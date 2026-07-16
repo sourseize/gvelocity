@@ -924,6 +924,8 @@ single day's snapshot would otherwise miss entirely.</p>
     status_color = "#10b98122" if is_current else "#334155"
     status_text_color = "#10b981" if is_current else "#94a3b8"
 
+    generated_at = datetime.datetime.now(datetime.timezone.utc).strftime("%d %b %Y %H:%M UTC")
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -959,7 +961,7 @@ single day's snapshot would otherwise miss entirely.</p>
 
 {watchlist_html}
 
-<footer>Velocity · Pure maths · Source: iShares {etf} CSV · {month_label}</footer>
+<footer>Velocity · Pure maths · Generated: {generated_at} · Source: iShares {etf} CSV · {month_label}</footer>
 </div>
 </body>
 </html>"""
@@ -1221,6 +1223,8 @@ def generate_hub_index(report_dir: Path) -> str:
     if not cards:
         cards = '<p class="none">No ETFs tracked yet — run velocity.py --etf CODE to get started.</p>'
 
+    generated_at = datetime.datetime.now(datetime.timezone.utc).strftime("%d %b %Y %H:%M UTC")
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1244,7 +1248,7 @@ def generate_hub_index(report_dir: Path) -> str:
 <h1>Velocity — tracked ETFs</h1>
 <p class="sub">{len(etf_dirs)} fund(s) tracked</p>
 {cards}
-<footer style="margin-top:18px;color:var(--muted);font-size:.75rem;letter-spacing:.04em;text-transform:uppercase">Velocity · Pure maths</footer>
+<footer style="margin-top:18px;color:var(--muted);font-size:.75rem;letter-spacing:.04em;text-transform:uppercase">Velocity · Pure maths · Generated: {generated_at}</footer>
 </div>
 </body>
 </html>"""
