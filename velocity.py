@@ -64,6 +64,23 @@ def get_or_create_portfolio(etf: str, initial_capital: float = 100000.0) -> Port
         portfolios[etf] = Portfolio(initial_capital=initial_capital)
     return portfolios[etf]
 
+
+def load_portfolio_state(etf: str, portfolio: Portfolio, portfolio_file: Path) -> Portfolio:
+    """Load an existing portfolio state from disk when available."""
+    if not portfolio_file.exists():
+        portfolios[etf] = portfolio
+        return portfolio
+
+    try:
+        portfolio = Portfolio.load_state(portfolio_file)
+        portfolios[etf] = portfolio
+        log.info(f"[{etf}] Loaded existing portfolio state")
+    except Exception as e:
+        log.warning(f"[{etf}] Could not load portfolio state: {e}")
+
+    return portfolio
+
+
 def run_etf(etf: str, args, report_root: Path) -> None:
     """Runs the full fetch/analyze/report/paper trade pipeline for a single ETF."""
     etf_cfg = ETF_CONFIG[etf]
@@ -78,16 +95,9 @@ def run_etf(etf: str, args, report_root: Path) -> None:
     conn = get_db(db_path)
     portfolio = get_or_create_portfolio(etf, args.initial_capital)
 
-    # Load existing portfolio state if not wiping and portfolio file exists
-    if not args.no_wipe:
-        portfolio_file = fund_dir / "portfolio.json"
-        if portfolio_file.exists():
-            try:
-                portfolio = Portfolio.load_state(portfolio_file)
-                portfolios[etf] = portfolio
-                log.info(f"[{etf}] Loaded existing portfolio state")
-            except Exception as e:
-                log.warning(f"[{etf}] Could not load portfolio state: {e}")
+    # Load existing portfolio state whenever a saved state exists.
+    portfolio_file = fund_dir / "portfolio.json"
+    portfolio = load_portfolio_state(etf, portfolio, portfolio_file)
 
     # Fetch or load data
     if args.report_only:
@@ -222,7 +232,18 @@ def execute_paper_trades_for_etf(conn, today: str, day_data: dict, portfolio: Po
         log.info("[%s] Stop loss triggered for: %s", etf, ", ".join(stopped_out))
 
     # Process new entries and scored holdings for potential trades
-    tickers_to_consider = set(day_data.get("new_tickers", [])) | set(scored.keys())
+    current_tickers = {row["ticker"] for row in conn.execute(
+        "SELECT ticker FROM holdings WHERE snapshot_date=?",
+        (today,)
+    )}
+    tickers_to_consider = set(day_data.get("new_tickers", [])) | set(scored.keys()) | set(current_tickers)
+
+    # Sell any open position that is no longer present in the current snapshot.
+    for ticker in list(portfolio.positions):
+        if ticker not in current_tickers:
+            trade = portfolio.sell(ticker, price_data.get(ticker, portfolio.positions[ticker].current_price), today, reason="exit")
+            if trade:
+                log.info("[%s] Exit signal for %s: SELL @ $%.2f", etf, ticker, trade.price)
 
     # Get trading parameters from args
     allocation_pct = getattr(args, 'allocation_pct', 0.1)
@@ -311,11 +332,11 @@ def build_day_data(conn, today: str) -> dict:
     exits = detect_exits(conn, today)
     movers = detect_weight_movers(conn, today, NEW_ENTRY_LOOKBACK_DAYS)
 
-    top30 = [r["ticker"] for r in conn.execute(
-        "SELECT ticker FROM holdings WHERE snapshot_date=? ORDER BY weight_pct DESC LIMIT 30",
+    current_holdings = [r["ticker"] for r in conn.execute(
+        "SELECT ticker FROM holdings WHERE snapshot_date=?",
         (today,)
     )]
-    to_score = list(set(new_tickers + top30))
+    to_score = list(dict.fromkeys(new_tickers + current_holdings))
     scored = {t: compute_metrics(conn, t, today) for t in to_score}
 
     top20 = [dict(r) for r in conn.execute(

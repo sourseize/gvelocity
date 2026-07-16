@@ -63,6 +63,10 @@ def etf_report_dir(report_root: Path, etf: str) -> Path:
     """Get report directory for an ETF."""
     return report_root / etf
 
+def _normalize_ticker(value) -> str:
+    return (value or "").strip().strip('"').upper()
+
+
 def store_snapshot(conn, holdings_date, rows) -> bool:
     """Store snapshot and holdings in database.
 
@@ -78,6 +82,19 @@ def store_snapshot(conn, holdings_date, rows) -> bool:
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()
     conn.execute("INSERT INTO snapshots(fetch_date,fetched_at) VALUES(?,?)", (ds, now))
 
+    normalized_rows = []
+    seen_tickers = set()
+    for row in rows:
+        normalized = {**row}
+        ticker = _normalize_ticker(normalized.get("ticker"))
+        if not ticker:
+            continue
+        if ticker in seen_tickers:
+            continue
+        normalized["ticker"] = ticker
+        normalized_rows.append({**normalized, "snapshot_date": ds})
+        seen_tickers.add(ticker)
+
     # Insert holdings
     conn.executemany(
         """INSERT OR IGNORE INTO holdings
@@ -85,7 +102,7 @@ def store_snapshot(conn, holdings_date, rows) -> bool:
             price,currency,exchange,location)
            VALUES(:snapshot_date,:ticker,:name,:sector,:weight_pct,:market_value,
                   :shares,:price,:currency,:exchange,:location)""",
-        [{**r, "snapshot_date": ds} for r in rows]
+        normalized_rows
     )
 
     # Store weekly closes if it's a Friday
@@ -146,18 +163,29 @@ def detect_new_entries(conn, today: str, lookback_days: int) -> list[str]:
     return sorted(today_set - prior_set)
 
 def detect_exits(conn, today: str) -> list[dict]:
-    """Detect tickers that exited since previous day."""
-    dates = recent_dates(conn, 2)
-    if len(dates) < 2:
+    """Detect tickers that exited between the previous snapshot and today."""
+    if not today:
         return []
 
+    prev_date = conn.execute(
+        "SELECT fetch_date FROM snapshots WHERE fetch_date < ? ORDER BY fetch_date DESC LIMIT 1",
+        (today,)
+    ).fetchone()
+    if not prev_date:
+        return []
+
+    prev_date = prev_date["fetch_date"]
+
     today_set = {r["ticker"] for r in conn.execute(
-        "SELECT ticker FROM holdings WHERE snapshot_date=?", (dates[0],)
+        "SELECT ticker FROM holdings WHERE snapshot_date=?", (today,)
     )}
 
-    return [dict(r) for r in conn.execute(
-        "SELECT ticker,name,sector,weight_pct FROM holdings WHERE snapshot_date=?", (dates[1],)
-    ) if r["ticker"] not in today_set]
+    prev_rows = [dict(r) for r in conn.execute(
+        "SELECT ticker,name,sector,weight_pct FROM holdings WHERE snapshot_date=?",
+        (prev_date,)
+    )]
+
+    return [row for row in prev_rows if row["ticker"] not in today_set]
 
 def detect_weight_movers(conn, today: str, lookback_days: int, threshold: float = 0.05) -> list[dict]:
     """Detect significant weight changes over lookback period."""
