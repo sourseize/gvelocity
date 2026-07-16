@@ -173,7 +173,7 @@ def run_etf(etf: str, args, report_root: Path) -> None:
     # Add portfolio link to the ETF page navigation if portfolio exists
     portfolio_nav_link = ""
     if (fund_dir / "portfolio.html").exists():
-        portfolio_nav_link = ' · <a href="portfolio.html" style="color:#10b981">📊 Portfolio</a>'
+        portfolio_nav_link = ' · <a href="portfolio.html"><span class="icon icon-portfolio"></span>Portfolio</a>'
 
     # Generate all archive pages
     for ym in all_months:

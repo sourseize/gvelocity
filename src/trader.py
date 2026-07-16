@@ -319,25 +319,29 @@ class Portfolio:
         return_sign = "+" if total_return >= 0 else ""
         
         css = """
-        :root{--bg:#0f172a;--sf:#1e293b;--bd:#334155;--mt:#94a3b8;--ac:#3b82f6;--tx:#f8fafc;--pos:#10b981;--neg:#ef4444}
-        *{box-sizing:border-box;margin:0;padding:0;background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px;line-height:1.6}
-        body{background:var(--bg);color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px;line-height:1.6}
-        a{color:var(--ac);text-decoration:none}
-        .wrap{max-width:1100px;margin:0 auto;padding:24px 16px}
-        h1{font-size:1.5rem;font-weight:700;margin-bottom:4px}
-        h2{font-size:.9rem;font-weight:600;color:var(--ac);margin:28px 0 10px;border-bottom:1px solid var(--bd);padding-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
-        .sub{color:var(--mt);font-size:.82rem;margin-bottom:18px}
-        .stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
-        .stat{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:10px 16px;min-width:120px}
-        .sv{font-size:1.4rem;font-weight:700;color:var(--ac)}
-        .sl{font-size:.7rem;color:var(--mt);text-transform:uppercase;letter-spacing:.05em}
+        /* Purple/Lilac Theme - Flat Design */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root{--bg:#1a1025;--sf:#2d1f3e;--bd:#4a3b5c;--mt:#b8a9c9;--ac:#a78bfa;--ac-hover:#c4b5fd;--tx:#f5f3ff;--pos:#34d399;--neg:#f87171;--lilac-light:#ddd6fe;--purple-glow:rgba(167,139,250,0.15)}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:linear-gradient(135deg,var(--bg) 0%,#241836 100%);color:var(--tx);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+        a{color:var(--ac);text-decoration:none;transition:color 0.2s ease}
+        a:hover{color:var(--ac-hover)}
+        .wrap{max-width:1100px;margin:0 auto;padding:32px 20px}
+        h1{font-size:1.75rem;font-weight:700;margin-bottom:8px;background:linear-gradient(135deg,var(--lilac-light) 0%,var(--ac) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        h2{font-size:.85rem;font-weight:600;color:var(--ac);margin:28px 0 10px;border-bottom:2px solid var(--bd);padding-bottom:8px;text-transform:uppercase;letter-spacing:.08em}
+        .sub{color:var(--mt);font-size:.85rem;margin-bottom:24px}
+        .stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+        .stat{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:14px 18px;min-width:130px;box-shadow:0 4px 12px var(--purple-glow)}
+        .sv{font-size:1.5rem;font-weight:700;color:var(--ac)}
+        .sl{font-size:.7rem;color:var(--mt);text-transform:uppercase;letter-spacing:.06em}
         table{width:100%;border-collapse:collapse;margin-top:12px}
-        th{text-align:left;padding:7px 10px;color:var(--mt);font-size:.7rem;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--bd)}
-        td{padding:6px 10px;border-bottom:1px solid #1e2d3e;vertical-align:middle;font-size:.8rem}
-        tr:hover td{background:#ffffff05}
+        th{text-align:left;padding:10px 12px;color:var(--mt);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid var(--bd)}
+        td{padding:8px 12px;border-bottom:1px solid #2d1f3e;vertical-align:middle;font-size:.82rem}
+        tr:hover td{background:rgba(167,139,250,0.08)}
         .pos{color:var(--pos);font-weight:600}
         .neg{color:var(--neg);font-weight:600}
-        footer{margin-top:40px;color:var(--mt);font-size:.7rem;border-top:1px solid var(--bd);padding-top:14px}
+        footer{margin-top:48px;color:var(--mt);font-size:.75rem;border-top:1px solid var(--bd);padding-top:16px;text-align:center}
         """
         
         return f"""<!DOCTYPE html>
@@ -350,7 +354,7 @@ class Portfolio:
 </head>
 <body>
 <div class="wrap">
-<h1>Portfolio Performance</h1>
+<h1><span class="icon icon-portfolio"></span>Portfolio Performance</h1>
 <p class="sub">Paper trading results</p>
 
 <div class="stats">

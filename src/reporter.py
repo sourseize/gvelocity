@@ -251,14 +251,11 @@ h2 {
 .tkl {
     color: inherit;
     text-decoration: none;
-    border-bottom: 1px dotted var(--mt);
-    padding: 2px 0;
     transition: all 0.2s ease;
 }
 
 .tkl:hover {
     color: var(--ac-hover);
-    border-bottom-color: var(--ac);
 }
 
 .cn {
@@ -475,10 +472,21 @@ footer {
 /* Flat icons placeholder styles */
 .icon {
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     vertical-align: middle;
-    margin-right: 6px;
+    margin-right: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.icon-portfolio {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a78bfa'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Cline x1='3' y1='10' x2='21' y2='10' stroke='%231a1025' stroke-width='2'/%3E%3Cline x1='12' y1='3' x2='12' y2='21' stroke='%231a1025' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+.icon-rising {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2334d399'%3E%3Cpath d='M13 2L3 14h9v8l10-12h-9z'/%3E%3C/svg%3E");
 }
 """
 
@@ -820,7 +828,7 @@ def generate_monthly_page(
         nav_parts.append('<a href="tickers/index.html">Tracked tickers →</a>')
     # Add portfolio link if it exists
     if (report_dir / "portfolio.html").exists():
-        nav_parts.append('<a href="portfolio.html" style="color:#10b981">📊 Portfolio</a>')
+        nav_parts.append('<a href="portfolio.html"><span class="icon icon-portfolio"></span>Portfolio</a>')
     nav_html = " · ".join(p for p in nav_parts if p)
 
     # Day blocks — first entry is always open
@@ -861,7 +869,7 @@ def generate_monthly_page(
                     f"</tr>"
                 )
             watchlist_html += f"""
-<h2>🌱 Rising stars — building position</h2>
+<h2><span class="icon icon-rising"></span>Rising stars — building position</h2>
 <p class="sub" style="margin-top:-8px">Entered within the last {RISING_STAR_LOOKBACK_DAYS} trading days,
 weight up {RISING_STAR_MIN_GROWTH*100:.0f}%+ since entry — includes names outside the top-20 that a
 single day's snapshot would otherwise miss entirely.</p>
@@ -926,7 +934,9 @@ single day's snapshot would otherwise miss entirely.</p>
 </table></div>"""
 
     n_days = len(entries)
-    status = "Live" if is_current else "Archived"
+    status_label = "Current month" if is_current else "Archived"
+    status_color = "#10b98122" if is_current else "#334155"
+    status_text_color = "#10b981" if is_current else "#94a3b8"
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -939,7 +949,7 @@ single day's snapshot would otherwise miss entirely.</p>
 <body>
 <div class="wrap">
 <h1>Velocity Tracker — {etf} — {month_label}
-  <span style="font-size:.75rem;background:#334155;color:#94a3b8;border-radius:4px;padding:2px 8px;margin-left:8px;vertical-align:middle">{status}</span>
+  <span style="font-size:.75rem;background:{status_color};color:{status_text_color};border-radius:4px;padding:2px 8px;margin-left:8px;vertical-align:middle">{status_label}</span>
 </h1>
 <p class="sub">{etf_name} · {n_days} trading days · {all_new} new entries · {all_exit} exits</p>
 
@@ -1214,7 +1224,7 @@ def generate_hub_index(report_dir: Path) -> str:
         # Add portfolio link if it exists
         portfolio_link = ""
         if (d / "portfolio.html").exists():
-            portfolio_link = f" · <a href='{code}/portfolio.html' style='color:#10b981'>Portfolio</a>"
+            portfolio_link = f" · <a href='{code}/portfolio.html'><span class='icon icon-portfolio' style='width:16px;height:16px'></span>Portfolio</a>"
 
         cards += f"""
 <div class="etfcard">
