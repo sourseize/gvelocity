@@ -98,6 +98,11 @@ def load_portfolio_state(etf: str, portfolio: Portfolio, portfolio_file: Path, c
     return portfolio
 
 
+def should_execute_paper_trades(args) -> bool:
+    """Return whether paper trading should run for this invocation."""
+    return not args.no_paper_trade and not getattr(args, "is_backfill", False) and not getattr(args, "report_only", False)
+
+
 def run_etf(etf: str, args, report_root: Path) -> None:
     """Runs the full fetch/analyze/report/paper trade pipeline for a single ETF."""
     etf_cfg = ETF_CONFIG[etf]
@@ -161,10 +166,7 @@ def run_etf(etf: str, args, report_root: Path) -> None:
     )
 
     # Paper trading: Execute trades based on signals
-    should_do_paper_trade = (
-        not args.no_paper_trade
-        and not getattr(args, "is_backfill", False)
-    )
+    should_do_paper_trade = should_execute_paper_trades(args)
     if should_do_paper_trade:
         execute_paper_trades_for_etf(conn, today, day_data, portfolio, etf, args)
         # Save portfolio state after trading

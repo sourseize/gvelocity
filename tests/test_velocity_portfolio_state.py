@@ -2,11 +2,12 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import backfill
-from velocity import load_portfolio_state
+from velocity import load_portfolio_state, should_execute_paper_trades
 from src.database import get_db
 from src.trader import Portfolio
 
@@ -53,6 +54,10 @@ class PortfolioStateTests(unittest.TestCase):
 
             self.assertEqual(conn.execute("SELECT COUNT(*) FROM portfolio_state").fetchone()[0], 0)
             conn.close()
+
+    def test_report_only_runs_skip_paper_trades(self):
+        args = SimpleNamespace(no_paper_trade=False, is_backfill=False, report_only=True)
+        self.assertFalse(should_execute_paper_trades(args))
 
 
 if __name__ == "__main__":
