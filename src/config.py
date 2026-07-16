@@ -69,9 +69,6 @@ FETCH_HEADERS = {
     "Referer": "https://www.ishares.com/uk/",
 }
 
-GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions"
-GROQ_MODEL = "llama-3.3-70b-versatile"   # 1,000 RPD free — 1/day is trivial
-
 NEW_ENTRY_LOOKBACK_DAYS = 20
 
 # Layout: velocity/src/velocity.py (this file), velocity/src/data/{ETF}.db,

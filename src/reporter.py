@@ -63,7 +63,7 @@ CSS = """
 }
 
 body {
-    background: linear-gradient(135deg, var(--bg) 0%, #241836 100%);
+    background: #0f172a;
     color: var(--tx);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 14px;
@@ -82,9 +82,9 @@ a:hover {
 }
 
 .wrap {
-    max-width: 1100px;
+    max-width: 1180px;
     margin: 0 auto;
-    padding: 32px 20px;
+    padding: 24px 18px 40px;
 }
 
 h1 {
@@ -147,8 +147,8 @@ h2 {
     background: var(--sf);
     border: 1px solid var(--bd);
     border-radius: 10px;
-    padding: 14px 18px;
-    min-width: 130px;
+    padding: 12px 14px;
+    min-width: 112px;
     box-shadow: 0 4px 12px var(--purple-glow);
 }
 
@@ -169,8 +169,8 @@ h2 {
     background: linear-gradient(135deg, #2d1f3e 0%, #3d2852 100%);
     border: 1px solid var(--bd);
     border-radius: 10px;
-    padding: 14px 18px;
-    margin-bottom: 24px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
     font-size: 0.85rem;
     color: var(--mt);
 }
@@ -183,7 +183,7 @@ h2 {
 .dayblock {
     border: 1px solid var(--bd);
     border-radius: 12px;
-    margin-bottom: 28px;
+    margin-bottom: 16px;
     overflow: hidden;
     background: var(--sf);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -191,7 +191,7 @@ h2 {
 
 .dayhead {
     background: linear-gradient(135deg, var(--sf) 0%, #3d2852 100%);
-    padding: 14px 18px;
+    padding: 12px 14px;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -213,14 +213,14 @@ h2 {
 }
 
 .day-body {
-    padding: 18px;
+    padding: 12px;
 }
 
 .ecard {
     background: var(--sf);
     border: 1px solid var(--bd);
     border-radius: 10px;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
     overflow: hidden;
     transition: all 0.2s ease;
 }
@@ -231,7 +231,7 @@ h2 {
 }
 
 .ect {
-    padding: 14px 16px 12px;
+    padding: 12px 14px 10px;
 }
 
 .ectitle {
@@ -291,7 +291,7 @@ h2 {
 }
 
 .ecs {
-    padding: 10px 16px;
+    padding: 8px 14px;
     border-top: 1px solid var(--bd);
     background: rgba(255, 255, 255, 0.02);
 }
@@ -354,7 +354,7 @@ h2 {
 .espark {
     display: flex;
     gap: 24px;
-    padding: 12px 16px;
+    padding: 10px 14px;
     border-top: 1px solid var(--bd);
     flex-wrap: wrap;
 }
@@ -365,17 +365,6 @@ h2 {
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 4px;
-}
-
-.eai {
-    padding: 10px 16px 14px;
-    border-top: 1px solid var(--bd);
-    font-size: 0.85rem;
-    color: var(--mt);
-}
-
-.eai b {
-    color: var(--tx);
 }
 
 /* exits / movers inline */
@@ -541,7 +530,7 @@ def sparkline(values: list[float], w=180, h=36, colour="#3b82f6") -> str:
             f'</svg>')
 
 
-def entry_card(ticker: str, m: dict, commentary: str = "") -> str:
+def entry_card(ticker: str, m: dict) -> str:
     """Generate HTML card for a single ETF holding."""
     col = sc(m.get("sector", ""))
     dp = [r["price"] for r in reversed(m.get("daily_history", [])) if r.get("price")]
@@ -603,7 +592,6 @@ def entry_card(ticker: str, m: dict, commentary: str = "") -> str:
     </div>
   </div>
   {"" if not (sd or sw) else f'<div class="espark"><div><div class="spl">Daily price (20d)</div>{sd}</div><div><div class="spl">Weekly price (52w)</div>{sw}</div></div>'}
-  {"" if not commentary else f'<div class="eai"><b>🤖 Groq:</b> {commentary}</div>'}
 </div>"""
 
 
@@ -639,7 +627,6 @@ def render_day_block(entry: dict, is_latest: bool = False) -> str:
         s = ne.get("score", 0) or 0
         lbl, scol = SCORE_META.get(s, ("?", "#6b7280"))
         sigs_html = "".join(f'<div class="sig">{sg}</div>' for sg in ne.get("signals", []))
-        commentary = ne.get("commentary", "")
 
         roc20 = ne.get("price_roc_20d")
         wpct = ne.get("weight_percentile")
@@ -665,7 +652,6 @@ def render_day_block(entry: dict, is_latest: bool = False) -> str:
     <span class="sbadge" style="background:{scol}22;color:{scol};border:1px solid {scol}44">{s}/5 — {lbl}</span>
     <div class="sigs">{sigs_html}</div>
   </div>
-  {"" if not commentary else f'<div class="eai"><b>🤖 Groq:</b> {commentary}</div>'}
 </div>"""
 
     # Exits
@@ -973,7 +959,7 @@ single day's snapshot would otherwise miss entirely.</p>
 
 {watchlist_html}
 
-<footer>Velocity · Pure maths + Groq (optional) · Source: iShares {etf} CSV · {month_label}</footer>
+<footer>Velocity · Pure maths · Source: iShares {etf} CSV · {month_label}</footer>
 </div>
 </body>
 </html>"""
@@ -1004,7 +990,7 @@ def save_month_log(report_dir: Path, ym: str, entries: list[dict]) -> None:
     p.write_text(json.dumps(entries, indent=2), encoding="utf-8")
 
 
-def append_day_to_log(report_dir: Path, day_data: dict, commentary: dict) -> None:
+def append_day_to_log(report_dir: Path, day_data: dict, commentary: dict = None) -> None:
     """Append today's structured summary to the monthly JSON log."""
     ym = month_key(day_data["date"])
     entries = load_month_log(report_dir, ym)
@@ -1027,7 +1013,6 @@ def append_day_to_log(report_dir: Path, day_data: dict, commentary: dict) -> Non
             "price_roc_20d": m.get("price_roc_20d"),
             "weight_percentile": m.get("weight_percentile"),
             "drawdown": m.get("drawdown_from_52w_high"),
-            "commentary": commentary.get(t, ""),
         })
 
     exit_details = [
@@ -1260,7 +1245,7 @@ def generate_hub_index(report_dir: Path) -> str:
 <h1>Velocity — tracked ETFs</h1>
 <p class="sub">{len(etf_dirs)} fund(s) tracked</p>
 {cards}
-<footer>Velocity · Pure maths + Groq (optional)</footer>
+<footer>Velocity · Pure maths</footer>
 </div>
 </body>
 </html>"""

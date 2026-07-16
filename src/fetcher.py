@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Optional, Tuple, List, Dict
 
 from .config import (
-    FETCH_HEADERS, GROQ_ENDPOINT, GROQ_MODEL,
+    FETCH_HEADERS,
     NEW_ENTRY_LOOKBACK_DAYS, DEFAULT_REPORT_DIR
 )
 from .exceptions import NoDataForDateError

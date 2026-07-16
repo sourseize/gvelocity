@@ -19,7 +19,7 @@ from typing import Optional, Dict, List
 
 # Import our modular components
 from src.config import (
-    ETF_CONFIG, FETCH_HEADERS, GROQ_ENDPOINT, GROQ_MODEL,
+    ETF_CONFIG, FETCH_HEADERS,
     NEW_ENTRY_LOOKBACK_DAYS, DEFAULT_REPORT_DIR,
     SCORE_META, sc, RISING_STAR_LOOKBACK_DAYS, RISING_STAR_MIN_GROWTH,
     INITIAL_CAPITAL_PER_ETF, MAX_PURCHASE_AMOUNT, ALLOCATION_PCT
@@ -148,14 +148,8 @@ def run_etf(etf: str, args, report_root: Path) -> None:
         portfolio.save_state(portfolio_file)
         log.info(f"[{etf}] Portfolio value: ${portfolio.total_value():.2f} (Return: {portfolio.total_return():.2f}%)")
 
-    # Groq commentary
-    commentary = {}
-    if not args.no_ai and day_data["new_tickers"]:
-        log.info("Requesting Groq commentary for %d tickers …", len(day_data["new_tickers"]))
-        commentary = get_groq_commentary(day_data["new_tickers"], day_data["scored"])
-
     # Append to monthly log
-    append_day_to_log(fund_dir, day_data, commentary)
+    append_day_to_log(fund_dir, day_data, {})
 
     # Determine prev/next months for nav links
     all_months = sorted(set(get_all_months(fund_dir) + [today_ym]))
@@ -280,52 +274,6 @@ def execute_paper_trades_for_etf(conn, today: str, day_data: dict, portfolio: Po
             log.info("[%s] %s signal for %s: %s @ $%.2f (Score: %d)",
                     etf, action, ticker, action, price, score)
 
-def get_groq_commentary(new_tickers: list[str], scored: dict) -> dict[str, str]:
-    """Get commentary from Groq API for new tickers."""
-    api_key = os.environ.get("GROQ_API_KEY", "")
-    if not api_key or not new_tickers:
-        return {}
-
-    commentary = {}
-    for ticker in new_tickers:
-        m = scored.get(ticker, {})
-        prompt = (
-            f"A stock just entered the iShares MSCI World Momentum Factor ETF (IWMO).\n"
-            f"Ticker: {ticker} | Company: {m.get('name', ticker)} | Sector: {m.get('sector', '')}\n"
-            f"Weight: {m.get('current_weight', '?')}% | "
-            f"Confirmation score: {m.get('confirmation_score', '?')}/5\n\n"
-            f"Write exactly 3 sentences for a private investor:\n"
-            f"1. What the company does.\n"
-            f"2. Why it may be gaining momentum right now.\n"
-            f"3. One specific risk to watch.\n"
-            f"Be factual and concise. No buy/sell recommendations."
-        )
-        payload = json.dumps({
-            "model": GROQ_MODEL,
-            "messages": [{"role": "user", "content": prompt}],
-            "max_tokens": 220,
-            "temperature": 0.4,
-        }).encode()
-        req = urllib.request.Request(
-            GROQ_ENDPOINT,
-            data=payload,
-            headers={
-                "Content-Type": "application/json",
-                "Authorization": f"Bearer {api_key}",
-            }
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=25) as resp:
-                data = json.load(resp)
-                commentary[ticker] = data["choices"][0]["message"]["content"].strip()
-                log.info("Groq commentary OK for %s", ticker)
-        except urllib.error.HTTPError as e:
-            log.warning("Groq HTTP %s for %s", e.code, ticker)
-        except Exception as e:
-            log.warning("Groq error for %s: %s", ticker, e)
-
-    return commentary
-
 def build_day_data(conn, today: str) -> dict:
     """Build today's analysis data using modular functions."""
     new_tickers = detect_new_entries(conn, today, NEW_ENTRY_LOOKBACK_DAYS)
@@ -380,8 +328,6 @@ def main():
                    help="Shared report root — each ETF gets its own subfolder here")
     p.add_argument("--report-only", action="store_true",
                    help="Regenerate HTML from existing DB/logs without fetching")
-    p.add_argument("--no-ai",       action="store_true",
-                   help="Skip Groq commentary even if GROQ_API_KEY is set")
     p.add_argument("--mock-csv",    help="Use local CSV file instead of fetching. Only valid for a single --etf, not ALL.")
     p.add_argument("--initial-capital", type=float, default=INITIAL_CAPITAL_PER_ETF,
                    help=f"Initial capital for paper trading (default: ${INITIAL_CAPITAL_PER_ETF:,.0f})")

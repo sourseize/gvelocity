@@ -23,9 +23,6 @@ archived -- you never miss a signal.
 
 **4-5 = act, 3 = watch, 0-2 = wait**
 
-When `GROQ_API_KEY` is set, the script calls **llama-3.3-70b-versatile** via
-Groq for a short analyst note on each new entry. Groq's free tier
-(1,000 req/day) is enough for daily use across several funds.
 
 ---
 
@@ -38,7 +35,6 @@ velocity/
 |   |-- backfill.py           <- one-off historical populator
 |   |-- ticker.py     <- per-ticker score-history tool
 |   |-- velocity.sh           <- cron wrapper (loops all ETFs, commits, pushes)
-|   |-- .env                  <- GROQ_API_KEY=... (not committed)
 |   `-- data/
 |       |-- IWMO.db           <- one SQLite DB per ETF
 |       |-- IWQU.db
@@ -69,7 +65,6 @@ wherever `velocity.py` itself lives.
 
 - Linux server (or your own machine) with Python 3.9+
 - `pip3 install requests`
-- Groq API key (free, optional): https://console.groq.com
 - GitHub account, with `report/` set up as its own checkout on a `report`
   branch (GitHub Pages serves that branch)
 
@@ -135,7 +130,6 @@ python3 velocity.py --etf {IWMO|IWQU|DYNF|ALL} [options]
 | `--db PATH` | No | `src/data/{ETF}.db` | Override the DB location. Cannot combine with `--etf ALL`. |
 | `--report-dir PATH` | No | `velocity/report` | Shared report root -- each ETF writes its own subfolder here |
 | `--report-only` | No | off | Skip fetching, just rebuild HTML from whatever's already in the DB |
-| `--no-ai` | No | off | Skip Groq commentary even if `GROQ_API_KEY` is set |
 | `--mock-csv PATH` | No | none | Use a local CSV file instead of fetching live (for testing) |
 
 ```bash
@@ -150,7 +144,7 @@ python3 velocity.py --etf IWMO --report-only
 python3 velocity.py --etf ALL --report-only
 
 # Test against a saved CSV without touching the network
-python3 velocity.py --etf DYNF --mock-csv /tmp/DYNF_holdings.csv --no-ai
+python3 velocity.py --etf DYNF --mock-csv /tmp/DYNF_holdings.csv
 ```
 
 ### `backfill.py` -- historical populator
