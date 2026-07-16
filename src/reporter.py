@@ -1228,16 +1228,15 @@ def generate_hub_index(report_dir: Path) -> str:
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Velocity — tracked ETFs</title>
 <style>{CSS}
-.etfcard{{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:18px 20px;margin-bottom:16px}}
-.etfcard h2{{margin:0 0 4px;font-size:1.1rem}}
-.etfcard h2 a{{color:var(--tx);text-decoration:none}}
-.etfcard h2 a:hover{{color:#3b82f6}}
-.etfname{{font-size:.8rem;color:var(--mt);font-weight:400;margin-left:8px}}
-.hubrow{{font-size:.85rem;margin-top:6px}}
-.hubrow.none{{color:var(--mt)}}
-.hubrow .mt{{color:var(--mt)}}
-.chip{{display:inline-block;background:#1e293b;border:1px solid var(--bd);border-radius:5px;
-       padding:2px 8px;margin:2px 4px 2px 0;font-size:.78rem}}
+.etfcard{{background:linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(10, 16, 28, 0.96));border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:12px;box-shadow:var(--shadow)}}
+.etfcard h2{{margin:0 0 4px;font-size:1.02rem}}
+.etfcard h2 a{{color:var(--text);text-decoration:none}}
+.etfcard h2 a:hover{{color:var(--accent-2)}}
+.etfname{{font-size:.78rem;color:var(--muted);font-weight:400;margin-left:8px}}
+.hubrow{{font-size:.82rem;margin-top:6px;color:var(--muted)}}
+.hubrow.none{{color:var(--muted)}}
+.hubrow .mt{{color:var(--text)}}
+.chip{{display:inline-block;background:rgba(15, 23, 42, 0.8);border:1px solid var(--border);border-radius:999px;padding:2px 8px;margin:2px 4px 2px 0;font-size:.76rem;color:var(--text)}}
 </style>
 </head>
 <body>
@@ -1245,7 +1244,7 @@ def generate_hub_index(report_dir: Path) -> str:
 <h1>Velocity — tracked ETFs</h1>
 <p class="sub">{len(etf_dirs)} fund(s) tracked</p>
 {cards}
-<footer>Velocity · Pure maths</footer>
+<footer style="margin-top:18px;color:var(--muted);font-size:.75rem;letter-spacing:.04em;text-transform:uppercase">Velocity · Pure maths</footer>
 </div>
 </body>
 </html>"""
