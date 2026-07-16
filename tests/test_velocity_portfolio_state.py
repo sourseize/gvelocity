@@ -5,7 +5,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import backfill
 from velocity import load_portfolio_state
+from src.database import get_db
 from src.trader import Portfolio
 
 
@@ -21,6 +23,36 @@ class PortfolioStateTests(unittest.TestCase):
 
             self.assertEqual(loaded.cash, 500.0)
             self.assertEqual(loaded.initial_capital, 1000.0)
+
+    def test_save_state_persists_portfolio_to_database(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = Path(tmpdir) / "TEST.db"
+            conn = get_db(db_path)
+            portfolio_file = Path(tmpdir) / "portfolio.json"
+            original = Portfolio(initial_capital=1000.0)
+            original.cash = 250.0
+
+            original.save_state(portfolio_file, conn=conn)
+
+            loaded = Portfolio.load_state(portfolio_file, conn=conn)
+
+            self.assertEqual(loaded.cash, 250.0)
+            self.assertEqual(loaded.initial_capital, 1000.0)
+            self.assertEqual(conn.execute("SELECT COUNT(*) FROM portfolio_state").fetchone()[0], 1)
+            conn.close()
+
+    def test_wipe_existing_clears_portfolio_state_table(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            db_path = Path(tmpdir) / "TEST.db"
+            conn = get_db(db_path)
+            portfolio_file = Path(tmpdir) / "portfolio.json"
+            portfolio = Portfolio(initial_capital=1000.0)
+            portfolio.save_state(portfolio_file, conn=conn)
+
+            backfill.wipe_existing(conn, Path(tmpdir))
+
+            self.assertEqual(conn.execute("SELECT COUNT(*) FROM portfolio_state").fetchone()[0], 0)
+            conn.close()
 
 
 if __name__ == "__main__":

@@ -254,8 +254,8 @@ class Portfolio:
         """Get history of all trades"""
         return [trade.to_dict() for trade in self.trade_history]
 
-    def save_state(self, filepath: Path):
-        """Save portfolio state to file"""
+    def save_state(self, filepath: Path, conn=None, etf: str = ""):
+        """Save portfolio state to file and SQLite."""
         state = {
             "initial_capital": self.initial_capital,
             "cash": self.cash,
@@ -265,6 +265,36 @@ class Portfolio:
             "daily_values": self.daily_values
         }
         filepath.write_text(json.dumps(state, indent=2))
+
+        if conn is not None:
+            now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+            conn.execute(
+                """
+                INSERT INTO portfolio_state (
+                    etf, initial_capital, cash, commission_per_trade,
+                    positions_json, trade_history_json, daily_values_json, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(etf) DO UPDATE SET
+                    initial_capital=excluded.initial_capital,
+                    cash=excluded.cash,
+                    commission_per_trade=excluded.commission_per_trade,
+                    positions_json=excluded.positions_json,
+                    trade_history_json=excluded.trade_history_json,
+                    daily_values_json=excluded.daily_values_json,
+                    updated_at=excluded.updated_at
+                """,
+                (
+                    etf or filepath.stem,
+                    self.initial_capital,
+                    self.cash,
+                    self.commission_per_trade,
+                    json.dumps(state["positions"], indent=2),
+                    json.dumps(state["trade_history"], indent=2),
+                    json.dumps(state["daily_values"], indent=2),
+                    now,
+                ),
+            )
+            conn.commit()
         
         # Also generate HTML portfolio report
         html_path = filepath.with_suffix('.html')
@@ -387,9 +417,16 @@ class Portfolio:
 </html>"""
 
     @classmethod
-    def load_state(cls, filepath: Path):
-        """Load portfolio state from file"""
+    def load_state(cls, filepath: Path, conn=None, etf: str = ""):
+        """Load portfolio state from file and SQLite."""
         if not filepath.exists():
+            if conn is not None:
+                row = conn.execute(
+                    "SELECT initial_capital, cash, commission_per_trade, positions_json, trade_history_json, daily_values_json FROM portfolio_state WHERE etf=?",
+                    (etf or filepath.stem,),
+                ).fetchone()
+                if row:
+                    return cls._state_from_row(row)
             return cls()  # Return new portfolio if no saved state
 
         data = json.loads(filepath.read_text())
@@ -410,6 +447,23 @@ class Portfolio:
         ]
 
         portfolio.daily_values = data.get("daily_values", [])
+        return portfolio
+
+    @classmethod
+    def _state_from_row(cls, row):
+        portfolio = cls(
+            initial_capital=row["initial_capital"],
+            commission_per_trade=row["commission_per_trade"],
+        )
+        portfolio.cash = row["cash"]
+        positions = json.loads(row["positions_json"] or "{}")
+        for ticker, pos_data in positions.items():
+            portfolio.positions[ticker] = Position.from_dict(pos_data)
+        portfolio.trade_history = [
+            Trade.from_dict(trade_data)
+            for trade_data in json.loads(row["trade_history_json"] or "[]")
+        ]
+        portfolio.daily_values = json.loads(row["daily_values_json"] or "[]")
         return portfolio
 
 def execute_paper_trade(

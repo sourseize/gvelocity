@@ -65,14 +65,31 @@ def get_or_create_portfolio(etf: str, initial_capital: float = 100000.0) -> Port
     return portfolios[etf]
 
 
-def load_portfolio_state(etf: str, portfolio: Portfolio, portfolio_file: Path) -> Portfolio:
-    """Load an existing portfolio state from disk when available."""
-    if not portfolio_file.exists():
+def reset_portfolio_state(etf: str, portfolio_file: Path, initial_capital: float = 100000.0, conn=None) -> Portfolio:
+    """Reset the paper-trading portfolio state for an ETF."""
+    portfolio = Portfolio(initial_capital=initial_capital)
+    portfolios[etf] = portfolio
+
+    for path in (portfolio_file, portfolio_file.with_suffix(".html")):
+        if path.exists():
+            path.unlink()
+
+    if conn is not None:
+        conn.execute("DELETE FROM portfolio_state WHERE etf=?", (etf,))
+        conn.commit()
+
+    log.info(f"[{etf}] Reset portfolio state")
+    return portfolio
+
+
+def load_portfolio_state(etf: str, portfolio: Portfolio, portfolio_file: Path, conn=None) -> Portfolio:
+    """Load an existing portfolio state from disk or SQLite when available."""
+    if not portfolio_file.exists() and conn is None:
         portfolios[etf] = portfolio
         return portfolio
 
     try:
-        portfolio = Portfolio.load_state(portfolio_file)
+        portfolio = Portfolio.load_state(portfolio_file, conn=conn, etf=etf)
         portfolios[etf] = portfolio
         log.info(f"[{etf}] Loaded existing portfolio state")
     except Exception as e:
@@ -97,7 +114,10 @@ def run_etf(etf: str, args, report_root: Path) -> None:
 
     # Load existing portfolio state whenever a saved state exists.
     portfolio_file = fund_dir / "portfolio.json"
-    portfolio = load_portfolio_state(etf, portfolio, portfolio_file)
+    if getattr(args, "reset_portfolio", False):
+        portfolio = reset_portfolio_state(etf, portfolio_file, args.initial_capital, conn=conn)
+    else:
+        portfolio = load_portfolio_state(etf, portfolio, portfolio_file, conn=conn)
 
     # Fetch or load data
     if args.report_only:
@@ -141,11 +161,15 @@ def run_etf(etf: str, args, report_root: Path) -> None:
     )
 
     # Paper trading: Execute trades based on signals
-    if not args.no_paper_trade:
+    should_do_paper_trade = (
+        not args.no_paper_trade
+        and not getattr(args, "is_backfill", False)
+    )
+    if should_do_paper_trade:
         execute_paper_trades_for_etf(conn, today, day_data, portfolio, etf, args)
         # Save portfolio state after trading
         portfolio_file = fund_dir / "portfolio.json"
-        portfolio.save_state(portfolio_file)
+        portfolio.save_state(portfolio_file, conn=conn, etf=etf)
         log.info(f"[{etf}] Portfolio value: ${portfolio.total_value():.2f} (Return: {portfolio.total_return():.2f}%)")
 
     # Append to monthly log
@@ -339,6 +363,8 @@ def main():
                    help="Trailing stop loss percentage (default: 15%%)")
     p.add_argument("--no-paper-trade", action="store_true",
                    help="Disable paper trading functionality")
+    p.add_argument("--reset-portfolio", action="store_true",
+                   help="Delete the saved portfolio state and start fresh from this run onward")
     p.add_argument("--no-wipe", action="store_true",
                    help="Keep existing DB/report rows, just fill gaps (for backfill)")
     args = p.parse_args()

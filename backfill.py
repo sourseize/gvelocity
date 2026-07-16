@@ -161,6 +161,7 @@ def wipe_existing(conn, fund_dir: Path) -> None:
     conn.execute("DELETE FROM holdings")
     conn.execute("DELETE FROM snapshots")
     conn.execute("DELETE FROM weekly_closes")
+    conn.execute("DELETE FROM portfolio_state")
     conn.commit()
 
     removed = 0
@@ -218,6 +219,12 @@ def backfill_etf(etf: str, args, report_root: Path) -> Optional[str]:
     fund_dir = etf_report_dir(report_root, etf)
     db_path.parent.mkdir(parents=True, exist_ok=True)
     fund_dir.mkdir(parents=True, exist_ok=True)
+
+    # Backfill is a historical replay, so it must never create or mutate live
+    # portfolio state. Keep paper trading disabled even if the caller reuses
+    # the same args object for other flows.
+    args.is_backfill = True
+    args.no_paper_trade = True
 
     end_date = (
         datetime.datetime.strptime(args.end_date, "%Y-%m-%d").date()

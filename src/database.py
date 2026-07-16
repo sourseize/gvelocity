@@ -42,6 +42,17 @@ CREATE TABLE IF NOT EXISTS weekly_closes (
     currency    TEXT,
     UNIQUE(week_ending, ticker)
 );
+CREATE TABLE IF NOT EXISTS portfolio_state (
+    id                 INTEGER PRIMARY KEY AUTOINCREMENT,
+    etf                TEXT NOT NULL UNIQUE,
+    initial_capital    REAL NOT NULL,
+    cash               REAL NOT NULL,
+    commission_per_trade REAL NOT NULL,
+    positions_json     TEXT NOT NULL,
+    trade_history_json TEXT NOT NULL,
+    daily_values_json  TEXT NOT NULL,
+    updated_at         TEXT NOT NULL
+);
 CREATE INDEX IF NOT EXISTS idx_h_date   ON holdings(snapshot_date);
 CREATE INDEX IF NOT EXISTS idx_h_ticker ON holdings(ticker);
 CREATE INDEX IF NOT EXISTS idx_wc       ON weekly_closes(ticker);
