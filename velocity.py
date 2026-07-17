@@ -103,6 +103,54 @@ def should_execute_paper_trades(args) -> bool:
     return not args.no_paper_trade and not getattr(args, "is_backfill", False) and not getattr(args, "report_only", False)
 
 
+def rebuild_report_pages_from_db(conn, fund_dir: Path, etf: str, etf_name: str, today: str) -> None:
+    """Rebuild monthly log JSONs and HTML pages from historical snapshots in the DB."""
+    for pattern in ("????-??.json", "????-??.html"):
+        for path in fund_dir.glob(pattern):
+            path.unlink(missing_ok=True)
+    index_path = fund_dir / "index.html"
+    if index_path.exists():
+        index_path.unlink()
+
+    snapshot_dates = [
+        row["fetch_date"]
+        for row in conn.execute(
+            "SELECT fetch_date FROM snapshots ORDER BY fetch_date ASC"
+        )
+    ]
+
+    for snapshot_date in snapshot_dates:
+        day_data = build_day_data(conn, snapshot_date)
+        append_day_to_log(fund_dir, day_data, {})
+
+    all_months = sorted(get_all_months(fund_dir))
+    if not all_months:
+        return
+
+    live_ym = all_months[-1]
+    latest_day_data = build_day_data(conn, today)
+
+    for idx, ym in enumerate(all_months):
+        prev_ym = all_months[idx - 1] if idx > 0 else None
+        next_ym = all_months[idx + 1] if idx < len(all_months) - 1 else None
+        is_current = (ym == live_ym)
+        entries = load_month_log(fund_dir, ym)
+        html = generate_monthly_page(
+            ym=ym,
+            entries=entries,
+            prev_ym=prev_ym,
+            next_ym=next_ym,
+            is_current=is_current,
+            report_dir=fund_dir,
+            day_data=latest_day_data if is_current else None,
+            live_ym=live_ym,
+            etf=etf,
+            etf_name=etf_name,
+        )
+        filename = "index.html" if is_current else f"{ym}.html"
+        (fund_dir / filename).write_text(html, encoding="utf-8")
+
+
 def run_etf(etf: str, args, report_root: Path) -> None:
     """Runs the full fetch/analyze/report/paper trade pipeline for a single ETF."""
     etf_cfg = ETF_CONFIG[etf]
@@ -165,68 +213,54 @@ def run_etf(etf: str, args, report_root: Path) -> None:
         etf, len(day_data["new_tickers"]), len(day_data["exits"]), len(day_data["movers"])
     )
 
-    # Paper trading: Execute trades based on signals
-    should_do_paper_trade = should_execute_paper_trades(args)
-    if should_do_paper_trade:
-        execute_paper_trades_for_etf(conn, today, day_data, portfolio, etf, args)
-        # Save portfolio state after trading
-        portfolio_file = fund_dir / "portfolio.json"
-        portfolio.save_state(portfolio_file, conn=conn, etf=etf)
-        log.info(f"[{etf}] Portfolio value: ${portfolio.total_value():.2f} (Return: {portfolio.total_return():.2f}%)")
+    if args.report_only:
+        rebuild_report_pages_from_db(conn, fund_dir, etf, etf_name, today)
+    else:
+        # Paper trading: Execute trades based on signals
+        should_do_paper_trade = should_execute_paper_trades(args)
+        if should_do_paper_trade:
+            execute_paper_trades_for_etf(conn, today, day_data, portfolio, etf, args)
+            # Save portfolio state after trading
+            portfolio_file = fund_dir / "portfolio.json"
+            portfolio.save_state(portfolio_file, conn=conn, etf=etf)
+            log.info(f"[{etf}] Portfolio value: ${portfolio.total_value():.2f} (Return: {portfolio.total_return():.2f}%)")
 
-    # Append to monthly log
-    append_day_to_log(fund_dir, day_data, {})
+        # Append to monthly log
+        append_day_to_log(fund_dir, day_data, {})
 
-    # Determine prev/next months for nav links
-    all_months = sorted(set(get_all_months(fund_dir) + [today_ym]))
-    idx = all_months.index(today_ym)
-    prev_ym = all_months[idx - 1] if idx > 0 else None
-    next_ym = all_months[idx + 1] if idx < len(all_months) - 1 else None
+        # Determine prev/next months for nav links
+        all_months = sorted(set(get_all_months(fund_dir) + [today_ym]))
+        idx = all_months.index(today_ym)
+        prev_ym = all_months[idx - 1] if idx > 0 else None
+        next_ym = all_months[idx + 1] if idx < len(all_months) - 1 else None
 
-    # Generate index.html (current month)
-    current_entries = load_month_log(fund_dir, today_ym)
-    html = generate_monthly_page(
-        ym=today_ym,
-        entries=current_entries,
-        prev_ym=prev_ym,
-        next_ym=next_ym,
-        is_current=True,
-        report_dir=fund_dir,
-        day_data=day_data,
-        live_ym=today_ym,
-        etf=etf,
-        etf_name=etf_name,
-    )
-    (fund_dir / "index.html").write_text(html, encoding="utf-8")
-    log.info("[%s] index.html updated (%d day entries for %s)", etf, len(current_entries), today_ym)
-    
-    # Add portfolio link to the ETF page navigation if portfolio exists
-    portfolio_nav_link = ""
-    if (fund_dir / "portfolio.html").exists():
-        portfolio_nav_link = ' · <a href="portfolio.html"><span class="icon icon-portfolio"></span>Portfolio</a>'
-
-    # Generate all archive pages
-    for ym in all_months:
-        if ym == today_ym:
-            continue
-        ym_idx = all_months.index(ym)
-        ym_prev = all_months[ym_idx - 1] if ym_idx > 0 else None
-        ym_next = all_months[ym_idx + 1] if ym_idx < len(all_months)-1 else None
-        ym_entries = load_month_log(fund_dir, ym)
-        arch_html = generate_monthly_page(
-            ym=ym,
-            entries=ym_entries,
-            prev_ym=ym_prev,
-            next_ym=ym_next,
-            is_current=False,
+        # Generate index.html (current month)
+        current_entries = load_month_log(fund_dir, today_ym)
+        html = generate_monthly_page(
+            ym=today_ym,
+            entries=current_entries,
+            prev_ym=prev_ym,
+            next_ym=next_ym,
+            is_current=True,
             report_dir=fund_dir,
+            day_data=day_data,
             live_ym=today_ym,
             etf=etf,
             etf_name=etf_name,
         )
-        arch_path = fund_dir / f"{ym}.html"
-        arch_path.write_text(arch_html, encoding="utf-8")
-        log.info("[%s] Archive %s updated", etf, arch_path.name)
+        (fund_dir / "index.html").write_text(html, encoding="utf-8")
+        log.info("[%s] index.html updated (%d day entries for %s)", etf, len(current_entries), today_ym)
+
+    # Save or refresh portfolio state from DB/file for report-only and live runs.
+    portfolio_file = fund_dir / "portfolio.json"
+    portfolio.save_state(portfolio_file, conn=conn, etf=etf)
+    if not args.report_only:
+        log.info(f"[{etf}] Portfolio value: ${portfolio.total_value():.2f} (Return: {portfolio.total_return():.2f}%)")
+
+    # Add portfolio link to the ETF page navigation if portfolio exists
+    portfolio_nav_link = ""
+    if (fund_dir / "portfolio.html").exists():
+        portfolio_nav_link = ' · <a href="portfolio.html"><span class="icon icon-portfolio"></span>Portfolio</a>'
 
     conn.close()
     log.info("[%s] Done.", etf)
