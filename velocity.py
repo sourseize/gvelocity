@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 """
-Velocity — Multi-ETF Momentum/Factor Tracker (Modular Version)
-=============================================================
+Velocity — Daily ETF Momentum/Factor Tracker
+=============================================
 
-Refactored version using modular components for better maintainability.
+Daily runner: fetches latest holdings, scores positions, executes paper trades,
+and generates HTML reports. For manual/one-off operations, see the CLI tools
+in the `cli/` directory.
+
+Usage:
+  python velocity.py --etf IWMO              # Run daily for IWMO
+  python velocity.py --etf ALL               # Run daily for all configured ETFs
 """
 
 import argparse
@@ -58,6 +64,7 @@ log = logging.getLogger(__name__)
 # Global dictionaries for paper trading (one per ETF)
 portfolios: dict[str, Portfolio] = {}
 
+
 def get_or_create_portfolio(etf: str, initial_capital: float = 100000.0) -> Portfolio:
     """Get or create a paper trading portfolio for an ETF."""
     if etf not in portfolios:
@@ -100,55 +107,7 @@ def load_portfolio_state(etf: str, portfolio: Portfolio, portfolio_file: Path, c
 
 def should_execute_paper_trades(args) -> bool:
     """Return whether paper trading should run for this invocation."""
-    return not args.no_paper_trade and not getattr(args, "is_backfill", False) and not getattr(args, "report_only", False)
-
-
-def rebuild_report_pages_from_db(conn, fund_dir: Path, etf: str, etf_name: str, today: str) -> None:
-    """Rebuild monthly log JSONs and HTML pages from historical snapshots in the DB."""
-    for pattern in ("????-??.json", "????-??.html"):
-        for path in fund_dir.glob(pattern):
-            path.unlink(missing_ok=True)
-    index_path = fund_dir / "index.html"
-    if index_path.exists():
-        index_path.unlink()
-
-    snapshot_dates = [
-        row["fetch_date"]
-        for row in conn.execute(
-            "SELECT fetch_date FROM snapshots ORDER BY fetch_date ASC"
-        )
-    ]
-
-    for snapshot_date in snapshot_dates:
-        day_data = build_day_data(conn, snapshot_date)
-        append_day_to_log(fund_dir, day_data, {})
-
-    all_months = sorted(get_all_months(fund_dir))
-    if not all_months:
-        return
-
-    live_ym = all_months[-1]
-    latest_day_data = build_day_data(conn, today)
-
-    for idx, ym in enumerate(all_months):
-        prev_ym = all_months[idx - 1] if idx > 0 else None
-        next_ym = all_months[idx + 1] if idx < len(all_months) - 1 else None
-        is_current = (ym == live_ym)
-        entries = load_month_log(fund_dir, ym)
-        html = generate_monthly_page(
-            ym=ym,
-            entries=entries,
-            prev_ym=prev_ym,
-            next_ym=next_ym,
-            is_current=is_current,
-            report_dir=fund_dir,
-            day_data=latest_day_data if is_current else None,
-            live_ym=live_ym,
-            etf=etf,
-            etf_name=etf_name,
-        )
-        filename = "index.html" if is_current else f"{ym}.html"
-        (fund_dir / filename).write_text(html, encoding="utf-8")
+    return not args.no_paper_trade and not getattr(args, "is_backfill", False)
 
 
 def run_etf(etf: str, args, report_root: Path) -> None:
@@ -165,7 +124,7 @@ def run_etf(etf: str, args, report_root: Path) -> None:
     conn = get_db(db_path)
     portfolio = get_or_create_portfolio(etf, args.initial_capital)
 
-    # Load existing portfolio state whenever a saved state exists.
+    # Load existing portfolio state
     portfolio_file = fund_dir / "portfolio.json"
     if getattr(args, "reset_portfolio", False):
         portfolio = reset_portfolio_state(etf, portfolio_file, args.initial_capital, conn=conn)
@@ -173,33 +132,22 @@ def run_etf(etf: str, args, report_root: Path) -> None:
         portfolio = load_portfolio_state(etf, portfolio, portfolio_file, conn=conn)
 
     # Fetch or load data
-    if args.report_only:
-        latest = conn.execute(
-            "SELECT fetch_date FROM snapshots ORDER BY fetch_date DESC LIMIT 1"
-        ).fetchone()
-        if not latest:
-            log.error("No data in DB for %s. Run without --report-only first.", etf)
+    if args.mock_csv:
+        raw = Path(args.mock_csv).read_text(encoding="utf-8-sig")
+        hdate, rows = parse_csv(raw)
+    else:
+        try:
+            hdate, rows = fetch_csv(etf_url, etf)
+        except NoDataForDateError as e:
+            log.warning(
+                "No holdings data available yet for %s (%s). iShares publishes "
+                "with a lag — this run will simply be retried next cron cycle.",
+                etf, e
+            )
             conn.close()
             return
-        today = latest["fetch_date"]
-        log.info("Report-only: using %s for %s", today, etf)
-    else:
-        if args.mock_csv:
-            raw = Path(args.mock_csv).read_text(encoding="utf-8-sig")
-            hdate, rows = parse_csv(raw)
-        else:
-            try:
-                hdate, rows = fetch_csv(etf_url, etf)
-            except NoDataForDateError as e:
-                log.warning(
-                    "No holdings data available yet for %s (%s). iShares publishes "
-                    "with a lag — this run will simply be retried next cron cycle.",
-                    etf, e
-                )
-                conn.close()
-                return
-        store_snapshot(conn, hdate, rows)
-        today = hdate.isoformat()
+    store_snapshot(conn, hdate, rows)
+    today = hdate.isoformat()
 
     today_ym = month_key(today)
 
@@ -213,57 +161,47 @@ def run_etf(etf: str, args, report_root: Path) -> None:
         etf, len(day_data["new_tickers"]), len(day_data["exits"]), len(day_data["movers"])
     )
 
-    if args.report_only:
-        rebuild_report_pages_from_db(conn, fund_dir, etf, etf_name, today)
-    else:
-        # Paper trading: Execute trades based on signals
-        should_do_paper_trade = should_execute_paper_trades(args)
-        if should_do_paper_trade:
-            execute_paper_trades_for_etf(conn, today, day_data, portfolio, etf, args)
-            # Save portfolio state after trading
-            portfolio_file = fund_dir / "portfolio.json"
-            portfolio.save_state(portfolio_file, conn=conn, etf=etf)
-            log.info(f"[{etf}] Portfolio value: ${portfolio.total_value():.2f} (Return: {portfolio.total_return():.2f}%)")
-
-        # Append to monthly log
-        append_day_to_log(fund_dir, day_data, {})
-
-        # Determine prev/next months for nav links
-        all_months = sorted(set(get_all_months(fund_dir) + [today_ym]))
-        idx = all_months.index(today_ym)
-        prev_ym = all_months[idx - 1] if idx > 0 else None
-        next_ym = all_months[idx + 1] if idx < len(all_months) - 1 else None
-
-        # Generate index.html (current month)
-        current_entries = load_month_log(fund_dir, today_ym)
-        html = generate_monthly_page(
-            ym=today_ym,
-            entries=current_entries,
-            prev_ym=prev_ym,
-            next_ym=next_ym,
-            is_current=True,
-            report_dir=fund_dir,
-            day_data=day_data,
-            live_ym=today_ym,
-            etf=etf,
-            etf_name=etf_name,
-        )
-        (fund_dir / "index.html").write_text(html, encoding="utf-8")
-        log.info("[%s] index.html updated (%d day entries for %s)", etf, len(current_entries), today_ym)
-
-    # Save or refresh portfolio state from DB/file for report-only and live runs.
-    portfolio_file = fund_dir / "portfolio.json"
-    portfolio.save_state(portfolio_file, conn=conn, etf=etf)
-    if not args.report_only:
+    # Paper trading: Execute trades based on signals
+    should_do_paper_trade = should_execute_paper_trades(args)
+    if should_do_paper_trade:
+        execute_paper_trades_for_etf(conn, today, day_data, portfolio, etf, args)
+        # Save portfolio state after trading
+        portfolio_file = fund_dir / "portfolio.json"
+        portfolio.save_state(portfolio_file, conn=conn, etf=etf)
         log.info(f"[{etf}] Portfolio value: ${portfolio.total_value():.2f} (Return: {portfolio.total_return():.2f}%)")
 
-    # Add portfolio link to the ETF page navigation if portfolio exists
-    portfolio_nav_link = ""
-    if (fund_dir / "portfolio.html").exists():
-        portfolio_nav_link = ' · <a href="portfolio.html"><span class="icon icon-portfolio"></span>Portfolio</a>'
+    # Append to monthly log
+    append_day_to_log(fund_dir, day_data, {})
+
+    # Determine prev/next months for nav links
+    all_months = sorted(set(get_all_months(fund_dir) + [today_ym]))
+    idx = all_months.index(today_ym)
+    prev_ym = all_months[idx - 1] if idx > 0 else None
+    next_ym = all_months[idx + 1] if idx < len(all_months) - 1 else None
+
+    # Generate index.html (current month)
+    current_entries = load_month_log(fund_dir, today_ym)
+    html = generate_monthly_page(
+        ym=today_ym,
+        entries=current_entries,
+        prev_ym=prev_ym,
+        next_ym=next_ym,
+        is_current=True,
+        report_dir=fund_dir,
+        day_data=day_data,
+        live_ym=today_ym,
+        etf=etf,
+        etf_name=etf_name,
+    )
+    (fund_dir / "index.html").write_text(html, encoding="utf-8")
+    log.info("[%s] index.html updated (%d day entries for %s)", etf, len(current_entries), today_ym)
+
+    # Save portfolio state
+    portfolio.save_state(portfolio_file, conn=conn, etf=etf)
 
     conn.close()
     log.info("[%s] Done.", etf)
+
 
 def execute_paper_trades_for_etf(conn, today: str, day_data: dict, portfolio: Portfolio, etf: str, args):
     """Execute paper trades based on today's analysis."""
@@ -334,6 +272,7 @@ def execute_paper_trades_for_etf(conn, today: str, day_data: dict, portfolio: Po
             log.info("[%s] %s signal for %s: %s @ $%.2f (Score: %d)",
                     etf, action, ticker, action, price, score)
 
+
 def build_day_data(conn, today: str) -> dict:
     """Build today's analysis data using modular functions."""
     new_tickers = detect_new_entries(conn, today, NEW_ENTRY_LOOKBACK_DAYS)
@@ -374,21 +313,26 @@ def build_day_data(conn, today: str) -> dict:
         "lookback": NEW_ENTRY_LOOKBACK_DAYS,
     }
 
+
 def main():
     """Main entry point."""
-    p = argparse.ArgumentParser(description="Velocity — monthly rolling reports (modular)")
+    p = argparse.ArgumentParser(
+        description="Velocity — Daily ETF tracker (fetch, score, trade, report)",
+        epilog="MANUAL TOOLS (see cli/ directory):\n"
+               "  Backfill history:    python cli/backfill.py --etf IWMO --months 12\n"
+               "  Rebuild reports:     python cli/report_rebuild.py --etf IWMO\n"
+               "  Ticker history:      python cli/ticker.py NVDA --etf IWMO\n",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     p.add_argument("--etf", required=True, choices=sorted(ETF_CONFIG.keys()) + ["ALL"],
                    help="Which configured ETF to fetch, or ALL to run every "
-                        "configured ETF in one invocation. No default — must "
-                        "be specified explicitly.")
-    p.add_argument("--db",          default=None,
+                        "configured ETF in one invocation. Required.")
+    p.add_argument("--db", default=None,
                    help="DB path override. Only valid for a single --etf, not ALL. "
                         "Default: data/{ETF}.db next to this script")
-    p.add_argument("--report-dir",  default=str(DEFAULT_REPORT_DIR),
+    p.add_argument("--report-dir", default=str(DEFAULT_REPORT_DIR),
                    help="Shared report root — each ETF gets its own subfolder here")
-    p.add_argument("--report-only", action="store_true",
-                   help="Regenerate HTML from existing DB/logs without fetching")
-    p.add_argument("--mock-csv",    help="Use local CSV file instead of fetching. Only valid for a single --etf, not ALL.")
+    p.add_argument("--mock-csv", help="Use local CSV file instead of fetching (for testing)")
     p.add_argument("--initial-capital", type=float, default=INITIAL_CAPITAL_PER_ETF,
                    help=f"Initial capital for paper trading (default: ${INITIAL_CAPITAL_PER_ETF:,.0f})")
     p.add_argument("--allocation-pct", type=float, default=ALLOCATION_PCT,
@@ -401,8 +345,6 @@ def main():
                    help="Disable paper trading functionality")
     p.add_argument("--reset-portfolio", action="store_true",
                    help="Delete the saved portfolio state and start fresh from this run onward")
-    p.add_argument("--no-wipe", action="store_true",
-                   help="Keep existing DB/report rows, just fill gaps (for backfill)")
     args = p.parse_args()
 
     report_root = Path(args.report_dir)
@@ -425,6 +367,7 @@ def main():
     hub_html = generate_hub_index(report_root)
     (report_root / "index.html").write_text(hub_html, encoding="utf-8")
     log.info("Hub index.html updated")
+
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 """
-ticker_history.py — replay a single ticker's confirmation score over time.
+ticker.py — replay a single ticker's confirmation score over time (CLI Tool)
+=============================================================================
+
+Replays compute_metrics() for every date a ticker has appeared in the holdings,
+regardless of whether it was in the top-20 that day. Updates the tickers index
+and manifest.json so every ticker you've checked stays linked and browsable.
+
+Usage (run from the velocity directory):
+  python cli/ticker.py NVDA --etf IWMO
+  python cli/ticker.py AAPL --etf IWQU --html /custom/path.html
 """
 
 import argparse
@@ -9,22 +18,14 @@ import json
 import sys
 from pathlib import Path
 
-# Import our modular components
-sys.path.insert(0, str(Path(__file__).parent))
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
-# Import from our modules
-from src.config import (
-    ETF_CONFIG, SCORE_META, DEFAULT_REPORT_DIR
-)
-from src.database import (
-    get_db, default_db_path, etf_report_dir
-)
-from src.analyzer import (
-    compute_metrics
-)
-from src.reporter import (
-    fmt_pct, fmt_f, ticker_link, score_badge, CSS
-)
+from src.config import ETF_CONFIG, SCORE_META, DEFAULT_REPORT_DIR
+from src.database import get_db, default_db_path, etf_report_dir
+from src.analyzer import compute_metrics
+from src.reporter import fmt_pct, fmt_f, ticker_link, score_badge
+
 
 def build_html(ticker: str, history: list, generated_at: str) -> str:
     """Generate HTML for a single ticker's history page."""
@@ -36,12 +37,12 @@ def build_html(ticker: str, history: list, generated_at: str) -> str:
         roc20 = m.get("price_roc_20d")
         wpct = m.get("weight_percentile")
         dd = m.get("drawdown_from_52w_high")
-        
+
         def fnum(v, width, prec=1, suffix=""):
             if v is None:
                 return f"{'—':<{width}}"
             return f"{v:<{width}.{prec}f}{suffix}"
-        
+
         rows += f"""<tr>
             <td>{d}</td>
             <td><span class="score-{min(5, max(0, score))}">{score}</span></td>
@@ -50,7 +51,7 @@ def build_html(ticker: str, history: list, generated_at: str) -> str:
             <td>{fnum(wpct, 10, 0)}</td>
             <td>{fnum((dd*100 if dd is not None else None), 8, 1)}</td>
         </tr>"""
-    
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,13 +88,13 @@ def build_index_html(manifest: dict) -> str:
     items = ""
     for ticker, data in sorted(manifest.items()):
         items += f"""<div style="margin-bottom: 10px;">
-            <a href="{ticker}.html">{ticker}</a> — 
-            {data.get('name', '')} | 
-            First: {data.get('first_seen', '?')} | 
-            Last: {data.get('last_date', '?')} | 
+            <a href="{ticker}.html">{ticker}</a> —
+            {data.get('name', '')} |
+            First: {data.get('first_seen', '?')} |
+            Last: {data.get('last_date', '?')} |
             Score: {data.get('last_score', '?')}/5
         </div>"""
-    
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,13 +120,6 @@ def get_ticker_dates(conn, ticker: str) -> list[str]:
         (ticker,),
     ).fetchall()
     return [r["snapshot_date"] for r in rows]
-
-
-def fnum(v, width, prec=1, suffix=""):
-    """Format a number for display in tables."""
-    if v is None:
-        return f"{'—':<{width}}"
-    return f"{v:<{width}.{prec}f}{suffix}"
 
 
 def load_manifest(tickers_dir: Path) -> dict:
@@ -155,17 +149,22 @@ def fmt_ts(iso_ts: str) -> str:
 
 def main():
     """Main entry point."""
-    p = argparse.ArgumentParser(description="Replay a ticker's confirmation score over time")
-    p.add_argument("ticker")
+    p = argparse.ArgumentParser(
+        description="Replay a ticker's confirmation score over time (MANUAL TOOL)",
+        epilog="Examples:\n"
+               "  python cli/ticker.py NVDA --etf IWMO\n"
+               "  python cli/ticker.py AAPL --etf IWQU --html /custom/path.html\n",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    p.add_argument("ticker", help="Ticker symbol to analyze")
     p.add_argument("--etf", required=True, choices=sorted(ETF_CONFIG.keys()),
-                    help="Which tracked ETF this ticker belongs to. No default — "
-                         "must be specified explicitly.")
-    p.add_argument("--db",          default=None, help="Default: data/{ETF}.db next to velocity.py")
-    p.add_argument("--report-dir",  default=str(DEFAULT_REPORT_DIR),
-                    help="Shared report root — the ETF's tickers/ subfolder lives at {report-dir}/{ETF}/tickers")
+                    help="Which tracked ETF this ticker belongs to. Required.")
+    p.add_argument("--db", default=None,
+                    help="DB path override. Default: data/{ETF}.db")
+    p.add_argument("--report-dir", default=str(DEFAULT_REPORT_DIR),
+                    help="Shared report root. Default: velocity/report")
     p.add_argument("--html", default=None,
-                    help="Write to this exact path instead of {ETF}/tickers/{TICKER}.html "
-                         "(skips updating the tickers index)")
+                    help="Write to custom path instead of {ETF}/tickers/{TICKER}.html")
     args = p.parse_args()
 
     db_path = Path(args.db) if args.db else default_db_path(args.etf)
@@ -190,16 +189,16 @@ def main():
         dd = m.get("drawdown_from_52w_high")
         print(
             f"{d:<12}{score:<7}"
-            f"{fnum(m.get('current_weight'), 10, 3)}"
-            f"{fnum((roc20*100 if roc20 is not None else None), 10, 1)}"
-            f"{fnum(wpct, 10, 0)}"
-            f"{fnum((dd*100 if dd is not None else None), 8, 1)}"
+            f"{fmt_f(m.get('current_weight'), 10, 3)}"
+            f"{fmt_f((roc20*100 if roc20 is not None else None), 10, 1)}"
+            f"{fmt_f(wpct, 10, 0)}"
+            f"{fmt_f((dd*100 if dd is not None else None), 8, 1)}"
         )
 
     generated_at = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
     if args.html:
-        # Custom explicit path — write it and stop, don't touch tickers/index.html
+        # Custom path — write and stop, don't update index
         out_path = Path(args.html)
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(build_html(ticker, history, fmt_ts(generated_at)), encoding="utf-8")
@@ -207,8 +206,8 @@ def main():
         conn.close()
         return
 
-    # Default path: report_dir/{ETF}/tickers/{TICKER}.html, plus manifest + index
-    fund_dir    = etf_report_dir(Path(args.report_dir), args.etf)
+    # Default: report_dir/{ETF}/tickers/{TICKER}.html
+    fund_dir = etf_report_dir(Path(args.report_dir), args.etf)
     tickers_dir = fund_dir / "tickers"
     tickers_dir.mkdir(parents=True, exist_ok=True)
 
@@ -219,11 +218,11 @@ def main():
     last = history[-1]
     manifest = load_manifest(tickers_dir)
     manifest[ticker] = {
-        "name":        last["metrics"].get("name", ticker),
-        "first_seen":  history[0]["date"],
-        "last_date":   last["date"],
-        "last_score":  last["score"],
-        "n_days":      len(history),
+        "name": last["metrics"].get("name", ticker),
+        "first_seen": history[0]["date"],
+        "last_date": last["date"],
+        "last_score": last["score"],
+        "n_days": len(history),
         "generated_at": generated_at,
     }
     save_manifest(tickers_dir, manifest)

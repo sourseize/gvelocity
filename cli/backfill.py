@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-backfill.py — one-off historical populator for Velocity (Modular Version)
-=========================================================================
+backfill.py — one-off historical populator for Velocity (CLI Tool)
+==================================================================
 
 Pulls a configured ETF's historical holdings via iShares' `asOfDate` CSV
 parameter for the trailing N months (default 12), stores them in that ETF's
@@ -13,22 +13,18 @@ IMPORTANT — why this isn't a bulk fetch-then-analyze:
 Velocity's new-entry/exit/mover detection (detect_new_entries, detect_exits,
 recent_dates, etc. in velocity.py) always looks at "the N most recent dates
 in the whole snapshots table" — it does NOT filter by "on or before the date
-being analyzed". That's fine for live daily cron (today IS the most recent
-row), but it means analysis MUST happen immediately after each day's
-snapshot is stored, in strict chronological order, before the next day's
-snapshot goes in. This script does exactly that: fetch → store → analyze →
-log, one day at a time, oldest first.
+being analyzed". That's fine for live daily cron (today IS the most recent row),
+but it means analysis MUST happen immediately after each day's snapshot is
+stored, in strict chronological order, before the next day's snapshot goes in.
+This script does exactly that: fetch → store → analyze → log, one day at a time,
+oldest first.
 
-Usage (run from the same folder as velocity.sh / velocity.py):
-  python3 backfill.py                       # IWMO, last 12 months, wipes first
-  python3 backfill.py --etf QUAL            # a different configured ETF
-  python3 backfill.py --months 6            # last 6 months
-  python3 backfill.py --no-wipe             # keep existing rows, just fill gaps
-  python3 backfill.py --dry-run             # show the date list, fetch nothing
-  python3 backfill.py --db PATH --report-dir PATH
-
-Safe to re-run: store_snapshot() already dedups on the actual trading date
-parsed out of each CSV, and append_day_to_log() dedups by date too.
+Usage (run from the velocity directory):
+  python cli/backfill.py --etf IWMO           # backfill IWMO, last 12 months
+  python cli/backfill.py --etf ALL            # backfill all configured ETFs
+  python cli/backfill.py --etf IWMO --months 6
+  python cli/backfill.py --etf IWMO --dry-run # show dates, fetch nothing
+  python cli/backfill.py --etf IWMO --no-wipe # keep existing data, fill gaps
 """
 
 import argparse
@@ -39,10 +35,8 @@ import time
 from pathlib import Path
 from typing import Optional
 
-import requests
-
-# Import our modular components
-sys.path.insert(0, str(Path(__file__).parent))
+# Add parent directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from src.config import ETF_CONFIG, FETCH_HEADERS, DEFAULT_REPORT_DIR
 from src.database import get_db, default_db_path, etf_report_dir, store_snapshot
@@ -52,18 +46,20 @@ from src.reporter import (
     generate_hub_index, append_day_to_log
 )
 from src.analyzer import compute_metrics
+from src.config import NEW_ENTRY_LOOKBACK_DAYS
 
-import velocity  # This imports our main velocity module for additional functions
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+log = logging.getLogger("backfill")
 
-# Re-export commonly used items from velocity module
-FETCH_HEADERS = velocity.FETCH_HEADERS if hasattr(velocity, 'FETCH_HEADERS') else FETCH_HEADERS
-DEFAULT_REPORT_DIR = velocity.DEFAULT_REPORT_DIR if hasattr(velocity, 'DEFAULT_REPORT_DIR') else DEFAULT_REPORT_DIR
 
 def build_day_data(conn, today: str) -> dict:
     """Build today's analysis data using modular functions."""
     from src.database import detect_new_entries, detect_exits, detect_weight_movers, recent_dates
-    from src.config import NEW_ENTRY_LOOKBACK_DAYS
-    
+
     new_tickers = detect_new_entries(conn, today, NEW_ENTRY_LOOKBACK_DAYS)
     exits = detect_exits(conn, today)
     movers = detect_weight_movers(conn, today, NEW_ENTRY_LOOKBACK_DAYS)
@@ -103,13 +99,6 @@ def build_day_data(conn, today: str) -> dict:
         "lookback": NEW_ENTRY_LOOKBACK_DAYS,
     }
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s %(levelname)s %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
-log = logging.getLogger("backfill")
-
 
 def fetch_csv_for_date(base_url: str, date_obj: datetime.date, retries: int = 3, backoff: float = 5.0):
     """Fetch+parse an ETF's holdings CSV as of a given calendar date.
@@ -118,6 +107,7 @@ def fetch_csv_for_date(base_url: str, date_obj: datetime.date, retries: int = 3,
     url = f"{base_url}&asOfDate={date_obj:%Y%m%d}"
     for attempt in range(1, retries + 1):
         try:
+            import requests
             resp = requests.get(url, headers=FETCH_HEADERS, timeout=30)
             resp.raise_for_status()
         except requests.RequestException as e:
@@ -131,8 +121,7 @@ def fetch_csv_for_date(base_url: str, date_obj: datetime.date, retries: int = 3,
         try:
             hdate, rows = parse_csv(resp.text)
         except NoDataForDateError as e:
-            # Expected for weekends/holidays/dates outside iShares' retention
-            # window — not transient, so don't retry, just move on.
+            # Expected for weekends/holidays/dates outside iShares' retention window
             log.info("No data for %s: %s", date_obj, e)
             return None, None
         except ValueError as e:
@@ -211,20 +200,14 @@ def regenerate_all_pages(conn, fund_dir: Path, latest_date: str, etf: str, etf_n
 def backfill_etf(etf: str, args, report_root: Path) -> Optional[str]:
     """Runs the full backfill for a single ETF. Returns the last stored date,
     or None if nothing was stored."""
-    etf_cfg  = ETF_CONFIG[etf]
-    etf_url  = etf_cfg["url"]
+    etf_cfg = ETF_CONFIG[etf]
+    etf_url = etf_cfg["url"]
     etf_name = etf_cfg["name"]
 
-    db_path  = Path(args.db) if args.db else default_db_path(etf)
+    db_path = Path(args.db) if args.db else default_db_path(etf)
     fund_dir = etf_report_dir(report_root, etf)
     db_path.parent.mkdir(parents=True, exist_ok=True)
     fund_dir.mkdir(parents=True, exist_ok=True)
-
-    # Backfill is a historical replay, so it must never create or mutate live
-    # portfolio state. Keep paper trading disabled even if the caller reuses
-    # the same args object for other flows.
-    args.is_backfill = True
-    args.no_paper_trade = True
 
     end_date = (
         datetime.datetime.strptime(args.end_date, "%Y-%m-%d").date()
@@ -233,8 +216,6 @@ def backfill_etf(etf: str, args, report_root: Path) -> Optional[str]:
 
     # iShares publishes holdings with a lag — requesting asOfDate for today
     # (or often yesterday) is guaranteed to hit the "-" no-data placeholder.
-    # Clamp to a safe cutoff rather than wasting requests / risking a
-    # mislabeled response.
     PUBLISH_LAG_DAYS = 2
     safe_end = datetime.date.today() - datetime.timedelta(days=PUBLISH_LAG_DAYS)
     if end_date > safe_end:
@@ -274,10 +255,6 @@ def backfill_etf(etf: str, args, report_root: Path) -> Optional[str]:
         store_snapshot(conn, hdate, rows)
         today = hdate.isoformat()
 
-        # Always analyze + log, even if this asOfDate collapsed onto a
-        # trading date we already have (idempotent — append_day_to_log
-        # dedups by date), UNLESS we've literally just done this same date
-        # back to back (holiday collapse), in which case skip re-analysis.
         if today != last_stored_date:
             day_data = build_day_data(conn, today)
             append_day_to_log(fund_dir, day_data, commentary={})
@@ -304,21 +281,32 @@ def backfill_etf(etf: str, args, report_root: Path) -> Optional[str]:
 
 
 def main():
-    p = argparse.ArgumentParser(description="Backfill Velocity with N months of ETF history")
+    p = argparse.ArgumentParser(
+        description="Backfill Velocity with N months of ETF history (MANUAL TOOL)",
+        epilog="Examples:\n"
+               "  python cli/backfill.py --etf IWMO --months 12\n"
+               "  python cli/backfill.py --etf ALL\n"
+               "  python cli/backfill.py --etf DYNF --dry-run\n"
+               "  python cli/backfill.py --etf IWMO --no-wipe\n",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     p.add_argument("--etf", required=True, choices=sorted(ETF_CONFIG.keys()) + ["ALL"],
                    help="Which configured ETF to backfill, or ALL to backfill every "
-                        "configured ETF in one invocation. No default — must be "
-                        "specified explicitly.")
-    p.add_argument("--db",          default=None,
-                   help="DB path override. Only valid for a single --etf, not ALL. "
-                        "Default: data/{ETF}.db next to velocity.py")
-    p.add_argument("--report-dir",  default=str(DEFAULT_REPORT_DIR),
-                   help="Shared report root — this ETF's subfolder is created under it")
-    p.add_argument("--months",      type=int, default=12, help="How many trailing months to backfill")
-    p.add_argument("--end-date",    default=None, help="YYYY-MM-DD, default today")
-    p.add_argument("--sleep",       type=float, default=1.5, help="Seconds between requests")
-    p.add_argument("--no-wipe",     action="store_true", help="Keep existing DB/report rows, just fill in")
-    p.add_argument("--dry-run",     action="store_true", help="Print the date list and exit, no network calls")
+                        "configured ETF in one invocation. Required.")
+    p.add_argument("--db", default=None,
+                   help="DB path override. Default: data/{ETF}.db")
+    p.add_argument("--report-dir", default=str(DEFAULT_REPORT_DIR),
+                   help="Shared report root. Default: velocity/report")
+    p.add_argument("--months", type=int, default=12,
+                   help="How many trailing months to backfill (default: 12)")
+    p.add_argument("--end-date", default=None,
+                   help="YYYY-MM-DD end of range, default today (auto-clamped)")
+    p.add_argument("--sleep", type=float, default=1.5,
+                   help="Seconds between requests (default: 1.5)")
+    p.add_argument("--no-wipe", action="store_true",
+                   help="Keep existing DB/report rows, just fill gaps")
+    p.add_argument("--dry-run", action="store_true",
+                   help="Print the date list and exit, no network calls")
     args = p.parse_args()
 
     report_root = Path(args.report_dir)
@@ -326,8 +314,7 @@ def main():
 
     if args.etf == "ALL":
         if args.db:
-            log.error("--db can't be combined with --etf ALL (each ETF needs its own DB). "
-                       "Run per-ETF instead, or drop --db to use the default data/{ETF}.db.")
+            log.error("--db can't be combined with --etf ALL (each ETF needs its own DB).")
             sys.exit(1)
         any_stored = False
         for etf in sorted(ETF_CONFIG.keys()):
@@ -345,7 +332,7 @@ def main():
         (report_root / "index.html").write_text(hub_html, encoding="utf-8")
         log.info("Hub index.html updated")
 
-    log.info("Backfill done. Run velocity.sh as normal from here on for the daily cron.")
+    log.info("Backfill done. Run velocity.py --etf ALL for daily runs from here on.")
 
 
 if __name__ == "__main__":
