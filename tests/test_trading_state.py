@@ -5,7 +5,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.database import get_db, load_trading_state, save_trading_state
-from velocity import record_trading_baseline
 
 
 class TradingStateTests(unittest.TestCase):
@@ -15,28 +14,36 @@ class TradingStateTests(unittest.TestCase):
     def tearDown(self):
         self.conn.close()
 
-    def test_save_and_load_trading_state(self):
+    def test_save_and_load_round_trip(self):
+        """Scores written by save_trading_state come back intact via load."""
         save_trading_state(self.conn, "TEST", "2026-07-16", {"AAA": 2, "BBB": 4})
 
-        self.assertEqual(
-            load_trading_state(self.conn, "TEST"),
-            {"last_evaluated_snapshot": "2026-07-16", "scores": {"AAA": 2, "BBB": 4}},
-        )
+        result = load_trading_state(self.conn, "TEST")
+        self.assertEqual(result, {
+            "last_evaluated_snapshot": "2026-07-16",
+            "scores": {"AAA": 2, "BBB": 4},
+        })
 
-    def test_baseline_is_created_once_for_an_existing_backfill_snapshot(self):
-        day_data = {"scored": {"AAA": {"confirmation_score": 2}, "BBB": {"confirmation_score": 4}}}
+    def test_load_returns_none_when_no_state(self):
+        """load_trading_state returns None if there is no state for the ETF."""
+        self.assertIsNone(load_trading_state(self.conn, "MISSING"))
 
-        self.assertTrue(record_trading_baseline(self.conn, "TEST", "2026-07-16", day_data, snapshot_added=False))
-        self.assertFalse(record_trading_baseline(self.conn, "TEST", "2026-07-16", day_data, snapshot_added=False))
-        self.assertEqual(load_trading_state(self.conn, "TEST")["scores"], {"AAA": 2, "BBB": 4})
-
-    def test_baseline_is_updated_when_a_new_snapshot_arrives_while_trading_is_disabled(self):
+    def test_upsert_overwrites_previous_state(self):
+        """A second save for the same ETF replaces the prior state."""
         save_trading_state(self.conn, "TEST", "2026-07-16", {"AAA": 2})
-        day_data = {"scored": {"AAA": {"confirmation_score": 4}}}
+        save_trading_state(self.conn, "TEST", "2026-07-17", {"AAA": 4, "BBB": 5})
 
-        self.assertTrue(record_trading_baseline(self.conn, "TEST", "2026-07-17", day_data, snapshot_added=True))
-        self.assertEqual(load_trading_state(self.conn, "TEST")["last_evaluated_snapshot"], "2026-07-17")
-        self.assertEqual(load_trading_state(self.conn, "TEST")["scores"], {"AAA": 4})
+        result = load_trading_state(self.conn, "TEST")
+        self.assertEqual(result["last_evaluated_snapshot"], "2026-07-17")
+        self.assertEqual(result["scores"], {"AAA": 4, "BBB": 5})
+
+    def test_separate_etfs_do_not_interfere(self):
+        """State for different ETFs is stored independently."""
+        save_trading_state(self.conn, "MTUM", "2026-07-16", {"AAPL": 5})
+        save_trading_state(self.conn, "QUAL", "2026-07-16", {"MSFT": 3})
+
+        self.assertEqual(load_trading_state(self.conn, "MTUM")["scores"], {"AAPL": 5})
+        self.assertEqual(load_trading_state(self.conn, "QUAL")["scores"], {"MSFT": 3})
 
 
 if __name__ == "__main__":

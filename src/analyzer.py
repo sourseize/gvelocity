@@ -188,6 +188,64 @@ def confirmation_score(metrics: dict) -> Tuple[int, List[str]]:
     return score, signals
 
 
+BUY_THRESHOLD = 4  # score must reach this or above to signal a buy
+
+
+def compute_score_transitions(
+    prior_scores: dict[str, int],
+    current_scores: dict[str, int],
+    threshold: int = BUY_THRESHOLD,
+) -> dict[str, list[dict]]:
+    """
+    Compare prior and current score maps, returning threshold-crossing events.
+
+    Rules (from the plan):
+    - Buy  : prior < threshold AND current >= threshold  (e.g. 2→4, or new ticker at ≥4)
+    - Sell : prior >= threshold AND current < threshold  (e.g. 5→3)
+    - Unchanged : everything else
+
+    New tickers absent from prior_scores are treated as prior = 0.
+    Tickers that disappeared from current_scores are ignored here (exit logic
+    is handled separately via detect_exits / portfolio position checks).
+
+    Args:
+        prior_scores:   {ticker: score} from the last persisted trading state.
+        current_scores: {ticker: score} computed for today's snapshot.
+        threshold:      The crossing boundary (default 4).
+
+    Returns:
+        {
+            "buy_signals":  [{"ticker": ..., "prior": ..., "current": ...}, ...],
+            "sell_signals": [{"ticker": ..., "prior": ..., "current": ...}, ...],
+            "unchanged":    [{"ticker": ..., "prior": ..., "current": ...}, ...],
+        }
+    """
+    buy_signals: list[dict] = []
+    sell_signals: list[dict] = []
+    unchanged: list[dict] = []
+
+    for ticker, current in current_scores.items():
+        prior = prior_scores.get(ticker, 0)  # absent → treat as 0
+        entry = {"ticker": ticker, "prior": prior, "current": current}
+        if prior < threshold and current >= threshold:
+            buy_signals.append(entry)
+        elif prior >= threshold and current < threshold:
+            sell_signals.append(entry)
+        else:
+            unchanged.append(entry)
+
+    # Sort for deterministic output / logging
+    buy_signals.sort(key=lambda x: x["ticker"])
+    sell_signals.sort(key=lambda x: x["ticker"])
+    unchanged.sort(key=lambda x: x["ticker"])
+
+    return {
+        "buy_signals": buy_signals,
+        "sell_signals": sell_signals,
+        "unchanged": unchanged,
+    }
+
+
 def compute_metrics(conn, ticker: str, today: str) -> dict:
     """
     Calculate all metrics for a given ticker and date.

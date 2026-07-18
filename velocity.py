@@ -41,7 +41,7 @@ from src.fetcher import fetch_csv, parse_csv, NoDataForDateError
 from src.analyzer import (
     roc, max_drawdown, momentum_consistency,
     weight_percentile, weight_zscore, confirmation_score,
-    compute_metrics
+    compute_metrics, compute_score_transitions, BUY_THRESHOLD
 )
 from src.reporter import (
     month_key, fmt_pct, fmt_f, ticker_link, score_badge,
@@ -111,22 +111,90 @@ def should_execute_paper_trades(args) -> bool:
     return False
 
 
-def record_trading_baseline(conn, etf: str, today: str, day_data: dict, snapshot_added: bool) -> bool:
-    """Record scores without trading, including the first run after a backfill."""
-    existing = load_trading_state(conn, etf)
-    if existing and not snapshot_added:
-        return False
+def evaluate_and_persist_scores(
+    conn,
+    etf: str,
+    today: str,
+    day_data: dict,
+    snapshot_added: bool,
+) -> dict:
+    """Compute today's scores, diff against prior state, log signal transitions.
 
-    scores = {
+    No trades are executed here — that gate stays off while paper trading is
+    disabled.  The function still computes and logs every threshold crossing so
+    the transition logic can be validated in the logs before buy/sell is
+    re-enabled.
+
+    Returns a dict with keys:
+        prior_state   : the loaded prior trading state (or None on first run)
+        current_scores: {ticker: score} for today
+        transitions   : output of compute_score_transitions()
+        persisted     : True if state was saved, False if skipped
+    """
+    prior_state = load_trading_state(conn, etf)
+
+    # Skip evaluation if the snapshot hasn't changed and we already have state.
+    # This makes re-running the same date idempotent.
+    if prior_state and prior_state["last_evaluated_snapshot"] == today and not snapshot_added:
+        log.info(
+            "[%s] Score state already up to date for %s; skipping evaluation",
+            etf, today,
+        )
+        return {
+            "prior_state": prior_state,
+            "current_scores": prior_state["scores"],
+            "transitions": None,
+            "persisted": False,
+        }
+
+    # Build current score map from today's scored holdings.
+    current_scores: dict[str, int] = {
         ticker: metrics["confirmation_score"]
         for ticker, metrics in day_data.get("scored", {}).items()
         if metrics.get("confirmation_score") is not None
     }
-    save_trading_state(conn, etf, today, scores)
-    action = "Established" if existing is None else "Updated"
-    log.info("[%s] %s trading baseline for %s (%d scores; no trades executed)",
-             etf, action, today, len(scores))
-    return True
+
+    prior_scores: dict[str, int] = prior_state["scores"] if prior_state else {}
+    transitions = compute_score_transitions(prior_scores, current_scores, threshold=BUY_THRESHOLD)
+
+    # Log transitions (informational — no trades yet).
+    buy_sigs  = transitions["buy_signals"]
+    sell_sigs = transitions["sell_signals"]
+
+    if prior_state is None:
+        log.info(
+            "[%s] Bootstrap: first score state for %s — %d tickers scored, no trades (buy/sell disabled)",
+            etf, today, len(current_scores),
+        )
+    else:
+        log.info(
+            "[%s] Score evaluation for %s: %d tickers | %d BUY signals | %d SELL signals (buy/sell disabled)",
+            etf, today, len(current_scores), len(buy_sigs), len(sell_sigs),
+        )
+        for sig in buy_sigs:
+            log.info(
+                "[%s]   WOULD BUY  %s: score %d → %d (crossed ≥%d)",
+                etf, sig["ticker"], sig["prior"], sig["current"], BUY_THRESHOLD,
+            )
+        for sig in sell_sigs:
+            log.info(
+                "[%s]   WOULD SELL %s: score %d → %d (fell below %d)",
+                etf, sig["ticker"], sig["prior"], sig["current"], BUY_THRESHOLD,
+            )
+
+    # Persist the new score map atomically.
+    save_trading_state(conn, etf, today, current_scores)
+    log.info(
+        "[%s] Trading state persisted for %s (%d scores)",
+        etf, today, len(current_scores),
+    )
+
+    return {
+        "prior_state": prior_state,
+        "current_scores": current_scores,
+        "transitions": transitions,
+        "persisted": True,
+    }
 
 
 def run_etf(etf: str, args, report_root: Path) -> None:
@@ -191,7 +259,7 @@ def run_etf(etf: str, args, report_root: Path) -> None:
     elif should_do_paper_trade:
         log.info("[%s] Snapshot %s already processed; skipping paper-trade evaluation", etf, today)
     else:
-        record_trading_baseline(conn, etf, today, day_data, snapshot_added)
+        evaluate_and_persist_scores(conn, etf, today, day_data, snapshot_added)
 
     # Append to monthly log
     append_day_to_log(fund_dir, day_data, {})
