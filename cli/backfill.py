@@ -151,6 +151,7 @@ def wipe_existing(conn, fund_dir: Path) -> None:
     conn.execute("DELETE FROM snapshots")
     conn.execute("DELETE FROM weekly_closes")
     conn.execute("DELETE FROM portfolio_state")
+    conn.execute("DELETE FROM trading_state")
     conn.commit()
 
     removed = 0

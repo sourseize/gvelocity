@@ -3,6 +3,7 @@ Database operations for Velocity tracker
 """
 
 import sqlite3
+import json
 from pathlib import Path
 from typing import Optional
 import datetime
@@ -52,6 +53,12 @@ CREATE TABLE IF NOT EXISTS portfolio_state (
     trade_history_json TEXT NOT NULL,
     daily_values_json  TEXT NOT NULL,
     updated_at         TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS trading_state (
+    etf                     TEXT PRIMARY KEY,
+    last_evaluated_snapshot TEXT NOT NULL,
+    scores_json             TEXT NOT NULL,
+    updated_at              TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_h_date   ON holdings(snapshot_date);
 CREATE INDEX IF NOT EXISTS idx_h_ticker ON holdings(ticker);
@@ -127,6 +134,37 @@ def store_snapshot(conn, holdings_date, rows) -> bool:
 
     conn.commit()
     return True
+
+
+def load_trading_state(conn, etf: str) -> Optional[dict]:
+    """Load the latest evaluated snapshot and score map for an ETF."""
+    row = conn.execute(
+        "SELECT last_evaluated_snapshot, scores_json FROM trading_state WHERE etf=?",
+        (etf,),
+    ).fetchone()
+    if not row:
+        return None
+    return {
+        "last_evaluated_snapshot": row["last_evaluated_snapshot"],
+        "scores": json.loads(row["scores_json"]),
+    }
+
+
+def save_trading_state(conn, etf: str, snapshot_date: str, scores: dict[str, int]) -> None:
+    """Persist an ETF's evaluated snapshot and per-ticker confirmation scores."""
+    now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    conn.execute(
+        """
+        INSERT INTO trading_state (etf, last_evaluated_snapshot, scores_json, updated_at)
+        VALUES (?, ?, ?, ?)
+        ON CONFLICT(etf) DO UPDATE SET
+            last_evaluated_snapshot=excluded.last_evaluated_snapshot,
+            scores_json=excluded.scores_json,
+            updated_at=excluded.updated_at
+        """,
+        (etf, snapshot_date, json.dumps(scores, sort_keys=True), now),
+    )
+    conn.commit()
 
 def recent_dates(conn, n: int) -> list[str]:
     """Get the n most recent fetch dates."""

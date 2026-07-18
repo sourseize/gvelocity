@@ -34,7 +34,8 @@ from src.database import (
     get_db, default_db_path, etf_report_dir,
     store_snapshot, recent_dates, daily_history,
     weekly_history, detect_new_entries, detect_exits,
-    detect_weight_movers, find_rising_stars
+    detect_weight_movers, find_rising_stars, load_trading_state,
+    save_trading_state
 )
 from src.fetcher import fetch_csv, parse_csv, NoDataForDateError
 from src.analyzer import (
@@ -110,6 +111,24 @@ def should_execute_paper_trades(args) -> bool:
     return False
 
 
+def record_trading_baseline(conn, etf: str, today: str, day_data: dict, snapshot_added: bool) -> bool:
+    """Record scores without trading, including the first run after a backfill."""
+    existing = load_trading_state(conn, etf)
+    if existing and not snapshot_added:
+        return False
+
+    scores = {
+        ticker: metrics["confirmation_score"]
+        for ticker, metrics in day_data.get("scored", {}).items()
+        if metrics.get("confirmation_score") is not None
+    }
+    save_trading_state(conn, etf, today, scores)
+    action = "Established" if existing is None else "Updated"
+    log.info("[%s] %s trading baseline for %s (%d scores; no trades executed)",
+             etf, action, today, len(scores))
+    return True
+
+
 def run_etf(etf: str, args, report_root: Path) -> None:
     """Runs the full fetch/analyze/report/paper trade pipeline for a single ETF."""
     etf_cfg = ETF_CONFIG[etf]
@@ -146,7 +165,7 @@ def run_etf(etf: str, args, report_root: Path) -> None:
             )
             conn.close()
             return
-    store_snapshot(conn, hdate, rows)
+    snapshot_added = store_snapshot(conn, hdate, rows)
     today = hdate.isoformat()
 
     today_ym = month_key(today)
@@ -163,12 +182,16 @@ def run_etf(etf: str, args, report_root: Path) -> None:
 
     # Paper trading: Execute trades based on signals
     should_do_paper_trade = should_execute_paper_trades(args)
-    if should_do_paper_trade:
+    if should_do_paper_trade and snapshot_added:
         execute_paper_trades_for_etf(conn, today, day_data, portfolio, etf, args)
         # Save portfolio state after trading
         portfolio_file = fund_dir / "portfolio.json"
         portfolio.save_state(portfolio_file, conn=conn, etf=etf)
         log.info(f"[{etf}] Portfolio value: ${portfolio.total_value():.2f} (Return: {portfolio.total_return():.2f}%)")
+    elif should_do_paper_trade:
+        log.info("[%s] Snapshot %s already processed; skipping paper-trade evaluation", etf, today)
+    else:
+        record_trading_baseline(conn, etf, today, day_data, snapshot_added)
 
     # Append to monthly log
     append_day_to_log(fund_dir, day_data, {})
