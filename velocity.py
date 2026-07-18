@@ -107,8 +107,12 @@ def load_portfolio_state(etf: str, portfolio: Portfolio, portfolio_file: Path, c
 
 
 def should_execute_paper_trades(args) -> bool:
-    """Return whether paper trading should run for this invocation."""
-    return False
+    """Return whether paper trading should run for this invocation.
+
+    Paper trading is opt-in: pass --paper-trade to enable it.
+    Omitting the flag (e.g. during manual inspection or testing) is always safe.
+    """
+    return getattr(args, "paper_trade", False)
 
 
 def evaluate_and_persist_scores(
@@ -248,18 +252,24 @@ def run_etf(etf: str, args, report_root: Path) -> None:
         etf, len(day_data["new_tickers"]), len(day_data["exits"]), len(day_data["movers"])
     )
 
-    # Paper trading: Execute trades based on signals
+    # Score evaluation always runs — builds the transition map and persists state.
+    eval_result = evaluate_and_persist_scores(conn, etf, today, day_data, snapshot_added)
+
+    # Paper trading: only execute when enabled AND the snapshot is genuinely new.
     should_do_paper_trade = should_execute_paper_trades(args)
     if should_do_paper_trade and snapshot_added:
-        execute_paper_trades_for_etf(conn, today, day_data, portfolio, etf, args)
-        # Save portfolio state after trading
+        execute_paper_trades_for_etf(
+            conn, today, day_data, portfolio, etf, args,
+            transitions=eval_result["transitions"],
+        )
         portfolio_file = fund_dir / "portfolio.json"
         portfolio.save_state(portfolio_file, conn=conn, etf=etf)
-        log.info(f"[{etf}] Portfolio value: ${portfolio.total_value():.2f} (Return: {portfolio.total_return():.2f}%)")
+        log.info(
+            "[%s] Portfolio value: $%.2f (Return: %.2f%%)",
+            etf, portfolio.total_value(), portfolio.total_return(),
+        )
     elif should_do_paper_trade:
-        log.info("[%s] Snapshot %s already processed; skipping paper-trade evaluation", etf, today)
-    else:
-        evaluate_and_persist_scores(conn, etf, today, day_data, snapshot_added)
+        log.info("[%s] Snapshot %s already processed; skipping paper-trade execution", etf, today)
 
     # Append to monthly log
     append_day_to_log(fund_dir, day_data, {})
@@ -294,74 +304,108 @@ def run_etf(etf: str, args, report_root: Path) -> None:
     log.info("[%s] Done.", etf)
 
 
-def execute_paper_trades_for_etf(conn, today: str, day_data: dict, portfolio: Portfolio, etf: str, args):
-    """Execute paper trades based on today's analysis."""
-    # Get current prices for all tickers in scored holdings
+def execute_paper_trades_for_etf(
+    conn,
+    today: str,
+    day_data: dict,
+    portfolio: Portfolio,
+    etf: str,
+    args,
+    transitions: Optional[dict] = None,
+) -> None:
+    """Execute paper trades driven by score transitions.
+
+    Only threshold-crossing events from `transitions` trigger buy/sell orders:
+      - buy_signals  : score crossed up through BUY_THRESHOLD → open a position
+      - sell_signals : score fell below BUY_THRESHOLD          → close a position
+
+    Exit logic (ticker dropped from ETF) and trailing stop-losses run
+    independently of the score-transition system.
+
+    Args:
+        conn:        Database connection (used for exit detection).
+        today:       ISO date string for this snapshot.
+        day_data:    Output of build_day_data().
+        portfolio:   Active paper-trading portfolio.
+        etf:         ETF key (for logging).
+        args:        Parsed CLI args (allocation_pct, max_purchase_amount, trail_percent).
+        transitions: Output of compute_score_transitions().  If None (e.g. first
+                     bootstrap run) no buy/sell signals are processed.
+    """
     scored = day_data.get("scored", {})
-    price_data = {}
 
-    for ticker, metrics in scored.items():
-        price = metrics.get("current_price")
-        if price is not None:
-            price_data[ticker] = price
+    # Build price map from scored holdings.
+    price_data: dict[str, float] = {
+        ticker: metrics["current_price"]
+        for ticker, metrics in scored.items()
+        if metrics.get("current_price") is not None
+    }
 
-    # Update portfolio prices
+    # Refresh portfolio mark-to-market before any decisions.
     portfolio.update_prices(price_data, today)
 
-    # Check stop losses first
-    trail_percent = getattr(args, 'trail_percent', 0.15)
+    # 1. Trailing stop-losses — independent of score transitions.
+    trail_percent = getattr(args, "trail_percent", 0.15)
     stopped_out = portfolio.check_stop_losses(today, trail_percent)
     if stopped_out:
         log.info("[%s] Stop loss triggered for: %s", etf, ", ".join(stopped_out))
 
-    # Process new entries and scored holdings for potential trades
-    current_tickers = {row["ticker"] for row in conn.execute(
-        "SELECT ticker FROM holdings WHERE snapshot_date=?",
-        (today,)
-    )}
-    tickers_to_consider = set(day_data.get("new_tickers", [])) | set(scored.keys()) | set(current_tickers)
-
-    # Sell any open position that is no longer present in the current snapshot.
+    # 2. Exit any position whose ticker has left the ETF entirely.
+    current_tickers: set[str] = {
+        row["ticker"]
+        for row in conn.execute(
+            "SELECT ticker FROM holdings WHERE snapshot_date=?", (today,)
+        )
+    }
     for ticker in list(portfolio.positions):
         if ticker not in current_tickers:
-            trade = portfolio.sell(ticker, price_data.get(ticker, portfolio.positions[ticker].current_price), today, reason="exit")
+            exit_price = price_data.get(ticker, portfolio.positions[ticker].current_price)
+            trade = portfolio.sell(ticker, exit_price, today, reason="exit")
             if trade:
-                log.info("[%s] Exit signal for %s: SELL @ $%.2f", etf, ticker, trade.price)
+                log.info("[%s] ETF-exit for %s: SELL @ $%.2f", etf, ticker, trade.price)
 
-    # Get trading parameters from args
-    allocation_pct = getattr(args, 'allocation_pct', 0.1)
-    max_purchase_amount = getattr(args, 'max_purchase_amount', None)
+    # 3. Score-transition buys and sells.
+    if transitions is None:
+        log.info("[%s] No transitions available (bootstrap run); skipping buy/sell", etf)
+        return
 
-    for ticker in tickers_to_consider:
+    allocation_pct = getattr(args, "allocation_pct", 0.1)
+    max_purchase_amount = getattr(args, "max_purchase_amount", None)
+
+    # Buys: score just crossed up through the threshold.
+    for sig in transitions["buy_signals"]:
+        ticker = sig["ticker"]
         if ticker not in scored:
             continue
-
         metrics = scored[ticker]
-        score = metrics.get("confirmation_score", 0)
         price = metrics.get("current_price")
-        name = metrics.get("name", "")
-        sector = metrics.get("sector", "")
-
         if price is None:
             continue
-
-        # Execute trade based on signal
-        trade = execute_paper_trade(
-            ticker=ticker,
-            score=score,
-            price=price,
-            date=today,
-            portfolio=portfolio,
-            name=name,
-            sector=sector,
+        trade = portfolio.buy(
+            ticker, price, today,
             allocation_pct=allocation_pct,
-            max_purchase_amount=max_purchase_amount
+            name=metrics.get("name", ""),
+            sector=metrics.get("sector", ""),
+            max_purchase_amount=max_purchase_amount,
         )
-
         if trade:
-            action = "BUY" if trade.type.value == "buy" else "SELL"
-            log.info("[%s] %s signal for %s: %s @ $%.2f (Score: %d)",
-                    etf, action, ticker, action, price, score)
+            log.info(
+                "[%s] BUY  %s: score %d→%d, @ $%.2f",
+                etf, ticker, sig["prior"], sig["current"], trade.price,
+            )
+
+    # Sells: score just fell below the threshold.
+    for sig in transitions["sell_signals"]:
+        ticker = sig["ticker"]
+        if ticker not in portfolio.positions:
+            continue
+        price = price_data.get(ticker, portfolio.positions[ticker].current_price)
+        trade = portfolio.sell(ticker, price, today, reason="signal")
+        if trade:
+            log.info(
+                "[%s] SELL %s: score %d→%d, @ $%.2f",
+                etf, ticker, sig["prior"], sig["current"], trade.price,
+            )
 
 
 def build_day_data(conn, today: str) -> dict:
@@ -432,8 +476,8 @@ def main():
                    help=f"Maximum dollar amount to spend on a single ticker (default: ${MAX_PURCHASE_AMOUNT:,.0f})")
     p.add_argument("--trail-percent", type=float, default=0.15,
                    help="Trailing stop loss percentage (default: 15%%)")
-    p.add_argument("--no-paper-trade", action="store_true",
-                   help="Disable paper trading functionality")
+    p.add_argument("--paper-trade", action="store_true",
+                   help="Enable paper trading (buy/sell signals will be executed)")
     p.add_argument("--reset-portfolio", action="store_true",
                    help="Delete the saved portfolio state and start fresh from this run onward")
     args = p.parse_args()

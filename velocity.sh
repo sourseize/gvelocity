@@ -30,7 +30,8 @@ for etf in "${ETFS[@]}"; do
     echo "$LOG Running $etf"
     python3 "$SCRIPT_DIR/velocity.py" \
         --etf "$etf" \
-        --report-dir "$REPORT"
+        --report-dir "$REPORT" \
+        --paper-trade
 done
 
 echo "$LOG Tracker done"

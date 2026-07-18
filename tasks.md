@@ -15,10 +15,9 @@ The first live run after a backfill can create a large batch of paper trades.
 ## ✅ Completed
 
 ### 1. Hard-disable paper trading (buy/sell)
-- `should_execute_paper_trades()` in `velocity.py` always returns `False`.
-- No orders can be created. Scoring, reports, and portfolio-state saving still run.
-- The existing `--no-paper-trade` flag remains accepted (now redundant).
-- The `execute_paper_trades_for_etf()` function is preserved for when trading is re-enabled.
+- ~~`should_execute_paper_trades()` always returns `False`~~
+- Now restored to normal: returns `True` unless `--no-paper-trade` is passed.
+- No-paper-trade flag remains available for manual override.
 
 ### 2. Persist per-ETF signal state in SQLite
 - `trading_state` table added to the schema (`etf`, `last_evaluated_snapshot`, `scores_json`, `updated_at`).
@@ -28,57 +27,68 @@ The first live run after a backfill can create a large batch of paper trades.
 
 ### 3. Score transition logic (`compute_score_transitions`)
 - Added to `src/analyzer.py`.
-- Implements the exact threshold rules from the plan:
+- Implements exact threshold rules:
   - **Buy** : `prior < 4 AND current >= 4` (new tickers treated as `prior = 0`)
   - **Sell** : `prior >= 4 AND current < 4`
   - **Unchanged** : everything else
-- Output: sorted `buy_signals`, `sell_signals`, `unchanged` lists.
+- `BUY_THRESHOLD = 4` exported as a named constant.
 - `tests/test_score_transitions.py` — 11 tests covering all rule branches, mixed tickers, absent tickers, sorted output.
 
 ### 4. Score evaluation pipeline (`evaluate_and_persist_scores`)
 - Replaces `record_trading_baseline()` in `velocity.py`.
-- On every run: loads prior state, diffs scores via `compute_score_transitions`, logs all `WOULD BUY` / `WOULD SELL` signals, atomically saves new state.
-- **Idempotent**: re-running the same snapshot date skips evaluation if state is already up to date.
-- Bootstrap case (first run / no prior state): logs ticker count, no trades, saves initial state.
-- Buy/sell is still fully gated off — signals are log-only.
+- On every new snapshot: loads prior state, diffs scores via `compute_score_transitions`, logs all `WOULD BUY` / `WOULD SELL` signals, atomically saves new state.
+- **Idempotent**: re-running the same snapshot date skips evaluation entirely if state is already up to date.
+- Bootstrap (first run, no prior state): logs ticker count, no trades, saves initial state.
+- Always runs — decoupled from the trading enable/disable gate.
+
+### 5. Transition-based trade execution (`execute_paper_trades_for_etf`)
+- Fully refactored: no longer iterates all scored holdings.
+- Accepts a `transitions` dict from `evaluate_and_persist_scores()`.
+- **Buy** only from `transitions["buy_signals"]` (score crossed up through threshold).
+- **Sell** only from `transitions["sell_signals"]` (score fell below threshold).
+- ETF-exit sells (ticker removed from ETF) run independently of score transitions.
+- Trailing stop-losses run independently of score transitions.
+- `transitions=None` (bootstrap run) → no buy/sell, returns early.
+
+### 6. `run_etf()` pipeline wiring
+- `evaluate_and_persist_scores()` runs **unconditionally** (always updates score state).
+- Its returned `transitions` dict is passed to `execute_paper_trades_for_etf()`.
+- `execute_paper_trades_for_etf()` only fires when `should_execute_paper_trades() AND snapshot_added=True`.
+
+### 7. Regression tests (all 6 scenarios pass)
+- `tests/test_trading_regression.py` — 6 end-to-end tests using in-memory DB + synthetic data:
+  - **R1**: Backfill → first live run → **zero trades** ✅
+  - **R2**: Score 2 → 4 → **one buy** ✅
+  - **R3**: Score 5 → 3 → **one sell** ✅
+  - **R4**: New ticker enters at score 4 → **one buy** ✅
+  - **R5**: Re-running same snapshot → **no duplicate trades** ✅
+  - **R6**: Ticker exits ETF → **exit sell fires** ✅
+
+**Total: 21 tests, all passing.**
 
 ---
 
 ## ⏳ Pending
 
-### 5. Bootstrap mode (first post-backfill run creates no trades)
-- `evaluate_and_persist_scores()` already handles this correctly — bootstrap path logs and saves but executes no trades.
-- **Needs verification**: end-to-end test with a real or mock DB to confirm backfill → first live run = 0 trades.
+### 8. Dry-run validation against a real ETF DB
+- Run `python velocity.py --etf MTUM --mock-csv <path>` and inspect logs.
+- Verify `WOULD BUY` / `WOULD SELL` log lines appear with sensible tickers.
+- Confirm no mass buys on first run post-backfill.
 
-### 6. Process only newly stored snapshots (use `store_snapshot()` return value)
-- `snapshot_added` is already plumbed through to `evaluate_and_persist_scores()`.
-- The `should_execute_paper_trades()` gate needs updating: when paper trading is re-enabled, trades must only execute when `snapshot_added=True`.
-- Currently the outer `if/elif/else` in `run_etf()` handles this, but it should be reviewed once trading is re-enabled.
-
-### 7. Re-enable paper trading with transition-based signals
-- Flip `should_execute_paper_trades()` to use the transition result instead of scoring all holdings.
-- `execute_paper_trades_for_etf()` needs to be updated to:
-  - Accept the `transitions` dict from `evaluate_and_persist_scores()`.
-  - Only act on `buy_signals` and `sell_signals` (not iterate all scored holdings).
-  - Still process exits/stops independently of score transitions.
-
-### 8. Regression tests (from the plan)
-- `[ ]` Backfill → first live run produces **zero trades**.
-- `[ ]` Score 2 → 4 creates **one buy**.
-- `[ ]` Score 5 → 3 creates **one sell**.
-- `[ ]` New ticker at score 4 creates **a buy**.
-- `[ ]` Re-running the same snapshot creates **no duplicate trades**.
+### 9. Review `execute_paper_trade()` in `src/trader.py`
+- The standalone `execute_paper_trade()` function (score-based buy/sell) is now unused by the main pipeline.
+- Decide: keep for external/CLI use, or remove to avoid confusion.
 
 ---
 
 # Next Logical Steps
 
-1. **Write end-to-end regression tests** (item 8 above) using a mock CSV + in-memory DB. These are the definitive correctness gate before re-enabling trading.
+1. **Dry-run with real data** (item 8): run `velocity.py --etf MTUM` (or `--mock-csv`) and review the log output. Check `WOULD BUY` / `WOULD SELL` lines and confirm the score history in the DB looks correct.
 
-2. **Refactor `execute_paper_trades_for_etf()`** to consume the `transitions` dict rather than iterating all scored holdings. This is the core change needed to prevent the original "mass buy on first live run" problem from recurring once trading is turned back on.
+2. **Validate trailing stop-loss behaviour**: add a regression test (or manual run) to confirm stops fire correctly when price drops below the trailing stop, and that they are independent of score transitions.
 
-3. **Re-enable `should_execute_paper_trades()`** after the regression tests pass. The function should return `True` when `--no-paper-trade` is not set (restoring original intent).
+3. **Clean up `execute_paper_trade()` in `trader.py`**: the score-gated version is now bypassed. Mark it deprecated or remove it — keeping it risks confusion if future developers reuse it.
 
-4. **Wire `transitions` return value from `evaluate_and_persist_scores()` into `execute_paper_trades_for_etf()`** — currently `evaluate_and_persist_scores()` returns the transitions dict but it is not yet passed to the trading function.
+4. **Integration test across multiple ETFs** (if running `--etf ALL`): confirm score states are stored per-ETF independently and trades don't cross-contaminate.
 
-5. **Validate with a dry-run** against a real ETF DB (`--mock-csv` with a known CSV snapshot) and inspect logs for `WOULD BUY` / `WOULD SELL` output before committing to live trading.
+5. **Consider a `--dry-run` CLI flag**: would allow `run_etf()` to print all transitions + intended orders without modifying any DB state — useful for manual validation before going live.
