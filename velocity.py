@@ -107,7 +107,7 @@ def load_portfolio_state(etf: str, portfolio: Portfolio, portfolio_file: Path, c
 
 def should_execute_paper_trades(args) -> bool:
     """Return whether paper trading should run for this invocation."""
-    return not args.no_paper_trade and not getattr(args, "is_backfill", False)
+    return False
 
 
 def run_etf(etf: str, args, report_root: Path) -> None:

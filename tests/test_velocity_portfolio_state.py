@@ -56,7 +56,7 @@ class PortfolioStateTests(unittest.TestCase):
             conn.close()
 
     def test_report_only_runs_skip_paper_trades(self):
-        args = SimpleNamespace(no_paper_trade=False, is_backfill=False, report_only=True)
+        args = SimpleNamespace(no_paper_trade=False, report_only=True)
         self.assertFalse(should_execute_paper_trades(args))
 
 
