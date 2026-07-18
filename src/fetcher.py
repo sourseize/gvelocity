@@ -76,9 +76,9 @@ def fetch_csv(url: str, etf: str = "") -> Tuple[datetime.date, List[Dict]]:
 
 def parse_csv(raw: str) -> Tuple[datetime.date, List[Dict]]:
     """
-    Parse an iShares holdings CSV.
+    Parse a BlackRock holdings CSV.
 
-    Written to tolerate cross-fund format variation rather than assuming IWMO's exact layout.
+    Written to tolerate cross-fund format variation rather than assuming MTUM's exact layout.
     Handles different preamble lengths, date formats, column variations, and trailing disclaimer text.
 
     Args:
@@ -107,9 +107,8 @@ def parse_csv(raw: str) -> Tuple[datetime.date, List[Dict]]:
                     candidate = part.strip().strip('"')
                     if not candidate or candidate == "-":
                         continue
-                    if candidate.lower().startswith("holdings"):
-                        continue
-                    if candidate.lower().startswith("as of"):
+                    candidate_lower = candidate.lower()
+                    if "holdings" in candidate_lower and "as of" in candidate_lower:
                         continue
                     date_str = candidate
                     break
@@ -118,7 +117,7 @@ def parse_csv(raw: str) -> Tuple[datetime.date, List[Dict]]:
     if not date_str or date_str == "-":
         raise NoDataForDateError(
             f"Server returned no holdings data (date field was {date_str!r}) — "
-            "this is iShares' placeholder response for a date it has no data for "
+            "this is BlackRock's placeholder response for a date it has no data for "
             "(weekend/holiday, outside retention window, or not yet published)"
         )
 

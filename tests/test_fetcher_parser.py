@@ -8,6 +8,16 @@ from src.fetcher import parse_csv
 
 
 class FetcherParserTests(unittest.TestCase):
+    def test_parse_csv_accepts_blackrock_sample_file(self):
+        sample_path = Path(__file__).resolve().parents[1] / "sample" / "holdings.csv"
+
+        holdings_date, rows = parse_csv(sample_path.read_text(encoding="utf-8-sig"))
+
+        self.assertEqual(holdings_date, __import__("datetime").date(2026, 7, 16))
+        self.assertEqual(len(rows), 125)
+        self.assertEqual(rows[0]["ticker"], "AAPL")
+        self.assertEqual(rows[0]["weight_pct"], 7.12)
+
     def test_parse_csv_accepts_uk_style_headers(self):
         raw = """Holdings as of 01/Jan/2024
 

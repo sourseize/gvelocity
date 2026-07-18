@@ -8,7 +8,7 @@ without fetching any new data from the network. Useful after tweaking
 report templates or when you need to regenerate reports from existing data.
 
 Usage (run from the velocity directory):
-  python cli/report_rebuild.py --etf IWMO
+  python cli/report_rebuild.py --etf MTUM
   python cli/report_rebuild.py --etf ALL
 """
 
@@ -178,7 +178,7 @@ def main():
     p = argparse.ArgumentParser(
         description="Rebuild HTML reports from existing database (MANUAL TOOL)",
         epilog="Examples:\n"
-               "  python cli/report_rebuild.py --etf IWMO\n"
+               "  python cli/report_rebuild.py --etf MTUM\n"
                "  python cli/report_rebuild.py --etf ALL\n",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )

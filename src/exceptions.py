@@ -3,7 +3,7 @@ Custom exceptions for Velocity tracker
 """
 
 class NoDataForDateError(Exception):
-    """Raised when iShares has no holdings data for the requested date.
+    """Raised when BlackRock has no holdings data for the requested date.
 
     This happens when the server returns a placeholder CSV with
     `Holdings as of,"-"` and no rows — e.g. weekends, holidays, dates

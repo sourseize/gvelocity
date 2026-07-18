@@ -10,21 +10,13 @@ from pathlib import Path
 #
 # Two URL patterns have been confirmed in use so far:
 #
-# 1. ishares.com ajax CSV (IWMO, IWQU — both UK-domiciled "World Factor"
-#    UCITS ETFs, same product family, same shared ajax_id):
-#      https://www.ishares.com/{region-path}/products/{id}/{slug}/
-#          {ajax_id}.ajax?fileType=csv&fileName={TICKER}_holdings&dataType=fund
-#
-# 2. BlackRock varnish-api (DYNF — a US-domiciled active ETF, entirely
-#    different domain/API shape, not an ishares.com ajax URL at all):
+# BlackRock varnish-api (MTUM, QUAL, and DYNF — US-domiciled ETFs):
 #      https://www.blackrock.com/varnish-api/blk-one01-product-data/
 #          product-data/api/v1/get-fund-document?appType=PRODUCT_PAGE
 #          &appSubType=ISHARES&targetSite=us-ishares&locale=en_US
 #          &portfolioId={id}&userType=individual&component=holdings
-#      (asOfDate=YYYYMMDD appended for historical backfill, omitted here
-#      for the live daily fetch — same convention as pattern 1)
 #
-# IWMO and IWQU confirmed working (live data, in active use). DYNF's URL
+# MTUM, QUAL, and DYNF URLs
 # and CSV structure were confirmed against a real sample the user fetched
 # manually — but the live endpoint itself (headers/anti-bot behaviour on
 # blackrock.com, and whether omitting asOfDate really returns "latest")
@@ -32,20 +24,22 @@ from pathlib import Path
 # relying on it in cron:
 #   curl -s "URL_HERE" | head -20
 ETF_CONFIG = {
-    "IWMO": {
-        "name": "iShares MSCI World Momentum Factor UCITS ETF",
+    "MTUM": {
+        "name": "iShares MSCI USA Momentum Factor ETF",
         "url": (
-            "https://www.ishares.com/uk/individual/en/products/270051/"
-            "ishares-msci-world-momentum-factor-ucits-etf/"
-            "1506575576011.ajax?fileType=csv&fileName=IWMO_holdings&dataType=fund"
+            "https://www.blackrock.com/varnish-api/blk-one01-product-data/"
+            "product-data/api/v1/get-fund-document?appType=PRODUCT_PAGE"
+            "&appSubType=ISHARES&targetSite=us-ishares&locale=en_US"
+            "&portfolioId=251614&userType=individual&component=holdings"
         ),
     },
-    "IWQU": {
-        "name": "iShares MSCI World Quality Factor UCITS ETF",
+    "QUAL": {
+        "name": "iShares MSCI USA Quality Factor ETF",
         "url": (
-            "https://www.ishares.com/uk/individual/en/products/270054/"
-            "ishares-msci-world-quality-factor-ucits-etf/"
-            "1506575576011.ajax?fileType=csv&fileName=IWQU_holdings&dataType=fund"
+            "https://www.blackrock.com/varnish-api/blk-one01-product-data/"
+            "product-data/api/v1/get-fund-document?appType=PRODUCT_PAGE"
+            "&appSubType=ISHARES&targetSite=us-ishares&locale=en_US"
+            "&portfolioId=256101&userType=individual&component=holdings"
         ),
     },
     "DYNF": {
@@ -66,7 +60,7 @@ FETCH_HEADERS = {
     ),
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "en-GB,en;q=0.9",
-    "Referer": "https://www.ishares.com/uk/",
+    "Referer": "https://www.blackrock.com/",
 }
 
 NEW_ENTRY_LOOKBACK_DAYS = 20

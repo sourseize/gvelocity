@@ -3,7 +3,7 @@
 backfill.py — one-off historical populator for Velocity (CLI Tool)
 ==================================================================
 
-Pulls a configured ETF's historical holdings via iShares' `asOfDate` CSV
+Pulls a configured ETF's historical holdings via BlackRock's `asOfDate` CSV
 parameter for the trailing N months (default 12), stores them in that ETF's
 own SQLite DB, then replays the day-by-day analysis/report pipeline so the
 monthly HTML archive and JSON logs come out looking exactly as if Velocity
@@ -20,11 +20,11 @@ This script does exactly that: fetch → store → analyze → log, one day at a
 oldest first.
 
 Usage (run from the velocity directory):
-  python cli/backfill.py --etf IWMO           # backfill IWMO, last 12 months
+  python cli/backfill.py --etf MTUM           # backfill MTUM, last 12 months
   python cli/backfill.py --etf ALL            # backfill all configured ETFs
-  python cli/backfill.py --etf IWMO --months 6
-  python cli/backfill.py --etf IWMO --dry-run # show dates, fetch nothing
-  python cli/backfill.py --etf IWMO --no-wipe # keep existing data, fill gaps
+  python cli/backfill.py --etf MTUM --months 6
+  python cli/backfill.py --etf MTUM --dry-run # show dates, fetch nothing
+  python cli/backfill.py --etf MTUM --no-wipe # keep existing data, fill gaps
 """
 
 import argparse
@@ -121,7 +121,7 @@ def fetch_csv_for_date(base_url: str, date_obj: datetime.date, retries: int = 3,
         try:
             hdate, rows = parse_csv(resp.text)
         except NoDataForDateError as e:
-            # Expected for weekends/holidays/dates outside iShares' retention window
+            # Expected for weekends/holidays/dates outside BlackRock's retention window
             log.info("No data for %s: %s", date_obj, e)
             return None, None
         except ValueError as e:
@@ -214,13 +214,13 @@ def backfill_etf(etf: str, args, report_root: Path) -> Optional[str]:
         if args.end_date else datetime.date.today()
     )
 
-    # iShares publishes holdings with a lag — requesting asOfDate for today
+    # BlackRock publishes holdings with a lag — requesting asOfDate for today
     # (or often yesterday) is guaranteed to hit the "-" no-data placeholder.
     PUBLISH_LAG_DAYS = 2
     safe_end = datetime.date.today() - datetime.timedelta(days=PUBLISH_LAG_DAYS)
     if end_date > safe_end:
         log.warning(
-            "Clamping end date from %s to %s — iShares publishes holdings with "
+            "Clamping end date from %s to %s — BlackRock publishes holdings with "
             "roughly a %d-day lag, so more recent dates will never have data yet",
             end_date, safe_end, PUBLISH_LAG_DAYS,
         )
@@ -284,10 +284,10 @@ def main():
     p = argparse.ArgumentParser(
         description="Backfill Velocity with N months of ETF history (MANUAL TOOL)",
         epilog="Examples:\n"
-               "  python cli/backfill.py --etf IWMO --months 12\n"
+               "  python cli/backfill.py --etf MTUM --months 12\n"
                "  python cli/backfill.py --etf ALL\n"
                "  python cli/backfill.py --etf DYNF --dry-run\n"
-               "  python cli/backfill.py --etf IWMO --no-wipe\n",
+               "  python cli/backfill.py --etf MTUM --no-wipe\n",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     p.add_argument("--etf", required=True, choices=sorted(ETF_CONFIG.keys()) + ["ALL"],

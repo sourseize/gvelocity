@@ -961,7 +961,7 @@ single day's snapshot would otherwise miss entirely.</p>
 
 {watchlist_html}
 
-<footer>Velocity · Pure maths · Generated: {generated_at} · Source: iShares {etf} CSV · {month_label}</footer>
+<footer>Velocity · Pure maths · Generated: {generated_at} · Source: BlackRock {etf} holdings · {month_label}</footer>
 </div>
 </body>
 </html>"""

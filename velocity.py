@@ -8,7 +8,7 @@ and generates HTML reports. For manual/one-off operations, see the CLI tools
 in the `cli/` directory.
 
 Usage:
-  python velocity.py --etf IWMO              # Run daily for IWMO
+  python velocity.py --etf MTUM              # Run daily for MTUM
   python velocity.py --etf ALL               # Run daily for all configured ETFs
 """
 
@@ -140,7 +140,7 @@ def run_etf(etf: str, args, report_root: Path) -> None:
             hdate, rows = fetch_csv(etf_url, etf)
         except NoDataForDateError as e:
             log.warning(
-                "No holdings data available yet for %s (%s). iShares publishes "
+                "No holdings data available yet for %s (%s). BlackRock publishes "
                 "with a lag — this run will simply be retried next cron cycle.",
                 etf, e
             )
@@ -319,9 +319,9 @@ def main():
     p = argparse.ArgumentParser(
         description="Velocity — Daily ETF tracker (fetch, score, trade, report)",
         epilog="MANUAL TOOLS (see cli/ directory):\n"
-               "  Backfill history:    python cli/backfill.py --etf IWMO --months 12\n"
-               "  Rebuild reports:     python cli/report_rebuild.py --etf IWMO\n"
-               "  Ticker history:      python cli/ticker.py NVDA --etf IWMO\n",
+               "  Backfill history:    python cli/backfill.py --etf MTUM --months 12\n"
+               "  Rebuild reports:     python cli/report_rebuild.py --etf MTUM\n"
+               "  Ticker history:      python cli/ticker.py NVDA --etf MTUM\n",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     p.add_argument("--etf", required=True, choices=sorted(ETF_CONFIG.keys()) + ["ALL"],

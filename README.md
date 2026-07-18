@@ -1,6 +1,6 @@
 # Velocity
 
-Tracks daily holdings for multiple iShares factor ETFs -- momentum, quality,
+Tracks daily holdings for multiple BlackRock factor ETFs -- momentum, quality,
 factor-rotation, or any others you add. Detects new entries and exits,
 scores 5 mathematical confirmation signals per holding, and publishes a
 rolling HTML report per fund plus a hub page linking all of them, via
@@ -46,13 +46,13 @@ velocity/
 |   |-- fetcher.py          <- CSV fetching and parsing
 |   |-- trader.py           <- Portfolio, Position, Trade classes
 |   `-- data/
-|       |-- IWMO.db         <- one SQLite DB per ETF
-|       |-- IWQU.db
+|       |-- MTUM.db         <- one SQLite DB per ETF
+|       |-- QUAL.db
 |       `-- DYNF.db
 `-- report/                 <- separate git checkout, `report` branch,
                                    published via GitHub Pages
     |-- index.html          <- hub page: links + daily summary per ETF
-    |-- IWMO/
+    |-- MTUM/
     |   |-- index.html      <- current month, always up to date
     |   |-- 2026-06.html    <- sealed previous months
     |   |-- 2026-06.json
@@ -60,7 +60,7 @@ velocity/
     |       |-- index.html  <- tracked-ticker dashboard for this ETF
     |       |-- manifest.json
     |       `-- NVDA.html   <- per-ticker score-history chart
-    |-- IWQU/  (same structure)
+    |-- QUAL/  (same structure)
     `-- DYNF/  (same structure)
 ```
 
@@ -90,7 +90,7 @@ wherever `velocity.py` itself lives.
 **When:** Daily cron (weekdays), or manual test runs.
 
 ```
-python velocity.py --etf {IWMO|IWQU|DYNF|ALL} [options]
+python velocity.py --etf {MTUM|QUAL|DYNF|ALL} [options]
 ```
 
 | Flag | Required? | Default | Purpose |
@@ -108,16 +108,16 @@ python velocity.py --etf {IWMO|IWQU|DYNF|ALL} [options]
 
 ```bash
 # Daily run, single fund
-python velocity.py --etf IWMO
+python velocity.py --etf MTUM
 
 # Daily run, all funds
 python velocity.py --etf ALL
 
 # Test with local CSV (no network)
-python velocity.py --etf IWMO --mock-csv /tmp/IWMO_holdings.csv
+python velocity.py --etf MTUM --mock-csv /tmp/MTUM_holdings.csv
 
 # Run without paper trading (report only)
-python velocity.py --etf IWMO --no-paper-trade
+python velocity.py --etf MTUM --no-paper-trade
 ```
 
 ---
@@ -132,7 +132,7 @@ Populates database with N months of historical data, analyzing each date
 in chronological order so new-entry/exit detection works correctly.
 
 ```
-python cli/backfill.py --etf {IWMO|IWQU|DYNF|ALL} [options]
+python cli/backfill.py --etf {MTUM|QUAL|DYNF|ALL} [options]
 ```
 
 | Flag | Required? | Default | Purpose |
@@ -148,7 +148,7 @@ python cli/backfill.py --etf {IWMO|IWQU|DYNF|ALL} [options]
 
 ```bash
 # Backfill one fund, last 12 months (fresh start)
-python cli/backfill.py --etf IWMO
+python cli/backfill.py --etf MTUM
 
 # Backfill all funds at once
 python cli/backfill.py --etf ALL
@@ -157,10 +157,10 @@ python cli/backfill.py --etf ALL
 python cli/backfill.py --etf DYNF --months 6
 
 # Preview dates before committing
-python cli/backfill.py --etf IWQU --dry-run
+python cli/backfill.py --etf QUAL --dry-run
 
 # Fill gaps without wiping existing data
-python cli/backfill.py --etf IWMO --no-wipe
+python cli/backfill.py --etf MTUM --no-wipe
 ```
 
 **Why backfill can't bulk-fetch:** New-entry/exit detection looks at "the N
@@ -177,7 +177,7 @@ Regenerates all HTML pages from existing database data without fetching.
 Use after tweaking report templates or when you need to regenerate reports.
 
 ```
-python cli/report_rebuild.py --etf {IWMO|IWQU|DYNF|ALL} [options]
+python cli/report_rebuild.py --etf {MTUM|QUAL|DYNF|ALL} [options]
 ```
 
 | Flag | Required? | Default | Purpose |
@@ -188,7 +188,7 @@ python cli/report_rebuild.py --etf {IWMO|IWQU|DYNF|ALL} [options]
 
 ```bash
 # Rebuild one fund from existing DB
-python cli/report_rebuild.py --etf IWMO
+python cli/report_rebuild.py --etf MTUM
 
 # Rebuild all funds
 python cli/report_rebuild.py --etf ALL
@@ -202,7 +202,7 @@ Replays `compute_metrics()` for every date a ticker has appeared,
 generating a score-history HTML page and updating the tickers index.
 
 ```
-python cli/ticker.py TICKER --etf {IWMO|IWQU|DYNF} [options]
+python cli/ticker.py TICKER --etf {MTUM|QUAL|DYNF} [options]
 ```
 
 | Flag | Required? | Default | Purpose |
@@ -214,11 +214,11 @@ python cli/ticker.py TICKER --etf {IWMO|IWQU|DYNF} [options]
 | `--html PATH` | No | `{ETF}/tickers/{TICKER}.html` | Custom output path |
 
 ```bash
-# Generate score history for NVDA in IWMO
-python cli/ticker.py NVDA --etf IWMO
+# Generate score history for NVDA in MTUM
+python cli/ticker.py NVDA --etf MTUM
 
 # Custom output path (skips index update)
-python cli/ticker.py AAPL --etf IWQU --html /tmp/AAPL.html
+python cli/ticker.py AAPL --etf QUAL --html /tmp/AAPL.html
 ```
 
 Output includes:
@@ -258,10 +258,10 @@ the scoring-based strategy on historical or live data.
 
 ```bash
 # Run live trading with $50k starting budget, 15% position size
-python velocity.py --etf IWMO --initial-capital 50000 --allocation-pct 0.15
+python velocity.py --etf MTUM --initial-capital 50000 --allocation-pct 0.15
 
 # Run daily with paper trading disabled (report generation only)
-python velocity.py --etf IWMO --no-paper-trade
+python velocity.py --etf MTUM --no-paper-trade
 ```
 
 ### Viewing results
@@ -272,7 +272,7 @@ After each run:
 - `{report_dir}/{ETF}/portfolio.html` is a human-readable HTML report.
 - Console output shows summary lines:
   ```
-  [IWMO] Portfolio value: $102,345.67 (Return: +2.35%)
+  [MTUM] Portfolio value: $102,345.67 (Return: +2.35%)
   ```
 
 ### Notes
@@ -291,24 +291,17 @@ Everything about a fund lives in one place: `ETF_CONFIG` in
 
 ```python
 ETF_CONFIG = {
-    "IWMO": {
-        "name": "iShares MSCI World Momentum Factor UCITS ETF",
-        "url": "https://www.ishares.com/uk/.../IWMO_holdings...",
+    "MTUM": {
+        "name": "iShares MSCI USA Momentum Factor ETF",
+        "url": "https://www.blackrock.com/varnish-api/...portfolioId=251614...",
     },
     ...
 }
 ```
 
-Two URL shapes have been seen in practice:
-
-1. **ishares.com ajax CSV** (IWMO, IWQU):
-   The numeric ajax_id is a shared per-locale resource version, not
-   fund-specific -- funds on the same site often share one.
-
-2. **BlackRock varnish-api** (DYNF) -- a completely different domain/API
-   shape. Store this **without** `asOfDate` (that's for the live/current
-   fetch -- `backfill.py` appends `&asOfDate=YYYYMMDD` itself for
-   historical runs).
+All tracked funds use the **BlackRock varnish-api**. Store each base URL
+**without** `asOfDate`: live runs retrieve the latest available holdings and
+`backfill.py` appends `&asOfDate=YYYYMMDD` for historical runs.
 
 Before trusting a new fund's URL in cron, sanity-check it manually:
 
@@ -330,10 +323,10 @@ published yet).
 ### Brand new fund, from scratch
 ```bash
 # 1. Backfill 12 months of history
-python cli/backfill.py --etf IWMO --months 12
+python cli/backfill.py --etf MTUM --months 12
 
 # 2. Run today live (catches up to current date)
-python velocity.py --etf IWMO
+python velocity.py --etf MTUM
 ```
 
 ### Full fresh rebuild (destructive)
@@ -360,13 +353,13 @@ cd report && git add . && git commit -m "Full rebuild" && git push origin report
 
 ## Known Caveats
 
-- **DYNF's live endpoint is unverified end-to-end.** Its CSV structure was
-  confirmed against a real sample, but the BlackRock `varnish-api` domain
-  itself -- headers, anti-bot behaviour, whether omitting `asOfDate` really
-  returns "latest" -- hasn't been tested live. If it 403s, try changing
-  the `Referer` header in `FETCH_HEADERS` first.
+- **BlackRock's live endpoint is unverified end-to-end.** The holdings CSV
+  structure is confirmed against a real sample, but headers, anti-bot
+  behaviour, and whether omitting `asOfDate` returns "latest" have not been
+  tested live. If it 403s, try changing the `Referer` header in
+  `FETCH_HEADERS` first.
 
-- **iShares publishes with a ~2-day lag.** `backfill.py` clamps its end
+- **BlackRock publishes with a ~2-day lag.** `backfill.py` clamps its end
   date automatically; don't request `asOfDate` for today or yesterday.
 
 - **New date/header formats can still appear.** The parser tries several

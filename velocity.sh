@@ -14,7 +14,7 @@ SCRIPT_DIR="$HOME/velocity/main"
 REPORT="$HOME/velocity/report"          # single repo, checked out on report branch
 
 # Keep this in sync with ETF_CONFIG at the top of velocity.py.
-ETFS=(IWMO IWQU DYNF)
+ETFS=(MTUM QUAL DYNF)
 
 LOG="[velocity $(date '+%Y-%m-%d %H:%M')]"
 echo "$LOG Starting"

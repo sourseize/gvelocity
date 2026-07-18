@@ -8,8 +8,8 @@ regardless of whether it was in the top-20 that day. Updates the tickers index
 and manifest.json so every ticker you've checked stays linked and browsable.
 
 Usage (run from the velocity directory):
-  python cli/ticker.py NVDA --etf IWMO
-  python cli/ticker.py AAPL --etf IWQU --html /custom/path.html
+  python cli/ticker.py NVDA --etf MTUM
+  python cli/ticker.py AAPL --etf QUAL --html /custom/path.html
 """
 
 import argparse
@@ -152,8 +152,8 @@ def main():
     p = argparse.ArgumentParser(
         description="Replay a ticker's confirmation score over time (MANUAL TOOL)",
         epilog="Examples:\n"
-               "  python cli/ticker.py NVDA --etf IWMO\n"
-               "  python cli/ticker.py AAPL --etf IWQU --html /custom/path.html\n",
+               "  python cli/ticker.py NVDA --etf MTUM\n"
+               "  python cli/ticker.py AAPL --etf QUAL --html /custom/path.html\n",
         formatter_class=argparse.RawDescriptionHelpFormatter
     )
     p.add_argument("ticker", help="Ticker symbol to analyze")
