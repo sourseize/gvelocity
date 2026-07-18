@@ -5,11 +5,9 @@ Paper trading functionality for Velocity tracker
 import json
 import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 from enum import Enum
 
-# Import from our modules (we'll need to adjust imports after restructuring)
-# For now, we'll define what we need locally or import from config/database later
 
 class OrderStatus(Enum):
     OPEN = "open"
@@ -302,7 +300,7 @@ class Portfolio:
 
     def generate_portfolio_html(self) -> str:
         """Generate HTML report for portfolio performance"""
-        from src.reporter import ticker_link, fmt_pct, fmt_f
+        from src.reporter import ticker_link, fmt_f
         
         positions_rows = ""
         for pos in self.positions.values():
@@ -345,7 +343,6 @@ class Portfolio:
         
         total_value = self.total_value()
         total_return = self.total_return()
-        return_class = "pos" if total_return >= 0 else "neg"
         return_sign = "+" if total_return >= 0 else ""
         
         css = """
@@ -419,14 +416,16 @@ class Portfolio:
     @classmethod
     def load_state(cls, filepath: Path, conn=None, etf: str = ""):
         """Load portfolio state from file and SQLite."""
+        if not filepath.exists() and conn is None:
+            return cls()
+
         if not filepath.exists():
-            if conn is not None:
-                row = conn.execute(
-                    "SELECT initial_capital, cash, commission_per_trade, positions_json, trade_history_json, daily_values_json FROM portfolio_state WHERE etf=?",
-                    (etf or filepath.stem,),
-                ).fetchone()
-                if row:
-                    return cls._state_from_row(row)
+            row = conn.execute(
+                "SELECT initial_capital, cash, commission_per_trade, positions_json, trade_history_json, daily_values_json FROM portfolio_state WHERE etf=?",
+                (etf or filepath.stem,),
+            ).fetchone()
+            if row:
+                return cls._state_from_row(row)
             return cls()  # Return new portfolio if no saved state
 
         data = json.loads(filepath.read_text())
@@ -465,51 +464,3 @@ class Portfolio:
         ]
         portfolio.daily_values = json.loads(row["daily_values_json"] or "[]")
         return portfolio
-
-def execute_paper_trade(
-    ticker: str,
-    score: int,
-    price: float,
-    date: str,
-    portfolio: Portfolio,
-    name: str = "",
-    sector: str = "",
-    allocation_pct: float = 0.1,
-    max_purchase_amount: Optional[float] = None
-) -> Optional[Trade]:
-    """
-    Execute paper trade based on score
-
-    Buy when score >= 4
-    Sell when score <= 3
-
-    Args:
-        ticker: Stock ticker
-        score: Confirmation score (0-5)
-        price: Current price
-        date: Date of decision
-        portfolio: Portfolio object to trade in
-        name: Company name
-        sector: Sector name
-        allocation_pct: Percentage of portfolio to allocate per trade
-        max_purchase_amount: Maximum dollar amount to spend on this ticker (cap)
-
-    Returns:
-        Trade object if trade executed, None otherwise
-    """
-    if score >= 4 and ticker not in portfolio.positions:
-        # Buy signal
-        return portfolio.buy(ticker, price, date, allocation_pct, name, sector, max_purchase_amount)
-    elif score <= 3 and ticker in portfolio.positions:
-        # Sell signal
-        return portfolio.sell(ticker, price, date, reason="signal")
-    return None
-
-def get_trade_signal(score: int) -> str:
-    """Get trading signal based on score"""
-    if score >= 4:
-        return "BUY"
-    elif score <= 3:
-        return "SELL"
-    else:
-        return "HOLD"

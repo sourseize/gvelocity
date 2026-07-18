@@ -51,7 +51,7 @@ from src.reporter import (
     find_tracked_etf_dirs
 )
 from src.trader import (
-    Portfolio, execute_paper_trade
+    Portfolio
 )
 
 # Set up logging
