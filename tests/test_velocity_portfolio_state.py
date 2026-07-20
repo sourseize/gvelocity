@@ -6,7 +6,7 @@ from types import SimpleNamespace
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-import backfill
+from cli import backfill
 from velocity import load_portfolio_state, should_execute_paper_trades
 from src.database import get_db
 from src.trader import Portfolio

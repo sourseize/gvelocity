@@ -140,6 +140,7 @@ class ExecuteBuyReasonTests(unittest.TestCase):
                 conn, "2026-07-16", day_data, portfolio, "TEST", _make_args(),
                 transitions=transitions,
             )
+            conn.close()
 
             buys = [t for t in portfolio.trade_history if t.type == OrderType.BUY]
             self.assertEqual(len(buys), 1)
@@ -193,6 +194,7 @@ class ExecuteBuyReasonTests(unittest.TestCase):
                 conn, "2026-07-16", day_data, portfolio, "TEST", _make_args(),
                 transitions=transitions,
             )
+            conn.close()
 
             sells = [t for t in portfolio.trade_history if t.type == OrderType.SELL]
             self.assertEqual(len(sells), 1)
