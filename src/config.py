@@ -67,7 +67,7 @@ NEW_ENTRY_LOOKBACK_DAYS = 20
 
 # Layout: velocity/src/velocity.py (this file), velocity/src/data/{ETF}.db,
 # velocity/report/ (report output — a separate git checkout on the `report`
-# branch, one level up from src/, not nested inside it).
+# branch, two level up from src/, not nested inside it).
 DEFAULT_REPORT_DIR = Path(__file__).resolve().parent.parent / "report"
 
 # Sector colours

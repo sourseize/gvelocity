@@ -42,7 +42,7 @@ from src.fetcher import fetch_csv, parse_csv, NoDataForDateError
 from src.analyzer import (
     roc, max_drawdown, momentum_consistency,
     weight_percentile, weight_zscore, confirmation_score,
-    compute_metrics, compute_score_transitions, BUY_THRESHOLD
+    compute_metrics, compute_score_transitions, format_buy_reason, BUY_THRESHOLD
 )
 from src.reporter import (
     month_key, fmt_pct, fmt_f, ticker_link, score_badge,
@@ -171,15 +171,27 @@ def evaluate_and_persist_scores(
             "persisted": False,
         }
 
-    # Build current score map from today's scored holdings.
+    # Build current score map + per-ticker signal-bit map from today's scored holdings.
+    scored = day_data.get("scored", {})
     current_scores: dict[str, int] = {
         ticker: metrics["confirmation_score"]
-        for ticker, metrics in day_data.get("scored", {}).items()
+        for ticker, metrics in scored.items()
+        if metrics.get("confirmation_score") is not None
+    }
+    current_signals: dict[str, list[bool]] = {
+        ticker: metrics.get("confirmation_signal_bits", [])
+        for ticker, metrics in scored.items()
         if metrics.get("confirmation_score") is not None
     }
 
     prior_scores: dict[str, int] = prior_state["scores"] if prior_state else {}
-    transitions = compute_score_transitions(prior_scores, current_scores, threshold=BUY_THRESHOLD)
+    prior_signals: dict[str, list[bool]] = prior_state["signals"] if prior_state else {}
+    transitions = compute_score_transitions(
+        prior_scores, current_scores,
+        threshold=BUY_THRESHOLD,
+        prior_signals=prior_signals if prior_state else None,
+        current_signals=current_signals,
+    )
 
     # Log transitions (informational — no trades yet).
     buy_sigs  = transitions["buy_signals"]
@@ -206,8 +218,8 @@ def evaluate_and_persist_scores(
                 etf, sig["ticker"], sig["prior"], sig["current"], BUY_THRESHOLD,
             )
 
-    # Persist the new score map atomically.
-    save_trading_state(conn, etf, today, current_scores)
+    # Persist the new score + signal-bit map atomically.
+    save_trading_state(conn, etf, today, current_scores, signals=current_signals)
     log.info(
         "[%s] Trading state persisted for %s (%d scores)",
         etf, today, len(current_scores),
@@ -305,6 +317,16 @@ def run_etf(etf: str, args, report_root: Path) -> None:
         )
     elif should_do_paper_trade:
         log.info("[%s] Snapshot %s already processed; skipping paper-trade execution", etf, today)
+
+    # Surface today's executed trades in the day data so the monthly log can
+    # show a per-day "Trades executed" block. Sourced from the durable
+    # portfolio trade_history (loaded from DB at the start of every run) so a
+    # no-op re-run of the same snapshot doesn't erase previously-logged trades
+    # — append_day_to_log dedups by date and would otherwise write an empty
+    # trades list over the real one if we relied on execute() to populate it.
+    day_data["trades"] = [
+        t.to_dict() for t in portfolio.trade_history if t.date == today
+    ]
 
     # Append to monthly log
     append_day_to_log(fund_dir, day_data, {})
@@ -416,17 +438,22 @@ def execute_paper_trades_for_etf(
         price = metrics.get("current_price")
         if price is None:
             continue
+        reason = format_buy_reason(
+            sig["prior"], sig["current"], sig.get("flipped", []),
+            is_new=sig.get("is_new", False),
+        )
         trade = portfolio.buy(
             ticker, price, today,
             allocation_pct=allocation_pct,
             name=metrics.get("name", ""),
             sector=metrics.get("sector", ""),
             max_purchase_amount=max_purchase_amount,
+            reason=reason,
         )
         if trade:
             log.info(
-                "[%s] BUY  %s: score %d→%d, @ $%.2f",
-                etf, ticker, sig["prior"], sig["current"], trade.price,
+                "[%s] BUY  %s: %s, @ $%.2f",
+                etf, ticker, reason, trade.price,
             )
 
     # Sells: score just fell below the threshold.
@@ -435,11 +462,12 @@ def execute_paper_trades_for_etf(
         if ticker not in portfolio.positions:
             continue
         price = price_data.get(ticker, portfolio.positions[ticker].current_price)
-        trade = portfolio.sell(ticker, price, today, reason="signal")
+        reason = f"signal · score {sig['prior']}→{sig['current']}"
+        trade = portfolio.sell(ticker, price, today, reason=reason)
         if trade:
             log.info(
-                "[%s] SELL %s: score %d→%d, @ $%.2f",
-                etf, ticker, sig["prior"], sig["current"], trade.price,
+                "[%s] SELL %s: %s, @ $%.2f",
+                etf, ticker, reason, trade.price,
             )
 
 

@@ -13,7 +13,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from src.analyzer import compute_score_transitions, BUY_THRESHOLD
+from src.analyzer import compute_score_transitions, BUY_THRESHOLD, SIGNAL_LABELS
 
 
 THRESHOLD = BUY_THRESHOLD  # 4
@@ -113,6 +113,76 @@ class ScoreTransitionsTests(unittest.TestCase):
         result = self._transitions(prior, current)
         tickers = [s["ticker"] for s in result["buy_signals"]]
         self.assertEqual(tickers, sorted(tickers))
+
+
+class FlippedSignalsTests(unittest.TestCase):
+    """Per-signal flip derivation via optional prior_signals/current_signals."""
+
+    def test_buy_signal_names_signal_that_flipped_on(self):
+        """A single bit going False→True is reported in `flipped`."""
+        # AAA 3→4; the only signal that flipped is the 1st (price ROC 20d).
+        prior_signals = {"AAA": [False, True, True, True, False]}   # score 3
+        current_signals = {"AAA": [True, True, True, True, False]}  # score 4
+        result = compute_score_transitions(
+            {"AAA": 3}, {"AAA": 4},
+            threshold=BUY_THRESHOLD,
+            prior_signals=prior_signals, current_signals=current_signals,
+        )
+        buy = result["buy_signals"][0]
+        self.assertEqual(buy["ticker"], "AAA")
+        self.assertEqual(buy["prior"], 3)
+        self.assertEqual(buy["current"], 4)
+        self.assertFalse(buy["is_new"], "AAA had a prior score, so it's not new")
+        self.assertEqual(buy["flipped"], [SIGNAL_LABELS[0]])
+
+    def test_multiple_flips_listed_in_signal_order(self):
+        """Two bits flipping report both labels, in fixed signal order."""
+        # AAA 2→4: signals 1 (price ROC) and 4 (price vs entry) both turn on.
+        prior_signals = {"AAA": [False, True, True, False, False]}   # score 3
+        current_signals = {"AAA": [True, True, True, True, False]}  # score 4
+        result = compute_score_transitions(
+            {"AAA": 3}, {"AAA": 4},
+            prior_signals=prior_signals, current_signals=current_signals,
+        )
+        buy = result["buy_signals"][0]
+        self.assertEqual(
+            buy["flipped"],
+            [SIGNAL_LABELS[0], SIGNAL_LABELS[3]],
+        )
+
+    def test_new_entrant_treats_absent_prior_as_all_false(self):
+        """A ticker absent from prior_signals is diffed against all-False."""
+        # AAA is brand new (no prior score), entering at score 4 with 4 signals ON.
+        current_signals = {"AAA": [True, True, True, True, False]}
+        result = compute_score_transitions(
+            {}, {"AAA": 4},
+            prior_signals={}, current_signals=current_signals,
+        )
+        buy = result["buy_signals"][0]
+        self.assertTrue(buy["is_new"])
+        self.assertEqual(buy["prior"], 0)
+        # All 4 on-signals are "flips" vs an absent (all-False) prior.
+        self.assertEqual(
+            buy["flipped"],
+            [SIGNAL_LABELS[0], SIGNAL_LABELS[1], SIGNAL_LABELS[2], SIGNAL_LABELS[3]],
+        )
+
+    def test_no_signal_maps_yields_empty_flipped(self):
+        """Without prior/current signal maps, flipped is empty (bootstrap run)."""
+        result = compute_score_transitions({"AAA": 2}, {"AAA": 4})
+        # No kwargs → can_diff is False → flipped stays [].
+        self.assertEqual(result["buy_signals"][0]["flipped"], [])
+        self.assertIn("is_new", result["buy_signals"][0])
+
+    def test_sell_carries_empty_flipped(self):
+        """Sell entries have a `flipped` key too (uniform shape), empty."""
+        result = compute_score_transitions(
+            {"AAA": 5}, {"AAA": 3},
+            prior_signals={"AAA": [True] * 5}, current_signals={"AAA": [True, True, True, False, False]},
+        )
+        sell = result["sell_signals"][0]
+        self.assertEqual(sell["ticker"], "AAA")
+        self.assertEqual(sell["flipped"], [])
 
 
 if __name__ == "__main__":

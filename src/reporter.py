@@ -601,6 +601,7 @@ def render_day_block(entry: dict, is_latest: bool = False) -> str:
     new_entries = entry.get("new_entries", [])
     exits_e = entry.get("exits", [])
     movers_e = entry.get("movers", [])
+    trades_e = entry.get("trades", [])
 
     badge_parts = []
     if new_entries:
@@ -753,6 +754,27 @@ def render_day_block(entry: dict, is_latest: bool = False) -> str:
 </details>"""
 
     body_content = ""
+
+    # Trades executed today (the actionable output) — shown first.
+    trades_html = ""
+    if trades_e:
+        trade_rows = ""
+        for tr in trades_e:
+            typ = (tr.get("type") or "").upper()
+            tcls = "pos" if typ == "BUY" else "neg"
+            reason_text = tr.get("reason") or "—"
+            trade_rows += (
+                f'<div class="mini-exit">'
+                f'<span class="{tcls}" style="font-weight:700">{typ}</span> '
+                f'<b>{ticker_link(tr.get("ticker", ""), "")}</b> '
+                f'<span class="ml">@ {fmt_f(tr.get("price"))}</span> '
+                f'<span class="ml">{fmt_f(tr.get("shares", 0), 4)} sh</span> '
+                f'<span class="ml" title="{reason_text}">{reason_text}</span>'
+                f'</div>'
+            )
+        trades_html = f'<h2>Trades executed ({len(trades_e)})</h2>{trade_rows}'
+
+    body_content += trades_html
     if new_entries:
         body_content += f'<h2>New entries ({len(new_entries)})</h2>{cards_html}'
     body_content += exits_html
@@ -1072,6 +1094,7 @@ def append_day_to_log(report_dir: Path, day_data: dict, commentary: dict = None)
         "movers": mover_summary,
         "top20": top20_details,
         "rising_stars": rising_details,
+        "trades": day_data.get("trades", []),
         "n_holdings": len(day_data["top20"]),
         "n_snapshots": day_data["n_snapshots"],
     })

@@ -21,13 +21,14 @@ class OrderType(Enum):
 class Trade:
     """Represents a single trade (buy or sell)"""
     def __init__(self, ticker: str, order_type: OrderType, price: float,
-                 date: str, shares: float, commission: float = 0.0):
+                 date: str, shares: float, commission: float = 0.0, reason: str = ""):
         self.ticker = ticker
         self.type = order_type
         self.price = price
         self.date = date
         self.shares = shares
         self.commission = commission
+        self.reason = reason
         self.value = price * shares
         self.total = self.value + commission  # For buys, this is negative cash flow
 
@@ -39,6 +40,7 @@ class Trade:
             "date": self.date,
             "shares": self.shares,
             "commission": self.commission,
+            "reason": self.reason,
             "value": self.value,
             "total": self.total
         }
@@ -51,7 +53,8 @@ class Trade:
             price=data["price"],
             date=data["date"],
             shares=data["shares"],
-            commission=data.get("commission", 0.0)
+            commission=data.get("commission", 0.0),
+            reason=data.get("reason", "")
         )
         return trade
 
@@ -136,7 +139,8 @@ class Portfolio:
 
     def buy(self, ticker: str, price: float, date: str,
             allocation_pct: float = 0.1, name: str = "", sector: str = "",
-            max_purchase_amount: Optional[float] = None) -> Optional[Trade]:
+            max_purchase_amount: Optional[float] = None,
+            reason: str = "") -> Optional[Trade]:
         """
         Buy a position
 
@@ -148,6 +152,7 @@ class Portfolio:
             name: Company name
             sector: Sector name
             max_purchase_amount: Maximum dollar amount to spend on this ticker (optional cap)
+            reason: Human-readable reason for the buy (e.g. flipped confirmation signal)
 
         Returns:
             Trade object if successful, None if insufficient funds or position exists
@@ -179,7 +184,7 @@ class Portfolio:
         position = Position(ticker, price, date, shares, name, sector)
         self.positions[ticker] = position
 
-        trade = Trade(ticker, OrderType.BUY, price, date, shares, commission)
+        trade = Trade(ticker, OrderType.BUY, price, date, shares, commission, reason=reason)
         self.trade_history.append(trade)
 
         # Submit order to Alpaca if client is configured
@@ -226,7 +231,7 @@ class Portfolio:
         self.cash += net_proceeds
         del self.positions[ticker]
 
-        trade = Trade(ticker, OrderType.SELL, price, date, position.shares, commission)
+        trade = Trade(ticker, OrderType.SELL, price, date, position.shares, commission, reason=reason)
         self.trade_history.append(trade)
 
         # Submit order to Alpaca if client is configured
@@ -403,6 +408,7 @@ class Portfolio:
         for trade in reversed(self.trade_history[-50:]):  # Last 50 trades
             trade_type = trade.type.value.upper()
             type_class = "pos" if trade.type == OrderType.BUY else "neg"
+            reason_text = trade.reason or "—"
             trades_rows += f"""
             <tr>
                 <td>{trade.date}</td>
@@ -412,10 +418,11 @@ class Portfolio:
                 <td>{fmt_f(trade.shares, 4)}</td>
                 <td>${fmt_f(trade.value)}</td>
                 <td>${fmt_f(trade.commission)}</td>
+                <td nowrap style="max-width:340px" title="{reason_text}">{reason_text}</td>
             </tr>"""
-        
+
         if not trades_rows:
-            trades_rows = '<tr><td colspan="7" style="text-align:center;color:var(--mt)">No trades yet</td></tr>'
+            trades_rows = '<tr><td colspan="8" style="text-align:center;color:var(--mt)">No trades yet</td></tr>'
         
         total_value = self.total_value()
         total_return = self.total_return()
@@ -479,7 +486,7 @@ class Portfolio:
 <h2>Recent Trades</h2>
 <div style="overflow-x:auto">
 <table>
-<tr><th>Date</th><th>Ticker</th><th>Type</th><th>Price</th><th>Shares</th><th>Value</th><th>Commission</th></tr>
+<tr><th>Date</th><th>Ticker</th><th>Type</th><th>Price</th><th>Shares</th><th>Value</th><th>Commission</th><th>Reason</th></tr>
 {trades_rows}
 </table>
 </div>

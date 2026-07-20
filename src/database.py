@@ -137,22 +137,63 @@ def store_snapshot(conn, holdings_date, rows) -> bool:
 
 
 def load_trading_state(conn, etf: str) -> Optional[dict]:
-    """Load the latest evaluated snapshot and score map for an ETF."""
+    """Load the latest evaluated snapshot, score map, and signal-bit map for an ETF.
+
+    Returns a dict with keys:
+        last_evaluated_snapshot : str
+        scores                  : {ticker: int}
+        signals                 : {ticker: [bool, ...]}  # 5-bit confirmation vector
+
+    The persisted payload is ``{ticker: {"score": int, "bits": [bool*5]}}``.
+    Legacy rows that stored a plain ``{ticker: int}`` map are coerced to the
+    new shape (``bits=[]``), so existing DBs load without a migration; tickers
+    with no prior bits produce no flipped-signal detail on their first
+    post-upgrade score crossing.
+    """
     row = conn.execute(
         "SELECT last_evaluated_snapshot, scores_json FROM trading_state WHERE etf=?",
         (etf,),
     ).fetchone()
     if not row:
         return None
+
+    raw = json.loads(row["scores_json"])
+    scores: dict[str, int] = {}
+    signals: dict[str, list[bool]] = {}
+    for ticker, value in raw.items():
+        if isinstance(value, dict):
+            scores[ticker] = int(value.get("score", 0))
+            signals[ticker] = [bool(b) for b in value.get("bits", [])]
+        else:  # legacy {ticker: int}
+            scores[ticker] = int(value)
+            signals[ticker] = []
     return {
         "last_evaluated_snapshot": row["last_evaluated_snapshot"],
-        "scores": json.loads(row["scores_json"]),
+        "scores": scores,
+        "signals": signals,
     }
 
 
-def save_trading_state(conn, etf: str, snapshot_date: str, scores: dict[str, int]) -> None:
-    """Persist an ETF's evaluated snapshot and per-ticker confirmation scores."""
+def save_trading_state(
+    conn,
+    etf: str,
+    snapshot_date: str,
+    scores: dict[str, int],
+    signals: Optional[dict[str, list[bool]]] = None,
+) -> None:
+    """Persist an ETF's evaluated snapshot, per-ticker scores, and signal bits.
+
+    The payload is stored as ``{ticker: {"score": int, "bits": [bool*5]}}`` so
+    the next run can diff the bit vectors to derive which signal flipped a buy.
+    ``signals`` is optional (defaults to no bits) — legacy/test callers and the
+    `<list`-missing path persist empty bits.
+    """
     now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    packed: dict[str, dict] = {}
+    for ticker, score in scores.items():
+        value = score["score"] if isinstance(score, dict) else int(score)
+        bits = [bool(b) for b in (signals or {}).get(ticker, [])]
+        packed[ticker] = {"score": value, "bits": bits}
     conn.execute(
         """
         INSERT INTO trading_state (etf, last_evaluated_snapshot, scores_json, updated_at)
@@ -162,7 +203,7 @@ def save_trading_state(conn, etf: str, snapshot_date: str, scores: dict[str, int
             scores_json=excluded.scores_json,
             updated_at=excluded.updated_at
         """,
-        (etf, snapshot_date, json.dumps(scores, sort_keys=True), now),
+        (etf, snapshot_date, json.dumps(packed, sort_keys=True), now),
     )
     conn.commit()
 
