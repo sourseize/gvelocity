@@ -20,7 +20,7 @@ LOG="[velocity $(date '+%Y-%m-%d %H:%M')]"
 echo "$LOG Starting"
 
 # Activate virtualenv (expected at $SCRIPT_DIR/venv)
-source "$SCRIPT_DIR/venv/bin/activate"
+source "$SCRIPT_DIR/.venv/bin/activate"
 
 # Run tracker for each ETF — DB defaults to src/data/{ETF}.db next to this
 # script, report output goes to $REPORT/{ETF}/ with a shared hub index.html
