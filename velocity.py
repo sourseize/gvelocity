@@ -28,7 +28,8 @@ from src.config import (
     ETF_CONFIG, FETCH_HEADERS,
     NEW_ENTRY_LOOKBACK_DAYS, DEFAULT_REPORT_DIR,
     SCORE_META, sc, RISING_STAR_LOOKBACK_DAYS, RISING_STAR_MIN_GROWTH,
-    INITIAL_CAPITAL_PER_ETF, MAX_PURCHASE_AMOUNT, ALLOCATION_PCT
+    INITIAL_CAPITAL_PER_ETF, MAX_PURCHASE_AMOUNT, ALLOCATION_PCT,
+    ALPACA_API_KEY, ALPACA_SECRET_KEY, ALPACA_PAPER
 )
 from src.database import (
     get_db, default_db_path, etf_report_dir,
@@ -53,6 +54,7 @@ from src.reporter import (
 from src.trader import (
     Portfolio
 )
+from src.alpaca_client import AlpacaClient
 
 # Set up logging
 logging.basicConfig(
@@ -66,10 +68,28 @@ log = logging.getLogger(__name__)
 portfolios: dict[str, Portfolio] = {}
 
 
-def get_or_create_portfolio(etf: str, initial_capital: float = 100000.0) -> Portfolio:
+# Global Alpaca client instance
+_alpaca_client = None
+
+def get_alpaca_client() -> Optional[AlpacaClient]:
+    """Get or create the Alpaca client (lazy initialization)."""
+    global _alpaca_client
+    if _alpaca_client is None and ALPACA_API_KEY and ALPACA_SECRET_KEY:
+        _alpaca_client = AlpacaClient(
+            api_key=ALPACA_API_KEY,
+            secret_key=ALPACA_SECRET_KEY,
+            paper=ALPACA_PAPER
+        )
+    return _alpaca_client
+
+def get_or_create_portfolio(etf: str, initial_capital: float = 100000.0, alpaca_client=None) -> Portfolio:
     """Get or create a paper trading portfolio for an ETF."""
     if etf not in portfolios:
-        portfolios[etf] = Portfolio(initial_capital=initial_capital)
+        portfolios[etf] = Portfolio(
+            initial_capital=initial_capital,
+            alpaca_client=alpaca_client,
+            etf=etf
+        )
     return portfolios[etf]
 
 
@@ -213,7 +233,17 @@ def run_etf(etf: str, args, report_root: Path) -> None:
     fund_dir.mkdir(parents=True, exist_ok=True)
 
     conn = get_db(db_path)
-    portfolio = get_or_create_portfolio(etf, args.initial_capital)
+
+    # Initialize Alpaca client if --alpaca-trade is enabled
+    alpaca_client = None
+    if getattr(args, "alpaca_trade", False):
+        alpaca_client = get_alpaca_client()
+        if alpaca_client and alpaca_client.is_available():
+            log.info(f"[{etf}] Alpaca trading enabled (paper={ALPACA_PAPER})")
+        else:
+            log.warning(f"[{etf}] Alpaca client not available, check API credentials")
+
+    portfolio = get_or_create_portfolio(etf, args.initial_capital, alpaca_client=alpaca_client)
 
     # Load existing portfolio state
     portfolio_file = fund_dir / "portfolio.json"
@@ -221,6 +251,11 @@ def run_etf(etf: str, args, report_root: Path) -> None:
         portfolio = reset_portfolio_state(etf, portfolio_file, args.initial_capital, conn=conn)
     else:
         portfolio = load_portfolio_state(etf, portfolio, portfolio_file, conn=conn)
+
+    # Sync Alpaca positions if requested
+    if getattr(args, "sync_alpaca_positions", False) and alpaca_client and alpaca_client.is_available():
+        synced = portfolio.sync_alpaca_positions(etf)
+        log.info(f"[{etf}] Synced {synced} positions from Alpaca")
 
     # Fetch or load data
     if args.mock_csv:
@@ -478,6 +513,12 @@ def main():
                    help="Trailing stop loss percentage (default: 15%%)")
     p.add_argument("--paper-trade", action="store_true",
                    help="Enable paper trading (buy/sell signals will be executed)")
+    p.add_argument("--alpaca-trade", action="store_true",
+                   help="Enable Alpaca order execution (requires ALPACA_API_KEY and ALPACA_SECRET_KEY)")
+    p.add_argument("--alpaca-paper", action="store_true", default=True,
+                   help="Use Alpaca paper trading API (default: True)")
+    p.add_argument("--sync-alpaca-positions", action="store_true",
+                   help="Sync existing Alpaca positions to local portfolio state on startup")
     p.add_argument("--reset-portfolio", action="store_true",
                    help="Delete the saved portfolio state and start fresh from this run onward")
     args = p.parse_args()

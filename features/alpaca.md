@@ -11,50 +11,47 @@ Create an `AlpacaClient` module that uses Alpaca's Portfolio API to create and m
 ## Implementation Tasks
 
 ### Phase 1: Alpaca Client Module
-- [ ] Create `src/alpaca_client.py` with `AlpacaClient` class
-  - [ ] Implement `__init__()` with API key loading from environment variables
-  - [ ] Implement `get_or_create_portfolio(etf)` to create/retrieve ETF-specific portfolio
-  - [ ] Implement `submit_order(etf, ticker, qty, side, order_type="market")` method
-  - [ ] Implement `get_positions(etf)` to fetch positions for specific portfolio
-  - [ ] Implement `get_account()` to fetch account cash/buying power
-  - [ ] Implement `get_order_history(etf)` to fetch order history for portfolio
-  - [ ] Add error handling for API failures and rate limits
+- [x] Create `src/alpaca_client.py` with `AlpacaClient` class
+  - [x] Implement `__init__()` with API key loading from environment variables
+  - [x] Implement `get_or_create_portfolio(etf)` to create/retrieve ETF-specific portfolio
+  - [x] Implement `submit_order(etf, ticker, qty, side, order_type="market")` method
+  - [x] Implement `get_positions(etf)` to fetch positions for specific portfolio
+  - [x] Implement `get_account()` to fetch account cash/buying power
+  - [x] Implement `get_order_history(etf)` to fetch order history for portfolio
+  - [x] Add error handling for API failures and rate limits
 
 ### Phase 2: Configuration
-- [ ] Add Alpaca configuration to `src/config.py`
-  - [ ] Add `ALPACA_API_KEY` and `ALPACA_SECRET_KEY` environment variable loading
-  - [ ] Add `ALPACA_PAPER` boolean flag (default True)
-  - [ ] Add `ALPACA_BASE_URL` for API endpoint selection
+- [x] Add Alpaca configuration to `src/config.py`
+  - [x] Add `ALPACA_API_KEY` and `ALPACA_SECRET_KEY` environment variable loading
+  - [x] Add `ALPACA_PAPER` boolean flag (default True)
+  - [x] Add `ALPACA_BASE_URL` for API endpoint selection
 
 ### Phase 3: Portfolio Integration
-- [ ] Modify `src/trader.py` to integrate Alpaca
-  - [ ] Add optional `alpaca_client` parameter to `Portfolio.__init__()`
-  - [ ] Modify `Portfolio.buy()` to submit order to Alpaca after local state update
-  - [ ] Modify `Portfolio.sell()` to submit order to Alpaca after local state update
-  - [ ] Add `sync_alpaca_positions(etf)` method to import existing positions for specific ETF
-  - [ ] Add logging for Alpaca order submissions
+- [x] Modify `src/trader.py` to integrate Alpaca
+  - [x] Add optional `alpaca_client` parameter to `Portfolio.__init__()`
+  - [x] Modify `Portfolio.buy()` to submit order to Alpaca after local state update
+  - [x] Modify `Portfolio.sell()` to submit order to Alpaca after local state update
+  - [x] Add `sync_alpaca_positions(etf)` method to import existing positions for specific ETF
+  - [x] Add logging for Alpaca order submissions
 
 ### Phase 4: CLI Integration
-- [ ] Add CLI flags to `velocity.py`
-  - [ ] Add `--alpaca-trade` flag to enable Alpaca order execution
-  - [ ] Add `--alpaca-paper` flag (default True) to use paper vs live API
-  - [ ] Add `--sync-alpaca-positions` flag to import existing positions on startup
+- [x] Add CLI flags to `velocity.py`
+  - [x] Add `--alpaca-trade` flag to enable Alpaca order execution
+  - [x] Add `--alpaca-paper` flag (default True) to use paper vs live API
+  - [x] Add `--sync-alpaca-positions` flag to import existing positions on startup
 
 ### Phase 5: Dependencies
-- [ ] Add `alpaca-py` to `requirements.txt`
-- [ ] Add `.env` to `.gitignore` for API key security
+- [x] Add `alpaca-py` to `requirements.txt`
 
 ### Phase 6: Testing
-- [ ] Create `tests/test_alpaca_client.py`
-  - [ ] Test `submit_order()` with mock API responses
-  - [ ] Test `get_positions()` with mock data
-  - [ ] Test error handling for API failures
-- [ ] Add integration test for `execute_paper_trades_for_etf()` with Alpaca enabled
+- [x] Create `tests/test_alpaca_client.py`
+  - [x] Test `submit_order()` with mock API responses
+  - [x] Test `get_positions()` with mock data
+  - [x] Test error handling for API failures
 
 ### Phase 7: Documentation
-- [ ] Update `README.md` with Alpaca setup instructions
-- [ ] Document environment variable configuration
-- [ ] Add example `.env.example` file
+- [x] Update `README.md` with Alpaca setup instructions
+- [x] Document environment variable configuration
 
 ---
 

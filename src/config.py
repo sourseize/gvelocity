@@ -107,3 +107,26 @@ TRAILING_STOP_PERCENT = 0.15      # 15% trailing stop loss
 INITIAL_CAPITAL_PER_ETF = 100000.0   # $100k pool for each ETF
 MAX_PURCHASE_AMOUNT = 1000.0         # $1k max purchase on one ticker
 ALLOCATION_PCT = 0.1                 # 10% allocation per trade (before max cap applied)
+
+# ── Alpaca configuration ───────────────────────────────────────────────────
+# Load from .env file or environment variables
+# The .env file should be at the project root and contain:
+#   ALPACA_API_KEY=your_api_key
+#   ALPACA_SECRET_KEY=your_secret_key
+#   ALPACA_PAPER=true
+
+def _load_env_file():
+    """Load environment variables from .env file if it exists."""
+    env_path = Path(__file__).resolve().parent.parent / ".env"
+    if env_path.exists():
+        for line in env_path.read_text().splitlines():
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                key, value = line.split("=", 1)
+                os.environ.setdefault(key.strip(), value.strip())
+
+_load_env_file()
+
+ALPACA_API_KEY = os.getenv("ALPACA_API_KEY", "")
+ALPACA_SECRET_KEY = os.getenv("ALPACA_SECRET_KEY", "")
+ALPACA_PAPER = os.getenv("ALPACA_PAPER", "true").lower() in ("true", "1", "yes")

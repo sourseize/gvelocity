@@ -74,11 +74,66 @@ wherever `velocity.py` itself lives.
 ## Prerequisites
 
 - Linux server (or your own machine) with Python 3.9+
-- `pip3 install requests`
+- `pip3 install -r requirements.txt`
 - GitHub account, with `report/` set up as its own checkout on a `report`
   branch (GitHub Pages serves that branch)
 
 ---
+
+## Alpaca Integration
+
+Velocity can integrate with Alpaca's paper trading API to execute real trades
+based on the scoring signals. Each ETF gets its own Alpaca portfolio to handle
+ticker overlap.
+
+### Setup
+
+1. **Create an Alpaca account** at https://app.alpaca.markets
+2. **Get API keys** from the dashboard (paper trading keys recommended)
+3. **Create a `.env` file** at the project root:
+
+```bash
+# Copy the example file
+cp .env.example .env
+
+# Edit with your credentials
+ALPACA_API_KEY=your_api_key_here
+ALPACA_SECRET_KEY=your_secret_key_here
+ALPACA_PAPER=true
+```
+
+4. **Install dependencies**:
+```bash
+pip3 install -r requirements.txt
+```
+
+### Usage
+
+```bash
+# Run with Alpaca paper trading enabled
+python velocity.py --etf MTUM --alpaca-trade
+
+# Run with Alpaca paper trading and sync existing positions
+python velocity.py --etf MTUM --alpaca-trade --sync-alpaca-positions
+
+# Run all ETFs with Alpaca trading
+python velocity.py --etf ALL --alpaca-trade
+```
+
+### CLI Flags
+
+| Flag | Default | Purpose |
+|---|---|---|
+| `--alpaca-trade` | off | Enable Alpaca order execution |
+| `--alpaca-paper` | True | Use paper trading API (set to false for live) |
+| `--sync-alpaca-positions` | off | Import existing Alpaca positions on startup |
+
+### Safety Features
+
+- **Paper trading by default**: Uses virtual money, no real risk
+- **Opt-in**: Must pass `--alpaca-trade` to enable
+- **Error handling**: API errors are logged but don't crash the pipeline
+- **Position sync**: Optional, only imports positions you already hold
 
 ---
 

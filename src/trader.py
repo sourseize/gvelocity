@@ -123,13 +123,16 @@ class Position:
 
 class Portfolio:
     """Manages the paper trading portfolio"""
-    def __init__(self, initial_capital: float = 100000.0, commission_per_trade: float = 1.0):
+    def __init__(self, initial_capital: float = 100000.0, commission_per_trade: float = 1.0,
+                 alpaca_client=None, etf: str = ""):
         self.initial_capital = initial_capital
         self.cash = initial_capital
         self.commission_per_trade = commission_per_trade
         self.positions: Dict[str, Position] = {}  # ticker -> Position
         self.trade_history: List[Trade] = []
         self.daily_values: List[Dict] = []  # Track portfolio value over time
+        self.alpaca_client = alpaca_client
+        self.etf = etf
 
     def buy(self, ticker: str, price: float, date: str,
             allocation_pct: float = 0.1, name: str = "", sector: str = "",
@@ -149,6 +152,9 @@ class Portfolio:
         Returns:
             Trade object if successful, None if insufficient funds or position exists
         """
+        import logging
+        log = logging.getLogger(__name__)
+
         # Don't buy if we already have a position
         if ticker in self.positions:
             return None
@@ -176,6 +182,20 @@ class Portfolio:
         trade = Trade(ticker, OrderType.BUY, price, date, shares, commission)
         self.trade_history.append(trade)
 
+        # Submit order to Alpaca if client is configured
+        if self.alpaca_client and self.alpaca_client.is_available():
+            try:
+                alpaca_order = self.alpaca_client.submit_order(
+                    etf=self.etf,
+                    ticker=ticker,
+                    qty=shares,
+                    side="buy"
+                )
+                if alpaca_order:
+                    log.info(f"Alpaca order submitted: BUY {shares} {ticker} (ID: {alpaca_order.id})")
+            except Exception as e:
+                log.error(f"Failed to submit Alpaca order for {ticker}: {e}")
+
         return trade
 
     def sell(self, ticker: str, price: float, date: str, reason: str = "") -> Optional[Trade]:
@@ -191,6 +211,9 @@ class Portfolio:
         Returns:
             Trade object if successful, None if no position
         """
+        import logging
+        log = logging.getLogger(__name__)
+
         if ticker not in self.positions:
             return None
 
@@ -206,6 +229,20 @@ class Portfolio:
         trade = Trade(ticker, OrderType.SELL, price, date, position.shares, commission)
         self.trade_history.append(trade)
 
+        # Submit order to Alpaca if client is configured
+        if self.alpaca_client and self.alpaca_client.is_available():
+            try:
+                alpaca_order = self.alpaca_client.submit_order(
+                    etf=self.etf,
+                    ticker=ticker,
+                    qty=position.shares,
+                    side="sell"
+                )
+                if alpaca_order:
+                    log.info(f"Alpaca order submitted: SELL {position.shares} {ticker} (ID: {alpaca_order.id})")
+            except Exception as e:
+                log.error(f"Failed to submit Alpaca order for {ticker}: {e}")
+
         return trade
 
     def update_prices(self, price_data: Dict[str, float], date: str):
@@ -213,6 +250,45 @@ class Portfolio:
         for ticker, position in self.positions.items():
             if ticker in price_data:
                 position.update_price(price_data[ticker], date)
+
+    def sync_alpaca_positions(self, etf: str) -> int:
+        """
+        Sync positions from Alpaca to local portfolio state.
+
+        Args:
+            etf: ETF symbol to filter positions
+
+        Returns:
+            Number of positions synced
+        """
+        import logging
+        log = logging.getLogger(__name__)
+
+        if not self.alpaca_client or not self.alpaca_client.is_available():
+            log.warning("Alpaca client not available, cannot sync positions")
+            return 0
+
+        try:
+            alpaca_positions = self.alpaca_client.get_positions(etf)
+            synced = 0
+            for pos in alpaca_positions:
+                if pos.ticker not in self.positions:
+                    # Add position to local state
+                    self.positions[pos.ticker] = Position(
+                        ticker=pos.ticker,
+                        entry_price=pos.avg_entry_price,
+                        entry_date="",  # Alpaca doesn't provide entry date
+                        shares=pos.qty,
+                        name=pos.ticker,
+                        sector=""
+                    )
+                    self.positions[pos.ticker].current_price = pos.current_price
+                    synced += 1
+                    log.info(f"Synced position: {pos.ticker} ({pos.qty} shares)")
+            return synced
+        except Exception as e:
+            log.error(f"Failed to sync Alpaca positions: {e}")
+            return 0
 
     def check_stop_losses(self, date: str, trail_percent: float = 0.15) -> List[str]:
         """
