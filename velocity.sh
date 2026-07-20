@@ -19,9 +19,8 @@ ETFS=(MTUM QUAL DYNF)
 LOG="[velocity $(date '+%Y-%m-%d %H:%M')]"
 echo "$LOG Starting"
 
-# Load API key from .env file if present
-# Format: GROQ_API_KEY=gsk_...
-[ -f "$SCRIPT_DIR/.env" ] && { set -a; source "$SCRIPT_DIR/.env"; set +a; }
+# Activate virtualenv (expected at $SCRIPT_DIR/venv)
+source "$SCRIPT_DIR/venv/bin/activate"
 
 # Run tracker for each ETF — DB defaults to src/data/{ETF}.db next to this
 # script, report output goes to $REPORT/{ETF}/ with a shared hub index.html
