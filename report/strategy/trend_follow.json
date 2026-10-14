@@ -1,0 +1,7144 @@
+{
+  "strategy": "trend_follow",
+  "initial_capital": 100000.0,
+  "cash": 80582.31906731232,
+  "last_date": "2026-08-13",
+  "total_value": 107368.4646352321,
+  "realized": 5607.319067312304,
+  "unrealized": 1786.145567919782,
+  "positions": {
+    "SNOW": {
+      "issuer": "SNOW",
+      "ticker": "SNOW",
+      "shares": 3.9131285462727448,
+      "entry_price": 255.55,
+      "entry_date": "2026-05-29",
+      "stop_price": 253.035,
+      "trail": 0.25,
+      "target_price": null,
+      "highest_close": 337.38,
+      "last_price": 337.38,
+      "etfs": [
+        "DYNF"
+      ],
+      "meta": {}
+    },
+    "MET": {
+      "issuer": "MET",
+      "ticker": "MET",
+      "shares": 11.835720203574388,
+      "entry_price": 84.49,
+      "entry_date": "2026-06-05",
+      "stop_price": 88.93543752042146,
+      "trail": 0.11020072515836463,
+      "target_price": null,
+      "highest_close": 99.95,
+      "last_price": 97.47,
+      "etfs": [
+        "DYNF"
+      ],
+      "meta": {}
+    },
+    "AMG": {
+      "issuer": "AMG",
+      "ticker": "AMG",
+      "shares": 2.969032985956474,
+      "entry_price": 336.81,
+      "entry_date": "2026-06-05",
+      "stop_price": 321.11864794760277,
+      "trail": 0.1624885296864985,
+      "target_price": null,
+      "highest_close": 383.42,
+      "last_price": 367.1,
+      "etfs": [
+        "DYNF"
+      ],
+      "meta": {}
+    },
+    "RVMD": {
+      "issuer": "RVMD",
+      "ticker": "RVMD",
+      "shares": 5.492091388400703,
+      "entry_price": 182.08,
+      "entry_date": "2026-06-26",
+      "stop_price": 155.2275,
+      "trail": 0.25,
+      "target_price": null,
+      "highest_close": 206.97,
+      "last_price": 202.0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ],
+      "meta": {}
+    },
+    "HALO": {
+      "issuer": "HALO",
+      "ticker": "HALO",
+      "shares": 12.586532410320956,
+      "entry_price": 79.45,
+      "entry_date": "2026-07-02",
+      "stop_price": 88.64346515236265,
+      "trail": 0.14038532629594017,
+      "target_price": null,
+      "highest_close": 103.12,
+      "last_price": 100.67,
+      "etfs": [
+        "DYNF"
+      ],
+      "meta": {}
+    },
+    "ADP": {
+      "issuer": "ADP",
+      "ticker": "ADP",
+      "shares": 3.9832702648874725,
+      "entry_price": 251.05,
+      "entry_date": "2026-07-13",
+      "stop_price": 230.34821362248266,
+      "trail": 0.1660999398237605,
+      "target_price": null,
+      "highest_close": 276.23,
+      "last_price": 276.23,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ],
+      "meta": {}
+    },
+    "PAYX": {
+      "issuer": "PAYX",
+      "ticker": "PAYX",
+      "shares": 8.718395815170009,
+      "entry_price": 114.7,
+      "entry_date": "2026-07-16",
+      "stop_price": 104.43068629726277,
+      "trail": 0.16721940751784084,
+      "target_price": null,
+      "highest_close": 125.4,
+      "last_price": 125.4,
+      "etfs": [
+        "QUAL"
+      ],
+      "meta": {}
+    },
+    "BBY": {
+      "issuer": "BBY",
+      "ticker": "BBY",
+      "shares": 11.708230886313078,
+      "entry_price": 85.41,
+      "entry_date": "2026-07-17",
+      "stop_price": 78.62007460500747,
+      "trail": 0.1280905555616339,
+      "target_price": null,
+      "highest_close": 90.17,
+      "last_price": 85.35,
+      "etfs": [
+        "QUAL"
+      ],
+      "meta": {}
+    },
+    "VLO": {
+      "issuer": "VLO",
+      "ticker": "VLO",
+      "shares": 3.229452607782981,
+      "entry_price": 309.65,
+      "entry_date": "2026-07-17",
+      "stop_price": 273.0417650673687,
+      "trail": 0.20377415995751572,
+      "target_price": null,
+      "highest_close": 342.92,
+      "last_price": 342.92,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ],
+      "meta": {}
+    },
+    "TRV": {
+      "issuer": "TRV",
+      "ticker": "TRV",
+      "shares": 2.656959906475011,
+      "entry_price": 376.37,
+      "entry_date": "2026-07-23",
+      "stop_price": 321.1817819162471,
+      "trail": 0.191425955600808,
+      "target_price": null,
+      "highest_close": 397.22,
+      "last_price": 370.0,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ],
+      "meta": {}
+    },
+    "HWM": {
+      "issuer": "HWM",
+      "ticker": "HWM",
+      "shares": 3.4832282559476124,
+      "entry_price": 287.09,
+      "entry_date": "2026-07-23",
+      "stop_price": 257.08429075400903,
+      "trail": 0.1178220755129743,
+      "target_price": null,
+      "highest_close": 291.42,
+      "last_price": 282.82,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ],
+      "meta": {}
+    },
+    "RPRX": {
+      "issuer": "RPRX",
+      "ticker": "RPRX",
+      "shares": 16.943409013893593,
+      "entry_price": 59.02,
+      "entry_date": "2026-07-23",
+      "stop_price": 51.40574098894805,
+      "trail": 0.14280905471155497,
+      "target_price": null,
+      "highest_close": 59.97,
+      "last_price": 58.56,
+      "etfs": [
+        "MTUM"
+      ],
+      "meta": {}
+    },
+    "MRK": {
+      "issuer": "MRK",
+      "ticker": "MRK",
+      "shares": 7.6640098099325575,
+      "entry_price": 130.48,
+      "entry_date": "2026-07-23",
+      "stop_price": 112.33681237400275,
+      "trail": 0.17125184526740875,
+      "target_price": null,
+      "highest_close": 135.55,
+      "last_price": 135.55,
+      "etfs": [
+        "QUAL"
+      ],
+      "meta": {}
+    },
+    "RTX": {
+      "issuer": "RTX",
+      "ticker": "RTX",
+      "shares": 4.699468960007519,
+      "entry_price": 212.79,
+      "entry_date": "2026-07-24",
+      "stop_price": 187.33454823555817,
+      "trail": 0.16413283849920499,
+      "target_price": null,
+      "highest_close": 224.12,
+      "last_price": 220.48,
+      "etfs": [
+        "DYNF"
+      ],
+      "meta": {}
+    },
+    "ALL": {
+      "issuer": "ALL",
+      "ticker": "ALL",
+      "shares": 3.8465976843481937,
+      "entry_price": 259.97,
+      "entry_date": "2026-07-24",
+      "stop_price": 232.0504216036255,
+      "trail": 0.15651767800652294,
+      "target_price": null,
+      "highest_close": 275.11,
+      "last_price": 260.48,
+      "etfs": [
+        "DYNF"
+      ],
+      "meta": {}
+    },
+    "THC": {
+      "issuer": "THC",
+      "ticker": "THC",
+      "shares": 3.8076381220728783,
+      "entry_price": 262.63,
+      "entry_date": "2026-07-28",
+      "stop_price": 200.28750000000002,
+      "trail": 0.25,
+      "target_price": null,
+      "highest_close": 267.05,
+      "last_price": 267.05,
+      "etfs": [
+        "DYNF"
+      ],
+      "meta": {}
+    },
+    "NTNX": {
+      "issuer": "NTNX",
+      "ticker": "NTNX",
+      "shares": 16.78697330871244,
+      "entry_price": 59.57,
+      "entry_date": "2026-07-29",
+      "stop_price": 57.30256492383065,
+      "trail": 0.15669514460882047,
+      "target_price": null,
+      "highest_close": 67.95,
+      "last_price": 67.95,
+      "etfs": [
+        "DYNF"
+      ],
+      "meta": {}
+    },
+    "LMT": {
+      "issuer": "LMT",
+      "ticker": "LMT",
+      "shares": 1.7160311631259224,
+      "entry_price": 582.74,
+      "entry_date": "2026-07-31",
+      "stop_price": 478.6601995108864,
+      "trail": 0.2110690277048945,
+      "target_price": null,
+      "highest_close": 606.72,
+      "last_price": 598.01,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ],
+      "meta": {}
+    },
+    "REGN": {
+      "issuer": "REGN",
+      "ticker": "REGN",
+      "shares": 1.3112518521432412,
+      "entry_price": 762.63,
+      "entry_date": "2026-07-31",
+      "stop_price": 661.5597075945672,
+      "trail": 0.18128864848144643,
+      "target_price": null,
+      "highest_close": 808.05,
+      "last_price": 805.97,
+      "etfs": [
+        "DYNF"
+      ],
+      "meta": {}
+    },
+    "NTAP": {
+      "issuer": "NTAP",
+      "ticker": "NTAP",
+      "shares": 5.466870763175159,
+      "entry_price": 182.92,
+      "entry_date": "2026-08-03",
+      "stop_price": 157.7501260208348,
+      "trail": 0.23044965110085947,
+      "target_price": null,
+      "highest_close": 204.99,
+      "last_price": 204.99,
+      "etfs": [
+        "QUAL"
+      ],
+      "meta": {}
+    },
+    "DELL": {
+      "issuer": "DELL",
+      "ticker": "DELL",
+      "shares": 2.1400903118111585,
+      "entry_price": 467.27,
+      "entry_date": "2026-08-04",
+      "stop_price": 370.8825,
+      "trail": 0.25,
+      "target_price": null,
+      "highest_close": 494.51,
+      "last_price": 494.51,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ],
+      "meta": {}
+    },
+    "WSM": {
+      "issuer": "WSM",
+      "ticker": "WSM",
+      "shares": 4.018000642880103,
+      "entry_price": 248.88,
+      "entry_date": "2026-08-04",
+      "stop_price": 208.03145705750873,
+      "trail": 0.17375702177492755,
+      "target_price": null,
+      "highest_close": 251.78,
+      "last_price": 242.44,
+      "etfs": [
+        "QUAL"
+      ],
+      "meta": {}
+    },
+    "EXPE": {
+      "issuer": "EXPE",
+      "ticker": "EXPE",
+      "shares": 3.2045119528295842,
+      "entry_price": 312.06,
+      "entry_date": "2026-08-04",
+      "stop_price": 253.2808233303952,
+      "trail": 0.2285314997094355,
+      "target_price": null,
+      "highest_close": 328.31,
+      "last_price": 328.31,
+      "etfs": [
+        "DYNF"
+      ],
+      "meta": {}
+    },
+    "ANET": {
+      "issuer": "ANET",
+      "ticker": "ANET",
+      "shares": 5.068166844052506,
+      "entry_price": 197.31,
+      "entry_date": "2026-08-05",
+      "stop_price": 157.875,
+      "trail": 0.25,
+      "target_price": null,
+      "highest_close": 210.5,
+      "last_price": 203.62,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ],
+      "meta": {}
+    },
+    "BKNG": {
+      "issuer": "BKNG",
+      "ticker": "BKNG",
+      "shares": 4.83045116413873,
+      "entry_price": 207.02,
+      "entry_date": "2026-08-05",
+      "stop_price": 164.59185137549778,
+      "trail": 0.23238573185571412,
+      "target_price": null,
+      "highest_close": 214.42,
+      "last_price": 213.34,
+      "etfs": [
+        "DYNF"
+      ],
+      "meta": {}
+    }
+  },
+  "rising_stars": [
+    {
+      "issuer": "BAC",
+      "ticker": "BAC",
+      "first_seen": "2026-06-09",
+      "seen": 22,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-12",
+      "ref_price": 64.81,
+      "rank": 0.8989169675090253,
+      "reason": "55d breakout \u00b7 RS pctile 90% \u00b7 trail 8%",
+      "why": "book full",
+      "first_price": 54.42
+    },
+    {
+      "issuer": "JPM",
+      "ticker": "JPM",
+      "first_seen": "2026-06-12",
+      "seen": 19,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-12",
+      "ref_price": 365.18,
+      "rank": 0.8339350180505415,
+      "reason": "55d breakout \u00b7 RS pctile 83% \u00b7 trail 9%",
+      "why": "book full",
+      "first_price": 320.72
+    },
+    {
+      "issuer": "AMP",
+      "ticker": "AMP",
+      "first_seen": "2026-07-02",
+      "seen": 15,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 570.68,
+      "rank": 0.8253424657534246,
+      "reason": "55d breakout \u00b7 RS pctile 83% \u00b7 trail 8%",
+      "why": "book full",
+      "first_price": 489.16
+    },
+    {
+      "issuer": "TMO",
+      "ticker": "TMO",
+      "first_seen": "2026-07-14",
+      "seen": 11,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-11",
+      "ref_price": 605.0,
+      "rank": 0.9422382671480144,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 18%",
+      "why": "book full",
+      "first_price": 534.07
+    },
+    {
+      "issuer": "RJF",
+      "ticker": "RJF",
+      "first_seen": "2026-07-02",
+      "seen": 11,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-12",
+      "ref_price": 181.18,
+      "rank": 0.7472924187725631,
+      "reason": "55d breakout \u00b7 RS pctile 75% \u00b7 trail 9%",
+      "why": "book full",
+      "first_price": 162.66
+    },
+    {
+      "issuer": "ROST",
+      "ticker": "ROST",
+      "first_seen": "2026-07-22",
+      "seen": 10,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ],
+      "last_seen": "2026-08-07",
+      "ref_price": 255.23,
+      "rank": 0.8086642599277978,
+      "reason": "55d breakout \u00b7 RS pctile 81% \u00b7 trail 11%",
+      "why": "book full",
+      "first_price": 238.21
+    },
+    {
+      "issuer": "V",
+      "ticker": "V",
+      "first_seen": "2026-06-26",
+      "seen": 10,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ],
+      "last_seen": "2026-08-06",
+      "ref_price": 370.47,
+      "rank": 0.7075812274368231,
+      "reason": "55d breakout \u00b7 RS pctile 71% \u00b7 trail 9%",
+      "why": "book full",
+      "first_price": 336.23
+    },
+    {
+      "issuer": "COF",
+      "ticker": "COF",
+      "first_seen": "2026-07-06",
+      "seen": 8,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 223.83,
+      "rank": 0.8184931506849316,
+      "reason": "55d breakout \u00b7 RS pctile 82% \u00b7 trail 13%",
+      "why": "book full",
+      "first_price": 206.5
+    },
+    {
+      "issuer": "PYPL",
+      "ticker": "PYPL",
+      "first_seen": "2026-07-16",
+      "seen": 7,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 60.59,
+      "rank": 0.9452054794520548,
+      "reason": "55d breakout \u00b7 RS pctile 95% \u00b7 trail 12%",
+      "why": "book full",
+      "first_price": 56.73
+    },
+    {
+      "issuer": "TPR",
+      "ticker": "TPR",
+      "first_seen": "2026-07-30",
+      "seen": 7,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ],
+      "last_seen": "2026-08-10",
+      "ref_price": 164.78,
+      "rank": 0.8736462093862816,
+      "reason": "55d breakout \u00b7 RS pctile 87% \u00b7 trail 14%",
+      "why": "book full",
+      "first_price": 152.58
+    },
+    {
+      "issuer": "ETN",
+      "ticker": "ETN",
+      "first_seen": "2026-08-03",
+      "seen": 7,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-12",
+      "ref_price": 459.96,
+      "rank": 0.8194945848375451,
+      "reason": "55d breakout \u00b7 RS pctile 82% \u00b7 trail 25%",
+      "why": "book full",
+      "first_price": 438.23
+    },
+    {
+      "issuer": "GRMN",
+      "ticker": "GRMN",
+      "first_seen": "2026-07-28",
+      "seen": 6,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-10",
+      "ref_price": 313.16,
+      "rank": 0.924187725631769,
+      "reason": "55d breakout \u00b7 RS pctile 92% \u00b7 trail 25%",
+      "why": "book full",
+      "first_price": 253.65
+    },
+    {
+      "issuer": "WAT",
+      "ticker": "WAT",
+      "first_seen": "2026-07-28",
+      "seen": 6,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-12",
+      "ref_price": 416.15,
+      "rank": 0.8664259927797834,
+      "reason": "55d breakout \u00b7 RS pctile 87% \u00b7 trail 17%",
+      "why": "book full",
+      "first_price": 383.9
+    },
+    {
+      "issuer": "FAST",
+      "ticker": "FAST",
+      "first_seen": "2026-08-04",
+      "seen": 6,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-11",
+      "ref_price": 52.38,
+      "rank": 0.8122743682310469,
+      "reason": "55d breakout \u00b7 RS pctile 81% \u00b7 trail 13%",
+      "why": "book full",
+      "first_price": 49.71
+    },
+    {
+      "issuer": "SCHW",
+      "ticker": "SCHW",
+      "first_seen": "2026-07-27",
+      "seen": 6,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 110.06,
+      "rank": 0.7876712328767124,
+      "reason": "55d breakout \u00b7 RS pctile 79% \u00b7 trail 9%",
+      "why": "book full",
+      "first_price": 104.18
+    },
+    {
+      "issuer": "MDT",
+      "ticker": "MDT",
+      "first_seen": "2026-07-27",
+      "seen": 6,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-12",
+      "ref_price": 90.76,
+      "rank": 0.7581227436823105,
+      "reason": "55d breakout \u00b7 RS pctile 76% \u00b7 trail 12%",
+      "why": "book full",
+      "first_price": 84.22
+    },
+    {
+      "issuer": "ATI",
+      "ticker": "ATI",
+      "first_seen": "2026-08-05",
+      "seen": 5,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-12",
+      "ref_price": 230.43,
+      "rank": 0.9819494584837545,
+      "reason": "55d breakout \u00b7 RS pctile 98% \u00b7 trail 25%",
+      "why": "book full",
+      "first_price": 205.11
+    },
+    {
+      "issuer": "WTW",
+      "ticker": "WTW",
+      "first_seen": "2026-07-27",
+      "seen": 5,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-07",
+      "ref_price": 344.82,
+      "rank": 0.9566787003610109,
+      "reason": "55d breakout \u00b7 RS pctile 96% \u00b7 trail 17%",
+      "why": "book full",
+      "first_price": 302.64
+    },
+    {
+      "issuer": "MSFT",
+      "ticker": "MSFT",
+      "first_seen": "2026-08-03",
+      "seen": 5,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ],
+      "last_seen": "2026-08-10",
+      "ref_price": 506.06,
+      "rank": 0.855595667870036,
+      "reason": "55d breakout \u00b7 RS pctile 86% \u00b7 trail 25%",
+      "why": "book full",
+      "first_price": 487.65
+    },
+    {
+      "issuer": "BRK",
+      "ticker": "BRKB",
+      "first_seen": "2026-08-03",
+      "seen": 5,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ],
+      "last_seen": "2026-08-10",
+      "ref_price": 529.42,
+      "rank": 0.631768953068592,
+      "reason": "55d breakout \u00b7 RS pctile 63% \u00b7 trail 8%",
+      "why": "book full",
+      "first_price": 513.14
+    },
+    {
+      "issuer": "GGG",
+      "ticker": "GGG",
+      "first_seen": "2026-07-28",
+      "seen": 5,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-07",
+      "ref_price": 83.54,
+      "rank": 0.6064981949458483,
+      "reason": "55d breakout \u00b7 RS pctile 61% \u00b7 trail 15%",
+      "why": "book full",
+      "first_price": 82.26
+    },
+    {
+      "issuer": "RMD",
+      "ticker": "RMD",
+      "first_seen": "2026-08-04",
+      "seen": 5,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 226.74,
+      "rank": 0.5547945205479452,
+      "reason": "55d breakout \u00b7 RS pctile 55% \u00b7 trail 19%",
+      "why": "book full",
+      "first_price": 223.14
+    },
+    {
+      "issuer": "CACI",
+      "ticker": "CACI",
+      "first_seen": "2026-08-07",
+      "seen": 4,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-12",
+      "ref_price": 680.08,
+      "rank": 0.9386281588447654,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 25%",
+      "why": "book full",
+      "first_price": 644.43
+    },
+    {
+      "issuer": "RCL",
+      "ticker": "RCL",
+      "first_seen": "2026-07-29",
+      "seen": 4,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-05",
+      "ref_price": 327.42,
+      "rank": 0.8736462093862816,
+      "reason": "55d breakout \u00b7 RS pctile 87% \u00b7 trail 17%",
+      "why": "book full",
+      "first_price": 323.58
+    },
+    {
+      "issuer": "ITW",
+      "ticker": "ITW",
+      "first_seen": "2026-07-24",
+      "seen": 4,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-05",
+      "ref_price": 297.32,
+      "rank": 0.776173285198556,
+      "reason": "55d breakout \u00b7 RS pctile 78% \u00b7 trail 14%",
+      "why": "book full",
+      "first_price": 283.02
+    },
+    {
+      "issuer": "CBRE",
+      "ticker": "CBRE",
+      "first_seen": "2026-07-28",
+      "seen": 4,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 151.89,
+      "rank": 0.7534246575342466,
+      "reason": "55d breakout \u00b7 RS pctile 75% \u00b7 trail 15%",
+      "why": "book full",
+      "first_price": 147.05
+    },
+    {
+      "issuer": "MCK",
+      "ticker": "MCK",
+      "first_seen": "2026-07-17",
+      "seen": 4,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-11",
+      "ref_price": 901.77,
+      "rank": 0.7509025270758123,
+      "reason": "55d breakout \u00b7 RS pctile 75% \u00b7 trail 20%",
+      "why": "book full",
+      "first_price": 841.39
+    },
+    {
+      "issuer": "ZBH",
+      "ticker": "ZBH",
+      "first_seen": "2026-07-28",
+      "seen": 4,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 99.57,
+      "rank": 0.6986301369863014,
+      "reason": "55d breakout \u00b7 RS pctile 70% \u00b7 trail 14%",
+      "why": "book full",
+      "first_price": 95.75
+    },
+    {
+      "issuer": "BLK",
+      "ticker": "BLK",
+      "first_seen": "2026-08-03",
+      "seen": 4,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 1182.84,
+      "rank": 0.6712328767123288,
+      "reason": "55d breakout \u00b7 RS pctile 67% \u00b7 trail 13%",
+      "why": "book full",
+      "first_price": 1126.63
+    },
+    {
+      "issuer": "LDOS",
+      "ticker": "LDOS",
+      "first_seen": "2026-08-07",
+      "seen": 4,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 142.61,
+      "rank": 0.636986301369863,
+      "reason": "55d breakout \u00b7 RS pctile 64% \u00b7 trail 25%",
+      "why": "book full",
+      "first_price": 137.57
+    },
+    {
+      "issuer": "PLTR",
+      "ticker": "PLTR",
+      "first_seen": "2026-08-07",
+      "seen": 3,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 179.01,
+      "rank": 0.910958904109589,
+      "reason": "55d breakout \u00b7 RS pctile 91% \u00b7 trail 25%",
+      "why": "book full",
+      "first_price": 172.01
+    },
+    {
+      "issuer": "DGX",
+      "ticker": "DGX",
+      "first_seen": "2026-07-27",
+      "seen": 3,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-06",
+      "ref_price": 238.5,
+      "rank": 0.8736462093862816,
+      "reason": "55d breakout \u00b7 RS pctile 87% \u00b7 trail 18%",
+      "why": "book full",
+      "first_price": 231.84
+    },
+    {
+      "issuer": "PH",
+      "ticker": "PH",
+      "first_seen": "2026-07-28",
+      "seen": 3,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-07",
+      "ref_price": 1073.87,
+      "rank": 0.8303249097472925,
+      "reason": "55d breakout \u00b7 RS pctile 83% \u00b7 trail 16%",
+      "why": "book full",
+      "first_price": 990.96
+    },
+    {
+      "issuer": "RPM",
+      "ticker": "RPM",
+      "first_seen": "2026-08-04",
+      "seen": 3,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-07",
+      "ref_price": 117.36,
+      "rank": 0.8158844765342961,
+      "reason": "55d breakout \u00b7 RS pctile 82% \u00b7 trail 20%",
+      "why": "book full",
+      "first_price": 115.09
+    },
+    {
+      "issuer": "SHW",
+      "ticker": "SHW",
+      "first_seen": "2026-08-04",
+      "seen": 3,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-07",
+      "ref_price": 369.73,
+      "rank": 0.8122743682310469,
+      "reason": "55d breakout \u00b7 RS pctile 81% \u00b7 trail 22%",
+      "why": "book full",
+      "first_price": 361.57
+    },
+    {
+      "issuer": "IDXX",
+      "ticker": "IDXX",
+      "first_seen": "2026-08-04",
+      "seen": 3,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-10",
+      "ref_price": 595.76,
+      "rank": 0.6642599277978339,
+      "reason": "55d breakout \u00b7 RS pctile 66% \u00b7 trail 16%",
+      "why": "book full",
+      "first_price": 588.09
+    },
+    {
+      "issuer": "JCI",
+      "ticker": "JCI",
+      "first_seen": "2026-08-05",
+      "seen": 3,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ],
+      "last_seen": "2026-08-11",
+      "ref_price": 154.76,
+      "rank": 0.5740072202166066,
+      "reason": "55d breakout \u00b7 RS pctile 57% \u00b7 trail 14%",
+      "why": "book full",
+      "first_price": 153.65
+    },
+    {
+      "issuer": "HPE",
+      "ticker": "HPE",
+      "first_seen": "2026-08-12",
+      "seen": 2,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 59.82,
+      "rank": 0.9931506849315068,
+      "reason": "55d breakout \u00b7 RS pctile 99% \u00b7 trail 25%",
+      "why": "book full",
+      "first_price": 58.79
+    },
+    {
+      "issuer": "WFC",
+      "ticker": "WFC",
+      "first_seen": "2026-08-04",
+      "seen": 2,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-05",
+      "ref_price": 89.17,
+      "rank": 0.8303249097472925,
+      "reason": "55d breakout \u00b7 RS pctile 83% \u00b7 trail 12%",
+      "why": "book full",
+      "first_price": 88.39
+    },
+    {
+      "issuer": "PLNT",
+      "ticker": "PLNT",
+      "first_seen": "2026-08-03",
+      "seen": 2,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-05",
+      "ref_price": 56.59,
+      "rank": 0.7653429602888087,
+      "reason": "55d breakout \u00b7 RS pctile 77% \u00b7 trail 14%",
+      "why": "book full",
+      "first_price": 56.23
+    },
+    {
+      "issuer": "EXPD",
+      "ticker": "EXPD",
+      "first_seen": "2026-08-12",
+      "seen": 2,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 187.05,
+      "rank": 0.7602739726027398,
+      "reason": "55d breakout \u00b7 RS pctile 76% \u00b7 trail 17%",
+      "why": "book full",
+      "first_price": 184.47
+    },
+    {
+      "issuer": "ADSK",
+      "ticker": "ADSK",
+      "first_seen": "2026-08-07",
+      "seen": 2,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-10",
+      "ref_price": 256.07,
+      "rank": 0.6353790613718412,
+      "reason": "55d breakout \u00b7 RS pctile 64% \u00b7 trail 23%",
+      "why": "book full",
+      "first_price": 249.08
+    },
+    {
+      "issuer": "DLTR",
+      "ticker": "DLTR",
+      "first_seen": "2026-08-07",
+      "seen": 1,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-07",
+      "ref_price": 130.9,
+      "rank": 0.9819494584837545,
+      "reason": "55d breakout \u00b7 RS pctile 98% \u00b7 trail 15%",
+      "why": "book full",
+      "first_price": 130.9
+    },
+    {
+      "issuer": "CRWD",
+      "ticker": "CRWD",
+      "first_seen": "2026-08-13",
+      "seen": 1,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 225.53,
+      "rank": 0.9726027397260274,
+      "reason": "55d breakout \u00b7 RS pctile 97% \u00b7 trail 22%",
+      "why": "book full",
+      "first_price": 225.53
+    },
+    {
+      "issuer": "M",
+      "ticker": "M",
+      "first_seen": "2026-08-04",
+      "seen": 1,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-04",
+      "ref_price": 26.21,
+      "rank": 0.9568345323741008,
+      "reason": "55d breakout \u00b7 RS pctile 96% \u00b7 trail 19%",
+      "why": "book full",
+      "first_price": 26.21
+    },
+    {
+      "issuer": "MPC",
+      "ticker": "MPC",
+      "first_seen": "2026-08-13",
+      "seen": 1,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 356.37,
+      "rank": 0.9246575342465754,
+      "reason": "55d breakout \u00b7 RS pctile 92% \u00b7 trail 22%",
+      "why": "book full",
+      "first_price": 356.37
+    },
+    {
+      "issuer": "GE",
+      "ticker": "GE",
+      "first_seen": "2026-08-05",
+      "seen": 1,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-05",
+      "ref_price": 381.22,
+      "rank": 0.9025270758122743,
+      "reason": "55d breakout \u00b7 RS pctile 90% \u00b7 trail 15%",
+      "why": "book full",
+      "first_price": 381.22
+    },
+    {
+      "issuer": "PSX",
+      "ticker": "PSX",
+      "first_seen": "2026-08-13",
+      "seen": 1,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 232.61,
+      "rank": 0.8767123287671232,
+      "reason": "55d breakout \u00b7 RS pctile 88% \u00b7 trail 16%",
+      "why": "book full",
+      "first_price": 232.61
+    },
+    {
+      "issuer": "CAH",
+      "ticker": "CAH",
+      "first_seen": "2026-08-11",
+      "seen": 1,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-11",
+      "ref_price": 240.26,
+      "rank": 0.8592057761732852,
+      "reason": "55d breakout \u00b7 RS pctile 86% \u00b7 trail 12%",
+      "why": "book full",
+      "first_price": 240.26
+    },
+    {
+      "issuer": "OMC",
+      "ticker": "OMC",
+      "first_seen": "2026-08-13",
+      "seen": 1,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 88.36,
+      "rank": 0.821917808219178,
+      "reason": "55d breakout \u00b7 RS pctile 82% \u00b7 trail 21%",
+      "why": "book full",
+      "first_price": 88.36
+    },
+    {
+      "issuer": "VRTX",
+      "ticker": "VRTX",
+      "first_seen": "2026-08-11",
+      "seen": 1,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-11",
+      "ref_price": 529.65,
+      "rank": 0.8158844765342961,
+      "reason": "55d breakout \u00b7 RS pctile 82% \u00b7 trail 14%",
+      "why": "book full",
+      "first_price": 529.65
+    },
+    {
+      "issuer": "USB",
+      "ticker": "USB",
+      "first_seen": "2026-08-13",
+      "seen": 1,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 65.17,
+      "rank": 0.8116438356164384,
+      "reason": "55d breakout \u00b7 RS pctile 81% \u00b7 trail 8%",
+      "why": "book full",
+      "first_price": 65.17
+    },
+    {
+      "issuer": "MSI",
+      "ticker": "MSI",
+      "first_seen": "2026-08-04",
+      "seen": 1,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-04",
+      "ref_price": 442.85,
+      "rank": 0.7482014388489209,
+      "reason": "55d breakout \u00b7 RS pctile 75% \u00b7 trail 12%",
+      "why": "book full",
+      "first_price": 442.85
+    },
+    {
+      "issuer": "INSM",
+      "ticker": "INSM",
+      "first_seen": "2026-08-10",
+      "seen": 1,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-10",
+      "ref_price": 134.75,
+      "rank": 0.7472924187725631,
+      "reason": "55d breakout \u00b7 RS pctile 75% \u00b7 trail 25%",
+      "why": "book full",
+      "first_price": 134.75
+    },
+    {
+      "issuer": "ULTA",
+      "ticker": "ULTA",
+      "first_seen": "2026-08-07",
+      "seen": 1,
+      "etfs": [
+        "QUAL"
+      ],
+      "last_seen": "2026-08-07",
+      "ref_price": 565.15,
+      "rank": 0.7220216606498195,
+      "reason": "55d breakout \u00b7 RS pctile 72% \u00b7 trail 15%",
+      "why": "book full",
+      "first_price": 565.15
+    },
+    {
+      "issuer": "DAR",
+      "ticker": "DAR",
+      "first_seen": "2026-08-13",
+      "seen": 1,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 65.74,
+      "rank": 0.5684931506849316,
+      "reason": "55d breakout \u00b7 RS pctile 57% \u00b7 trail 22%",
+      "why": "book full",
+      "first_price": 65.74
+    },
+    {
+      "issuer": "NEM",
+      "ticker": "NEM",
+      "first_seen": "2026-08-12",
+      "seen": 1,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ],
+      "last_seen": "2026-08-12",
+      "ref_price": 117.84,
+      "rank": 0.5451263537906137,
+      "reason": "55d breakout \u00b7 RS pctile 55% \u00b7 trail 24%",
+      "why": "book full",
+      "first_price": 117.84
+    },
+    {
+      "issuer": "NOC",
+      "ticker": "NOC",
+      "first_seen": "2026-08-10",
+      "seen": 1,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-10",
+      "ref_price": 577.89,
+      "rank": 0.5234657039711191,
+      "reason": "55d breakout \u00b7 RS pctile 52% \u00b7 trail 12%",
+      "why": "book full",
+      "first_price": 577.89
+    },
+    {
+      "issuer": "PFE",
+      "ticker": "PFE",
+      "first_seen": "2026-08-10",
+      "seen": 1,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-10",
+      "ref_price": 27.05,
+      "rank": 0.5126353790613718,
+      "reason": "55d breakout \u00b7 RS pctile 51% \u00b7 trail 10%",
+      "why": "book full",
+      "first_price": 27.05
+    },
+    {
+      "issuer": "AU",
+      "ticker": "AU",
+      "first_seen": "2026-08-12",
+      "seen": 1,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-12",
+      "ref_price": 97.92,
+      "rank": 0.5090252707581228,
+      "reason": "55d breakout \u00b7 RS pctile 51% \u00b7 trail 25%",
+      "why": "book full",
+      "first_price": 97.92
+    },
+    {
+      "issuer": "XOM",
+      "ticker": "XOM",
+      "first_seen": "2026-08-10",
+      "seen": 1,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ],
+      "last_seen": "2026-08-10",
+      "ref_price": 159.79,
+      "rank": 0.5054151624548736,
+      "reason": "55d breakout \u00b7 RS pctile 51% \u00b7 trail 12%",
+      "why": "book full",
+      "first_price": 159.79
+    },
+    {
+      "issuer": "UBER",
+      "ticker": "UBER",
+      "first_seen": "2026-08-10",
+      "seen": 1,
+      "etfs": [
+        "DYNF"
+      ],
+      "last_seen": "2026-08-10",
+      "ref_price": 78.03,
+      "rank": 0.5018050541516246,
+      "reason": "55d breakout \u00b7 RS pctile 50% \u00b7 trail 24%",
+      "why": "book full",
+      "first_price": 78.03
+    },
+    {
+      "issuer": "GILD",
+      "ticker": "GILD",
+      "first_seen": "2026-08-13",
+      "seen": 1,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ],
+      "last_seen": "2026-08-13",
+      "ref_price": 138.14,
+      "rank": 0.5,
+      "reason": "55d breakout \u00b7 RS pctile 50% \u00b7 trail 13%",
+      "why": "book full",
+      "first_price": 138.14
+    }
+  ],
+  "trades": [
+    {
+      "date": "2025-12-05",
+      "issuer": "CAT",
+      "ticker": "CAT",
+      "side": "buy",
+      "price": 603.17,
+      "shares": 1.6579073892932341,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "20d breakout \u00b7 RS pctile 98% \u00b7 trail 11% \u00b7 recent ETF add",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "M",
+      "ticker": "M",
+      "side": "buy",
+      "price": 22.85,
+      "shares": 43.7636761487965,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 96% \u00b7 trail 23%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "GM",
+      "ticker": "GM",
+      "side": "buy",
+      "price": 76.05,
+      "shares": 13.149243918474689,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 95% \u00b7 trail 12%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "HAL",
+      "ticker": "HAL",
+      "side": "buy",
+      "price": 28.45,
+      "shares": 35.1493848857645,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 95% \u00b7 trail 14%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "DLTR",
+      "ticker": "DLTR",
+      "side": "buy",
+      "price": 122.44,
+      "shares": 8.167265599477295,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 93% \u00b7 trail 21%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "EXPD",
+      "ticker": "EXPD",
+      "side": "buy",
+      "price": 151.47,
+      "shares": 6.601967386281112,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 92% \u00b7 trail 11%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "UTHR",
+      "ticker": "UTHR",
+      "side": "buy",
+      "price": 489.31,
+      "shares": 2.043694181602665,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 91% \u00b7 trail 8%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "EA",
+      "ticker": "EA",
+      "side": "buy",
+      "price": 203.92,
+      "shares": 4.903883876029816,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "20d breakout \u00b7 RS pctile 90% \u00b7 trail 8% \u00b7 recent ETF add",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "FOX",
+      "ticker": "FOXA",
+      "side": "buy",
+      "price": 68.4,
+      "shares": 14.61988304093567,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 87% \u00b7 trail 8%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "LULU",
+      "ticker": "LULU",
+      "side": "buy",
+      "price": 190.01,
+      "shares": 5.262880901005211,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 84% \u00b7 trail 14%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "PH",
+      "ticker": "PH",
+      "side": "buy",
+      "price": 880.0,
+      "shares": 1.1363636363636365,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 83% \u00b7 trail 9%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "CVNA",
+      "ticker": "CVNA",
+      "side": "buy",
+      "price": 77.89128993550322,
+      "shares": 12.838405947931223,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 81% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "MS",
+      "ticker": "MS",
+      "side": "buy",
+      "price": 176.51,
+      "shares": 5.665401393688743,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 81% \u00b7 trail 13%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "JKHY",
+      "ticker": "JKHY",
+      "side": "buy",
+      "price": 181.71,
+      "shares": 5.503274448296736,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 80% \u00b7 trail 9%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "WMT",
+      "ticker": "WMT",
+      "side": "buy",
+      "price": 115.11,
+      "shares": 8.687342541916427,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "20d breakout \u00b7 RS pctile 78% \u00b7 trail 14% \u00b7 recent ETF add",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "BFB",
+      "ticker": "BFB",
+      "side": "buy",
+      "price": 30.4,
+      "shares": 32.89473684210527,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 76% \u00b7 trail 12%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "C",
+      "ticker": "C",
+      "side": "buy",
+      "price": 108.88,
+      "shares": 9.184423218221896,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "20d breakout \u00b7 RS pctile 74% \u00b7 trail 12% \u00b7 recent ETF add",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "GS",
+      "ticker": "GS",
+      "side": "buy",
+      "price": 854.56,
+      "shares": 1.1701928477813144,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 73% \u00b7 trail 15%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "TJX",
+      "ticker": "TJX",
+      "side": "buy",
+      "price": 153.28,
+      "shares": 6.524008350730689,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 72% \u00b7 trail 9%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "PCAR",
+      "ticker": "PCAR",
+      "side": "buy",
+      "price": 110.33,
+      "shares": 9.063717937097797,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 71% \u00b7 trail 14%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "BK",
+      "ticker": "BK",
+      "side": "buy",
+      "price": 114.02,
+      "shares": 8.770391159445712,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 69% \u00b7 trail 10%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "SLB",
+      "ticker": "SLB",
+      "side": "buy",
+      "price": 38.46,
+      "shares": 26.001040041601662,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 67% \u00b7 trail 15%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "ODFL",
+      "ticker": "ODFL",
+      "side": "buy",
+      "price": 155.15,
+      "shares": 6.445375443119562,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 61% \u00b7 trail 20%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-05",
+      "issuer": "COF",
+      "ticker": "COF",
+      "side": "buy",
+      "price": 230.68,
+      "shares": 4.335009537020981,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 57% \u00b7 trail 14%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2025-12-08",
+      "issuer": "KLAC",
+      "ticker": "KLAC",
+      "side": "buy",
+      "price": 129.25110654989965,
+      "shares": 7.7368776693136665,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "20d breakout \u00b7 RS pctile 94% \u00b7 trail 18% \u00b7 recent ETF add",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-22",
+      "issuer": "BFB",
+      "ticker": "BFB",
+      "side": "sell",
+      "price": 28.1,
+      "shares": 32.89473684210527,
+      "value": 924.342105263158,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -77.65789473684202,
+      "hold_days": 11,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2025-12-22",
+      "issuer": "RKLB",
+      "ticker": "RKLB",
+      "side": "buy",
+      "price": 77.55,
+      "shares": 12.89490651192779,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 100% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2025-12-29",
+      "issuer": "M",
+      "ticker": "M",
+      "side": "sell",
+      "price": 22.1,
+      "shares": 43.7636761487965,
+      "value": 967.1772428884027,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -34.822757111597376,
+      "hold_days": 15,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2025-12-29",
+      "issuer": "MKL",
+      "ticker": "MKL",
+      "side": "buy",
+      "price": 2191.9,
+      "shares": 0.4562251927551439,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 86% \u00b7 trail 8%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-01-09",
+      "issuer": "UTHR",
+      "ticker": "UTHR",
+      "side": "sell",
+      "price": 483.23,
+      "shares": 2.043694181602665,
+      "value": 987.5743393758557,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -14.42566062414417,
+      "hold_days": 23,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-01-09",
+      "issuer": "LRCX",
+      "ticker": "LRCX",
+      "side": "buy",
+      "price": 218.36,
+      "shares": 4.5795933321121085,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "20d breakout \u00b7 RS pctile 100% \u00b7 trail 25% \u00b7 recent ETF add",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-01-12",
+      "issuer": "COF",
+      "ticker": "COF",
+      "side": "sell",
+      "price": 233.2,
+      "shares": 4.335009537020981,
+      "value": 1010.9242240332927,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 8.924224033292793,
+      "hold_days": 24,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-01-12",
+      "issuer": "MKL",
+      "ticker": "MKL",
+      "side": "sell",
+      "price": 2119.42,
+      "shares": 0.4562251927551439,
+      "value": 966.9327980291071,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -35.06720197089284,
+      "hold_days": 9,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-01-12",
+      "issuer": "AMAT",
+      "ticker": "AMAT",
+      "side": "buy",
+      "price": 307.24,
+      "shares": 3.254784533263898,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 97% \u00b7 trail 24%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-01-12",
+      "issuer": "GOOG",
+      "ticker": "GOOG",
+      "side": "buy",
+      "price": 332.73,
+      "shares": 3.0054398461214795,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 96% \u00b7 trail 10%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-01-14",
+      "issuer": "LULU",
+      "ticker": "LULU",
+      "side": "sell",
+      "price": 203.14,
+      "shares": 5.262880901005211,
+      "value": 1069.1016262301985,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 67.10162623019839,
+      "hold_days": 26,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-01-14",
+      "issuer": "MRK",
+      "ticker": "MRK",
+      "side": "buy",
+      "price": 111.01,
+      "shares": 9.008197459688317,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 11%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-01-20",
+      "issuer": "GM",
+      "ticker": "GM",
+      "side": "sell",
+      "price": 77.81,
+      "shares": 13.149243918474689,
+      "value": 1023.1426692965156,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 21.142669296515518,
+      "hold_days": 29,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-01-20",
+      "issuer": "WDC",
+      "ticker": "WDC",
+      "side": "buy",
+      "price": 222.97,
+      "shares": 4.4849082836256,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 100% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-01-22",
+      "issuer": "TJX",
+      "ticker": "TJX",
+      "side": "sell",
+      "price": 153.42,
+      "shares": 6.524008350730689,
+      "value": 1000.9133611691022,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -1.0866388308977926,
+      "hold_days": 31,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-01-22",
+      "issuer": "MU",
+      "ticker": "MU",
+      "side": "buy",
+      "price": 397.58,
+      "shares": 2.5152170632325572,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 100% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-01-27",
+      "issuer": "DLTR",
+      "ticker": "DLTR",
+      "side": "sell",
+      "price": 121.84,
+      "shares": 8.167265599477295,
+      "value": 995.0996406403136,
+      "commission": 1.0,
+      "reason": "time stop: underwater after 30d",
+      "pnl": -6.90035935968633,
+      "hold_days": 34,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-01-27",
+      "issuer": "JKHY",
+      "ticker": "JKHY",
+      "side": "sell",
+      "price": 178.96,
+      "shares": 5.503274448296736,
+      "value": 984.865995267184,
+      "commission": 1.0,
+      "reason": "time stop: underwater after 30d",
+      "pnl": -17.134004732816024,
+      "hold_days": 34,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-01-27",
+      "issuer": "NEM",
+      "ticker": "NEM",
+      "side": "buy",
+      "price": 127.0,
+      "shares": 7.874015748031496,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 99% \u00b7 trail 19%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-01-27",
+      "issuer": "STX",
+      "ticker": "STX",
+      "side": "buy",
+      "price": 371.76,
+      "shares": 2.689907467183129,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 98% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-01-28",
+      "issuer": "EA",
+      "ticker": "EA",
+      "side": "sell",
+      "price": 203.94,
+      "shares": 4.903883876029816,
+      "value": 1000.0980776775207,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -1.9019223224793536,
+      "hold_days": 35,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-01-28",
+      "issuer": "FOX",
+      "ticker": "FOXA",
+      "side": "sell",
+      "price": 71.14,
+      "shares": 14.61988304093567,
+      "value": 1040.0584795321636,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 38.05847953216366,
+      "hold_days": 35,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-01-28",
+      "issuer": "CVNA",
+      "ticker": "CVNA",
+      "side": "sell",
+      "price": 79.89229938503075,
+      "shares": 12.838405947931223,
+      "value": 1025.6897716186809,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": 23.68977161868082,
+      "hold_days": 35,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-01-28",
+      "issuer": "SOLS",
+      "ticker": "SOLS",
+      "side": "buy",
+      "price": 65.57,
+      "shares": 15.250876925423213,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 97% \u00b7 trail 19%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-01-28",
+      "issuer": "DVN",
+      "ticker": "DVN",
+      "side": "buy",
+      "price": 39.83,
+      "shares": 25.106703489831787,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 20%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-01-28",
+      "issuer": "LMT",
+      "ticker": "LMT",
+      "side": "buy",
+      "price": 597.27,
+      "shares": 1.6742846618782126,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 92% \u00b7 trail 17%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-02-02",
+      "issuer": "RKLB",
+      "ticker": "RKLB",
+      "side": "sell",
+      "price": 74.15,
+      "shares": 12.89490651192779,
+      "value": 956.1573178594457,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -45.84268214055437,
+      "hold_days": 27,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-02-02",
+      "issuer": "GEV",
+      "ticker": "GEV",
+      "side": "buy",
+      "price": 754.97,
+      "shares": 1.3245559426202365,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 97% \u00b7 trail 21%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-02-03",
+      "issuer": "KLAC",
+      "ticker": "KLAC",
+      "side": "sell",
+      "price": 143.07241196861887,
+      "shares": 7.7368776693136665,
+      "value": 1106.9337492548527,
+      "commission": 1.0,
+      "reason": "trailing stop 18% (stop 144.93)",
+      "pnl": 104.93374925485271,
+      "hold_days": 38,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-02-03",
+      "issuer": "GLW",
+      "ticker": "GLW",
+      "side": "buy",
+      "price": 112.79,
+      "shares": 8.8660342228921,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-02-04",
+      "issuer": "GS",
+      "ticker": "GS",
+      "side": "sell",
+      "price": 913.3,
+      "shares": 1.1701928477813144,
+      "value": 1068.7371278786743,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 66.73712787867441,
+      "hold_days": 40,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-02-04",
+      "issuer": "XOM",
+      "ticker": "XOM",
+      "side": "buy",
+      "price": 147.59,
+      "shares": 6.7755267972084825,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 92% \u00b7 trail 13%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-02-05",
+      "issuer": "MS",
+      "ticker": "MS",
+      "side": "sell",
+      "price": 175.84,
+      "shares": 5.665401393688743,
+      "value": 996.2041810662286,
+      "commission": 1.0,
+      "reason": "time stop: underwater after 30d",
+      "pnl": -5.795818933771387,
+      "hold_days": 41,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-02-05",
+      "issuer": "JNJ",
+      "ticker": "JNJ",
+      "side": "buy",
+      "price": 237.79,
+      "shares": 4.2053913116615504,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 92% \u00b7 trail 8%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-02-10",
+      "issuer": "GOOG",
+      "ticker": "GOOG",
+      "side": "sell",
+      "price": 318.63,
+      "shares": 3.0054398461214795,
+      "value": 957.623298169687,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -44.37670183031293,
+      "hold_days": 20,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-02-10",
+      "issuer": "PPG",
+      "ticker": "PPG",
+      "side": "buy",
+      "price": 129.14,
+      "shares": 7.7435341489855976,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 15%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-02-12",
+      "issuer": "EXPD",
+      "ticker": "EXPD",
+      "side": "sell",
+      "price": 140.56,
+      "shares": 6.601967386281112,
+      "value": 927.9725358156732,
+      "commission": 1.0,
+      "reason": "trailing stop 11% (stop 146.20)",
+      "pnl": -74.02746418432692,
+      "hold_days": 46,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-02-12",
+      "issuer": "BK",
+      "ticker": "BK",
+      "side": "sell",
+      "price": 114.91,
+      "shares": 8.770391159445712,
+      "value": 1007.8056481319068,
+      "commission": 1.0,
+      "reason": "trailing stop 10% (stop 115.47)",
+      "pnl": 5.805648131906689,
+      "hold_days": 46,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-02-12",
+      "issuer": "C",
+      "ticker": "C",
+      "side": "sell",
+      "price": 111.15,
+      "shares": 9.184423218221896,
+      "value": 1020.8486407053638,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 18.8486407053638,
+      "hold_days": 46,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-02-12",
+      "issuer": "PKG",
+      "ticker": "PKG",
+      "side": "buy",
+      "price": 245.08,
+      "shares": 4.080300310102824,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 88% \u00b7 trail 13%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-02-12",
+      "issuer": "ITW",
+      "ticker": "ITW",
+      "side": "buy",
+      "price": 298.51,
+      "shares": 3.3499715252420357,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 86% \u00b7 trail 15%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-02-12",
+      "issuer": "VZ",
+      "ticker": "VZ",
+      "side": "buy",
+      "price": 49.46,
+      "shares": 20.21835826930853,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 84% \u00b7 trail 23%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-02",
+      "issuer": "STX",
+      "ticker": "STX",
+      "side": "sell",
+      "price": 379.52,
+      "shares": 2.689907467183129,
+      "value": 1020.873681945341,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 18.873681945341055,
+      "hold_days": 23,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-02",
+      "issuer": "CIEN",
+      "ticker": "CIEN",
+      "side": "buy",
+      "price": 353.73,
+      "shares": 2.8270149549091115,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 99% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-03",
+      "issuer": "LRCX",
+      "ticker": "LRCX",
+      "side": "sell",
+      "price": 217.27,
+      "shares": 4.5795933321121085,
+      "value": 995.0082432679978,
+      "commission": 1.0,
+      "reason": "time stop: underwater after 30d",
+      "pnl": -6.991756732002214,
+      "hold_days": 35,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-03",
+      "issuer": "PCAR",
+      "ticker": "PCAR",
+      "side": "sell",
+      "price": 121.19,
+      "shares": 9.063717937097797,
+      "value": 1098.431976796882,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 96.43197679688207,
+      "hold_days": 58,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-03",
+      "issuer": "WDC",
+      "ticker": "WDC",
+      "side": "sell",
+      "price": 250.61,
+      "shares": 4.4849082836256,
+      "value": 1123.9628649594117,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 121.96286495941166,
+      "hold_days": 29,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-03",
+      "issuer": "COP",
+      "ticker": "COP",
+      "side": "buy",
+      "price": 118.52,
+      "shares": 8.437394532568343,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 90% \u00b7 trail 15%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-03",
+      "issuer": "MCK",
+      "ticker": "MCK",
+      "side": "buy",
+      "price": 995.69,
+      "shares": 1.0043286565095562,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 86% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-03",
+      "issuer": "VLO",
+      "ticker": "VLO",
+      "side": "buy",
+      "price": 217.71,
+      "shares": 4.593266271645767,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 86% \u00b7 trail 19%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-04",
+      "issuer": "SLB",
+      "ticker": "SLB",
+      "side": "sell",
+      "price": 47.89,
+      "shares": 26.001040041601662,
+      "value": 1245.1898075923036,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 243.18980759230368,
+      "hold_days": 59,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-04",
+      "issuer": "PPG",
+      "ticker": "PPG",
+      "side": "sell",
+      "price": 117.7,
+      "shares": 7.7435341489855976,
+      "value": 911.4139693356049,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -90.58603066439511,
+      "hold_days": 15,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-04",
+      "issuer": "TPL",
+      "ticker": "TPL",
+      "side": "buy",
+      "price": 536.11,
+      "shares": 1.8652888399768703,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 100% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-04",
+      "issuer": "OMC",
+      "ticker": "OMC",
+      "side": "buy",
+      "price": 85.8,
+      "shares": 11.655011655011656,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 86% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-05",
+      "issuer": "PH",
+      "ticker": "PH",
+      "side": "sell",
+      "price": 965.42,
+      "shares": 1.1363636363636365,
+      "value": 1097.0681818181818,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 95.06818181818178,
+      "hold_days": 60,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-05",
+      "issuer": "MRK",
+      "ticker": "MRK",
+      "side": "sell",
+      "price": 116.07,
+      "shares": 9.008197459688317,
+      "value": 1045.581479146023,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 43.58147914602277,
+      "hold_days": 34,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-05",
+      "issuer": "NEM",
+      "ticker": "NEM",
+      "side": "sell",
+      "price": 116.09,
+      "shares": 7.874015748031496,
+      "value": 914.0944881889765,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -87.9055118110236,
+      "hold_days": 26,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-05",
+      "issuer": "ITW",
+      "ticker": "ITW",
+      "side": "sell",
+      "price": 282.51,
+      "shares": 3.3499715252420357,
+      "value": 946.4004555961275,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -55.59954440387257,
+      "hold_days": 14,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-05",
+      "issuer": "CVX",
+      "ticker": "CVX",
+      "side": "buy",
+      "price": 189.9,
+      "shares": 5.26592943654555,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "20d breakout \u00b7 RS pctile 90% \u00b7 trail 10% \u00b7 recent ETF add",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-05",
+      "issuer": "WM",
+      "ticker": "WM",
+      "side": "buy",
+      "price": 246.09,
+      "shares": 4.063553984314682,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 79% \u00b7 trail 9%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-05",
+      "issuer": "FANG",
+      "ticker": "FANG",
+      "side": "buy",
+      "price": 179.04,
+      "shares": 5.5853440571939235,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 73% \u00b7 trail 15%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-05",
+      "issuer": "CTAS",
+      "ticker": "CTAS",
+      "side": "buy",
+      "price": 204.53,
+      "shares": 4.889258299515963,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 64% \u00b7 trail 9%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-06",
+      "issuer": "CAT",
+      "ticker": "CAT",
+      "side": "sell",
+      "price": 680.9,
+      "shares": 1.6579073892932341,
+      "value": 1128.8691413697632,
+      "commission": 1.0,
+      "reason": "trailing stop 11% (stop 688.97)",
+      "pnl": 126.86914136976313,
+      "hold_days": 61,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-06",
+      "issuer": "MU",
+      "ticker": "MU",
+      "side": "sell",
+      "price": 370.3,
+      "shares": 2.5152170632325572,
+      "value": 931.384878515016,
+      "commission": 1.0,
+      "reason": "time stop: underwater after 30d",
+      "pnl": -70.61512148498409,
+      "hold_days": 30,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-06",
+      "issuer": "PKG",
+      "ticker": "PKG",
+      "side": "sell",
+      "price": 222.52,
+      "shares": 4.080300310102824,
+      "value": 907.9484250040804,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -94.05157499591971,
+      "hold_days": 15,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-06",
+      "issuer": "DUK",
+      "ticker": "DUK",
+      "side": "buy",
+      "price": 132.5,
+      "shares": 7.547169811320755,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 79% \u00b7 trail 8%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-06",
+      "issuer": "EQT",
+      "ticker": "EQT",
+      "side": "buy",
+      "price": 61.96,
+      "shares": 16.139444803098772,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 58% \u00b7 trail 13%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-09",
+      "issuer": "COP",
+      "ticker": "COP",
+      "side": "sell",
+      "price": 117.07,
+      "shares": 8.437394532568343,
+      "value": 987.7657779277758,
+      "commission": 1.0,
+      "reason": "dropped from all tracked ETFs",
+      "pnl": -14.23422207222412,
+      "hold_days": 4,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-09",
+      "issuer": "CVX",
+      "ticker": "CVX",
+      "side": "sell",
+      "price": 189.94,
+      "shares": 5.26592943654555,
+      "value": 1000.2106371774618,
+      "commission": 1.0,
+      "reason": "dropped from all tracked ETFs",
+      "pnl": -1.7893628225382199,
+      "hold_days": 2,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-09",
+      "issuer": "VRT",
+      "ticker": "VRT",
+      "side": "buy",
+      "price": 264.35,
+      "shares": 3.782863627766219,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "20d breakout \u00b7 RS pctile 98% \u00b7 trail 25% \u00b7 recent ETF add",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-09",
+      "issuer": "TW",
+      "ticker": "TW",
+      "side": "buy",
+      "price": 126.57,
+      "shares": 7.900766374338311,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 83% \u00b7 trail 11%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-11",
+      "issuer": "UTHR",
+      "ticker": "UTHR",
+      "side": "buy",
+      "price": 544.71,
+      "shares": 1.835839253914927,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "20d breakout \u00b7 RS pctile 74% \u00b7 trail 25% \u00b7 recent ETF add",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-12",
+      "issuer": "ODFL",
+      "ticker": "ODFL",
+      "side": "sell",
+      "price": 176.24,
+      "shares": 6.445375443119562,
+      "value": 1135.9329680953915,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 133.93296809539157,
+      "hold_days": 65,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-12",
+      "issuer": "SOLS",
+      "ticker": "SOLS",
+      "side": "sell",
+      "price": 72.08,
+      "shares": 15.250876925423213,
+      "value": 1099.2832087845052,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 97.28320878450519,
+      "hold_days": 30,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-12",
+      "issuer": "OMC",
+      "ticker": "OMC",
+      "side": "sell",
+      "price": 77.91,
+      "shares": 11.655011655011656,
+      "value": 908.0419580419581,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -93.95804195804197,
+      "hold_days": 6,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-12",
+      "issuer": "CTAS",
+      "ticker": "CTAS",
+      "side": "sell",
+      "price": 193.26,
+      "shares": 4.889258299515963,
+      "value": 944.898058964455,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -57.101941035544954,
+      "hold_days": 5,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-12",
+      "issuer": "SO",
+      "ticker": "SO",
+      "side": "buy",
+      "price": 97.84,
+      "shares": 10.220768601798856,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 85% \u00b7 trail 12%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-12",
+      "issuer": "EXC",
+      "ticker": "EXC",
+      "side": "buy",
+      "price": 49.48,
+      "shares": 20.21018593371059,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 80% \u00b7 trail 14%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-13",
+      "issuer": "HAL",
+      "ticker": "HAL",
+      "side": "sell",
+      "price": 33.69,
+      "shares": 35.1493848857645,
+      "value": 1184.182776801406,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 182.1827768014059,
+      "hold_days": 66,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-13",
+      "issuer": "LNT",
+      "ticker": "LNT",
+      "side": "buy",
+      "price": 72.79,
+      "shares": 13.738150844896277,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 74% \u00b7 trail 8%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-13",
+      "issuer": "ATO",
+      "ticker": "ATO",
+      "side": "buy",
+      "price": 188.58,
+      "shares": 5.302789267154523,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 72% \u00b7 trail 8%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-16",
+      "issuer": "PWR",
+      "ticker": "PWR",
+      "side": "buy",
+      "price": 574.02,
+      "shares": 1.742099578411902,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 93% \u00b7 trail 19%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-17",
+      "issuer": "LMT",
+      "ticker": "LMT",
+      "side": "sell",
+      "price": 636.33,
+      "shares": 1.6742846618782126,
+      "value": 1065.3975588929632,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 63.397558892963076,
+      "hold_days": 33,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-17",
+      "issuer": "JNJ",
+      "ticker": "JNJ",
+      "side": "sell",
+      "price": 238.11,
+      "shares": 4.2053913116615504,
+      "value": 1001.3457252197319,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -0.654274780268213,
+      "hold_days": 27,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-17",
+      "issuer": "WDC",
+      "ticker": "WDC",
+      "side": "buy",
+      "price": 313.81,
+      "shares": 3.186641598419426,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 99% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-17",
+      "issuer": "RKLB",
+      "ticker": "RKLB",
+      "side": "buy",
+      "price": 78.59,
+      "shares": 12.724265173686218,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "20d breakout \u00b7 RS pctile 95% \u00b7 trail 25% \u00b7 recent ETF add",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-18",
+      "issuer": "WMT",
+      "ticker": "WMT",
+      "side": "sell",
+      "price": 121.98,
+      "shares": 8.687342541916427,
+      "value": 1059.6820432629659,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 57.6820432629659,
+      "hold_days": 69,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-18",
+      "issuer": "RKLB",
+      "ticker": "RKLB",
+      "side": "sell",
+      "price": 69.48,
+      "shares": 12.724265173686218,
+      "value": 884.0819442677185,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -117.91805573228145,
+      "hold_days": 1,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-19",
+      "issuer": "MCK",
+      "ticker": "MCK",
+      "side": "sell",
+      "price": 898.95,
+      "shares": 1.0043286565095562,
+      "value": 902.8412457692656,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -99.15875423073447,
+      "hold_days": 12,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-19",
+      "issuer": "DELL",
+      "ticker": "DELL",
+      "side": "buy",
+      "price": 156.76,
+      "shares": 6.379178361826997,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 90% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "issuer": "SO",
+      "ticker": "SO",
+      "side": "sell",
+      "price": 93.39,
+      "shares": 10.220768601798856,
+      "value": 954.5175797219952,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -47.48242027800494,
+      "hold_days": 6,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "issuer": "EXC",
+      "ticker": "EXC",
+      "side": "sell",
+      "price": 46.44,
+      "shares": 20.21018593371059,
+      "value": 938.5610347615197,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -63.43896523848018,
+      "hold_days": 6,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "issuer": "LNT",
+      "ticker": "LNT",
+      "side": "sell",
+      "price": 68.71,
+      "shares": 13.738150844896277,
+      "value": 943.9483445528231,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -58.051655447176984,
+      "hold_days": 5,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "issuer": "ATO",
+      "ticker": "ATO",
+      "side": "sell",
+      "price": 180.49,
+      "shares": 5.302789267154523,
+      "value": 957.1004348287199,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -44.89956517128011,
+      "hold_days": 5,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-23",
+      "issuer": "WM",
+      "ticker": "WM",
+      "side": "sell",
+      "price": 227.53,
+      "shares": 4.063553984314682,
+      "value": 924.5804380511196,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -77.4195619488805,
+      "hold_days": 12,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-24",
+      "issuer": "FLEX",
+      "ticker": "FLEX",
+      "side": "buy",
+      "price": 69.09,
+      "shares": 14.473874656245476,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 75% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-25",
+      "issuer": "TW",
+      "ticker": "TW",
+      "side": "sell",
+      "price": 119.95,
+      "shares": 7.900766374338311,
+      "value": 947.6969266018805,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -54.303073398119544,
+      "hold_days": 12,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-25",
+      "issuer": "FIX",
+      "ticker": "FIX",
+      "side": "buy",
+      "price": 1470.64,
+      "shares": 0.6799760648425175,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 97% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-25",
+      "issuer": "SLB",
+      "ticker": "SLB",
+      "side": "buy",
+      "price": 51.89,
+      "shares": 19.27153594141453,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-25",
+      "issuer": "JBL",
+      "ticker": "JBL",
+      "side": "buy",
+      "price": 283.24,
+      "shares": 3.530574777573789,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 88% \u00b7 trail 22%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-25",
+      "issuer": "FFIV",
+      "ticker": "FFIV",
+      "side": "buy",
+      "price": 297.86,
+      "shares": 3.3572819445377022,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 82% \u00b7 trail 14%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-26",
+      "issuer": "AMAT",
+      "ticker": "AMAT",
+      "side": "sell",
+      "price": 338.55,
+      "shares": 3.254784533263898,
+      "value": 1101.9073037364926,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": 99.90730373649265,
+      "hold_days": 51,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-27",
+      "issuer": "TPL",
+      "ticker": "TPL",
+      "side": "sell",
+      "price": 511.75,
+      "shares": 1.8652888399768703,
+      "value": 954.5615638581634,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -47.43843614183659,
+      "hold_days": 17,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-27",
+      "issuer": "HAL",
+      "ticker": "HAL",
+      "side": "buy",
+      "price": 40.42,
+      "shares": 24.740227610094013,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 96% \u00b7 trail 17%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-27",
+      "issuer": "T",
+      "ticker": "T",
+      "side": "buy",
+      "price": 29.1,
+      "shares": 34.36426116838488,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 87% \u00b7 trail 12%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "issuer": "VRT",
+      "ticker": "VRT",
+      "side": "sell",
+      "price": 234.22,
+      "shares": 3.782863627766219,
+      "value": 886.0223188954038,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -115.97768110459627,
+      "hold_days": 15,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "issuer": "PWR",
+      "ticker": "PWR",
+      "side": "sell",
+      "price": 533.78,
+      "shares": 1.742099578411902,
+      "value": 929.897912964705,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -72.10208703529496,
+      "hold_days": 10,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "issuer": "WDC",
+      "ticker": "WDC",
+      "side": "sell",
+      "price": 251.67,
+      "shares": 3.186641598419426,
+      "value": 801.9820910742169,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -200.01790892578316,
+      "hold_days": 9,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "issuer": "FLEX",
+      "ticker": "FLEX",
+      "side": "sell",
+      "price": 60.57,
+      "shares": 14.473874656245476,
+      "value": 876.6825879287885,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -125.3174120712115,
+      "hold_days": 4,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "issuer": "FIX",
+      "ticker": "FIX",
+      "side": "sell",
+      "price": 1273.18,
+      "shares": 0.6799760648425175,
+      "value": 865.7319262361965,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -136.26807376380353,
+      "hold_days": 3,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "issuer": "JBL",
+      "ticker": "JBL",
+      "side": "sell",
+      "price": 247.48,
+      "shares": 3.530574777573789,
+      "value": 873.7466459539613,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -128.25335404603877,
+      "hold_days": 3,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "issuer": "ETR",
+      "ticker": "ETR",
+      "side": "buy",
+      "price": 111.06,
+      "shares": 9.004141905276427,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 90% \u00b7 trail 16%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "issuer": "PFE",
+      "ticker": "PFE",
+      "side": "buy",
+      "price": 27.77,
+      "shares": 36.010082823190494,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 80% \u00b7 trail 12%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-03-31",
+      "issuer": "RPRX",
+      "ticker": "RPRX",
+      "side": "buy",
+      "price": 47.97,
+      "shares": 20.846362309776943,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 92% \u00b7 trail 12%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-04-01",
+      "issuer": "VZ",
+      "ticker": "VZ",
+      "side": "sell",
+      "price": 49.39,
+      "shares": 20.21835826930853,
+      "value": 998.5847149211484,
+      "commission": 1.0,
+      "reason": "time stop: underwater after 30d",
+      "pnl": -3.415285078851603,
+      "hold_days": 33,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-04-01",
+      "issuer": "EQT",
+      "ticker": "EQT",
+      "side": "sell",
+      "price": 61.09,
+      "shares": 16.139444803098772,
+      "value": 985.9586830213041,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -16.04131697869589,
+      "hold_days": 18,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-04-01",
+      "issuer": "TJX",
+      "ticker": "TJX",
+      "side": "buy",
+      "price": 162.03,
+      "shares": 6.171696599395173,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 67% \u00b7 trail 9%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-02",
+      "issuer": "SLB",
+      "ticker": "SLB",
+      "side": "sell",
+      "price": 49.44,
+      "shares": 19.27153594141453,
+      "value": 952.7847369435343,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -49.21526305646565,
+      "hold_days": 6,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-06",
+      "issuer": "STX",
+      "ticker": "STX",
+      "side": "buy",
+      "price": 453.3,
+      "shares": 2.2060445621001543,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 98% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-04-06",
+      "issuer": "COST",
+      "ticker": "COST",
+      "side": "buy",
+      "price": 1018.55,
+      "shares": 0.9817878356487164,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 83% \u00b7 trail 8%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-07",
+      "issuer": "NI",
+      "ticker": "NI",
+      "side": "buy",
+      "price": 47.65,
+      "shares": 20.986358866736623,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 82% \u00b7 trail 9%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-04-08",
+      "issuer": "T",
+      "ticker": "T",
+      "side": "sell",
+      "price": 27.35,
+      "shares": 34.36426116838488,
+      "value": 939.8625429553265,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -62.13745704467354,
+      "hold_days": 7,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-04-08",
+      "issuer": "TER",
+      "ticker": "TER",
+      "side": "buy",
+      "price": 358.29,
+      "shares": 2.791035194953808,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 98% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-04-08",
+      "issuer": "SOLS",
+      "ticker": "SOLS",
+      "side": "buy",
+      "price": 83.35,
+      "shares": 11.99760047990402,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 98% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-04-08",
+      "issuer": "INTC",
+      "ticker": "INTC",
+      "side": "buy",
+      "price": 58.95,
+      "shares": 16.963528413910094,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-04-08",
+      "issuer": "AEP",
+      "ticker": "AEP",
+      "side": "buy",
+      "price": 134.71,
+      "shares": 7.423353871279043,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 81% \u00b7 trail 9%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-04-08",
+      "issuer": "ATO",
+      "ticker": "ATO",
+      "side": "buy",
+      "price": 189.66,
+      "shares": 5.272593061267531,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 78% \u00b7 trail 8%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-08",
+      "issuer": "NFLX",
+      "ticker": "NFLX",
+      "side": "buy",
+      "price": 99.39,
+      "shares": 10.06137438374082,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 70% \u00b7 trail 13%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-10",
+      "issuer": "XOM",
+      "ticker": "XOM",
+      "side": "sell",
+      "price": 152.51,
+      "shares": 6.7755267972084825,
+      "value": 1033.3355918422656,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 31.33559184226565,
+      "hold_days": 45,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-04-10",
+      "issuer": "PFE",
+      "ticker": "PFE",
+      "side": "sell",
+      "price": 26.92,
+      "shares": 36.010082823190494,
+      "value": 969.3914296002881,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -32.608570399711844,
+      "hold_days": 8,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-04-10",
+      "issuer": "MPWR",
+      "ticker": "MPWR",
+      "side": "buy",
+      "price": 1353.85,
+      "shares": 0.7386342652435647,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 96% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-10",
+      "issuer": "AMAT",
+      "ticker": "AMAT",
+      "side": "buy",
+      "price": 399.49,
+      "shares": 2.5031915692507947,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-13",
+      "issuer": "COST",
+      "ticker": "COST",
+      "side": "sell",
+      "price": 980.85,
+      "shares": 0.9817878356487164,
+      "value": 962.9865985960436,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -39.01340140395654,
+      "hold_days": 5,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-13",
+      "issuer": "BE",
+      "ticker": "BE",
+      "side": "buy",
+      "price": 176.67,
+      "shares": 5.660270560932813,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 95% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-04-14",
+      "issuer": "DVN",
+      "ticker": "DVN",
+      "side": "sell",
+      "price": 45.25,
+      "shares": 25.106703489831787,
+      "value": 1136.0783329148883,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 134.07833291488834,
+      "hold_days": 52,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-14",
+      "issuer": "VRT",
+      "ticker": "VRT",
+      "side": "buy",
+      "price": 310.51,
+      "shares": 3.2205081961933595,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 99% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-04-15",
+      "issuer": "FANG",
+      "ticker": "FANG",
+      "side": "sell",
+      "price": 185.87,
+      "shares": 5.5853440571939235,
+      "value": 1038.1478999106346,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 36.147899910634564,
+      "hold_days": 28,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-15",
+      "issuer": "DUK",
+      "ticker": "DUK",
+      "side": "sell",
+      "price": 127.98,
+      "shares": 7.547169811320755,
+      "value": 965.8867924528303,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -36.11320754716978,
+      "hold_days": 27,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-04-15",
+      "issuer": "GRMN",
+      "ticker": "GRMN",
+      "side": "buy",
+      "price": 265.84,
+      "shares": 3.761661149563648,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 16%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-15",
+      "issuer": "ALL",
+      "ticker": "ALL",
+      "side": "buy",
+      "price": 218.23,
+      "shares": 4.582321404023278,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 84% \u00b7 trail 10%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-04-16",
+      "issuer": "TJX",
+      "ticker": "TJX",
+      "side": "sell",
+      "price": 157.48,
+      "shares": 6.171696599395173,
+      "value": 971.9187804727518,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -30.08121952724811,
+      "hold_days": 10,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-16",
+      "issuer": "HPE",
+      "ticker": "HPE",
+      "side": "buy",
+      "price": 25.89,
+      "shares": 38.62495171881035,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-04-17",
+      "issuer": "VLO",
+      "ticker": "VLO",
+      "side": "sell",
+      "price": 223.65,
+      "shares": 4.593266271645767,
+      "value": 1027.2840016535758,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 25.284001653575846,
+      "hold_days": 32,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-04-17",
+      "issuer": "WDC",
+      "ticker": "WDC",
+      "side": "buy",
+      "price": 372.52,
+      "shares": 2.6844196284763235,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 98% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-04-21",
+      "issuer": "NFLX",
+      "ticker": "NFLX",
+      "side": "sell",
+      "price": 92.58,
+      "shares": 10.06137438374082,
+      "value": 931.482040446725,
+      "commission": 1.0,
+      "reason": "trailing stop 13% (stop 93.56)",
+      "pnl": -70.517959553275,
+      "hold_days": 9,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-21",
+      "issuer": "ATO",
+      "ticker": "ATO",
+      "side": "sell",
+      "price": 182.93,
+      "shares": 5.272593061267531,
+      "value": 964.5154486976695,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -37.48455130233043,
+      "hold_days": 9,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-21",
+      "issuer": "CRDO",
+      "ticker": "CRDO",
+      "side": "buy",
+      "price": 183.32,
+      "shares": 5.454942177612917,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 95% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-04-21",
+      "issuer": "JBL",
+      "ticker": "JBL",
+      "side": "buy",
+      "price": 333.68,
+      "shares": 2.9968832414289137,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 95% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-04-29",
+      "issuer": "TER",
+      "ticker": "TER",
+      "side": "sell",
+      "price": 306.33,
+      "shares": 2.791035194953808,
+      "value": 854.9778112702,
+      "commission": 1.0,
+      "reason": "trailing stop 25% (stop 313.56)",
+      "pnl": -147.02218872979998,
+      "hold_days": 15,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-04-29",
+      "issuer": "SOLS",
+      "ticker": "SOLS",
+      "side": "sell",
+      "price": 76.96,
+      "shares": 11.99760047990402,
+      "value": 923.3353329334134,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -78.6646670665867,
+      "hold_days": 15,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-04-29",
+      "issuer": "UNH",
+      "ticker": "UNH",
+      "side": "buy",
+      "price": 370.74,
+      "shares": 2.6973080865296435,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 93% \u00b7 trail 20%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-04-29",
+      "issuer": "FANG",
+      "ticker": "FANG",
+      "side": "buy",
+      "price": 205.32,
+      "shares": 4.870446132865771,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 92% \u00b7 trail 17%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "issuer": "GRMN",
+      "ticker": "GRMN",
+      "side": "sell",
+      "price": 242.42,
+      "shares": 3.761661149563648,
+      "value": 911.9018958772194,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -90.09810412278058,
+      "hold_days": 12,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-05-01",
+      "issuer": "AMD",
+      "ticker": "AMD",
+      "side": "buy",
+      "price": 360.54,
+      "shares": 2.7736173517501523,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 98% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-05-06",
+      "issuer": "AEP",
+      "ticker": "AEP",
+      "side": "sell",
+      "price": 132.56,
+      "shares": 7.423353871279043,
+      "value": 984.03978917675,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -17.960210823249987,
+      "hold_days": 20,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-05-06",
+      "issuer": "MU",
+      "ticker": "MU",
+      "side": "buy",
+      "price": 666.59,
+      "shares": 1.5001725198397815,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 97% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-05-07",
+      "issuer": "NI",
+      "ticker": "NI",
+      "side": "sell",
+      "price": 47.02,
+      "shares": 20.986358866736623,
+      "value": 986.7785939139561,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -15.221406086043977,
+      "hold_days": 22,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-05-07",
+      "issuer": "QCOM",
+      "ticker": "QCOM",
+      "side": "buy",
+      "price": 202.55,
+      "shares": 4.937052579609973,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 95% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-05-08",
+      "issuer": "UTHR",
+      "ticker": "UTHR",
+      "side": "sell",
+      "price": 564.94,
+      "shares": 1.835839253914927,
+      "value": 1037.139028106699,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 35.13902810669901,
+      "hold_days": 41,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-05-08",
+      "issuer": "FANG",
+      "ticker": "FANG",
+      "side": "sell",
+      "price": 188.7,
+      "shares": 4.870446132865771,
+      "value": 919.053185271771,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -82.94681472822914,
+      "hold_days": 7,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-05-08",
+      "issuer": "FLEX",
+      "ticker": "FLEX",
+      "side": "buy",
+      "price": 142.17,
+      "shares": 7.033832735457551,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 100% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-05-08",
+      "issuer": "WST",
+      "ticker": "WST",
+      "side": "buy",
+      "price": 325.92,
+      "shares": 3.0682376043200783,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 92% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-05-11",
+      "issuer": "HAL",
+      "ticker": "HAL",
+      "side": "sell",
+      "price": 40.26,
+      "shares": 24.740227610094013,
+      "value": 996.0415635823849,
+      "commission": 1.0,
+      "reason": "time stop: underwater after 30d",
+      "pnl": -5.958436417615133,
+      "hold_days": 30,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-05-11",
+      "issuer": "RKLB",
+      "ticker": "RKLB",
+      "side": "buy",
+      "price": 117.35,
+      "shares": 8.52151682999574,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 96% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-05-15",
+      "issuer": "ETR",
+      "ticker": "ETR",
+      "side": "sell",
+      "price": 109.03,
+      "shares": 9.004141905276427,
+      "value": 981.7215919322888,
+      "commission": 1.0,
+      "reason": "time stop: underwater after 30d",
+      "pnl": -20.27840806771116,
+      "hold_days": 33,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-05-15",
+      "issuer": "ALAB",
+      "ticker": "ALAB",
+      "side": "buy",
+      "price": 232.68,
+      "shares": 4.297747980058449,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 98% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-05-18",
+      "issuer": "CRDO",
+      "ticker": "CRDO",
+      "side": "sell",
+      "price": 156.27,
+      "shares": 5.454942177612917,
+      "value": 852.4438140955706,
+      "commission": 1.0,
+      "reason": "trailing stop 25% (stop 157.66)",
+      "pnl": -149.55618590442933,
+      "hold_days": 19,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-05-18",
+      "issuer": "MPWR",
+      "ticker": "MPWR",
+      "side": "sell",
+      "price": 1486.33,
+      "shares": 0.7386342652435647,
+      "value": 1097.8542674594673,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 95.85426745946747,
+      "hold_days": 26,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-05-18",
+      "issuer": "CRWD",
+      "ticker": "CRWD",
+      "side": "buy",
+      "price": 155.34415637860081,
+      "shares": 6.437319712000145,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 96% \u00b7 trail 21%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-05-18",
+      "issuer": "FTNT",
+      "ticker": "FTNT",
+      "side": "buy",
+      "price": 126.5,
+      "shares": 7.905138339920948,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 96% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-05-26",
+      "issuer": "ALL",
+      "ticker": "ALL",
+      "side": "sell",
+      "price": 212.82,
+      "shares": 4.582321404023278,
+      "value": 975.209641204234,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -26.79035879576592,
+      "hold_days": 28,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-05-26",
+      "issuer": "RVMD",
+      "ticker": "RVMD",
+      "side": "buy",
+      "price": 154.89,
+      "shares": 6.4561947188327204,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-05-28",
+      "issuer": "GEV",
+      "ticker": "GEV",
+      "side": "sell",
+      "price": 996.0,
+      "shares": 1.3245559426202365,
+      "value": 1319.2577188497555,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 317.2577188497556,
+      "hold_days": 80,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-05-28",
+      "issuer": "ASTS",
+      "ticker": "ASTS",
+      "side": "buy",
+      "price": 133.09,
+      "shares": 7.5137125253587795,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 91% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-05-29",
+      "issuer": "QCOM",
+      "ticker": "QCOM",
+      "side": "sell",
+      "price": 243.29,
+      "shares": 4.937052579609973,
+      "value": 1201.1355220933103,
+      "commission": 1.0,
+      "reason": "dropped from all tracked ETFs",
+      "pnl": 199.13552209331021,
+      "hold_days": 15,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-05-29",
+      "issuer": "ASTS",
+      "ticker": "ASTS",
+      "side": "sell",
+      "price": 133.09,
+      "shares": 7.5137125253587795,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "dropped from all tracked ETFs",
+      "pnl": -2.0,
+      "hold_days": 1,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-05-29",
+      "issuer": "SNOW",
+      "ticker": "SNOW",
+      "side": "buy",
+      "price": 255.55,
+      "shares": 3.9131285462727448,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 93% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-05-29",
+      "issuer": "CSCO",
+      "ticker": "CSCO",
+      "side": "buy",
+      "price": 120.42,
+      "shares": 8.304268393954493,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "20d breakout \u00b7 RS pctile 93% \u00b7 trail 25% \u00b7 recent ETF add",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-06-05",
+      "issuer": "VRT",
+      "ticker": "VRT",
+      "side": "sell",
+      "price": 300.51,
+      "shares": 3.2205081961933595,
+      "value": 967.7949180380664,
+      "commission": 1.0,
+      "reason": "time stop: underwater after 30d",
+      "pnl": -34.205081961933594,
+      "hold_days": 37,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-06-05",
+      "issuer": "RKLB",
+      "ticker": "RKLB",
+      "side": "sell",
+      "price": 110.08,
+      "shares": 8.52151682999574,
+      "value": 938.048572645931,
+      "commission": 1.0,
+      "reason": "trailing stop 25% (stop 112.67)",
+      "pnl": -63.951427354069,
+      "hold_days": 18,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-06-05",
+      "issuer": "CIEN",
+      "ticker": "CIEN",
+      "side": "sell",
+      "price": 488.21,
+      "shares": 2.8270149549091115,
+      "value": 1380.1769711361771,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 378.1769711361772,
+      "hold_days": 67,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-06-05",
+      "issuer": "INTC",
+      "ticker": "INTC",
+      "side": "sell",
+      "price": 99.17,
+      "shares": 16.963528413910094,
+      "value": 1682.273112807464,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 680.2731128074639,
+      "hold_days": 41,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-06-05",
+      "issuer": "EXEL",
+      "ticker": "EXEL",
+      "side": "buy",
+      "price": 52.7,
+      "shares": 18.975332068311193,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 84% \u00b7 trail 20%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-06-05",
+      "issuer": "MET",
+      "ticker": "MET",
+      "side": "buy",
+      "price": 84.49,
+      "shares": 11.835720203574388,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 81% \u00b7 trail 11%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-06-05",
+      "issuer": "AMG",
+      "ticker": "AMG",
+      "side": "buy",
+      "price": 336.81,
+      "shares": 2.969032985956474,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 79% \u00b7 trail 16%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-06-05",
+      "issuer": "GWW",
+      "ticker": "GWW",
+      "side": "buy",
+      "price": 1300.01,
+      "shares": 0.7692248521165221,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 76% \u00b7 trail 8%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-06-08",
+      "issuer": "BE",
+      "ticker": "BE",
+      "side": "sell",
+      "price": 253.57,
+      "shares": 5.660270560932813,
+      "value": 1435.2748061357333,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 433.27480613573334,
+      "hold_days": 39,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-06-08",
+      "issuer": "ODFL",
+      "ticker": "ODFL",
+      "side": "buy",
+      "price": 247.01,
+      "shares": 4.04841909234444,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "20d breakout \u00b7 RS pctile 89% \u00b7 trail 15% \u00b7 recent ETF add",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-06-09",
+      "issuer": "GLW",
+      "ticker": "GLW",
+      "side": "sell",
+      "price": 173.94,
+      "shares": 8.8660342228921,
+      "value": 1542.157992729852,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 540.1579927298519,
+      "hold_days": 87,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-06-09",
+      "issuer": "KLAC",
+      "ticker": "KLAC",
+      "side": "buy",
+      "price": 225.8028726509761,
+      "shares": 4.428641621161755,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 93% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-06-10",
+      "issuer": "RVMD",
+      "ticker": "RVMD",
+      "side": "sell",
+      "price": 144.19,
+      "shares": 6.4561947188327204,
+      "value": 930.91871650849,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -71.08128349151004,
+      "hold_days": 11,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-06-10",
+      "issuer": "CRDO",
+      "ticker": "CRDO",
+      "side": "buy",
+      "price": 237.68,
+      "shares": 4.207337596768765,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 97% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-06-18",
+      "issuer": "RPRX",
+      "ticker": "RPRX",
+      "side": "sell",
+      "price": 52.96,
+      "shares": 20.846362309776943,
+      "value": 1104.023347925787,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 102.023347925787,
+      "hold_days": 55,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-06-18",
+      "issuer": "SNDK",
+      "ticker": "SNDK",
+      "side": "buy",
+      "price": 2184.75,
+      "shares": 0.4577182744021055,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 100% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-06-23",
+      "issuer": "ODFL",
+      "ticker": "ODFL",
+      "side": "sell",
+      "price": 217.58,
+      "shares": 4.04841909234444,
+      "value": 880.8550261123032,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -121.14497388769676,
+      "hold_days": 11,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-06-23",
+      "issuer": "VIRT",
+      "ticker": "VIRT",
+      "side": "buy",
+      "price": 63.41,
+      "shares": 15.770383220312254,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 90% \u00b7 trail 19%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-06-26",
+      "issuer": "CSCO",
+      "ticker": "CSCO",
+      "side": "sell",
+      "price": 113.77,
+      "shares": 8.304268393954493,
+      "value": 944.7766151802026,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -57.223384819797424,
+      "hold_days": 20,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-06-26",
+      "issuer": "RVMD",
+      "ticker": "RVMD",
+      "side": "buy",
+      "price": 182.08,
+      "shares": 5.492091388400703,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 96% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "issuer": "STX",
+      "ticker": "STX",
+      "side": "sell",
+      "price": 820.16,
+      "shares": 2.2060445621001543,
+      "value": 1809.3095080520625,
+      "commission": 1.0,
+      "reason": "trailing stop 25% (stop 820.53)",
+      "pnl": 807.3095080520625,
+      "hold_days": 62,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "issuer": "HPE",
+      "ticker": "HPE",
+      "side": "sell",
+      "price": 41.23,
+      "shares": 38.62495171881035,
+      "value": 1592.5067593665506,
+      "commission": 1.0,
+      "reason": "trailing stop 25% (stop 42.11)",
+      "pnl": 590.5067593665507,
+      "hold_days": 54,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "issuer": "WDC",
+      "ticker": "WDC",
+      "side": "sell",
+      "price": 539.0,
+      "shares": 2.6844196284763235,
+      "value": 1446.9021797487385,
+      "commission": 1.0,
+      "reason": "trailing stop 25% (stop 559.67)",
+      "pnl": 444.9021797487384,
+      "hold_days": 53,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "issuer": "FLEX",
+      "ticker": "FLEX",
+      "side": "sell",
+      "price": 136.85,
+      "shares": 7.033832735457551,
+      "value": 962.5800098473659,
+      "commission": 1.0,
+      "reason": "time stop: underwater after 30d",
+      "pnl": -39.41999015263412,
+      "hold_days": 38,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "issuer": "SNDK",
+      "ticker": "SNDK",
+      "side": "sell",
+      "price": 1745.0,
+      "shares": 0.4577182744021055,
+      "value": 798.7183888316741,
+      "commission": 1.0,
+      "reason": "trailing stop 25% (stop 1751.25)",
+      "pnl": -203.2816111683259,
+      "hold_days": 10,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "issuer": "JBL",
+      "ticker": "JBL",
+      "side": "sell",
+      "price": 341.3,
+      "shares": 2.9968832414289137,
+      "value": 1022.8362502996882,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 20.836250299688338,
+      "hold_days": 51,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "issuer": "DVA",
+      "ticker": "DVA",
+      "side": "buy",
+      "price": 234.91,
+      "shares": 4.256949470009791,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 10%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "issuer": "HOOD",
+      "ticker": "HOOD",
+      "side": "buy",
+      "price": 112.73,
+      "shares": 8.870753126940476,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "issuer": "TROW",
+      "ticker": "TROW",
+      "side": "buy",
+      "price": 118.55,
+      "shares": 8.435259384226065,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 88% \u00b7 trail 12%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "issuer": "ABBV",
+      "ticker": "ABBV",
+      "side": "buy",
+      "price": 261.07,
+      "shares": 3.830390316773279,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 85% \u00b7 trail 18%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "issuer": "GE",
+      "ticker": "GE",
+      "side": "buy",
+      "price": 377.52,
+      "shares": 2.648866285229922,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 84% \u00b7 trail 14%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-02",
+      "issuer": "HALO",
+      "ticker": "HALO",
+      "side": "buy",
+      "price": 79.45,
+      "shares": 12.586532410320956,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 83% \u00b7 trail 14%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-07",
+      "issuer": "KLAC",
+      "ticker": "KLAC",
+      "side": "sell",
+      "price": 216.47,
+      "shares": 4.428641621161755,
+      "value": 958.668051732885,
+      "commission": 1.0,
+      "reason": "trailing stop 25% (stop 226.28)",
+      "pnl": -43.331948267114996,
+      "hold_days": 19,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-07",
+      "issuer": "MOH",
+      "ticker": "MOH",
+      "side": "buy",
+      "price": 232.9,
+      "shares": 4.293688278231,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 21%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-13",
+      "issuer": "ALAB",
+      "ticker": "ALAB",
+      "side": "sell",
+      "price": 362.05,
+      "shares": 4.297747980058449,
+      "value": 1555.9996561801615,
+      "commission": 1.0,
+      "reason": "trailing stop 25% (stop 362.26)",
+      "pnl": 553.9996561801615,
+      "hold_days": 39,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-07-13",
+      "issuer": "MU",
+      "ticker": "MU",
+      "side": "sell",
+      "price": 937.0,
+      "shares": 1.5001725198397815,
+      "value": 1405.6616510898752,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 403.66165108987525,
+      "hold_days": 46,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-07-13",
+      "issuer": "CRDO",
+      "ticker": "CRDO",
+      "side": "sell",
+      "price": 236.88,
+      "shares": 4.207337596768765,
+      "value": 996.634129922585,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -5.36587007741506,
+      "hold_days": 22,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-07-13",
+      "issuer": "CVS",
+      "ticker": "CVS",
+      "side": "buy",
+      "price": 105.9,
+      "shares": 9.442870632672332,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 93% \u00b7 trail 12%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-13",
+      "issuer": "DLTR",
+      "ticker": "DLTR",
+      "side": "buy",
+      "price": 126.38,
+      "shares": 7.912644405760405,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 89% \u00b7 trail 20%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-13",
+      "issuer": "ADP",
+      "ticker": "ADP",
+      "side": "buy",
+      "price": 251.05,
+      "shares": 3.9832702648874725,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 88% \u00b7 trail 17%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-16",
+      "issuer": "DELL",
+      "ticker": "DELL",
+      "side": "sell",
+      "price": 391.38,
+      "shares": 6.379178361826997,
+      "value": 2496.68282725185,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 1494.68282725185,
+      "hold_days": 82,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-16",
+      "issuer": "AMD",
+      "ticker": "AMD",
+      "side": "sell",
+      "price": 500.94,
+      "shares": 2.7736173517501523,
+      "value": 1389.4158761857213,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 387.41587618572134,
+      "hold_days": 52,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-07-16",
+      "issuer": "GE",
+      "ticker": "GE",
+      "side": "sell",
+      "price": 345.73,
+      "shares": 2.648866285229922,
+      "value": 915.7925407925409,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -86.20745920745912,
+      "hold_days": 9,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-16",
+      "issuer": "MNST",
+      "ticker": "MNST",
+      "side": "buy",
+      "price": 49.76778081592475,
+      "shares": 20.09332109258966,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 9%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-16",
+      "issuer": "AAPL",
+      "ticker": "AAPL",
+      "side": "buy",
+      "price": 333.26,
+      "shares": 3.0006601452319512,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 90% \u00b7 trail 18%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-16",
+      "issuer": "PAYX",
+      "ticker": "PAYX",
+      "side": "buy",
+      "price": 114.7,
+      "shares": 8.718395815170009,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 88% \u00b7 trail 17%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-17",
+      "issuer": "AMAT",
+      "ticker": "AMAT",
+      "side": "sell",
+      "price": 529.66,
+      "shares": 2.5031915692507947,
+      "value": 1325.840446569376,
+      "commission": 1.0,
+      "reason": "trailing stop 25% (stop 542.25)",
+      "pnl": 323.84044656937584,
+      "hold_days": 68,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-17",
+      "issuer": "VIRT",
+      "ticker": "VIRT",
+      "side": "sell",
+      "price": 55.71,
+      "shares": 15.770383220312254,
+      "value": 878.5680492035957,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -123.4319507964043,
+      "hold_days": 17,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-17",
+      "issuer": "BBY",
+      "ticker": "BBY",
+      "side": "buy",
+      "price": 85.41,
+      "shares": 11.708230886313078,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 13%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-17",
+      "issuer": "VLO",
+      "ticker": "VLO",
+      "side": "buy",
+      "price": 309.65,
+      "shares": 3.229452607782981,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 94% \u00b7 trail 20%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-07-23",
+      "issuer": "FFIV",
+      "ticker": "FFIV",
+      "side": "sell",
+      "price": 388.08,
+      "shares": 3.3572819445377022,
+      "value": 1302.8939770361915,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": 300.8939770361914,
+      "hold_days": 83,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-23",
+      "issuer": "MOH",
+      "ticker": "MOH",
+      "side": "sell",
+      "price": 200.29,
+      "shares": 4.293688278231,
+      "value": 859.982825246887,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -142.01717475311298,
+      "hold_days": 12,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-23",
+      "issuer": "DLTR",
+      "ticker": "DLTR",
+      "side": "sell",
+      "price": 117.65,
+      "shares": 7.912644405760405,
+      "value": 930.9226143377117,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -71.07738566228825,
+      "hold_days": 8,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-23",
+      "issuer": "MNST",
+      "ticker": "MNST",
+      "side": "sell",
+      "price": 46.590690145466475,
+      "shares": 20.09332109258966,
+      "value": 936.1616970182108,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -65.83830298178913,
+      "hold_days": 5,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-23",
+      "issuer": "TRV",
+      "ticker": "TRV",
+      "side": "buy",
+      "price": 376.37,
+      "shares": 2.656959906475011,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 87% \u00b7 trail 19%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-23",
+      "issuer": "HWM",
+      "ticker": "HWM",
+      "side": "buy",
+      "price": 287.09,
+      "shares": 3.4832282559476124,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 85% \u00b7 trail 12%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-23",
+      "issuer": "RPRX",
+      "ticker": "RPRX",
+      "side": "buy",
+      "price": 59.02,
+      "shares": 16.943409013893593,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 84% \u00b7 trail 14%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-07-23",
+      "issuer": "MRK",
+      "ticker": "MRK",
+      "side": "buy",
+      "price": 130.48,
+      "shares": 7.6640098099325575,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 82% \u00b7 trail 17%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-24",
+      "issuer": "WST",
+      "ticker": "WST",
+      "side": "sell",
+      "price": 328.2,
+      "shares": 3.0682376043200783,
+      "value": 1006.9955817378496,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 4.995581737849695,
+      "hold_days": 53,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-24",
+      "issuer": "HOOD",
+      "ticker": "HOOD",
+      "side": "sell",
+      "price": 94.91,
+      "shares": 8.870753126940476,
+      "value": 841.9231792779206,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -160.07682072207936,
+      "hold_days": 15,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-24",
+      "issuer": "RTX",
+      "ticker": "RTX",
+      "side": "buy",
+      "price": 212.79,
+      "shares": 4.699468960007519,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 87% \u00b7 trail 16%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-24",
+      "issuer": "ALL",
+      "ticker": "ALL",
+      "side": "buy",
+      "price": 259.97,
+      "shares": 3.8465976843481937,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 87% \u00b7 trail 16%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-28",
+      "issuer": "FTNT",
+      "ticker": "FTNT",
+      "side": "sell",
+      "price": 149.98,
+      "shares": 7.905138339920948,
+      "value": 1185.6126482213438,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 183.6126482213438,
+      "hold_days": 49,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-28",
+      "issuer": "THC",
+      "ticker": "THC",
+      "side": "buy",
+      "price": 262.63,
+      "shares": 3.8076381220728783,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 97% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-29",
+      "issuer": "CRWD",
+      "ticker": "CRWD",
+      "side": "sell",
+      "price": 179.38,
+      "shares": 6.437319712000145,
+      "value": 1154.726409938586,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 152.72640993858587,
+      "hold_days": 50,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-29",
+      "issuer": "NTNX",
+      "ticker": "NTNX",
+      "side": "buy",
+      "price": 59.57,
+      "shares": 16.78697330871244,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 96% \u00b7 trail 16%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-31",
+      "issuer": "UNH",
+      "ticker": "UNH",
+      "side": "sell",
+      "price": 414.4,
+      "shares": 2.6973080865296435,
+      "value": 1117.7644710578843,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 115.76447105788415,
+      "hold_days": 65,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-31",
+      "issuer": "EXEL",
+      "ticker": "EXEL",
+      "side": "sell",
+      "price": 53.03,
+      "shares": 18.975332068311193,
+      "value": 1006.2618595825426,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": 4.2618595825426615,
+      "hold_days": 39,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-31",
+      "issuer": "TROW",
+      "ticker": "TROW",
+      "side": "sell",
+      "price": 111.75,
+      "shares": 8.435259384226065,
+      "value": 942.6402361872628,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -59.359763812737214,
+      "hold_days": 20,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-31",
+      "issuer": "AAPL",
+      "ticker": "AAPL",
+      "side": "sell",
+      "price": 308.91,
+      "shares": 3.0006601452319512,
+      "value": 926.9339254636021,
+      "commission": 1.0,
+      "reason": "2 closes below SMA50",
+      "pnl": -75.0660745363979,
+      "hold_days": 11,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-31",
+      "issuer": "LMT",
+      "ticker": "LMT",
+      "side": "buy",
+      "price": 582.74,
+      "shares": 1.7160311631259224,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 77% \u00b7 trail 21%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-07-31",
+      "issuer": "REGN",
+      "ticker": "REGN",
+      "side": "buy",
+      "price": 762.63,
+      "shares": 1.3112518521432412,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 61% \u00b7 trail 18%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-07-31",
+      "issuer": "EA",
+      "ticker": "EA",
+      "side": "buy",
+      "price": 209.86,
+      "shares": 4.765081482893357,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 58% \u00b7 trail 8%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-08-03",
+      "issuer": "NTAP",
+      "ticker": "NTAP",
+      "side": "buy",
+      "price": 182.92,
+      "shares": 5.466870763175159,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 99% \u00b7 trail 23%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-08-04",
+      "issuer": "GWW",
+      "ticker": "GWW",
+      "side": "sell",
+      "price": 1300.45,
+      "shares": 0.7692248521165221,
+      "value": 1000.3384589349313,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -1.6615410650686884,
+      "hold_days": 41,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-08-04",
+      "issuer": "DVA",
+      "ticker": "DVA",
+      "side": "sell",
+      "price": 227.99,
+      "shares": 4.256949470009791,
+      "value": 970.5419096675322,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -31.458090332467698,
+      "hold_days": 22,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-08-04",
+      "issuer": "ABBV",
+      "ticker": "ABBV",
+      "side": "sell",
+      "price": 243.8,
+      "shares": 3.830390316773279,
+      "value": 933.8491592293256,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -68.15084077067446,
+      "hold_days": 22,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-08-04",
+      "issuer": "DELL",
+      "ticker": "DELL",
+      "side": "buy",
+      "price": 467.27,
+      "shares": 2.1400903118111585,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 99% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF",
+        "MTUM"
+      ]
+    },
+    {
+      "date": "2026-08-04",
+      "issuer": "WSM",
+      "ticker": "WSM",
+      "side": "buy",
+      "price": 248.88,
+      "shares": 4.018000642880103,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 97% \u00b7 trail 17%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-08-04",
+      "issuer": "EXPE",
+      "ticker": "EXPE",
+      "side": "buy",
+      "price": 312.06,
+      "shares": 3.2045119528295842,
+      "value": 1000.0000000000001,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 96% \u00b7 trail 23%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-08-05",
+      "issuer": "EA",
+      "ticker": "EA",
+      "side": "sell",
+      "price": 209.7,
+      "shares": 4.765081482893357,
+      "value": 999.2375869627368,
+      "commission": 1.0,
+      "reason": "dropped from all tracked ETFs",
+      "pnl": -2.762413037263056,
+      "hold_days": 3,
+      "etfs": [
+        "DYNF",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-08-05",
+      "issuer": "CVS",
+      "ticker": "CVS",
+      "side": "sell",
+      "price": 99.12,
+      "shares": 9.442870632672332,
+      "value": 935.9773371104816,
+      "commission": 1.0,
+      "reason": "close below 20d low",
+      "pnl": -66.02266288951841,
+      "hold_days": 17,
+      "etfs": [
+        "DYNF"
+      ]
+    },
+    {
+      "date": "2026-08-05",
+      "issuer": "ANET",
+      "ticker": "ANET",
+      "side": "buy",
+      "price": 197.31,
+      "shares": 5.068166844052506,
+      "value": 999.9999999999999,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 97% \u00b7 trail 25%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "MTUM",
+        "QUAL"
+      ]
+    },
+    {
+      "date": "2026-08-05",
+      "issuer": "BKNG",
+      "ticker": "BKNG",
+      "side": "buy",
+      "price": 207.02,
+      "shares": 4.83045116413873,
+      "value": 1000.0,
+      "commission": 1.0,
+      "reason": "55d breakout \u00b7 RS pctile 93% \u00b7 trail 23%",
+      "pnl": 0.0,
+      "hold_days": 0,
+      "etfs": [
+        "DYNF"
+      ]
+    }
+  ],
+  "equity": [
+    {
+      "date": "2025-12-05",
+      "value": 99976.0,
+      "cash": 75976.0,
+      "positions": 24
+    },
+    {
+      "date": "2025-12-08",
+      "value": 99911.85543553816,
+      "cash": 74975.0,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-09",
+      "value": 99975.92432729881,
+      "cash": 74975.0,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-10",
+      "value": 100571.97418606989,
+      "cash": 74975.0,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-11",
+      "value": 100826.0011410023,
+      "cash": 74975.0,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-12",
+      "value": 100677.81239236837,
+      "cash": 74975.0,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-15",
+      "value": 100688.7739341945,
+      "cash": 74975.0,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-16",
+      "value": 100477.13571870774,
+      "cash": 74975.0,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-17",
+      "value": 100311.32334896753,
+      "cash": 74975.0,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-18",
+      "value": 100452.80837508292,
+      "cash": 74975.0,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-19",
+      "value": 100576.09377381466,
+      "cash": 74975.0,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-22",
+      "value": 100648.12209618853,
+      "cash": 74897.34210526316,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-23",
+      "value": 100580.86547731151,
+      "cash": 74897.34210526316,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-24",
+      "value": 100673.74004988943,
+      "cash": 74897.34210526316,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-26",
+      "value": 100581.01192402333,
+      "cash": 74897.34210526316,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-29",
+      "value": 100460.6407779694,
+      "cash": 74862.51934815156,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-30",
+      "value": 100355.29443548937,
+      "cash": 74862.51934815156,
+      "positions": 25
+    },
+    {
+      "date": "2025-12-31",
+      "value": 100100.3205916865,
+      "cash": 74862.51934815156,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-02",
+      "value": 100562.40835741156,
+      "cash": 74862.51934815156,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-05",
+      "value": 101239.94122865611,
+      "cash": 74862.51934815156,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-06",
+      "value": 101640.68962280994,
+      "cash": 74862.51934815156,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-07",
+      "value": 101322.81834591013,
+      "cash": 74862.51934815156,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-08",
+      "value": 101523.62719069046,
+      "cash": 74862.51934815156,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-09",
+      "value": 101631.74787120175,
+      "cash": 74848.09368752742,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-12",
+      "value": 101742.28744044022,
+      "cash": 74821.95070958983,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-13",
+      "value": 101782.22710145259,
+      "cash": 74821.95070958983,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-14",
+      "value": 101753.73139195476,
+      "cash": 74889.05233582003,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-15",
+      "value": 102130.7307933575,
+      "cash": 74889.05233582003,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-16",
+      "value": 102106.91154394753,
+      "cash": 74889.05233582003,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-20",
+      "value": 101505.50239705315,
+      "cash": 74910.19500511655,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-21",
+      "value": 102004.49973750245,
+      "cash": 74910.19500511655,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-22",
+      "value": 101950.76362615169,
+      "cash": 74909.10836628565,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-23",
+      "value": 101718.47836428115,
+      "cash": 74909.10836628565,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-26",
+      "value": 101703.32794908964,
+      "cash": 74909.10836628565,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-27",
+      "value": 102028.51792003727,
+      "cash": 74885.07400219316,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-28",
+      "value": 102232.3303564259,
+      "cash": 74944.92033102152,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-29",
+      "value": 102414.43743379999,
+      "cash": 74944.92033102152,
+      "positions": 25
+    },
+    {
+      "date": "2026-01-30",
+      "value": 101592.39356456832,
+      "cash": 74944.92033102152,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-02",
+      "value": 102093.46563684985,
+      "cash": 74899.07764888096,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-03",
+      "value": 102335.98256308801,
+      "cash": 75004.01139813582,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-04",
+      "value": 101994.76138741794,
+      "cash": 75070.74852601449,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-05",
+      "value": 101681.26144823937,
+      "cash": 75064.95270708072,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-06",
+      "value": 102598.56633606055,
+      "cash": 75064.95270708072,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-09",
+      "value": 102725.98396715526,
+      "cash": 75064.95270708072,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-10",
+      "value": 102321.37377855612,
+      "cash": 75020.5760052504,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-11",
+      "value": 103038.32279532723,
+      "cash": 75020.5760052504,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-12",
+      "value": 102633.56743880209,
+      "cash": 74971.20282990334,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-13",
+      "value": 102917.45388711942,
+      "cash": 74971.20282990334,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-17",
+      "value": 102734.0029940038,
+      "cash": 74971.20282990334,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-18",
+      "value": 102981.97522411802,
+      "cash": 74971.20282990334,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-19",
+      "value": 102891.94797957901,
+      "cash": 74971.20282990334,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-20",
+      "value": 103072.63713560448,
+      "cash": 74971.20282990334,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-23",
+      "value": 102982.3311760387,
+      "cash": 74971.20282990334,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-24",
+      "value": 103161.51733428081,
+      "cash": 74971.20282990334,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-25",
+      "value": 103322.41461992513,
+      "cash": 74971.20282990334,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-26",
+      "value": 102986.6850842032,
+      "cash": 74971.20282990334,
+      "positions": 25
+    },
+    {
+      "date": "2026-02-27",
+      "value": 103173.08220550399,
+      "cash": 74971.20282990334,
+      "positions": 25
+    },
+    {
+      "date": "2026-03-02",
+      "value": 103154.72613288459,
+      "cash": 74990.07651184869,
+      "positions": 25
+    },
+    {
+      "date": "2026-03-03",
+      "value": 102214.77357839292,
+      "cash": 75201.47959687297,
+      "positions": 25
+    },
+    {
+      "date": "2026-03-04",
+      "value": 102307.26947831817,
+      "cash": 75354.0833738009,
+      "positions": 25
+    },
+    {
+      "date": "2026-03-05",
+      "value": 101700.55460339347,
+      "cash": 75349.2279785502,
+      "positions": 25
+    },
+    {
+      "date": "2026-03-06",
+      "value": 101189.13701833665,
+      "cash": 76312.43042343907,
+      "positions": 24
+    },
+    {
+      "date": "2026-03-09",
+      "value": 101458.61954564576,
+      "cash": 76296.40683854431,
+      "positions": 24
+    },
+    {
+      "date": "2026-03-10",
+      "value": 101408.00953427907,
+      "cash": 76296.40683854431,
+      "positions": 24
+    },
+    {
+      "date": "2026-03-11",
+      "value": 101518.89717814929,
+      "cash": 75295.40683854431,
+      "positions": 25
+    },
+    {
+      "date": "2026-03-12",
+      "value": 101300.58392703865,
+      "cash": 77377.56303243061,
+      "positions": 23
+    },
+    {
+      "date": "2026-03-13",
+      "value": 101271.09882781783,
+      "cash": 76558.74580923202,
+      "positions": 24
+    },
+    {
+      "date": "2026-03-16",
+      "value": 101459.98379369933,
+      "cash": 75557.74580923202,
+      "positions": 25
+    },
+    {
+      "date": "2026-03-17",
+      "value": 101527.52388552485,
+      "cash": 75620.4890933447,
+      "positions": 25
+    },
+    {
+      "date": "2026-03-18",
+      "value": 101255.22228514224,
+      "cash": 77562.25308087538,
+      "positions": 23
+    },
+    {
+      "date": "2026-03-19",
+      "value": 101484.73107417392,
+      "cash": 77463.09432664464,
+      "positions": 23
+    },
+    {
+      "date": "2026-03-20",
+      "value": 100959.54397050453,
+      "cash": 81253.2217205097,
+      "positions": 19
+    },
+    {
+      "date": "2026-03-23",
+      "value": 101213.74705920756,
+      "cash": 82176.80215856082,
+      "positions": 18
+    },
+    {
+      "date": "2026-03-24",
+      "value": 101778.80927245376,
+      "cash": 81175.80215856082,
+      "positions": 19
+    },
+    {
+      "date": "2026-03-25",
+      "value": 101863.29076689694,
+      "cash": 78118.49908516271,
+      "positions": 22
+    },
+    {
+      "date": "2026-03-26",
+      "value": 101069.02112003838,
+      "cash": 79219.4063888992,
+      "positions": 21
+    },
+    {
+      "date": "2026-03-27",
+      "value": 101107.1225642865,
+      "cash": 78170.96795275736,
+      "positions": 22
+    },
+    {
+      "date": "2026-03-30",
+      "value": 100439.70505408953,
+      "cash": 81397.03143581063,
+      "positions": 18
+    },
+    {
+      "date": "2026-03-31",
+      "value": 100619.18694062764,
+      "cash": 80396.03143581063,
+      "positions": 19
+    },
+    {
+      "date": "2026-04-01",
+      "value": 100529.18142810065,
+      "cash": 81377.57483375308,
+      "positions": 18
+    },
+    {
+      "date": "2026-04-02",
+      "value": 100777.95301875993,
+      "cash": 82329.35957069662,
+      "positions": 17
+    },
+    {
+      "date": "2026-04-06",
+      "value": 100693.61296670079,
+      "cash": 80327.35957069662,
+      "positions": 19
+    },
+    {
+      "date": "2026-04-07",
+      "value": 100833.12152453318,
+      "cash": 79326.35957069662,
+      "positions": 20
+    },
+    {
+      "date": "2026-04-08",
+      "value": 101098.71424467646,
+      "cash": 74259.22211365194,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-09",
+      "value": 101249.56711635401,
+      "cash": 74259.22211365194,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-10",
+      "value": 101184.6414205858,
+      "cash": 74257.94913509449,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-13",
+      "value": 101314.4729969315,
+      "cash": 74218.93573369054,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-14",
+      "value": 101359.96016113687,
+      "cash": 74353.01406660542,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-15",
+      "value": 101179.76951681197,
+      "cash": 74353.04875896889,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-16",
+      "value": 101442.46126206958,
+      "cash": 74322.96753944164,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-17",
+      "value": 101584.74091944506,
+      "cash": 74348.25154109522,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-20",
+      "value": 101574.5933696555,
+      "cash": 74348.25154109522,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-21",
+      "value": 101745.04159890789,
+      "cash": 74240.24903023962,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-22",
+      "value": 102094.38122180951,
+      "cash": 74240.24903023962,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-23",
+      "value": 102443.1214085666,
+      "cash": 74240.24903023962,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-24",
+      "value": 102936.66400105096,
+      "cash": 74240.24903023962,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-27",
+      "value": 102671.05619840154,
+      "cash": 74240.24903023962,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-28",
+      "value": 101849.21237154768,
+      "cash": 74240.24903023962,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-29",
+      "value": 102496.50731268743,
+      "cash": 74014.56217444324,
+      "positions": 25
+    },
+    {
+      "date": "2026-04-30",
+      "value": 103159.89038051773,
+      "cash": 74014.56217444324,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-01",
+      "value": 103288.83031772365,
+      "cash": 73924.46407032046,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-04",
+      "value": 103345.20785476675,
+      "cash": 73924.46407032046,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-05",
+      "value": 104047.41736540086,
+      "cash": 73924.46407032046,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-06",
+      "value": 104956.58836014668,
+      "cash": 73906.50385949721,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-07",
+      "value": 103887.23245903118,
+      "cash": 73891.28245341117,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-08",
+      "value": 105075.86735295042,
+      "cash": 73843.47466678964,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-11",
+      "value": 106261.8065326656,
+      "cash": 73837.51623037203,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-12",
+      "value": 105362.81797905815,
+      "cash": 73837.51623037203,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-13",
+      "value": 105797.9369585395,
+      "cash": 73837.51623037203,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-14",
+      "value": 105930.12678341889,
+      "cash": 73837.51623037203,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-15",
+      "value": 104740.97419686781,
+      "cash": 73817.23782230432,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-18",
+      "value": 103787.85689786245,
+      "cash": 73763.53590385936,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-19",
+      "value": 103793.54006342281,
+      "cash": 73763.53590385936,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-20",
+      "value": 104873.0524394348,
+      "cash": 73763.53590385936,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-21",
+      "value": 105632.88225781955,
+      "cash": 73763.53590385936,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-22",
+      "value": 106517.38356934107,
+      "cash": 73763.53590385936,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-26",
+      "value": 107569.62539073991,
+      "cash": 73736.74554506359,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-27",
+      "value": 107253.46331165783,
+      "cash": 73736.74554506359,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-28",
+      "value": 107429.41985179573,
+      "cash": 74054.00326391334,
+      "positions": 25
+    },
+    {
+      "date": "2026-05-29",
+      "value": 108405.91791788823,
+      "cash": 74251.13878600665,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-01",
+      "value": 108873.70706440778,
+      "cash": 74251.13878600665,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-02",
+      "value": 109971.04023713713,
+      "cash": 74251.13878600665,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-03",
+      "value": 109932.5712029323,
+      "cash": 74251.13878600665,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-04",
+      "value": 109412.33504596796,
+      "cash": 74251.13878600665,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-05",
+      "value": 106812.67427003675,
+      "cash": 75211.43236063428,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-08",
+      "value": 107455.86615524345,
+      "cash": 75644.70716677001,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-09",
+      "value": 107033.67714911794,
+      "cash": 76184.86515949987,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-10",
+      "value": 106254.2638772374,
+      "cash": 76113.78387600835,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-11",
+      "value": 107892.3329052564,
+      "cash": 76113.78387600835,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-12",
+      "value": 108221.65471710305,
+      "cash": 76113.78387600835,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-15",
+      "value": 109233.6031887628,
+      "cash": 76113.78387600835,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-16",
+      "value": 108564.56192169042,
+      "cash": 76113.78387600835,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-17",
+      "value": 108808.4607924498,
+      "cash": 76113.78387600835,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-18",
+      "value": 109523.50545058555,
+      "cash": 76215.80722393414,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-19",
+      "value": 109523.50545058555,
+      "cash": 76215.80722393414,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-22",
+      "value": 110258.82313433822,
+      "cash": 76215.80722393414,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-23",
+      "value": 109002.65400255632,
+      "cash": 76094.66225004644,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-24",
+      "value": 108693.65778213968,
+      "cash": 76094.66225004644,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-25",
+      "value": 109546.4534383854,
+      "cash": 76094.66225004644,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-26",
+      "value": 108327.02412421053,
+      "cash": 76037.43886522665,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-29",
+      "value": 109737.2849421103,
+      "cash": 76037.43886522665,
+      "positions": 25
+    },
+    {
+      "date": "2026-06-30",
+      "value": 110536.04280232101,
+      "cash": 76037.43886522665,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-01",
+      "value": 109317.79197697726,
+      "cash": 76037.43886522665,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-02",
+      "value": 107727.62570227981,
+      "cash": 77658.29196137273,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-06",
+      "value": 108332.14984460192,
+      "cash": 77658.29196137273,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-07",
+      "value": 107678.89427061047,
+      "cash": 77614.9600131056,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-08",
+      "value": 107748.69848149158,
+      "cash": 77614.9600131056,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-09",
+      "value": 108479.96205129715,
+      "cash": 77614.9600131056,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-10",
+      "value": 108136.61528013003,
+      "cash": 77614.9600131056,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-13",
+      "value": 107575.55449174487,
+      "cash": 78567.25545029824,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-14",
+      "value": 107995.930265427,
+      "cash": 78567.25545029824,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-15",
+      "value": 107602.35434504162,
+      "cash": 78567.25545029824,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-16",
+      "value": 107180.018771238,
+      "cash": 80363.14669452835,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-17",
+      "value": 106999.36747709248,
+      "cash": 80563.55519030131,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-20",
+      "value": 106838.10212537169,
+      "cash": 80563.55519030131,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-21",
+      "value": 106821.6549462151,
+      "cash": 80563.55519030131,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-22",
+      "value": 106556.74245793991,
+      "cash": 80563.55519030131,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-23",
+      "value": 106257.88534763057,
+      "cash": 80585.51630394031,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-24",
+      "value": 106365.58279764373,
+      "cash": 80430.43506495608,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-27",
+      "value": 106518.45929115209,
+      "cash": 80430.43506495608,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-28",
+      "value": 106821.46322649399,
+      "cash": 80614.04771317742,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-29",
+      "value": 106630.63134503903,
+      "cash": 80766.774123116,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-30",
+      "value": 106560.77044918077,
+      "cash": 80766.774123116,
+      "positions": 25
+    },
+    {
+      "date": "2026-07-31",
+      "value": 106283.16741323663,
+      "cash": 81753.3746154073,
+      "positions": 24
+    },
+    {
+      "date": "2026-08-03",
+      "value": 106285.10947377881,
+      "cash": 80752.3746154073,
+      "positions": 25
+    },
+    {
+      "date": "2026-08-04",
+      "value": 106424.56228662941,
+      "cash": 80651.10414323909,
+      "positions": 25
+    },
+    {
+      "date": "2026-08-05",
+      "value": 106392.05146613657,
+      "cash": 80582.31906731232,
+      "positions": 25
+    },
+    {
+      "date": "2026-08-06",
+      "value": 106362.19997675906,
+      "cash": 80582.31906731232,
+      "positions": 25
+    },
+    {
+      "date": "2026-08-07",
+      "value": 106725.1494132691,
+      "cash": 80582.31906731232,
+      "positions": 25
+    },
+    {
+      "date": "2026-08-10",
+      "value": 106984.63552590804,
+      "cash": 80582.31906731232,
+      "positions": 25
+    },
+    {
+      "date": "2026-08-11",
+      "value": 106932.00317935667,
+      "cash": 80582.31906731232,
+      "positions": 25
+    },
+    {
+      "date": "2026-08-12",
+      "value": 107139.52479335573,
+      "cash": 80582.31906731232,
+      "positions": 25
+    },
+    {
+      "date": "2026-08-13",
+      "value": 107368.4646352321,
+      "cash": 80582.31906731232,
+      "positions": 25
+    }
+  ]
+}

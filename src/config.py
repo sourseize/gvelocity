@@ -88,25 +88,12 @@ SECTOR_COLORS = {
 def sc(sector: str) -> str:
     return SECTOR_COLORS.get(sector or "", "#6b7280")
 
-# Confirmation score mapping
-SCORE_META = {
-    5: ("STRONG",  "#10b981"),
-    4: ("GOOD",    "#22c55e"),
-    3: ("WATCH",   "#f59e0b"),
-    2: ("WEAK",    "#ef4444"),
-    1: ("AVOID",   "#ef4444"),
-    0: ("AVOID",   "#6b7280"),
-}
-
-# Trading parameters for paper trading
-RISING_STAR_LOOKBACK_DAYS = 60    # how far back "recently entered" reaches
-RISING_STAR_MIN_GROWTH    = 0.30  # min weight growth since entry (30%) to qualify
-TRAILING_STOP_PERCENT = 0.15      # 15% trailing stop loss
-
-# Paper trading capital and position limits
-INITIAL_CAPITAL_PER_ETF = 100000.0   # $100k pool for each ETF
-MAX_PURCHASE_AMOUNT = 1000.0         # $1k max purchase on one ticker
-ALLOCATION_PCT = 0.1                 # 10% allocation per trade (before max cap applied)
+# Strategy / book defaults (override on the command line)
+MAX_PURCHASE_AMOUNT = 1000.0         # hard $ cap per issuer across all ETFs
+MAX_POSITIONS = 25                   # open positions per strategy book
+RISK_PER_TRADE = 0.0025              # fraction of equity at risk at the initial stop
+COMMISSION_PER_TRADE = 1.0
+INITIAL_CAPITAL = 100000.0           # capital of a strategy book
 
 # ── Alpaca configuration ───────────────────────────────────────────────────
 # Load from .env file or environment variables

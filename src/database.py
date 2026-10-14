@@ -3,7 +3,6 @@ Database operations for Velocity tracker
 """
 
 import sqlite3
-import json
 from pathlib import Path
 from typing import Optional
 import datetime
@@ -43,27 +42,19 @@ CREATE TABLE IF NOT EXISTS weekly_closes (
     currency    TEXT,
     UNIQUE(week_ending, ticker)
 );
-CREATE TABLE IF NOT EXISTS portfolio_state (
-    id                 INTEGER PRIMARY KEY AUTOINCREMENT,
-    etf                TEXT NOT NULL UNIQUE,
-    initial_capital    REAL NOT NULL,
-    cash               REAL NOT NULL,
-    commission_per_trade REAL NOT NULL,
-    positions_json     TEXT NOT NULL,
-    trade_history_json TEXT NOT NULL,
-    daily_values_json  TEXT NOT NULL,
-    updated_at         TEXT NOT NULL
-);
-CREATE TABLE IF NOT EXISTS trading_state (
-    etf                     TEXT PRIMARY KEY,
-    last_evaluated_snapshot TEXT NOT NULL,
-    scores_json             TEXT NOT NULL,
-    updated_at              TEXT NOT NULL
-);
-CREATE INDEX IF NOT EXISTS idx_h_date   ON holdings(snapshot_date);
-CREATE INDEX IF NOT EXISTS idx_h_ticker ON holdings(ticker);
-CREATE INDEX IF NOT EXISTS idx_wc       ON weekly_closes(ticker);
+CREATE INDEX IF NOT EXISTS idx_h_date        ON holdings(snapshot_date);
+CREATE INDEX IF NOT EXISTS idx_h_ticker_date ON holdings(ticker, snapshot_date);
+CREATE INDEX IF NOT EXISTS idx_wc_ticker     ON weekly_closes(ticker, week_ending);
+CREATE INDEX IF NOT EXISTS idx_wc_week       ON weekly_closes(week_ending);
 """
+
+# tables of the retired per-ETF paper-trading system; dropped by cli/migrate_db.py
+LEGACY_TABLES = ("portfolio_state", "trading_state")
+
+
+def week_ending(day: datetime.date) -> str:
+    """ISO date of the Friday of `day`'s week."""
+    return (day + datetime.timedelta(days=4 - day.weekday())).isoformat()
 
 def get_db(db_path: Path):
     """Get database connection with row factory and schema initialized."""
@@ -123,89 +114,41 @@ def store_snapshot(conn, holdings_date, rows) -> bool:
         normalized_rows
     )
 
-    # Store weekly closes if it's a Friday
-    if holdings_date.weekday() == 4:  # Friday
+    # Weekly close = the LAST snapshot of the week (so a Friday holiday does not lose the week).
+    # Every snapshot overwrites its week's row; later days in the week win.
+    we = week_ending(holdings_date)
+    last = conn.execute("SELECT MAX(snapshot_date) FROM holdings WHERE snapshot_date<=? AND snapshot_date>=?",
+                        (we, (holdings_date - datetime.timedelta(days=holdings_date.weekday())).isoformat())).fetchone()[0]
+    if last == ds:
+        conn.execute("DELETE FROM weekly_closes WHERE week_ending=?", (we,))
         conn.executemany(
-            """INSERT OR IGNORE INTO weekly_closes
+            """INSERT OR REPLACE INTO weekly_closes
                (week_ending,ticker,name,sector,weight_pct,price,currency)
                VALUES(:week_ending,:ticker,:name,:sector,:weight_pct,:price,:currency)""",
-            [{**r, "week_ending": ds} for r in rows]
+            [{**r, "week_ending": we} for r in normalized_rows]
         )
 
     conn.commit()
     return True
 
 
-def load_trading_state(conn, etf: str) -> Optional[dict]:
-    """Load the latest evaluated snapshot, score map, and signal-bit map for an ETF.
-
-    Returns a dict with keys:
-        last_evaluated_snapshot : str
-        scores                  : {ticker: int}
-        signals                 : {ticker: [bool, ...]}  # 5-bit confirmation vector
-
-    The persisted payload is ``{ticker: {"score": int, "bits": [bool*5]}}``.
-    Legacy rows that stored a plain ``{ticker: int}`` map are coerced to the
-    new shape (``bits=[]``), so existing DBs load without a migration; tickers
-    with no prior bits produce no flipped-signal detail on their first
-    post-upgrade score crossing.
-    """
-    row = conn.execute(
-        "SELECT last_evaluated_snapshot, scores_json FROM trading_state WHERE etf=?",
-        (etf,),
-    ).fetchone()
-    if not row:
-        return None
-
-    raw = json.loads(row["scores_json"])
-    scores: dict[str, int] = {}
-    signals: dict[str, list[bool]] = {}
-    for ticker, value in raw.items():
-        if isinstance(value, dict):
-            scores[ticker] = int(value.get("score", 0))
-            signals[ticker] = [bool(b) for b in value.get("bits", [])]
-        else:  # legacy {ticker: int}
-            scores[ticker] = int(value)
-            signals[ticker] = []
-    return {
-        "last_evaluated_snapshot": row["last_evaluated_snapshot"],
-        "scores": scores,
-        "signals": signals,
-    }
-
-
-def save_trading_state(
-    conn,
-    etf: str,
-    snapshot_date: str,
-    scores: dict[str, int],
-    signals: Optional[dict[str, list[bool]]] = None,
-) -> None:
-    """Persist an ETF's evaluated snapshot, per-ticker scores, and signal bits.
-
-    The payload is stored as ``{ticker: {"score": int, "bits": [bool*5]}}`` so
-    the next run can diff the bit vectors to derive which signal flipped a buy.
-    ``signals`` is optional (defaults to no bits) — legacy/test callers and the
-    `<list`-missing path persist empty bits.
-    """
-    now = datetime.datetime.now(datetime.timezone.utc).isoformat()
-    packed: dict[str, dict] = {}
-    for ticker, score in scores.items():
-        value = score["score"] if isinstance(score, dict) else int(score)
-        bits = [bool(b) for b in (signals or {}).get(ticker, [])]
-        packed[ticker] = {"score": value, "bits": bits}
-    conn.execute(
-        """
-        INSERT INTO trading_state (etf, last_evaluated_snapshot, scores_json, updated_at)
-        VALUES (?, ?, ?, ?)
-        ON CONFLICT(etf) DO UPDATE SET
-            last_evaluated_snapshot=excluded.last_evaluated_snapshot,
-            scores_json=excluded.scores_json,
-            updated_at=excluded.updated_at
-        """,
-        (etf, snapshot_date, json.dumps(packed, sort_keys=True), now),
-    )
+def rebuild_weekly_closes(conn) -> int:
+    """Derive weekly_closes from holdings: one row per (ISO week, ticker) = the week's last snapshot."""
+    conn.execute("DELETE FROM weekly_closes")
+    dates = [r[0] for r in conn.execute("SELECT fetch_date FROM snapshots ORDER BY fetch_date")]
+    last_of_week = {}
+    for d in dates:
+        last_of_week[week_ending(datetime.date.fromisoformat(d))] = d
+    n = 0
+    for we, d in sorted(last_of_week.items()):
+        cur = conn.execute(
+            """INSERT INTO weekly_closes (week_ending,ticker,name,sector,weight_pct,price,currency)
+               SELECT ?, ticker, name, sector, weight_pct, price, currency FROM holdings WHERE snapshot_date=?""",
+            (we, d))
+        n += cur.rowcount
     conn.commit()
+    return n
+
 
 def recent_dates(conn, n: int) -> list[str]:
     """Get the n most recent fetch dates."""
@@ -300,35 +243,3 @@ def detect_weight_movers(conn, today: str, lookback_days: int, threshold: float 
 
     movers.sort(key=lambda x: abs(x["weight_delta"]), reverse=True)
     return movers
-
-def find_rising_stars(conn, today: str, scored: dict, lookback_days: int = 60, min_growth: float = 0.30) -> list[dict]:
-    """Find recently-added holdings whose weight has grown meaningfully since entry."""
-    recent = recent_dates(conn, lookback_days)
-    if not recent:
-        return []
-
-    cutoff = recent[-1]  # Oldest date in lookback window
-
-    all_current = [r["ticker"] for r in conn.execute(
-        "SELECT ticker FROM holdings WHERE snapshot_date=?", (today,)
-    )]
-
-    # Import compute_metrics here to avoid circular import
-    from .analyzer import compute_metrics
-    rising = []
-    for ticker in all_current:
-        m = scored.get(ticker) or compute_metrics(conn, ticker, today)
-        first_seen = m.get("first_seen")
-
-        # Skip if entered before lookback window
-        if not first_seen or first_seen < cutoff:
-            continue
-
-        weight_roc = m.get("weight_roc_since_entry")
-        if weight_roc is None or weight_roc < min_growth:
-            continue
-
-        rising.append(m)
-
-    rising.sort(key=lambda m: m.get("weight_roc_since_entry") or 0, reverse=True)
-    return rising

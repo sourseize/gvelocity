@@ -1,0 +1,5031 @@
+[
+  {
+    "date": "2026-08-31",
+    "new_entries": [
+      {
+        "ticker": "ALL",
+        "name": "ALLSTATE CORP",
+        "sector": "Financials",
+        "weight": 0.43,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 257.8,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 56.00000000000001,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ATI",
+        "name": "ATI",
+        "sector": "Industrials",
+        "weight": 0.21,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 204.2,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 32.800000000000004,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CNC",
+        "name": "CENTENE CORP",
+        "sector": "Health Care",
+        "weight": 0.2,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 64.34,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 29.599999999999998,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CRS",
+        "name": "CARPENTER TECHNOLOGY",
+        "sector": "Industrials",
+        "weight": 0.16,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 476.42,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 16.8,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CRWD",
+        "name": "CROWDSTRIKE HOLDINGS CLASS A",
+        "sector": "Information Technology",
+        "weight": 1.57,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 231.0,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 83.2,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CVS",
+        "name": "CVS HEALTH",
+        "sector": "Health Care",
+        "weight": 0.74,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 93.91,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 68.0,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "DAL",
+        "name": "DELTA AIR LINES",
+        "sector": "Industrials",
+        "weight": 0.07,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 78.0,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 0.8,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "DDOG",
+        "name": "DATADOG INC CLASS A",
+        "sector": "Information Technology",
+        "weight": 0.61,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 237.04,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 64.0,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "DGX",
+        "name": "QUEST DIAGNOSTICS INC",
+        "sector": "Health Care",
+        "weight": 0.17,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 240.3,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 19.2,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "FFIV",
+        "name": "F5",
+        "sector": "Information Technology",
+        "weight": 0.16,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 407.13,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 16.8,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "FTNT",
+        "name": "FORTINET",
+        "sector": "Information Technology",
+        "weight": 0.97,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 170.93,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 74.4,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GRMN",
+        "name": "GARMIN",
+        "sector": "Consumer Discretionary",
+        "weight": 0.28,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 284.11,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 37.6,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GWW",
+        "name": "WW GRAINGER INC",
+        "sector": "Industrials",
+        "weight": 0.34,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 1309.49,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 42.4,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "HPE",
+        "name": "HEWLETT PACKARD ENTERPRISE",
+        "sector": "Information Technology",
+        "weight": 0.78,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 52.24,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 70.39999999999999,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "HPQ",
+        "name": "HP INC",
+        "sector": "Information Technology",
+        "weight": 0.14,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 30.02,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 11.200000000000001,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "HUM",
+        "name": "HUMANA",
+        "sector": "Health Care",
+        "weight": 0.36,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 383.23,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 44.800000000000004,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ILMN",
+        "name": "ILLUMINA INC",
+        "sector": "Health Care",
+        "weight": 0.18,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 213.63,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 24.0,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "IRM",
+        "name": "IRON MOUNTAIN INC",
+        "sector": "Real Estate",
+        "weight": 0.18,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 115.35,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 24.0,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "KO",
+        "name": "COCA-COLA",
+        "sector": "Consumer Staples",
+        "weight": 1.92,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 88.67,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 86.4,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MNST",
+        "name": "MONSTER BEVERAGE",
+        "sector": "Consumer Staples",
+        "weight": 0.36,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 45.92,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 44.800000000000004,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight": 1.88,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 147.76,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 85.6,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NET",
+        "name": "CLOUDFLARE CLASS A",
+        "sector": "Information Technology",
+        "weight": 0.5,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 305.11,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 59.199999999999996,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NTAP",
+        "name": "NETAPP INC",
+        "sector": "Information Technology",
+        "weight": 0.33,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 185.29,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 41.6,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVT",
+        "name": "NVENT ELECTRIC PLC",
+        "sector": "Industrials",
+        "weight": 0.15,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 150.75,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 14.399999999999999,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "OKTA",
+        "name": "OKTA CLASS A",
+        "sector": "Information Technology",
+        "weight": 0.17,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 173.04,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 19.2,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "PANW",
+        "name": "PALO ALTO NETWORKS",
+        "sector": "Information Technology",
+        "weight": 2.73,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 382.13,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 92.80000000000001,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "PFG",
+        "name": "PRINCIPAL FINANCIAL GROUP INC",
+        "sector": "Financials",
+        "weight": 0.13,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 110.16,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 8.799999999999999,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "Q",
+        "name": "QNITY ELECTRONICS",
+        "sector": "Information Technology",
+        "weight": 0.15,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 119.43,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 14.399999999999999,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ROIV",
+        "name": "ROIVANT SCIENCES LTD",
+        "sector": "Health Care",
+        "weight": 0.17,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 34.64,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 19.2,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "RS",
+        "name": "RELIANCE STEEL & ALUMINUM",
+        "sector": "Materials",
+        "weight": 0.1,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 384.05,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 4.8,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "SNDK",
+        "name": "SANDISK",
+        "sector": "Information Technology",
+        "weight": 2.85,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 1566.7,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 94.39999999999999,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TRV",
+        "name": "TRAVELERS COMPANIES",
+        "sector": "Financials",
+        "weight": 0.53,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 365.93,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 60.0,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TWLO",
+        "name": "TWILIO CLASS A",
+        "sector": "Information Technology",
+        "weight": 0.2,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 235.63,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 29.599999999999998,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "UNH",
+        "name": "UNITEDHEALTH GROUP INC",
+        "sector": "Health Care",
+        "weight": 2.1,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 389.41,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 88.0,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "UNP",
+        "name": "UNION PACIFIC",
+        "sector": "Industrials",
+        "weight": 1.03,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 300.67,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 76.0,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WST",
+        "name": "WEST PHARMACEUTICAL SERVICES",
+        "sector": "Health Care",
+        "weight": 0.14,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 341.11,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 11.200000000000001,
+        "drawdown": 0.0
+      }
+    ],
+    "exits": [
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight": 4.47
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight": 2.45
+      },
+      {
+        "ticker": "NEM",
+        "name": "NEWMONT",
+        "sector": "Materials",
+        "weight": 0.75
+      },
+      {
+        "ticker": "MO",
+        "name": "ALTRIA GROUP INC",
+        "sector": "Consumer Staples",
+        "weight": 0.59
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight": 0.57
+      },
+      {
+        "ticker": "SLB",
+        "name": "SLB",
+        "sector": "Energy",
+        "weight": 0.54
+      },
+      {
+        "ticker": "FCX",
+        "name": "FREEPORT MCMORAN INC",
+        "sector": "Materials",
+        "weight": 0.5
+      },
+      {
+        "ticker": "WMB",
+        "name": "WILLIAMS",
+        "sector": "Energy",
+        "weight": 0.48
+      },
+      {
+        "ticker": "BKR",
+        "name": "BAKER HUGHES CLASS A",
+        "sector": "Energy",
+        "weight": 0.4
+      },
+      {
+        "ticker": "HLT",
+        "name": "HILTON WORLDWIDE HOLDINGS",
+        "sector": "Consumer Discretionary",
+        "weight": 0.4
+      },
+      {
+        "ticker": "WBD",
+        "name": "WARNER BROS. DISCOVERY SERIES A",
+        "sector": "Communication",
+        "weight": 0.35
+      },
+      {
+        "ticker": "DVN",
+        "name": "DEVON ENERGY",
+        "sector": "Energy",
+        "weight": 0.33
+      },
+      {
+        "ticker": "NXPI",
+        "name": "NXP SEMICONDUCTORS NV",
+        "sector": "Information Technology",
+        "weight": 0.28
+      },
+      {
+        "ticker": "KMI",
+        "name": "KINDER MORGAN",
+        "sector": "Energy",
+        "weight": 0.28
+      },
+      {
+        "ticker": "OKE",
+        "name": "ONEOK",
+        "sector": "Energy",
+        "weight": 0.27
+      },
+      {
+        "ticker": "AEP",
+        "name": "AMERICAN ELECTRIC POWER INC",
+        "sector": "Utilities",
+        "weight": 0.27
+      },
+      {
+        "ticker": "CTVA",
+        "name": "CORTEVA",
+        "sector": "Materials",
+        "weight": 0.27
+      },
+      {
+        "ticker": "MCHP",
+        "name": "MICROCHIP TECHNOLOGY INC",
+        "sector": "Information Technology",
+        "weight": 0.21
+      },
+      {
+        "ticker": "HAL",
+        "name": "HALLIBURTON",
+        "sector": "Energy",
+        "weight": 0.2
+      },
+      {
+        "ticker": "LHX",
+        "name": "L3HARRIS TECHNOLOGIES",
+        "sector": "Industrials",
+        "weight": 0.2
+      },
+      {
+        "ticker": "EME",
+        "name": "EMCOR GROUP INC",
+        "sector": "Industrials",
+        "weight": 0.2
+      },
+      {
+        "ticker": "RKLB",
+        "name": "ROCKET LAB CORP",
+        "sector": "Industrials",
+        "weight": 0.17
+      },
+      {
+        "ticker": "DOW",
+        "name": "DOW",
+        "sector": "Materials",
+        "weight": 0.14
+      },
+      {
+        "ticker": "TDY",
+        "name": "TELEDYNE TECHNOLOGIES INC",
+        "sector": "Information Technology",
+        "weight": 0.14
+      },
+      {
+        "ticker": "MTZ",
+        "name": "MASTEC INC",
+        "sector": "Industrials",
+        "weight": 0.13
+      },
+      {
+        "ticker": "DOV",
+        "name": "DOVER CORP",
+        "sector": "Industrials",
+        "weight": 0.12
+      },
+      {
+        "ticker": "EXPD",
+        "name": "EXPEDITORS INTERNATIONAL OF WASHIN",
+        "sector": "Industrials",
+        "weight": 0.11
+      },
+      {
+        "ticker": "FDXF",
+        "name": "FEDEX FREIGHT HOLDING COMPANY INC",
+        "sector": "Industrials",
+        "weight": 0.11
+      },
+      {
+        "ticker": "ENTG",
+        "name": "ENTEGRIS INC",
+        "sector": "Information Technology",
+        "weight": 0.11
+      },
+      {
+        "ticker": "DD",
+        "name": "DUPONT DE NEMOURS",
+        "sector": "Industrials",
+        "weight": 0.1
+      },
+      {
+        "ticker": "FN",
+        "name": "FABRINET",
+        "sector": "Information Technology",
+        "weight": 0.1
+      },
+      {
+        "ticker": "FTAI",
+        "name": "FTAI AVIATION",
+        "sector": "Industrials",
+        "weight": 0.1
+      },
+      {
+        "ticker": "CHRW",
+        "name": "CH ROBINSON WORLDWIDE",
+        "sector": "Industrials",
+        "weight": 0.09
+      },
+      {
+        "ticker": "ECHO",
+        "name": "ECHOSTAR CLASS A",
+        "sector": "Communication",
+        "weight": 0.08
+      },
+      {
+        "ticker": "IREN",
+        "name": "IREN",
+        "sector": "Information Technology",
+        "weight": 0.08
+      },
+      {
+        "ticker": "NI",
+        "name": "NISOURCE",
+        "sector": "Utilities",
+        "weight": 0.08
+      },
+      {
+        "ticker": "BG",
+        "name": "BUNGE GLOBAL SA",
+        "sector": "Consumer Staples",
+        "weight": 0.08
+      }
+    ],
+    "movers": [
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA",
+        "delta": -1.5899999999999999,
+        "weight": 1.46
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "delta": -1.54,
+        "weight": 2.14
+      },
+      {
+        "ticker": "DELL",
+        "name": "DELL TECHNOLOGIES INC CLASS C",
+        "delta": 1.12,
+        "weight": 1.71
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "delta": -1.1199999999999997,
+        "weight": 2.64
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "delta": 1.04,
+        "weight": 3.61
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 5.15,
+        "price": 958.73,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.2,
+        "drawdown": -0.013307123891072957
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 5.08,
+        "price": 470.72,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4,
+        "drawdown": -0.08489667373004911
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 3.73,
+        "price": 89.51,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.6,
+        "drawdown": -0.12673170731707312
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 3.61,
+        "price": 110.49,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.8,
+        "drawdown": -0.010655444126074606
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.4,
+        "price": 265.85,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.0,
+        "drawdown": -0.016244819419774965
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.92,
+        "price": 458.39,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.19999999999999,
+        "drawdown": -0.09619858827240825
+      },
+      {
+        "ticker": "SNDK",
+        "name": "SANDISK",
+        "sector": "Information Technology",
+        "weight_pct": 2.85,
+        "price": 1566.7,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.39999999999999,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.77,
+        "price": 339.35,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.60000000000001,
+        "drawdown": -0.020889235119305096
+      },
+      {
+        "ticker": "PANW",
+        "name": "PALO ALTO NETWORKS",
+        "sector": "Information Technology",
+        "weight_pct": 2.73,
+        "price": 382.13,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.80000000000001,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.64,
+        "price": 160.95,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.0,
+        "drawdown": -0.025195324329235203
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 2.36,
+        "price": 301.49,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.2,
+        "drawdown": -0.09288121314237574
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.28,
+        "price": 828.38,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.4,
+        "drawdown": -0.14901791584483898
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 2.18,
+        "price": 335.41,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.60000000000001,
+        "drawdown": -0.023665366478430445
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 2.14,
+        "price": 797.47,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.8,
+        "drawdown": -0.06899611240178855
+      },
+      {
+        "ticker": "UNH",
+        "name": "UNITEDHEALTH GROUP INC",
+        "sector": "Health Care",
+        "weight_pct": 2.1,
+        "price": 389.41,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.0,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.94,
+        "price": 450.55,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.2,
+        "drawdown": -0.11448506289308176
+      },
+      {
+        "ticker": "KO",
+        "name": "COCA-COLA",
+        "sector": "Consumer Staples",
+        "weight_pct": 1.92,
+        "price": 88.67,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.4,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.88,
+        "price": 147.76,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.6,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MRVL",
+        "name": "MARVELL TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 1.75,
+        "price": 211.66,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.8,
+        "drawdown": -0.10707053661829226
+      },
+      {
+        "ticker": "DELL",
+        "name": "DELL TECHNOLOGIES INC CLASS C",
+        "sector": "Information Technology",
+        "weight_pct": 1.71,
+        "price": 456.01,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.0,
+        "drawdown": -0.07090320083127893
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 15
+  },
+  {
+    "date": "2026-08-28",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "delta": 0.6400000000000006,
+        "weight": 6.66
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "delta": -0.4300000000000006,
+        "weight": 4.47
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "delta": -0.30000000000000027,
+        "weight": 2.82
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "delta": -0.23999999999999932,
+        "weight": 4.03
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "delta": 0.2200000000000002,
+        "weight": 3.7
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.66,
+        "price": 932.86,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": -0.039931663339028006
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 5.0,
+        "price": 465.58,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": -0.09488909193413558
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.47,
+        "price": 368.79,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": -0.06157917504262192
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 4.03,
+        "price": 89.47,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": -0.1271219512195122
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.8,
+        "price": 156.71,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": -0.050875174126340045
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.7,
+        "price": 268.04,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": -0.008140911782119556
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.59,
+        "price": 800.25,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": -0.06575060999101072
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.19,
+        "price": 301.9,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": -0.09164761102419074
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA",
+        "sector": "Industrials",
+        "weight_pct": 2.83,
+        "price": 911.93,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": -0.14231836350811197
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.82,
+        "price": 461.67,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": -0.08973145628770848
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.51,
+        "price": 346.59,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.26984126984127,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.45,
+        "price": 103.09,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": -0.10566496052745722
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.42,
+        "price": 109.93,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": -0.01566977077363897
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.15,
+        "price": 829.76,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": -0.14760026298487844
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.94,
+        "price": 342.88,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.09523809523809,
+        "drawdown": -0.0019211736624556819
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.88,
+        "price": 459.45,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": -0.09699292452830192
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON",
+        "sector": "Energy",
+        "weight_pct": 1.79,
+        "price": 201.86,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.5079365079365,
+        "drawdown": -0.016612266770594807
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.76,
+        "price": 258.64,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.71428571428571,
+        "drawdown": -0.07489806137778095
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.47,
+        "price": 175.54,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": -0.13832711564892994
+      },
+      {
+        "ticker": "ADI",
+        "name": "ANALOG DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 1.43,
+        "price": 361.78,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.12698412698413,
+        "drawdown": -0.0709057757004546
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 14
+  },
+  {
+    "date": "2026-08-27",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "delta": 0.5500000000000007,
+        "weight": 6.57
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "delta": -0.47000000000000064,
+        "weight": 4.43
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "delta": -0.2200000000000002,
+        "weight": 2.9
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "delta": -0.2200000000000002,
+        "weight": 2.4
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "delta": -0.1899999999999995,
+        "weight": 4.08
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.57,
+        "price": 935.39,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": -0.03732787188934399
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 5.03,
+        "price": 476.67,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": -0.07332957483621372
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.43,
+        "price": 371.54,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": -0.05458154151505124
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 4.08,
+        "price": 92.09,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": -0.10156097560975606
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.73,
+        "price": 156.44,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": -0.052510447580401035
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.61,
+        "price": 265.77,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": -0.016540852575488554
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.6,
+        "price": 817.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": -0.046195874242618874
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.31,
+        "price": 318.58,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": -0.04146106631363591
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA INC",
+        "sector": "Industrials",
+        "weight_pct": 2.91,
+        "price": 953.83,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": -0.102910886433106
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.9,
+        "price": 482.36,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": -0.048937260933002075
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.43,
+        "price": 340.65,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": -0.015177797051170859
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.43,
+        "price": 112.15,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.4,
+        "price": 102.63,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": -0.10965559122061248
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.16,
+        "price": 847.2,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": -0.1296844181459566
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.88,
+        "price": 337.71,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.09523809523809,
+        "drawdown": -0.016970367351691332
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.86,
+        "price": 462.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": -0.09198113207547172
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.78,
+        "price": 266.54,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.5079365079365,
+        "drawdown": -0.046641390657414565
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON",
+        "sector": "Energy",
+        "weight_pct": 1.75,
+        "price": 199.77,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.71428571428571,
+        "drawdown": -0.02679397866224972
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.51,
+        "price": 183.77,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": -0.09792852935401526
+      },
+      {
+        "ticker": "ADI",
+        "name": "ANALOG DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 1.46,
+        "price": 374.52,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.12698412698413,
+        "drawdown": -0.03818793497521766
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 13
+  },
+  {
+    "date": "2026-08-26",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "delta": -0.6500000000000004,
+        "weight": 4.25
+      },
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "delta": 0.5800000000000001,
+        "weight": 6.6
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "delta": -0.35999999999999943,
+        "weight": 3.91
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "delta": -0.22999999999999998,
+        "weight": 2.89
+      },
+      {
+        "ticker": "MRVL",
+        "name": "MARVELL TECHNOLOGY",
+        "delta": 0.19000000000000017,
+        "weight": 1.32
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.6,
+        "price": 938.4,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": -0.03423008048082662
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 5.09,
+        "price": 480.93,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": -0.06504792083827442
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.25,
+        "price": 355.59,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": -0.09516781597496128
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 3.91,
+        "price": 88.24,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": -0.13912195121951224
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.78,
+        "price": 158.19,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": -0.04191145297074687
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.67,
+        "price": 270.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": -0.0008880994671403534
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.63,
+        "price": 821.93,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": -0.040440360974584796
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.26,
+        "price": 312.88,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": -0.05861114454206288
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA INC",
+        "sector": "Industrials",
+        "weight_pct": 2.91,
+        "price": 953.09,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": -0.10360686574182927
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.89,
+        "price": 479.76,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": -0.05406364604282506
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.44,
+        "price": 104.34,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": -0.09482085538301373
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.44,
+        "price": 342.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": -0.011274934952298287
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.43,
+        "price": 112.36,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.16,
+        "price": 846.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": -0.13053706443129526
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.89,
+        "price": 468.88,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": -0.07845911949685537
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.89,
+        "price": 339.1,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": -0.012924259183792274
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.75,
+        "price": 261.77,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.71428571428571,
+        "drawdown": -0.06370269690249661
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON",
+        "sector": "Energy",
+        "weight_pct": 1.75,
+        "price": 200.21,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.71428571428571,
+        "drawdown": -0.024650460369269753
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.51,
+        "price": 183.83,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": -0.09763400746122122
+      },
+      {
+        "ticker": "ADI",
+        "name": "ANALOG DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 1.45,
+        "price": 371.8,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.12698412698413,
+        "drawdown": -0.045173219651249326
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 12
+  },
+  {
+    "date": "2026-08-25",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "delta": -0.6100000000000003,
+        "weight": 4.29
+      },
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "delta": 0.5800000000000001,
+        "weight": 6.6
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "delta": -0.36999999999999966,
+        "weight": 3.9
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "delta": 0.26000000000000023,
+        "weight": 3.74
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "delta": -0.20999999999999996,
+        "weight": 2.91
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.6,
+        "price": 932.97,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": -0.03981845501512869
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 5.1,
+        "price": 479.18,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": -0.06845000874822602
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.29,
+        "price": 356.74,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": -0.09224153286343163
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 3.9,
+        "price": 87.48,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": -0.14653658536585362
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.86,
+        "price": 160.64,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": -0.0270728605172311
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.74,
+        "price": 273.14,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.61,
+        "price": 811.29,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": -0.052861996100727414
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.29,
+        "price": 314.66,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": -0.053255506077746984
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.91,
+        "price": 480.04,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": -0.05351157380022869
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA INC",
+        "sector": "Industrials",
+        "weight_pct": 2.85,
+        "price": 926.73,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": -0.12839877733364682
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.49,
+        "price": 346.96,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.26984126984127,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.48,
+        "price": 105.38,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": -0.08579855990283683
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.42,
+        "price": 111.11,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": -0.005103868194842473
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.11,
+        "price": 821.67,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": -0.1559109960552269
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.92,
+        "price": 343.34,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.09523809523809,
+        "drawdown": -0.0005821738371078927
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.83,
+        "price": 450.75,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": -0.1140919811320755
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON",
+        "sector": "Energy",
+        "weight_pct": 1.76,
+        "price": 199.89,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.5079365079365,
+        "drawdown": -0.026209382764164388
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.75,
+        "price": 260.05,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.71428571428571,
+        "drawdown": -0.0698547821732598
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.52,
+        "price": 183.34,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": -0.10003926958570585
+      },
+      {
+        "ticker": "ADI",
+        "name": "ANALOG DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 1.47,
+        "price": 373.66,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.12698412698413,
+        "drawdown": -0.04039651763013935
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 11
+  },
+  {
+    "date": "2026-08-24",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "delta": -0.5600000000000005,
+        "weight": 4.34
+      },
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "delta": 0.46000000000000085,
+        "weight": 6.48
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "delta": -0.34999999999999964,
+        "weight": 3.92
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "delta": 0.2799999999999998,
+        "weight": 3.76
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "delta": 0.2100000000000004,
+        "weight": 3.97
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.48,
+        "price": 910.43,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": -0.06301586974867754
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 4.89,
+        "price": 456.75,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": -0.11205505550263417
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.34,
+        "price": 358.76,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": -0.08710145296317977
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.97,
+        "price": 164.05,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": -0.006419962449276253
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 3.92,
+        "price": 87.26,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": -0.14868292682926823
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.76,
+        "price": 273.04,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.63,
+        "price": 811.02,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": -0.05317720676652237
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.27,
+        "price": 310.17,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": -0.06676495366470092
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.95,
+        "price": 484.19,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": -0.04532907449031904
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA INC",
+        "sector": "Industrials",
+        "weight_pct": 2.91,
+        "price": 942.1,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": -0.11394309898894896
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.53,
+        "price": 106.49,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.26984126984127,
+        "drawdown": -0.07616899453457102
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.52,
+        "price": 348.06,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.42,
+        "price": 110.23,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": -0.012983524355300884
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.05,
+        "price": 794.65,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": -0.18366822813938205
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.94,
+        "price": 344.59,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.09523809523809,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON",
+        "sector": "Energy",
+        "weight_pct": 1.8,
+        "price": 203.09,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": -0.010620158815219013
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.78,
+        "price": 435.38,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.5079365079365,
+        "drawdown": -0.14430031446540884
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.76,
+        "price": 258.94,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.71428571428571,
+        "drawdown": -0.0738250232491594
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.51,
+        "price": 181.57,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": -0.10872766542312981
+      },
+      {
+        "ticker": "ADI",
+        "name": "ANALOG DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 1.47,
+        "price": 371.17,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.12698412698413,
+        "drawdown": -0.046791134851947844
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 10
+  },
+  {
+    "date": "2026-08-21",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "delta": 0.75,
+        "weight": 6.77
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "delta": -0.5100000000000007,
+        "weight": 4.39
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "delta": -0.2899999999999996,
+        "weight": 3.98
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "delta": -0.20000000000000018,
+        "weight": 2.42
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "delta": 0.18000000000000016,
+        "weight": 3.66
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.77,
+        "price": 966.78,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": -0.005022332914805586
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 4.99,
+        "price": 473.25,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": -0.07997822663737629
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.39,
+        "price": 368.45,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": -0.06244433700603074
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 3.98,
+        "price": 90.07,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": -0.1212682926829269
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.93,
+        "price": 165.11,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.66,
+        "price": 270.24,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.64,
+        "price": 827.9,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": -0.03347070291978481
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.25,
+        "price": 314.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": -0.05524130460945966
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.95,
+        "price": 492.32,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": -0.029299262589218843
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA INC",
+        "sector": "Industrials",
+        "weight_pct": 2.91,
+        "price": 956.85,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": -0.10007053844345166
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.45,
+        "price": 344.82,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.26984126984127,
+        "drawdown": -0.0031222896790979596
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.42,
+        "price": 103.7,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": -0.1003730372169688
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.4,
+        "price": 111.04,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": -0.005730659025787971
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.16,
+        "price": 850.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": -0.12680802103879033
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.9,
+        "price": 341.75,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.09523809523809,
+        "drawdown": -0.0052104558421145145
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.85,
+        "price": 459.44,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": -0.09701257861635222
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON",
+        "sector": "Energy",
+        "weight_pct": 1.79,
+        "price": 205.27,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.5079365079365,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.76,
+        "price": 264.36,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.71428571428571,
+        "drawdown": -0.05443880105873085
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.51,
+        "price": 183.99,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": -0.09684861574710382
+      },
+      {
+        "ticker": "ADI",
+        "name": "ANALOG DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 1.45,
+        "price": 373.09,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.12698412698413,
+        "drawdown": -0.04186034566886672
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 9
+  },
+  {
+    "date": "2026-08-20",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "delta": 0.8100000000000005,
+        "weight": 6.83
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "delta": -0.5600000000000005,
+        "weight": 4.34
+      },
+      {
+        "ticker": "MRVL",
+        "name": "MARVELL TECHNOLOGY",
+        "delta": 0.2200000000000002,
+        "weight": 1.35
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "delta": 0.20000000000000018,
+        "weight": 3.96
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "delta": -0.19999999999999973,
+        "weight": 2.37
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.83,
+        "price": 974.33,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 4.95,
+        "price": 469.45,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": -0.08736561752755691
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.34,
+        "price": 364.03,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": -0.07369144253034438
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 4.07,
+        "price": 92.13,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": -0.10117073170731712
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.96,
+        "price": 166.15,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.63,
+        "price": 267.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.59,
+        "price": 815.39,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": -0.04807546376828521
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.22,
+        "price": 310.53,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": -0.06568179082922145
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.98,
+        "price": 496.21,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": -0.021629401790291467
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA INC",
+        "sector": "Industrials",
+        "weight_pct": 2.94,
+        "price": 966.01,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": -0.09145544321655304
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.43,
+        "price": 340.67,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": -0.015119976871928193
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.43,
+        "price": 103.84,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": -0.09915849744079112
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.37,
+        "price": 109.59,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": -0.018714183381088854
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.16,
+        "price": 850.24,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": -0.1265614727153189
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.89,
+        "price": 469.05,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.09523809523809,
+        "drawdown": -0.078125
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.88,
+        "price": 338.2,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": -0.015544041450777294
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON",
+        "sector": "Energy",
+        "weight_pct": 1.8,
+        "price": 205.77,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.5079365079365,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.77,
+        "price": 265.6,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.71428571428571,
+        "drawdown": -0.05000357679376194
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.53,
+        "price": 185.86,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": -0.0876693500883565
+      },
+      {
+        "ticker": "ADI",
+        "name": "ANALOG DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 1.44,
+        "price": 370.24,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.12698412698413,
+        "drawdown": -0.049179485862502835
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 8
+  },
+  {
+    "date": "2026-08-19",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "delta": -0.5900000000000007,
+        "weight": 4.31
+      },
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "delta": 0.54,
+        "weight": 6.56
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "delta": 0.2200000000000002,
+        "weight": 3.7
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "delta": -0.18999999999999995,
+        "weight": 2.38
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "delta": -0.17999999999999972,
+        "weight": 4.09
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.56,
+        "price": 937.11,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": -0.03555770537019117
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 4.91,
+        "price": 466.42,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": -0.09325608973735876
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.31,
+        "price": 362.48,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": -0.0776355632458841
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 4.09,
+        "price": 92.8,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": -0.09463414634146344
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.92,
+        "price": 164.77,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.7,
+        "price": 273.41,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.59,
+        "price": 816.15,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": -0.04718820411641789
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.18,
+        "price": 307.17,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": -0.07579131062703091
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA INC",
+        "sector": "Industrials",
+        "weight_pct": 3.0,
+        "price": 987.46,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": -0.07128144838937217
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.98,
+        "price": 496.17,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": -0.021708269253519444
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.66,
+        "price": 114.3,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.26984126984127,
+        "drawdown": -0.008415025592088132
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.45,
+        "price": 344.72,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": -0.0034113905753106392
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.38,
+        "price": 110.55,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": -0.010118194842406962
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.11,
+        "price": 832.56,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": -0.14472386587771213
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.89,
+        "price": 341.7,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.09523809523809,
+        "drawdown": -0.0053559993013914875
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.86,
+        "price": 462.09,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": -0.09180424528301893
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON",
+        "sector": "Energy",
+        "weight_pct": 1.79,
+        "price": 205.76,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.5079365079365,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.78,
+        "price": 267.45,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.71428571428571,
+        "drawdown": -0.04338650833392945
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.54,
+        "price": 187.27,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": -0.08074808560769678
+      },
+      {
+        "ticker": "ADI",
+        "name": "ANALOG DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 1.45,
+        "price": 373.26,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.12698412698413,
+        "drawdown": -0.04142376537661469
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 7
+  },
+  {
+    "date": "2026-08-18",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "delta": -0.47000000000000064,
+        "weight": 4.43
+      },
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "delta": 0.4300000000000006,
+        "weight": 6.45
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "delta": -0.20999999999999996,
+        "weight": 2.36
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "delta": 0.20999999999999996,
+        "weight": 1.95
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "delta": 0.18999999999999995,
+        "weight": 2.25
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.45,
+        "price": 940.76,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": -0.031801247349896034
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 5.0,
+        "price": 484.39,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": -0.058321507027741595
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.43,
+        "price": 380.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": -0.03305427619023387
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 4.18,
+        "price": 96.69,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": -0.056682926829268315
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.86,
+        "price": 165.56,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.62,
+        "price": 840.87,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": -0.018328916492522555
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.59,
+        "price": 271.11,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.33,
+        "price": 327.92,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": -0.013359008304248398
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 3.02,
+        "price": 514.33,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA INC",
+        "sector": "Industrials",
+        "weight_pct": 2.99,
+        "price": 1004.53,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": -0.055226898659769603
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.63,
+        "price": 115.2,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.26984126984127,
+        "drawdown": -0.0006072698880887757
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.4,
+        "price": 344.2,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": -0.004914715235617198
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.36,
+        "price": 111.61,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": -0.0006267908309456248
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.25,
+        "price": 903.68,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": -0.07166337935568715
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.95,
+        "price": 496.16,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.09523809523809,
+        "drawdown": -0.024842767295597458
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.85,
+        "price": 341.28,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": -0.006578564359317831
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.78,
+        "price": 272.24,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.5079365079365,
+        "drawdown": -0.026253666213606034
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON",
+        "sector": "Energy",
+        "weight_pct": 1.76,
+        "price": 205.74,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.71428571428571,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.57,
+        "price": 194.79,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": -0.04383467504417832
+      },
+      {
+        "ticker": "ADI",
+        "name": "ANALOG DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 1.43,
+        "price": 376.63,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.12698412698413,
+        "drawdown": -0.03276920311256065
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 6
+  },
+  {
+    "date": "2026-08-17",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "delta": 0.7000000000000002,
+        "weight": 6.72
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "delta": -0.47000000000000064,
+        "weight": 4.43
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "delta": 0.33000000000000007,
+        "weight": 2.39
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "delta": 0.30000000000000004,
+        "weight": 2.04
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "delta": -0.2599999999999998,
+        "weight": 2.31
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.72,
+        "price": 1011.75,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 5.05,
+        "price": 506.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": -0.01631058146542504
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.43,
+        "price": 392.43,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": -0.001424972645614398
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 4.33,
+        "price": 103.49,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.68,
+        "price": 881.65,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.64,
+        "price": 161.46,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.38,
+        "price": 343.84,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.37,
+        "price": 262.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA INC",
+        "sector": "Industrials",
+        "weight_pct": 3.11,
+        "price": 1079.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 3.05,
+        "price": 535.31,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.53,
+        "price": 114.33,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.26984126984127,
+        "drawdown": -0.008154767068621479
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.39,
+        "price": 994.79,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.32,
+        "price": 344.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": -0.005492917028042722
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.31,
+        "price": 112.9,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 2.04,
+        "price": 536.01,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.09523809523809,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.8,
+        "price": 341.45,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": -0.006083716597776188
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.79,
+        "price": 282.91,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.5079365079365,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON",
+        "sector": "Energy",
+        "weight_pct": 1.67,
+        "price": 202.7,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.71428571428571,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.6,
+        "price": 205.76,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GLW",
+        "name": "CORNING",
+        "sector": "Information Technology",
+        "weight_pct": 1.46,
+        "price": 173.21,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.12698412698413,
+        "drawdown": 0.0
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 5
+  },
+  {
+    "date": "2026-08-14",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "delta": 0.5200000000000005,
+        "weight": 6.54
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "delta": -0.40000000000000036,
+        "weight": 4.5
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "delta": 0.31999999999999984,
+        "weight": 2.38
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "delta": 0.2599999999999998,
+        "weight": 5.21
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "delta": -0.25,
+        "weight": 2.32
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.54,
+        "price": 971.66,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 5.21,
+        "price": 514.39,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.5,
+        "price": 392.99,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 4.35,
+        "price": 102.5,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.66,
+        "price": 160.1,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.62,
+        "price": 856.57,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.39,
+        "price": 260.35,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.31,
+        "price": 332.36,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA INC",
+        "sector": "Industrials",
+        "weight_pct": 3.11,
+        "price": 1063.25,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.93,
+        "price": 507.18,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.59,
+        "price": 115.27,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.26984126984127,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.38,
+        "price": 973.44,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.37,
+        "price": 345.9,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.32,
+        "price": 111.68,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.97,
+        "price": 508.8,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.09523809523809,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.83,
+        "price": 343.54,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.79,
+        "price": 279.58,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.5079365079365,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON",
+        "sector": "Energy",
+        "weight_pct": 1.68,
+        "price": 200.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.71428571428571,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.61,
+        "price": 203.72,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ADI",
+        "name": "ANALOG DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 1.45,
+        "price": 389.39,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.12698412698413,
+        "drawdown": 0.0
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 4
+  },
+  {
+    "date": "2026-08-13",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "delta": 0.41000000000000014,
+        "weight": 6.43
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "delta": -0.20999999999999996,
+        "weight": 2.36
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "delta": 0.19999999999999973,
+        "weight": 2.26
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "delta": 0.1900000000000004,
+        "weight": 4.46
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "delta": 0.16999999999999993,
+        "weight": 3.37
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.43,
+        "price": 949.83,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 4.92,
+        "price": 483.01,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.8,
+        "price": 417.82,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 4.46,
+        "price": 104.56,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.64,
+        "price": 158.61,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.63,
+        "price": 854.6,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.43,
+        "price": 262.08,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.37,
+        "price": 337.01,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 3.1,
+        "price": 534.54,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA INC",
+        "sector": "Industrials",
+        "weight_pct": 3.09,
+        "price": 1049.42,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.61,
+        "price": 115.72,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.26984126984127,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.38,
+        "price": 346.36,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.36,
+        "price": 113.47,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.26,
+        "price": 921.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.89,
+        "price": 487.29,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.09523809523809,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.84,
+        "price": 343.94,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.76,
+        "price": 273.43,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.5079365079365,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON CORP",
+        "sector": "Energy",
+        "weight_pct": 1.66,
+        "price": 197.7,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.66,
+        "price": 209.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ADI",
+        "name": "ANALOG DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 1.43,
+        "price": 381.17,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.12698412698413,
+        "drawdown": 0.0
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 3
+  },
+  {
+    "date": "2026-08-12",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "delta": 0.16000000000000014,
+        "weight": 6.18
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "delta": -0.10000000000000053,
+        "weight": 4.8
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "delta": 0.10000000000000009,
+        "weight": 2.16
+      },
+      {
+        "ticker": "LITE",
+        "name": "LUMENTUM HOLDINGS",
+        "delta": 0.07999999999999996,
+        "weight": 0.75
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "delta": -0.07999999999999963,
+        "weight": 3.68
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.18,
+        "price": 911.29,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 4.93,
+        "price": 482.93,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.8,
+        "price": 416.05,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 4.32,
+        "price": 100.95,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.68,
+        "price": 159.75,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.65,
+        "price": 855.6,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.42,
+        "price": 260.86,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.27,
+        "price": 326.11,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 3.19,
+        "price": 548.15,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA INC",
+        "sector": "Industrials",
+        "weight_pct": 3.07,
+        "price": 1039.9,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.62,
+        "price": 116.01,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.26984126984127,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.59,
+        "price": 123.88,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.37,
+        "price": 343.54,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.16,
+        "price": 878.21,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.84,
+        "price": 342.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.09523809523809,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.79,
+        "price": 276.59,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.77,
+        "price": 454.1,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.5079365079365,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON CORP",
+        "sector": "Energy",
+        "weight_pct": 1.66,
+        "price": 196.6,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.66,
+        "price": 208.25,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ADI",
+        "name": "ANALOG DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 1.45,
+        "price": 384.43,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.33333333333334,
+        "drawdown": 0.0
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 2
+  },
+  {
+    "date": "2026-08-11",
+    "new_entries": [],
+    "exits": [],
+    "movers": [],
+    "top20": [
+      {
+        "ticker": "MU",
+        "name": "MICRON TECHNOLOGY",
+        "sector": "Information Technology",
+        "weight_pct": 6.02,
+        "price": 868.52,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.20634920634922,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMD",
+        "name": "ADVANCED MICRO DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 4.95,
+        "price": 474.32,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.4126984126984,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AVGO",
+        "name": "BROADCOM INC",
+        "sector": "Information Technology",
+        "weight_pct": 4.9,
+        "price": 416.08,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.61904761904762,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "INTC",
+        "name": "INTEL CORPORATION",
+        "sector": "Information Technology",
+        "weight_pct": 4.27,
+        "price": 97.71,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.82539682539682,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 3.76,
+        "price": 159.8,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.03174603174604,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CAT",
+        "name": "CATERPILLAR INC",
+        "sector": "Industrials",
+        "weight_pct": 3.68,
+        "price": 843.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.23809523809523,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 3.48,
+        "price": 259.8,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.44444444444444,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.2,
+        "price": 311.41,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.65079365079364,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 3.12,
+        "price": 525.61,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.85714285714286,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GEV",
+        "name": "GE VERNOVA INC",
+        "sector": "Industrials",
+        "weight_pct": 3.05,
+        "price": 1011.88,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.06349206349206,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WMT",
+        "name": "WALMART INC",
+        "sector": "Consumer Staples",
+        "weight_pct": 2.62,
+        "price": 113.26,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.26984126984127,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CSCO",
+        "name": "CISCO SYSTEMS INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.57,
+        "price": 120.43,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.47619047619048,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 2.42,
+        "price": 343.8,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.68253968253968,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "STX",
+        "name": "SEAGATE TECHNOLOGY HOLDINGS PLC",
+        "sector": "Information Technology",
+        "weight_pct": 2.06,
+        "price": 820.52,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.88888888888889,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.88,
+        "price": 343.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.09523809523809,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TXN",
+        "name": "TEXAS INSTRUMENT INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.86,
+        "price": 281.24,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.3015873015873,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "WDC",
+        "name": "WESTERN DIGITAL CORP",
+        "sector": "Information Technology",
+        "weight_pct": 1.74,
+        "price": 437.93,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.5079365079365,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "CVX",
+        "name": "CHEVRON CORP",
+        "sector": "Energy",
+        "weight_pct": 1.7,
+        "price": 196.66,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.71428571428571,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 1.63,
+        "price": 200.47,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.92063492063492,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ADI",
+        "name": "ANALOG DEVICES",
+        "sector": "Information Technology",
+        "weight_pct": 1.48,
+        "price": 385.3,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.12698412698413,
+        "drawdown": 0.0
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 1
+  }
+]

@@ -1,0 +1,4293 @@
+[
+  {
+    "date": "2026-08-31",
+    "new_entries": [],
+    "exits": [
+      {
+        "ticker": "LULU",
+        "name": "LULULEMON ATHLETICA",
+        "sector": "Consumer Discretionary",
+        "weight": 0.25
+      },
+      {
+        "ticker": "GGG",
+        "name": "GRACO",
+        "sector": "Industrials",
+        "weight": 0.09
+      },
+      {
+        "ticker": "CSGP",
+        "name": "COSTAR GROUP",
+        "sector": "Real Estate",
+        "weight": 0.08
+      },
+      {
+        "ticker": "RPM",
+        "name": "RPM INTERNATIONAL INC",
+        "sector": "Materials",
+        "weight": 0.05
+      },
+      {
+        "ticker": "ERIE",
+        "name": "ERIE INDEMNITY CLASS A",
+        "sector": "Financials",
+        "weight": 0.03
+      }
+    ],
+    "movers": [
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "delta": -0.48,
+        "weight": 3.36
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "delta": -0.3600000000000003,
+        "weight": 2.78
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "delta": 0.35999999999999943,
+        "weight": 6.76
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "delta": -0.29000000000000004,
+        "weight": 2.35
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "delta": 0.1999999999999993,
+        "weight": 6.39
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.75,
+        "price": 507.29,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.15254237288136,
+        "drawdown": -0.012151188830253252
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "sector": "Information Technology",
+        "weight_pct": 6.76,
+        "price": 316.85,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.30508474576271,
+        "drawdown": -0.008914607444479092
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "sector": "Information Technology",
+        "weight_pct": 6.39,
+        "price": 220.78,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.45762711864407,
+        "drawdown": -0.019452833540593337
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.76,
+        "price": 572.34,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.61016949152543,
+        "drawdown": -0.02968551326608458
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.66,
+        "price": 1156.73,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.76271186440678,
+        "drawdown": -0.07859646327863634
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.56,
+        "price": 301.49,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.91525423728814,
+        "drawdown": -0.09288121314237574
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.36,
+        "price": 133.91,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.0677966101695,
+        "drawdown": -0.11965025310630475
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.25,
+        "price": 379.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.22033898305084,
+        "drawdown": -0.005843815513626882
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.78,
+        "price": 458.39,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.37288135593221,
+        "drawdown": -0.09619858827240825
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.35,
+        "price": 175.45,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.52542372881356,
+        "drawdown": -0.138768898488121
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.33,
+        "price": 589.31,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.67796610169492,
+        "drawdown": -0.010062153536032268
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.24,
+        "price": 160.95,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.83050847457628,
+        "drawdown": -0.025195324329235203
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.12,
+        "price": 265.85,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.98305084745762,
+        "drawdown": -0.016244819419774965
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.94,
+        "price": 339.35,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.13559322033898,
+        "drawdown": -0.020889235119305096
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.92,
+        "price": 81.05,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.28813559322035,
+        "drawdown": -0.008198727361722977
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.8,
+        "price": 504.03,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.4406779661017,
+        "drawdown": -0.0019207920792079748
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.52,
+        "price": 335.41,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.59322033898306,
+        "drawdown": -0.023665366478430445
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS",
+        "sector": "Information Technology",
+        "weight_pct": 1.49,
+        "price": 195.69,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.7457627118644,
+        "drawdown": -0.015742883009757548
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.41,
+        "price": 228.54,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.89830508474576,
+        "drawdown": -0.06855233126834048
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.4,
+        "price": 147.76,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.05084745762711,
+        "drawdown": -0.03139954113405454
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 15
+  },
+  {
+    "date": "2026-08-28",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "delta": -0.48,
+        "weight": 3.36
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "delta": -0.3700000000000001,
+        "weight": 2.77
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "delta": 0.34999999999999964,
+        "weight": 6.75
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "delta": -0.31000000000000005,
+        "weight": 2.33
+      },
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "delta": 0.1999999999999993,
+        "weight": 7.77
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.77,
+        "price": 513.53,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.1869918699187,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "sector": "Information Technology",
+        "weight_pct": 6.75,
+        "price": 319.7,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.3739837398374,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "sector": "Information Technology",
+        "weight_pct": 6.23,
+        "price": 217.55,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.5609756097561,
+        "drawdown": -0.03379818795523177
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.76,
+        "price": 578.02,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.7479674796748,
+        "drawdown": -0.020055946427057793
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.68,
+        "price": 1174.61,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.9349593495935,
+        "drawdown": -0.06435399075991731
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.53,
+        "price": 301.9,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.1219512195122,
+        "drawdown": -0.09164761102419074
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.36,
+        "price": 135.12,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.3089430894309,
+        "drawdown": -0.11169548353165477
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.24,
+        "price": 381.6,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.4959349593496,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.77,
+        "price": 461.67,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.6829268292683,
+        "drawdown": -0.08973145628770848
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.33,
+        "price": 175.54,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.05691056910568,
+        "drawdown": -0.13832711564892994
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.33,
+        "price": 595.3,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.05691056910568,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.16,
+        "price": 156.71,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.2439024390244,
+        "drawdown": -0.050875174126340045
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.12,
+        "price": 268.04,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.43089430894308,
+        "drawdown": -0.008140911782119556
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.96,
+        "price": 346.59,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.6178861788618,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.92,
+        "price": 81.72,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.8048780487805,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.79,
+        "price": 505.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.99186991869918,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.54,
+        "price": 342.88,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.1788617886179,
+        "drawdown": -0.0019211736624556819
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS",
+        "sector": "Information Technology",
+        "weight_pct": 1.47,
+        "price": 195.38,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.36585365853658,
+        "drawdown": -0.017302082285484348
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.39,
+        "price": 148.35,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.73983739837398,
+        "drawdown": -0.027531956735496667
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.39,
+        "price": 228.55,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.73983739837398,
+        "drawdown": -0.06851157482882296
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 14
+  },
+  {
+    "date": "2026-08-27",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "delta": -0.52,
+        "weight": 3.32
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "delta": 0.3099999999999996,
+        "weight": 6.5
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "delta": -0.26000000000000023,
+        "weight": 2.88
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "delta": 0.21999999999999975,
+        "weight": 6.62
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "delta": -0.20999999999999996,
+        "weight": 2.43
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.61,
+        "price": 505.06,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.1869918699187,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "sector": "Information Technology",
+        "weight_pct": 6.62,
+        "price": 314.58,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.3739837398374,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "sector": "Information Technology",
+        "weight_pct": 6.5,
+        "price": 227.98,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.5609756097561,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.71,
+        "price": 318.58,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.7479674796748,
+        "drawdown": -0.04146106631363591
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.7,
+        "price": 571.1,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.9349593495935,
+        "drawdown": -0.03178774264643553
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.67,
+        "price": 1176.1,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.1219512195122,
+        "drawdown": -0.06316711805002403
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.32,
+        "price": 134.22,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.3089430894309,
+        "drawdown": -0.11761225428965888
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.21,
+        "price": 379.66,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.4959349593496,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.88,
+        "price": 482.36,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.6829268292683,
+        "drawdown": -0.048937260933002075
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.43,
+        "price": 183.77,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.869918699187,
+        "drawdown": -0.09792852935401526
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.3,
+        "price": 591.73,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.05691056910568,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.15,
+        "price": 156.44,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.2439024390244,
+        "drawdown": -0.052510447580401035
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.09,
+        "price": 265.77,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.43089430894308,
+        "drawdown": -0.016540852575488554
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.92,
+        "price": 340.65,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.6178861788618,
+        "drawdown": -0.015177797051170859
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.87,
+        "price": 79.84,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.8048780487805,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.78,
+        "price": 503.7,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.99186991869918,
+        "drawdown": -0.000654722933158709
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.51,
+        "price": 337.71,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.36585365853658,
+        "drawdown": -0.016970367351691332
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.51,
+        "price": 201.09,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.36585365853658,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.4,
+        "price": 149.54,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.5528455284553,
+        "drawdown": -0.019731235660439325
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.39,
+        "price": 229.87,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.73983739837398,
+        "drawdown": -0.06313172481252041
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 13
+  },
+  {
+    "date": "2026-08-26",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "delta": -0.43999999999999995,
+        "weight": 3.4
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "delta": -0.26000000000000023,
+        "weight": 2.88
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "delta": 0.21999999999999997,
+        "weight": 1.44
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "delta": 0.21999999999999975,
+        "weight": 6.62
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "delta": -0.20000000000000018,
+        "weight": 2.44
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.51,
+        "price": 496.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.1869918699187,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "sector": "Information Technology",
+        "weight_pct": 6.62,
+        "price": 313.45,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.3739837398374,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "sector": "Information Technology",
+        "weight_pct": 6.0,
+        "price": 209.66,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.5609756097561,
+        "drawdown": -0.06883993604547878
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.75,
+        "price": 576.14,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.7479674796748,
+        "drawdown": -0.023243197423073722
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.72,
+        "price": 1189.41,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.9349593495935,
+        "drawdown": -0.052564919547554566
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.66,
+        "price": 312.88,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.1219512195122,
+        "drawdown": -0.05861114454206288
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.4,
+        "price": 136.83,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.3089430894309,
+        "drawdown": -0.10045361909144698
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.26,
+        "price": 383.9,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.4959349593496,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.88,
+        "price": 479.76,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.6829268292683,
+        "drawdown": -0.05406364604282506
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.44,
+        "price": 183.83,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.869918699187,
+        "drawdown": -0.09763400746122122
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.34,
+        "price": 598.47,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.05691056910568,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.18,
+        "price": 158.19,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.2439024390244,
+        "drawdown": -0.04191145297074687
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.13,
+        "price": 270.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.43089430894308,
+        "drawdown": -0.0008880994671403534
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.93,
+        "price": 342.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.6178861788618,
+        "drawdown": -0.011274934952298287
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.91,
+        "price": 81.46,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.8048780487805,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.79,
+        "price": 504.91,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.99186991869918,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.52,
+        "price": 339.1,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.36585365853658,
+        "drawdown": -0.012924259183792274
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.52,
+        "price": 202.25,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.36585365853658,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.44,
+        "price": 236.27,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.73983739837398,
+        "drawdown": -0.03704760352135639
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.44,
+        "price": 153.1,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.73983739837398,
+        "drawdown": 0.0
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 12
+  },
+  {
+    "date": "2026-08-25",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "delta": -0.3799999999999999,
+        "weight": 3.46
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "delta": -0.26000000000000023,
+        "weight": 2.88
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "delta": 0.25,
+        "weight": 1.47
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "delta": -0.20999999999999996,
+        "weight": 2.43
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "delta": 0.19999999999999973,
+        "weight": 3.26
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.43,
+        "price": 491.71,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.1869918699187,
+        "drawdown": -0.007448526443278155
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "sector": "Information Technology",
+        "weight_pct": 6.53,
+        "price": 309.9,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.3739837398374,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "sector": "Information Technology",
+        "weight_pct": 6.09,
+        "price": 213.05,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.5609756097561,
+        "drawdown": -0.053783975839403024
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.86,
+        "price": 1233.66,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.7479674796748,
+        "drawdown": -0.017317189740321814
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.7,
+        "price": 570.05,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.9349593495935,
+        "drawdown": -0.03356785623463604
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.68,
+        "price": 314.66,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.1219512195122,
+        "drawdown": -0.053255506077746984
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.46,
+        "price": 139.48,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.3089430894309,
+        "drawdown": -0.08303201630399068
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.26,
+        "price": 384.14,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.4959349593496,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.88,
+        "price": 480.04,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.6829268292683,
+        "drawdown": -0.05351157380022869
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.43,
+        "price": 183.34,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.869918699187,
+        "drawdown": -0.10003926958570585
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.34,
+        "price": 599.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.05691056910568,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.21,
+        "price": 160.64,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.2439024390244,
+        "drawdown": -0.0270728605172311
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.15,
+        "price": 273.14,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.43089430894308,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.96,
+        "price": 346.96,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.6178861788618,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.93,
+        "price": 82.23,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.8048780487805,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.78,
+        "price": 504.32,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.99186991869918,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.54,
+        "price": 343.34,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.1788617886179,
+        "drawdown": -0.0005821738371078927
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.47,
+        "price": 156.45,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.5528455284553,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.47,
+        "price": 241.19,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.5528455284553,
+        "drawdown": -0.01699543527877411
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.43,
+        "price": 190.94,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.73983739837398,
+        "drawdown": -0.039633839653958336
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 11
+  },
+  {
+    "date": "2026-08-24",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "delta": -0.34999999999999964,
+        "weight": 3.49
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "delta": -0.22999999999999998,
+        "weight": 3.64
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "delta": -0.22999999999999998,
+        "weight": 2.91
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "delta": -0.22999999999999998,
+        "weight": 2.41
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "delta": -0.22000000000000064,
+        "weight": 5.97
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.37,
+        "price": 487.31,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.1869918699187,
+        "drawdown": -0.016330238191360466
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "sector": "Information Technology",
+        "weight_pct": 6.55,
+        "price": 310.34,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.3739837398374,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "sector": "Information Technology",
+        "weight_pct": 5.97,
+        "price": 208.48,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.5609756097561,
+        "drawdown": -0.07408065375732815
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.9,
+        "price": 1246.93,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.7479674796748,
+        "drawdown": -0.006746853592480505
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.64,
+        "price": 559.02,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.9349593495935,
+        "drawdown": -0.05226752564211247
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.63,
+        "price": 310.17,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.1219512195122,
+        "drawdown": -0.06676495366470092
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.49,
+        "price": 140.71,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.3089430894309,
+        "drawdown": -0.07494576293471833
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.25,
+        "price": 382.41,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.4959349593496,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.91,
+        "price": 484.19,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.6829268292683,
+        "drawdown": -0.04532907449031904
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.41,
+        "price": 181.57,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.869918699187,
+        "drawdown": -0.10872766542312981
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.35,
+        "price": 599.86,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.05691056910568,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.26,
+        "price": 164.05,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.2439024390244,
+        "drawdown": -0.006419962449276253
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.16,
+        "price": 273.04,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.43089430894308,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.97,
+        "price": 348.06,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.6178861788618,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.88,
+        "price": 80.01,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.8048780487805,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.79,
+        "price": 504.32,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.99186991869918,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.55,
+        "price": 344.59,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.1788617886179,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.47,
+        "price": 241.52,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.36585365853658,
+        "drawdown": -0.015650472774698415
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.42,
+        "price": 150.66,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.73983739837398,
+        "drawdown": -0.012389380530973547
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.42,
+        "price": 188.15,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.73983739837398,
+        "drawdown": -0.05366663313549939
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 10
+  },
+  {
+    "date": "2026-08-21",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "delta": -0.33999999999999986,
+        "weight": 3.5
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "delta": -0.29000000000000004,
+        "weight": 3.58
+      },
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "delta": -0.2400000000000002,
+        "weight": 7.33
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "delta": 0.21999999999999997,
+        "weight": 1.44
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "delta": -0.18999999999999995,
+        "weight": 2.45
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.33,
+        "price": 483.24,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.1869918699187,
+        "drawdown": -0.024545821558336633
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "sector": "Information Technology",
+        "weight_pct": 6.55,
+        "price": 309.35,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.3739837398374,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "sector": "Information Technology",
+        "weight_pct": 6.16,
+        "price": 214.72,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.5609756097561,
+        "drawdown": -0.04636702789127731
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.94,
+        "price": 1255.4,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.7479674796748,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.68,
+        "price": 314.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.9349593495935,
+        "drawdown": -0.05524130460945966
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.58,
+        "price": 549.9,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.1219512195122,
+        "drawdown": -0.06772908366533872
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.5,
+        "price": 140.53,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.3089430894309,
+        "drawdown": -0.07612911708631918
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.16,
+        "price": 371.04,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.4959349593496,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.96,
+        "price": 492.32,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.6829268292683,
+        "drawdown": -0.029299262589218843
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.45,
+        "price": 183.99,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.869918699187,
+        "drawdown": -0.09684861574710382
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.28,
+        "price": 165.11,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.2439024390244,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.28,
+        "price": 580.63,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.2439024390244,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.14,
+        "price": 270.24,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.43089430894308,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.95,
+        "price": 344.82,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.6178861788618,
+        "drawdown": -0.0031222896790979596
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.87,
+        "price": 79.59,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.8048780487805,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.76,
+        "price": 495.82,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.99186991869918,
+        "drawdown": -0.01628871297343408
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.54,
+        "price": 341.75,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.1788617886179,
+        "drawdown": -0.0052104558421145145
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.46,
+        "price": 239.04,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.36585365853658,
+        "drawdown": -0.02575806977502454
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.44,
+        "price": 152.55,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.5528455284553,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.42,
+        "price": 188.65,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.73983739837398,
+        "drawdown": -0.05115179559400457
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 9
+  },
+  {
+    "date": "2026-08-20",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "delta": -0.31999999999999984,
+        "weight": 3.52
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "delta": -0.30000000000000027,
+        "weight": 3.57
+      },
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "delta": -0.2400000000000002,
+        "weight": 7.33
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "delta": 0.21999999999999975,
+        "weight": 6.62
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "delta": 0.18999999999999995,
+        "weight": 1.41
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.33,
+        "price": 481.15,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.1869918699187,
+        "drawdown": -0.028764634638675818
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "sector": "Information Technology",
+        "weight_pct": 6.62,
+        "price": 311.3,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.3739837398374,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "sector": "Information Technology",
+        "weight_pct": 6.25,
+        "price": 216.85,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.5609756097561,
+        "drawdown": -0.0369070882927696
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.92,
+        "price": 1244.4,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.7479674796748,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.66,
+        "price": 310.53,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.9349593495935,
+        "drawdown": -0.06568179082922145
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.57,
+        "price": 545.83,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.1219512195122,
+        "drawdown": -0.07462914300245822
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.52,
+        "price": 140.69,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.3089430894309,
+        "drawdown": -0.07507724672934071
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.13,
+        "price": 365.73,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.4959349593496,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 3.0,
+        "price": 496.21,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.6829268292683,
+        "drawdown": -0.021629401790291467
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.48,
+        "price": 185.86,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.869918699187,
+        "drawdown": -0.0876693500883565
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.31,
+        "price": 166.15,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.05691056910568,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.26,
+        "price": 573.85,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.2439024390244,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.13,
+        "price": 267.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.43089430894308,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.94,
+        "price": 340.67,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.6178861788618,
+        "drawdown": -0.015119976871928193
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.89,
+        "price": 80.14,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.8048780487805,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.77,
+        "price": 496.86,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.99186991869918,
+        "drawdown": -0.014225343729539828
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.53,
+        "price": 338.2,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.1788617886179,
+        "drawdown": -0.015544041450777294
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.41,
+        "price": 148.99,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.36585365853658,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.4,
+        "price": 228.99,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.5528455284553,
+        "drawdown": -0.06671829149005544
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.39,
+        "price": 183.75,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.73983739837398,
+        "drawdown": -0.07579720350065383
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 8
+  },
+  {
+    "date": "2026-08-19",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "delta": -0.33000000000000007,
+        "weight": 3.54
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "delta": 0.27999999999999936,
+        "weight": 6.68
+      },
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "delta": -0.2600000000000007,
+        "weight": 7.31
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "delta": -0.2599999999999998,
+        "weight": 3.58
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "delta": 0.2200000000000002,
+        "weight": 4.0
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.31,
+        "price": 484.31,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.1869918699187,
+        "drawdown": -0.022385950746871167
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "sector": "Information Technology",
+        "weight_pct": 6.68,
+        "price": 316.83,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.3739837398374,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "sector": "Information Technology",
+        "weight_pct": 6.21,
+        "price": 217.56,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.5609756097561,
+        "drawdown": -0.033753775093266984
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 4.0,
+        "price": 1280.34,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.7479674796748,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.59,
+        "price": 307.17,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.9349593495935,
+        "drawdown": -0.07579131062703091
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.58,
+        "price": 144.5,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.1219512195122,
+        "drawdown": -0.050029583853790104
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.54,
+        "price": 546.03,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.3089430894309,
+        "drawdown": -0.07429007374756302
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.1,
+        "price": 365.54,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.4959349593496,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 2.97,
+        "price": 496.17,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.6829268292683,
+        "drawdown": -0.021708269253519444
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.48,
+        "price": 187.27,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.869918699187,
+        "drawdown": -0.08074808560769678
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.27,
+        "price": 164.77,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.05691056910568,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.24,
+        "price": 573.72,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.2439024390244,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.15,
+        "price": 273.41,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.43089430894308,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.94,
+        "price": 344.72,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.6178861788618,
+        "drawdown": -0.0034113905753106392
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.88,
+        "price": 80.22,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.8048780487805,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.76,
+        "price": 499.62,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.99186991869918,
+        "drawdown": -0.008749479197666743
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.53,
+        "price": 341.7,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.1788617886179,
+        "drawdown": -0.0053559993013914875
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.43,
+        "price": 152.2,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.5528455284553,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.43,
+        "price": 234.69,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.5528455284553,
+        "drawdown": -0.04348712096511255
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.4,
+        "price": 186.45,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.73983739837398,
+        "drawdown": -0.062217080776581855
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 7
+  },
+  {
+    "date": "2026-08-18",
+    "new_entries": [
+      {
+        "ticker": "VMRK",
+        "name": "VIVMARK RESIDENTIAL",
+        "sector": "Real Estate",
+        "weight": 0.28,
+        "signal": {
+          "state": "NONE",
+          "checks": {},
+          "note": ""
+        },
+        "price": 64.03,
+        "currency": "USD",
+        "price_roc_20d": null,
+        "weight_percentile": 36.58536585365854,
+        "drawdown": 0.0
+      }
+    ],
+    "exits": [
+      {
+        "ticker": "EQR",
+        "name": "EQUITY RESIDENTIAL REIT",
+        "sector": "Real Estate",
+        "weight": 0.28
+      }
+    ],
+    "movers": [
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "delta": -0.3400000000000003,
+        "weight": 3.53
+      },
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "delta": -0.29000000000000004,
+        "weight": 7.28
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "delta": 0.20999999999999996,
+        "weight": 3.83
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "delta": 0.13999999999999968,
+        "weight": 6.54
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "delta": 0.10000000000000009,
+        "weight": 2.14
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.28,
+        "price": 481.63,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.1869918699187,
+        "drawdown": -0.02779572062979407
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "sector": "Information Technology",
+        "weight_pct": 6.54,
+        "price": 310.03,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.3739837398374,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA CORP",
+        "sector": "Information Technology",
+        "weight_pct": 6.28,
+        "price": 219.74,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.5609756097561,
+        "drawdown": -0.0240717711849351
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.83,
+        "price": 327.92,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.9349593495935,
+        "drawdown": -0.013359008304248398
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.83,
+        "price": 1225.73,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.9349593495935,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.74,
+        "price": 150.85,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.1219512195122,
+        "drawdown": -0.008283479061205832
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.53,
+        "price": 543.67,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.3089430894309,
+        "drawdown": -0.07829109095532773
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.09,
+        "price": 364.25,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.4959349593496,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 3.08,
+        "price": 514.33,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.6829268292683,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.58,
+        "price": 194.79,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.869918699187,
+        "drawdown": -0.04383467504417832
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.28,
+        "price": 165.56,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.05691056910568,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.24,
+        "price": 574.31,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.2439024390244,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.14,
+        "price": 271.11,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.43089430894308,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.94,
+        "price": 344.2,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.6178861788618,
+        "drawdown": -0.004914715235617198
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.82,
+        "price": 77.77,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.8048780487805,
+        "drawdown": -0.004989764585465719
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.78,
+        "price": 502.96,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.99186991869918,
+        "drawdown": -0.0021228895105449936
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.53,
+        "price": 341.28,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.1788617886179,
+        "drawdown": -0.006578564359317831
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.45,
+        "price": 193.18,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.36585365853658,
+        "drawdown": -0.028367367468061497
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.44,
+        "price": 236.38,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.5528455284553,
+        "drawdown": -0.03659928268666456
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.27,
+        "price": 135.17,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.73983739837398,
+        "drawdown": -0.004932273262662073
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 6
+  },
+  {
+    "date": "2026-08-17",
+    "new_entries": [],
+    "exits": [
+      {
+        "ticker": "AVB",
+        "name": "AVALONBAY COMMUNITIES REIT",
+        "sector": "Real Estate",
+        "weight": 0.15
+      }
+    ],
+    "movers": [
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "delta": 0.3899999999999997,
+        "weight": 4.01
+      },
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "delta": -0.33000000000000007,
+        "weight": 7.24
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA CORP",
+        "delta": 0.22999999999999954,
+        "weight": 6.42
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "delta": -0.18000000000000016,
+        "weight": 3.69
+      },
+      {
+        "ticker": "EQR",
+        "name": "EQUITY RESIDENTIAL REIT",
+        "delta": 0.14,
+        "weight": 0.28
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.24,
+        "price": 480.35,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.1869918699187,
+        "drawdown": -0.030379491320145245
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE",
+        "sector": "Information Technology",
+        "weight_pct": 6.43,
+        "price": 305.59,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.3739837398374,
+        "drawdown": -0.0011113653450136691
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA CORP",
+        "sector": "Information Technology",
+        "weight_pct": 6.42,
+        "price": 225.01,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.5609756097561,
+        "drawdown": -0.0006661929294724004
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 4.01,
+        "price": 343.84,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.7479674796748,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.73,
+        "price": 150.85,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.9349593495935,
+        "drawdown": -0.008283479061205832
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.69,
+        "price": 1183.16,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.3089430894309,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.69,
+        "price": 568.97,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.3089430894309,
+        "drawdown": -0.035398830211070605
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 3.2,
+        "price": 535.31,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.4959349593496,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.04,
+        "price": 358.84,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.6829268292683,
+        "drawdown": -0.014581903061925038
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.72,
+        "price": 205.76,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.869918699187,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.22,
+        "price": 161.46,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.05691056910568,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.19,
+        "price": 562.26,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.2439024390244,
+        "drawdown": -0.012348715066134964
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.06,
+        "price": 262.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.43089430894308,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.94,
+        "price": 344.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.6178861788618,
+        "drawdown": -0.005492917028042722
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.78,
+        "price": 76.02,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.8048780487805,
+        "drawdown": -0.02737973387922212
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.76,
+        "price": 498.23,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.99186991869918,
+        "drawdown": -0.011507251552486865
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.53,
+        "price": 341.45,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.1788617886179,
+        "drawdown": -0.006083716597776188
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.51,
+        "price": 201.8,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.36585365853658,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.43,
+        "price": 235.28,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.5528455284553,
+        "drawdown": -0.04108249103358336
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.27,
+        "price": 135.97,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.73983739837398,
+        "drawdown": 0.0
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 5
+  },
+  {
+    "date": "2026-08-14",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "delta": 0.22999999999999998,
+        "weight": 3.85
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA CORP",
+        "delta": 0.1899999999999995,
+        "weight": 6.38
+      },
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "delta": -0.15000000000000036,
+        "weight": 7.42
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "delta": -0.1200000000000001,
+        "weight": 3.02
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "delta": -0.11999999999999966,
+        "weight": 3.66
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.42,
+        "price": 495.4,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.19354838709677,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE INC",
+        "sector": "Information Technology",
+        "weight_pct": 6.4,
+        "price": 305.93,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.38709677419355,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA CORP",
+        "sector": "Information Technology",
+        "weight_pct": 6.38,
+        "price": 225.16,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.58064516129032,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.85,
+        "price": 332.36,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.7741935483871,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.8,
+        "price": 589.85,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.96774193548387,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.74,
+        "price": 152.11,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.16129032258065,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.66,
+        "price": 1180.16,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.35483870967742,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.06,
+        "price": 364.15,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.54838709677419,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 3.02,
+        "price": 507.18,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.74193548387096,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.68,
+        "price": 203.72,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.93548387096774,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.21,
+        "price": 569.29,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.12903225806451,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.19,
+        "price": 160.1,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.32258064516128,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.04,
+        "price": 260.35,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.51612903225806,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.94,
+        "price": 345.9,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.70967741935483,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.82,
+        "price": 78.16,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.90322580645162,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.77,
+        "price": 504.03,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.09677419354838,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.53,
+        "price": 343.54,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.29032258064517,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.48,
+        "price": 198.82,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.67741935483872,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.48,
+        "price": 245.36,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.67741935483872,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.26,
+        "price": 135.84,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.87096774193549,
+        "drawdown": 0.0
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 4
+  },
+  {
+    "date": "2026-08-13",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "delta": 0.27,
+        "weight": 3.89
+      },
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "delta": -0.16000000000000014,
+        "weight": 7.41
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA CORP",
+        "delta": 0.15999999999999925,
+        "weight": 6.35
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "delta": 0.10000000000000009,
+        "weight": 2.74
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "delta": -0.08000000000000007,
+        "weight": 3.76
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.41,
+        "price": 496.88,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.19354838709677,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA CORP",
+        "sector": "Information Technology",
+        "weight_pct": 6.35,
+        "price": 225.3,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.58064516129032,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE INC",
+        "sector": "Information Technology",
+        "weight_pct": 6.35,
+        "price": 305.26,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.58064516129032,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.89,
+        "price": 337.01,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.7741935483871,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.81,
+        "price": 594.97,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.96774193548387,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.76,
+        "price": 153.81,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.16129032258065,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.73,
+        "price": 1209.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.35483870967742,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 3.16,
+        "price": 534.54,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.54838709677419,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.06,
+        "price": 365.45,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.74193548387096,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.74,
+        "price": 209.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.93548387096774,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.18,
+        "price": 567.04,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.12903225806451,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.16,
+        "price": 158.61,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.32258064516128,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.04,
+        "price": 262.08,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.51612903225806,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.93,
+        "price": 346.36,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.70967741935483,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.81,
+        "price": 78.24,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.90322580645162,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.77,
+        "price": 506.93,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.09677419354838,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.52,
+        "price": 343.94,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.29032258064517,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.51,
+        "price": 203.62,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.48387096774194,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.47,
+        "price": 244.96,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.67741935483872,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.26,
+        "price": 135.55,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.87096774193549,
+        "drawdown": 0.0
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 3
+  },
+  {
+    "date": "2026-08-12",
+    "new_entries": [],
+    "exits": [],
+    "movers": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "delta": -0.1800000000000006,
+        "weight": 7.39
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA CORP",
+        "delta": 0.17999999999999972,
+        "weight": 6.37
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "delta": 0.16999999999999993,
+        "weight": 3.79
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "delta": -0.1299999999999999,
+        "weight": 3.74
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "delta": 0.1299999999999999,
+        "weight": 3.27
+      }
+    ],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.39,
+        "price": 492.43,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.19354838709677,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA CORP",
+        "sector": "Information Technology",
+        "weight_pct": 6.37,
+        "price": 224.09,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.38709677419355,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE INC",
+        "sector": "Information Technology",
+        "weight_pct": 6.34,
+        "price": 302.25,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.58064516129032,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.79,
+        "price": 1220.28,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.96774193548387,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.79,
+        "price": 326.11,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.96774193548387,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.76,
+        "price": 152.61,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.16129032258065,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.74,
+        "price": 578.85,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.35483870967742,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 3.27,
+        "price": 548.15,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.54838709677419,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.03,
+        "price": 359.42,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.74193548387096,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.74,
+        "price": 208.25,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.93548387096774,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.19,
+        "price": 159.75,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.12903225806451,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.17,
+        "price": 559.73,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.32258064516128,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.04,
+        "price": 260.86,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.51612903225806,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.93,
+        "price": 343.54,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.70967741935483,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.79,
+        "price": 510.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.90322580645162,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.73,
+        "price": 74.21,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.09677419354838,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.57,
+        "price": 210.5,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.29032258064517,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.53,
+        "price": 342.37,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.48387096774194,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.5,
+        "price": 248.25,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.67741935483872,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.24,
+        "price": 132.92,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.87096774193549,
+        "drawdown": 0.0
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 2
+  },
+  {
+    "date": "2026-08-11",
+    "new_entries": [],
+    "exits": [],
+    "movers": [],
+    "top20": [
+      {
+        "ticker": "MSFT",
+        "name": "MICROSOFT",
+        "sector": "Information Technology",
+        "weight_pct": 7.57,
+        "price": 503.81,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 99.19354838709677,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AAPL",
+        "name": "APPLE INC",
+        "sector": "Information Technology",
+        "weight_pct": 6.4,
+        "price": 304.91,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 98.38709677419355,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NVDA",
+        "name": "NVIDIA CORP",
+        "sector": "Information Technology",
+        "weight_pct": 6.19,
+        "price": 217.5,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 97.58064516129032,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "META",
+        "name": "META PLATFORMS CLASS A",
+        "sector": "Communication",
+        "weight_pct": 3.87,
+        "price": 599.12,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 96.7741935483871,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "TJX",
+        "name": "TJX",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 3.84,
+        "price": 155.74,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.96774193548387,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LLY",
+        "name": "ELI LILLY",
+        "sector": "Health Care",
+        "weight_pct": 3.78,
+        "price": 1215.02,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 95.16129032258065,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "LRCX",
+        "name": "LAM RESEARCH",
+        "sector": "Information Technology",
+        "weight_pct": 3.62,
+        "price": 311.41,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 94.35483870967742,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "AMAT",
+        "name": "APPLIED MATERIAL INC",
+        "sector": "Information Technology",
+        "weight_pct": 3.14,
+        "price": 525.61,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 93.54838709677419,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "V",
+        "name": "VISA CLASS A",
+        "sector": "Financials",
+        "weight_pct": 3.06,
+        "price": 362.82,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 92.74193548387096,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "KLAC",
+        "name": "KLA",
+        "sector": "Information Technology",
+        "weight_pct": 2.64,
+        "price": 200.47,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.93548387096774,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "XOM",
+        "name": "EXXONMOBIL HOLDINGS CORP",
+        "sector": "Energy",
+        "weight_pct": 2.19,
+        "price": 159.8,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 91.12903225806451,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MA",
+        "name": "MASTERCARD CLASS A",
+        "sector": "Financials",
+        "weight_pct": 2.18,
+        "price": 561.44,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 90.32258064516128,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "JNJ",
+        "name": "JOHNSON & JOHNSON",
+        "sector": "Health Care",
+        "weight_pct": 2.04,
+        "price": 259.8,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 89.51612903225806,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOGL",
+        "name": "ALPHABET CLASS A",
+        "sector": "Communication",
+        "weight_pct": 1.93,
+        "price": 343.8,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 88.70967741935483,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "BRKB",
+        "name": "BERKSHIRE HATHAWAY INC CLASS B",
+        "sector": "Financials",
+        "weight_pct": 1.82,
+        "price": 516.38,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.90322580645162,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "NFLX",
+        "name": "NETFLIX",
+        "sector": "Communication",
+        "weight_pct": 1.74,
+        "price": 74.79,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 87.09677419354838,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "GOOG",
+        "name": "ALPHABET CLASS C",
+        "sector": "Communication",
+        "weight_pct": 1.53,
+        "price": 343.0,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 86.29032258064517,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ROST",
+        "name": "ROSS STORES INC",
+        "sector": "Consumer Discretionary",
+        "weight_pct": 1.52,
+        "price": 251.81,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 85.48387096774194,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "ANET",
+        "name": "ARISTA NETWORKS INC",
+        "sector": "Information Technology",
+        "weight_pct": 1.48,
+        "price": 197.85,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 84.67741935483872,
+        "drawdown": 0.0
+      },
+      {
+        "ticker": "MRK",
+        "name": "MERCK & CO INC",
+        "sector": "Health Care",
+        "weight_pct": 1.22,
+        "price": 130.42,
+        "currency": "USD",
+        "state": "NONE",
+        "price_roc_20d": null,
+        "weight_percentile": 83.87096774193549,
+        "drawdown": 0.0
+      }
+    ],
+    "strategy": null,
+    "rising_stars": [],
+    "trades": [],
+    "n_holdings": 20,
+    "n_snapshots": 1
+  }
+]

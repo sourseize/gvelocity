@@ -45,8 +45,7 @@ from src.reporter import (
     get_all_months, load_month_log, generate_monthly_page,
     generate_hub_index, append_day_to_log
 )
-from src.analyzer import compute_metrics
-from src.config import NEW_ENTRY_LOOKBACK_DAYS
+from src.day_data import build_day_data
 
 logging.basicConfig(
     level=logging.INFO,
@@ -56,58 +55,14 @@ logging.basicConfig(
 log = logging.getLogger("backfill")
 
 
-def build_day_data(conn, today: str) -> dict:
-    """Build today's analysis data using modular functions."""
-    from src.database import detect_new_entries, detect_exits, detect_weight_movers, recent_dates
-
-    new_tickers = detect_new_entries(conn, today, NEW_ENTRY_LOOKBACK_DAYS)
-    exits = detect_exits(conn, today)
-    movers = detect_weight_movers(conn, today, NEW_ENTRY_LOOKBACK_DAYS)
-
-    top30 = [r["ticker"] for r in conn.execute(
-        "SELECT ticker FROM holdings WHERE snapshot_date=? ORDER BY weight_pct DESC LIMIT 30",
-        (today,)
-    )]
-    to_score = list(set(new_tickers + top30))
-    scored = {t: compute_metrics(conn, t, today) for t in to_score}
-
-    top20 = [dict(r) for r in conn.execute(
-        """SELECT ticker,name,sector,weight_pct,price,currency
-           FROM holdings WHERE snapshot_date=? ORDER BY weight_pct DESC LIMIT 20""",
-        (today,)
-    )]
-    sectors = [dict(r) for r in conn.execute(
-        """SELECT sector, COUNT(*) as count, SUM(weight_pct) as total_weight
-           FROM holdings WHERE snapshot_date=?
-           GROUP BY sector ORDER BY total_weight DESC""",
-        (today,)
-    )]
-
-    from src.database import find_rising_stars
-    rising_stars = find_rising_stars(conn, today, scored)
-
-    return {
-        "date": today,
-        "new_tickers": new_tickers,
-        "exits": exits,
-        "movers": movers,
-        "scored": scored,
-        "top20": top20,
-        "sectors": sectors,
-        "rising_stars": rising_stars,
-        "n_snapshots": len(recent_dates(conn, 9999)),
-        "lookback": NEW_ENTRY_LOOKBACK_DAYS,
-    }
-
-
 def fetch_csv_for_date(base_url: str, date_obj: datetime.date, retries: int = 3, backoff: float = 5.0):
     """Fetch+parse an ETF's holdings CSV as of a given calendar date.
     Returns (holdings_date, rows) or (None, None) on failure/no data.
     """
+    import requests
     url = f"{base_url}&asOfDate={date_obj:%Y%m%d}"
     for attempt in range(1, retries + 1):
         try:
-            import requests
             resp = requests.get(url, headers=FETCH_HEADERS, timeout=30)
             resp.raise_for_status()
         except requests.RequestException as e:
@@ -126,6 +81,10 @@ def fetch_csv_for_date(base_url: str, date_obj: datetime.date, retries: int = 3,
             return None, None
         except ValueError as e:
             log.warning("Parse error for %s: %s — skipping", date_obj, e)
+            return None, None
+        except Exception as e:  # unexpected payload (HTML, binary, encoding) must not abort the run
+            log.error("Unexpected error parsing %s: %s: %s — skipping (first 200 chars: %r)",
+                      date_obj, type(e).__name__, e, resp.text[:200])
             return None, None
 
         return hdate, rows
@@ -150,8 +109,6 @@ def wipe_existing(conn, fund_dir: Path) -> None:
     conn.execute("DELETE FROM holdings")
     conn.execute("DELETE FROM snapshots")
     conn.execute("DELETE FROM weekly_closes")
-    conn.execute("DELETE FROM portfolio_state")
-    conn.execute("DELETE FROM trading_state")
     conn.commit()
 
     removed = 0
@@ -174,7 +131,7 @@ def regenerate_all_pages(conn, fund_dir: Path, latest_date: str, etf: str, etf_n
         return
 
     live_ym = all_months[-1]
-    latest_day_data = build_day_data(conn, latest_date)
+    latest_day_data = build_day_data(conn, latest_date, etf=etf)
 
     for idx, ym in enumerate(all_months):
         prev_ym = all_months[idx - 1] if idx > 0 else None
@@ -253,14 +210,18 @@ def backfill_etf(etf: str, args, report_root: Path) -> Optional[str]:
             time.sleep(args.sleep)
             continue
 
-        store_snapshot(conn, hdate, rows)
-        today = hdate.isoformat()
+        try:
+            store_snapshot(conn, hdate, rows)
+            today = hdate.isoformat()
 
-        if today != last_stored_date:
-            day_data = build_day_data(conn, today)
-            append_day_to_log(fund_dir, day_data, commentary={})
-            last_stored_date = today
-            fetched += 1
+            if today != last_stored_date:
+                day_data = build_day_data(conn, today, etf=etf)
+                append_day_to_log(fund_dir, day_data, commentary={})
+                last_stored_date = today
+                fetched += 1
+        except Exception:
+            log.exception("[%s] Failed to store/analyse %s (requested %s) — continuing", etf, hdate, d)
+            skipped += 1
 
         if i % 20 == 0:
             log.info("[%s] Progress: %d/%d requested dates processed", etf, i, len(dates))

@@ -1,0 +1,461 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Velocity — range_breakout book</title><style>
+/* Purple/Lilac Theme - Flat Design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg: #1a1025;
+    --sf: #2d1f3e;
+    --bd: #4a3b5c;
+    --mt: #b8a9c9;
+    --ac: #a78bfa;
+    --ac-hover: #c4b5fd;
+    --tx: #f5f3ff;
+    --pos: #34d399;
+    --neg: #f87171;
+    --lilac-light: #ddd6fe;
+    --lilac-dark: #7c3aed;
+    --purple-glow: rgba(167, 139, 250, 0.15);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #0f172a;
+    color: var(--tx);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+a {
+    color: var(--ac);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--ac-hover);
+}
+
+.wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px 18px 40px;
+}
+
+h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--lilac-light) 0%, var(--ac) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h2 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ac);
+    margin: 32px 0 12px;
+    border-bottom: 2px solid var(--bd);
+    padding-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.sub {
+    color: var(--mt);
+    font-size: 0.85rem;
+    margin-bottom: 24px;
+}
+
+.nav {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    font-size: 0.85rem;
+}
+
+.nav a {
+    color: var(--ac);
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: var(--purple-glow);
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav a:hover {
+    border-color: var(--ac);
+    background: rgba(167, 139, 250, 0.2);
+}
+
+.stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.stat {
+    background: var(--sf);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    padding: 12px 14px;
+    min-width: 112px;
+    box-shadow: 0 4px 12px var(--purple-glow);
+}
+
+.sv {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ac);
+}
+
+.sl {
+    font-size: 0.7rem;
+    color: var(--mt);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.tip {
+    background: linear-gradient(135deg, #2d1f3e 0%, #3d2852 100%);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    color: var(--mt);
+}
+
+.tip b {
+    color: var(--tx);
+}
+
+/* Day block */
+.dayblock {
+    border: 1px solid var(--bd);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    background: var(--sf);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dayhead {
+    background: linear-gradient(135deg, var(--sf) 0%, #3d2852 100%);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--bd);
+}
+
+.daydate {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--lilac-light);
+}
+
+.daybadge {
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.day-body {
+    padding: 12px;
+}
+
+.ecard {
+    background: var(--sf);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.ecard:hover {
+    border-color: var(--ac);
+    box-shadow: 0 4px 16px var(--purple-glow);
+}
+
+.ect {
+    padding: 12px 14px 10px;
+}
+
+.ectitle {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.tk {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--lilac-light);
+}
+
+.tkl {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.tkl:hover {
+    color: var(--ac-hover);
+}
+
+.cn {
+    color: var(--mt);
+    font-size: 0.85rem;
+}
+
+.badge {
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ecmeta {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.ecmeta span {
+    display: flex;
+    flex-direction: column;
+}
+
+.ml {
+    font-size: 0.68rem;
+    color: var(--mt);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.ecs {
+    padding: 8px 14px;
+    border-top: 1px solid var(--bd);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.sbadge {
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.sigs {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.sig {
+    font-size: 0.8rem;
+    color: var(--mt);
+}
+
+.ecg {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--bd);
+}
+
+.egcol {
+    padding: 12px 16px;
+    border-right: 1px solid var(--bd);
+}
+
+.egcol:last-child {
+    border-right: none;
+}
+
+.egt {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ac);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.mr {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    font-size: 0.82rem;
+}
+
+.mr span:first-child {
+    color: var(--mt);
+}
+
+.espark {
+    display: flex;
+    gap: 24px;
+    padding: 10px 14px;
+    border-top: 1px solid var(--bd);
+    flex-wrap: wrap;
+}
+
+.spl {
+    font-size: 0.68rem;
+    color: var(--mt);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+/* exits / movers inline */
+.mini-exit {
+    font-size: 0.85rem;
+    color: var(--mt);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd);
+}
+
+.mini-exit:last-child {
+    border-bottom: none;
+}
+
+.mini-exit .tk {
+    font-size: 0.95rem;
+    color: var(--neg);
+}
+
+.mini-mover {
+    font-size: 0.85rem;
+    color: var(--mt);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd);
+}
+
+.mini-mover:last-child {
+    border-bottom: none;
+}
+
+/* table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--mt);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 2px solid var(--bd);
+}
+
+td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #2d1f3e;
+    vertical-align: middle;
+    font-size: 0.82rem;
+}
+
+tr:hover td {
+    background: rgba(167, 139, 250, 0.08);
+}
+
+.tw {
+    overflow-x: auto;
+}
+
+.pos {
+    color: var(--pos);
+    font-weight: 600;
+}
+
+.neg {
+    color: var(--neg);
+    font-weight: 600;
+}
+
+.bar {
+    height: 4px;
+    border-radius: 2px;
+    margin-top: 4px;
+}
+
+.none {
+    color: var(--mt);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding: 10px 0;
+}
+
+footer {
+    margin-top: 48px;
+    color: var(--mt);
+    font-size: 0.75rem;
+    border-top: 1px solid var(--bd);
+    padding-top: 16px;
+    text-align: center;
+}
+
+/* Flat icons placeholder styles */
+.icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.icon-portfolio {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a78bfa'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Cline x1='3' y1='10' x2='21' y2='10' stroke='%231a1025' stroke-width='2'/%3E%3Cline x1='12' y1='3' x2='12' y2='21' stroke='%231a1025' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+</style></head><body><div class="wrap">
+<h1>range_breakout — position book</h1>
+<p class="sub">Strategy <code>range_breakout</code> · last session 2026-08-13 · <a href="../index.html">← All ETFs</a></p>
+<div class="stats">
+  <div class="stat"><div class="sv">$99274</div><div class="sl">Equity</div></div>
+  <div class="stat"><div class="sv">-0.73%</div><div class="sl">Return</div></div>
+  <div class="stat"><div class="sv">$72072</div><div class="sl">Cash</div></div>
+  <div class="stat"><div class="sv">25</div><div class="sl">Open</div></div>
+  <div class="stat"><div class="sv">99</div><div class="sl">Closed trades</div></div>
+  <div class="stat"><div class="sv">16%</div><div class="sl">Win rate</div></div>
+  <div class="stat"><div class="sv">$-2903</div><div class="sl">Realized</div></div>
+  <div class="stat"><div class="sv">$2202</div><div class="sl">Unrealized</div></div>
+</div>
+<h2>Open positions</h2><div class="tw"><table>
+<tr><th>Ticker</th><th>Entry</th><th>Entry px</th><th>Last</th><th>P&L</th><th>Stop</th><th>Target</th><th>ETFs</th></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=UNP%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">UNP</a></b></td><td>2025-11-21</td><td>226.22</td><td>297.79</td><td class='pos'>+31.6%</td><td>257.99</td><td>—</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=FFIV%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">FFIV</a></b></td><td>2026-03-11</td><td>289.52</td><td>416.00</td><td class='pos'>+43.7%</td><td>340.18</td><td>—</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=DGX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">DGX</a></b></td><td>2026-05-28</td><td>196.20</td><td>236.04</td><td class='pos'>+20.3%</td><td>210.18</td><td>—</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ABBV%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ABBV</a></b></td><td>2026-05-28</td><td>218.63</td><td>250.82</td><td class='pos'>+14.7%</td><td>218.63</td><td>—</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ADP%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ADP</a></b></td><td>2026-06-01</td><td>233.74</td><td>276.23</td><td class='pos'>+18.2%</td><td>233.74</td><td>—</td><td>DYNF, QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=PAYX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">PAYX</a></b></td><td>2026-06-01</td><td>102.44</td><td>125.40</td><td class='pos'>+22.4%</td><td>104.43</td><td>—</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AMG%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMG</a></b></td><td>2026-06-02</td><td>310.52</td><td>367.10</td><td class='pos'>+18.2%</td><td>321.49</td><td>—</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BRKB%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BRKB</a></b></td><td>2026-06-15</td><td>495.52</td><td>506.93</td><td class='pos'>+2.3%</td><td>495.52</td><td>—</td><td>DYNF, QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=VRTX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">VRTX</a></b></td><td>2026-06-17</td><td>458.99</td><td>516.44</td><td class='pos'>+12.5%</td><td>458.99</td><td>—</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=TRV%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TRV</a></b></td><td>2026-06-22</td><td>310.61</td><td>370.00</td><td class='pos'>+19.1%</td><td>320.93</td><td>—</td><td>DYNF, QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=KO%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KO</a></b></td><td>2026-07-16</td><td>84.92</td><td>87.42</td><td class='pos'>+2.9%</td><td>79.39</td><td>93.97</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=COST%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">COST</a></b></td><td>2026-07-29</td><td>974.03</td><td>961.85</td><td class='neg'>-1.3%</td><td>912.97</td><td>1073.80</td><td>DYNF, QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=V%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">V</a></b></td><td>2026-07-29</td><td>368.73</td><td>365.45</td><td class='neg'>-0.9%</td><td>343.09</td><td>413.59</td><td>DYNF, QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=TJX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a></b></td><td>2026-07-29</td><td>161.63</td><td>153.81</td><td class='neg'>-4.8%</td><td>150.34</td><td>181.72</td><td>MTUM, QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MA%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MA</a></b></td><td>2026-07-30</td><td>577.35</td><td>567.04</td><td class='neg'>-1.8%</td><td>519.86</td><td>650.24</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=PEN%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">PEN</a></b></td><td>2026-07-31</td><td>321.19</td><td>326.75</td><td class='pos'>+1.7%</td><td>316.26</td><td>327.87</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BSX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BSX</a></b></td><td>2026-07-31</td><td>46.73</td><td>51.69</td><td class='pos'>+10.6%</td><td>42.63</td><td>52.92</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=PH%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">PH</a></b></td><td>2026-08-03</td><td>997.52</td><td>1058.87</td><td class='pos'>+6.2%</td><td>939.13</td><td>1094.62</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=WFC%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">WFC</a></b></td><td>2026-08-05</td><td>89.17</td><td>88.11</td><td class='neg'>-1.2%</td><td>83.87</td><td>97.43</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=PFE%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">PFE</a></b></td><td>2026-08-06</td><td>26.20</td><td>26.80</td><td class='pos'>+2.3%</td><td>24.17</td><td>29.09</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=FDX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">FDX</a></b></td><td>2026-08-10</td><td>325.08</td><td>339.35</td><td class='pos'>+4.4%</td><td>306.22</td><td>350.62</td><td>DYNF, MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BAC%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BAC</a></b></td><td>2026-08-10</td><td>63.86</td><td>64.09</td><td class='pos'>+0.4%</td><td>59.50</td><td>70.75</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=OXY%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">OXY</a></b></td><td>2026-08-10</td><td>58.65</td><td>57.70</td><td class='neg'>-1.6%</td><td>53.65</td><td>65.50</td><td>DYNF, MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=USB%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">USB</a></b></td><td>2026-08-12</td><td>65.02</td><td>65.17</td><td class='pos'>+0.2%</td><td>62.82</td><td>67.77</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GILD%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GILD</a></b></td><td>2026-08-13</td><td>138.14</td><td>138.14</td><td class='pos'>+0.0%</td><td>129.31</td><td>150.28</td><td>DYNF, QUAL</td></tr></table></div>
+<h2>Rising stars — signals waiting for a slot (43)</h2>
+<p class="sub" style="margin-top:-8px">Entry signals the book could not take (full, or capital exhausted). They keep their place while the
+signal repeats, get priority for the next free slot, and drop off when the setup stops firing.</p>
+<div class="tw"><table>
+<tr><th>Ticker</th><th>First</th><th>Last</th><th>Sessions</th><th>Price</th><th>Since first</th><th>Why waiting</th><th>Signal</th><th>ETFs</th></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=JPM%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JPM</a></b></td><td>2026-07-06</td><td>2026-08-12</td><td>12</td><td>365.18</td><td class='pos'>+8.1%</td><td>book full</td><td style='max-width:380px'>breakout from 6.8% base [338.87–362.04] · stop 338.87 · target 408.38</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=HWM%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">HWM</a></b></td><td>2026-07-22</td><td>2026-08-05</td><td>4</td><td>291.42</td><td class='pos'>+3.8%</td><td>book full</td><td style='max-width:380px'>breakout from 6.8% base [270.85–289.26] · stop 270.85 · target 326.08</td><td>DYNF, MTUM, QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=RJF%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">RJF</a></b></td><td>2026-08-03</td><td>2026-08-12</td><td>4</td><td>181.18</td><td class='pos'>+2.0%</td><td>book full</td><td style='max-width:380px'>breakout from 8.7% base [166.14–180.55] · stop 166.14 · target 209.37</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=SCHW%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">SCHW</a></b></td><td>2026-08-04</td><td>2026-08-13</td><td>4</td><td>110.06</td><td class='pos'>+3.5%</td><td>book full</td><td style='max-width:380px'>breakout from 9.4% base [99.96–109.34] · stop 99.96 · target 128.10</td><td>DYNF, QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AMP%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMP</a></b></td><td>2026-08-11</td><td>2026-08-13</td><td>3</td><td>570.68</td><td class='pos'>+1.4%</td><td>book full</td><td style='max-width:380px'>breakout from 8.6% base [520.11–565.07] · stop 520.11 · target 654.99</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NOC%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NOC</a></b></td><td>2026-08-04</td><td>2026-08-06</td><td>3</td><td>567.74</td><td class='pos'>+2.9%</td><td>book full</td><td style='max-width:380px'>breakout from 8.8% base [512.29–557.47] · stop 512.29 · target 647.83</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=IDXX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">IDXX</a></b></td><td>2026-08-04</td><td>2026-08-10</td><td>3</td><td>595.76</td><td class='pos'>+1.3%</td><td>book full</td><td style='max-width:380px'>breakout from 9.4% base [539.37–590.00] · stop 539.37 · target 691.26</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=DLTR%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">DLTR</a></b></td><td>2026-07-29</td><td>2026-08-04</td><td>3</td><td>130.71</td><td class='pos'>+1.4%</td><td>book full</td><td style='max-width:380px'>breakout from 9.9% base [117.65–129.35] · stop 117.65 · target 152.75</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MRP%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MRP</a></b></td><td>2026-08-11</td><td>2026-08-13</td><td>2</td><td>30.24</td><td class='pos'>+1.7%</td><td>book full</td><td style='max-width:380px'>breakout from 6.4% base [27.98–29.76] · stop 27.98 · target 33.32</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MRK%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MRK</a></b></td><td>2026-08-12</td><td>2026-08-13</td><td>2</td><td>135.55</td><td class='pos'>+2.0%</td><td>book full</td><td style='max-width:380px'>breakout from 6.8% base [124.40–132.92] · stop 124.40 · target 149.96</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=DD%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">DD</a></b></td><td>2026-08-04</td><td>2026-08-05</td><td>2</td><td>147.37</td><td class='pos'>+3.1%</td><td>book full</td><td style='max-width:380px'>breakout from 7.7% base [132.66–142.93] · stop 132.66 · target 163.47</td><td>MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=RVMD%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">RVMD</a></b></td><td>2026-08-04</td><td>2026-08-05</td><td>2</td><td>197.30</td><td class='pos'>+2.0%</td><td>book full</td><td style='max-width:380px'>breakout from 8.0% base [179.18–193.46] · stop 179.18 · target 222.02</td><td>DYNF, MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LYB%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LYB</a></b></td><td>2026-08-10</td><td>2026-08-11</td><td>2</td><td>63.98</td><td class='pos'>+2.1%</td><td>book full</td><td style='max-width:380px'>breakout from 8.4% base [57.80–62.65] · stop 57.80 · target 72.35</td><td>MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=CAH%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">CAH</a></b></td><td>2026-08-05</td><td>2026-08-11</td><td>2</td><td>240.26</td><td class='pos'>+0.4%</td><td>book full</td><td style='max-width:380px'>breakout from 8.5% base [220.54–239.23] · stop 220.54 · target 276.61</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=APG%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">APG</a></b></td><td>2026-08-05</td><td>2026-08-10</td><td>2</td><td>42.32</td><td class='pos'>+1.3%</td><td>book full</td><td style='max-width:380px'>breakout from 8.7% base [38.45–41.78] · stop 38.45 · target 48.44</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=WBD%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">WBD</a></b></td><td>2026-08-12</td><td>2026-08-13</td><td>2</td><td>27.75</td><td class='pos'>+0.4%</td><td>book full</td><td style='max-width:380px'>breakout from 9.4% base [25.28–27.65] · stop 25.28 · target 32.39</td><td>MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=DIS%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">DIS</a></b></td><td>2026-08-05</td><td>2026-08-06</td><td>2</td><td>104.68</td><td class='pos'>+2.9%</td><td>book full</td><td style='max-width:380px'>breakout from 9.6% base [92.83–101.76] · stop 92.83 · target 119.62</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=PSX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">PSX</a></b></td><td>2026-08-10</td><td>2026-08-11</td><td>2</td><td>224.36</td><td class='pos'>+4.1%</td><td>book full</td><td style='max-width:380px'>breakout from 9.9% base [196.16–215.52] · stop 196.16 · target 254.24</td><td>DYNF, MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BIIB%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BIIB</a></b></td><td>2026-08-13</td><td>2026-08-13</td><td>1</td><td>210.65</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 5.8% base [197.74–209.23] · stop 197.74 · target 232.21</td><td>DYNF, MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=WMT%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">WMT</a></b></td><td>2026-08-12</td><td>2026-08-12</td><td>1</td><td>116.01</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 6.0% base [108.40–114.95] · stop 108.40 · target 128.05</td><td>DYNF, MTUM, QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MKC%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MKC</a></b></td><td>2026-08-13</td><td>2026-08-13</td><td>1</td><td>54.45</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 6.3% base [49.96–53.13] · stop 49.96 · target 59.47</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=STT%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">STT</a></b></td><td>2026-08-12</td><td>2026-08-12</td><td>1</td><td>190.11</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 6.4% base [176.04–187.22] · stop 176.04 · target 209.58</td><td>DYNF, MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BNY%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BNY</a></b></td><td>2026-08-12</td><td>2026-08-12</td><td>1</td><td>162.93</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 6.5% base [152.50–162.35] · stop 152.50 · target 182.05</td><td>DYNF, MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=CVX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">CVX</a></b></td><td>2026-08-13</td><td>2026-08-13</td><td>1</td><td>197.70</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 7.1% base [183.86–196.83] · stop 183.86 · target 222.77</td><td>DYNF, MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=FAST%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">FAST</a></b></td><td>2026-08-04</td><td>2026-08-04</td><td>1</td><td>49.71</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 7.5% base [44.76–48.11] · stop 44.76 · target 54.81</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MPC%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MPC</a></b></td><td>2026-08-11</td><td>2026-08-11</td><td>1</td><td>336.42</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 7.6% base [297.75–320.32] · stop 297.75 · target 365.46</td><td>DYNF, MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=VLO%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">VLO</a></b></td><td>2026-08-11</td><td>2026-08-11</td><td>1</td><td>323.92</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 7.6% base [292.66–314.95] · stop 292.66 · target 359.53</td><td>DYNF, MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=PYPL%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">PYPL</a></b></td><td>2026-08-13</td><td>2026-08-13</td><td>1</td><td>60.59</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 7.7% base [55.51–59.78] · stop 55.51 · target 68.32</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=HSY%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">HSY</a></b></td><td>2026-08-13</td><td>2026-08-13</td><td>1</td><td>186.12</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 8.0% base [170.63–184.23] · stop 170.63 · target 211.43</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=COP%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">COP</a></b></td><td>2026-08-10</td><td>2026-08-10</td><td>1</td><td>123.03</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 8.1% base [111.46–120.48] · stop 111.46 · target 138.52</td><td>MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=C%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">C</a></b></td><td>2026-08-13</td><td>2026-08-13</td><td>1</td><td>138.73</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 8.3% base [127.13–137.64] · stop 127.13 · target 158.66</td><td>DYNF, MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GE%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GE</a></b></td><td>2026-08-04</td><td>2026-08-04</td><td>1</td><td>377.28</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 8.3% base [340.70–368.93] · stop 340.70 · target 425.39</td><td>DYNF</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AVGO%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AVGO</a></b></td><td>2026-08-04</td><td>2026-08-04</td><td>1</td><td>418.16</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 8.3% base [370.32–401.11] · stop 370.32 · target 462.69</td><td>DYNF, MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=XOM%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">XOM</a></b></td><td>2026-08-10</td><td>2026-08-10</td><td>1</td><td>159.79</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 8.6% base [144.51–156.97] · stop 144.51 · target 181.89</td><td>DYNF, MTUM, QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LULU%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LULU</a></b></td><td>2026-08-03</td><td>2026-08-03</td><td>1</td><td>123.67</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 8.8% base [110.63–120.32] · stop 110.63 · target 139.70</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=EXE%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">EXE</a></b></td><td>2026-08-10</td><td>2026-08-10</td><td>1</td><td>97.56</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 8.9% base [86.95–94.66] · stop 86.95 · target 110.08</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MSI%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSI</a></b></td><td>2026-08-04</td><td>2026-08-04</td><td>1</td><td>442.85</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 8.9% base [404.33–440.31] · stop 404.33 · target 512.27</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NDSN%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NDSN</a></b></td><td>2026-08-11</td><td>2026-08-11</td><td>1</td><td>311.36</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 8.9% base [285.24–310.67] · stop 285.24 · target 361.53</td><td>MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=WSM%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">WSM</a></b></td><td>2026-08-03</td><td>2026-08-03</td><td>1</td><td>239.80</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 9.1% base [216.65–236.32] · stop 216.65 · target 275.66</td><td>QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LLY%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LLY</a></b></td><td>2026-08-10</td><td>2026-08-10</td><td>1</td><td>1231.94</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 9.4% base [1115.68–1220.66] · stop 1115.68 · target 1430.62</td><td>DYNF, QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=EXPD%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">EXPD</a></b></td><td>2026-08-12</td><td>2026-08-12</td><td>1</td><td>184.47</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 9.5% base [167.01–182.80] · stop 167.01 · target 214.38</td><td>MTUM, QUAL</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NEM%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NEM</a></b></td><td>2026-08-05</td><td>2026-08-05</td><td>1</td><td>104.29</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 9.6% base [89.20–97.73] · stop 89.20 · target 114.79</td><td>DYNF, MTUM</td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b></td><td>2026-08-10</td><td>2026-08-10</td><td>1</td><td>76.29</td><td class='pos'>+0.0%</td><td>book full</td><td style='max-width:380px'>breakout from 10.0% base [67.60–74.35] · stop 67.60 · target 87.85</td><td>DYNF, QUAL</td></tr></table></div>
+<h2>Recent trades</h2><div class="tw"><table>
+<tr><th>Date</th><th>Ticker</th><th>Side</th><th>Price</th><th>Value</th><th>P&L</th><th>Reason</th></tr><tr><td>2026-08-13</td><td><b><a class="tkl" href="https://www.google.com/search?q=GILD%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GILD</a></b></td><td class='pos'>BUY</td><td>138.14</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 5.4% base [129.31–136.30] · stop 129.31 · target 150.28</td></tr><tr><td>2026-08-13</td><td><b><a class="tkl" href="https://www.google.com/search?q=WM%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">WM</a></b></td><td class='neg'>SELL</td><td>224.21</td><td>1000</td><td><span class='neg'>-2</span></td><td style='max-width:420px'>time stop: underwater after 40d</td></tr><tr><td>2026-08-12</td><td><b><a class="tkl" href="https://www.google.com/search?q=USB%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">USB</a></b></td><td class='pos'>BUY</td><td>65.02</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 2.6% base [62.82–64.47] · stop 62.82 · target 67.77</td></tr><tr><td>2026-08-12</td><td><b><a class="tkl" href="https://www.google.com/search?q=EBAY%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">EBAY</a></b></td><td class='neg'>SELL</td><td>102.31</td><td>916</td><td><span class='neg'>-86</span></td><td style='max-width:420px'>stop 104.94 hit</td></tr><tr><td>2026-08-10</td><td><b><a class="tkl" href="https://www.google.com/search?q=OXY%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">OXY</a></b></td><td class='pos'>BUY</td><td>58.65</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 7.4% base [53.65–57.60] · stop 53.65 · target 65.50</td></tr><tr><td>2026-08-10</td><td><b><a class="tkl" href="https://www.google.com/search?q=BAC%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BAC</a></b></td><td class='pos'>BUY</td><td>63.86</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 6.3% base [59.50–63.25] · stop 59.50 · target 70.75</td></tr><tr><td>2026-08-10</td><td><b><a class="tkl" href="https://www.google.com/search?q=FDX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">FDX</a></b></td><td class='pos'>BUY</td><td>325.08</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 4.8% base [306.22–321.02] · stop 306.22 · target 350.62</td></tr><tr><td>2026-08-10</td><td><b><a class="tkl" href="https://www.google.com/search?q=ROK%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ROK</a></b></td><td class='neg'>SELL</td><td>435.22</td><td>919</td><td><span class='neg'>-83</span></td><td style='max-width:420px'>stop 436.23 hit</td></tr><tr><td>2026-08-10</td><td><b><a class="tkl" href="https://www.google.com/search?q=AEP%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AEP</a></b></td><td class='neg'>SELL</td><td>122.84</td><td>1005</td><td><span class='pos'>+3</span></td><td style='max-width:420px'>trailing stop 10% (stop 124.41)</td></tr><tr><td>2026-08-07</td><td><b><a class="tkl" href="https://www.google.com/search?q=MNST%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MNST</a></b></td><td class='neg'>SELL</td><td>45.00</td><td>1002</td><td><span class='pos'>+0</span></td><td style='max-width:420px'>trailing stop 8% (stop 45.79)</td></tr><tr><td>2026-08-06</td><td><b><a class="tkl" href="https://www.google.com/search?q=PFE%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">PFE</a></b></td><td class='pos'>BUY</td><td>26.20</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 6.8% base [24.17–25.81] · stop 24.17 · target 29.09</td></tr><tr><td>2026-08-06</td><td><b><a class="tkl" href="https://www.google.com/search?q=PG%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">PG</a></b></td><td class='neg'>SELL</td><td>146.97</td><td>986</td><td><span class='neg'>-16</span></td><td style='max-width:420px'>time stop: underwater after 40d</td></tr><tr><td>2026-08-05</td><td><b><a class="tkl" href="https://www.google.com/search?q=WFC%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">WFC</a></b></td><td class='pos'>BUY</td><td>89.17</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 5.4% base [83.87–88.39] · stop 83.87 · target 97.43</td></tr><tr><td>2026-08-05</td><td><b><a class="tkl" href="https://www.google.com/search?q=EA%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">EA</a></b></td><td class='neg'>SELL</td><td>209.70</td><td>1022</td><td><span class='pos'>+20</span></td><td style='max-width:420px'>dropped from all tracked ETFs</td></tr><tr><td>2026-08-03</td><td><b><a class="tkl" href="https://www.google.com/search?q=PH%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">PH</a></b></td><td class='pos'>BUY</td><td>997.52</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 5.5% base [939.13–990.96] · stop 939.13 · target 1094.62</td></tr><tr><td>2026-07-31</td><td><b><a class="tkl" href="https://www.google.com/search?q=BSX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BSX</a></b></td><td class='pos'>BUY</td><td>46.73</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 8.0% base [42.63–46.06] · stop 42.63 · target 52.92</td></tr><tr><td>2026-07-31</td><td><b><a class="tkl" href="https://www.google.com/search?q=PEN%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">PEN</a></b></td><td class='pos'>BUY</td><td>321.19</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 1.2% base [316.26–320.13] · stop 316.26 · target 327.87</td></tr><tr><td>2026-07-31</td><td><b><a class="tkl" href="https://www.google.com/search?q=ES%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ES</a></b></td><td class='neg'>SELL</td><td>71.59</td><td>950</td><td><span class='neg'>-52</span></td><td style='max-width:420px'>stop 72.20 hit</td></tr><tr><td>2026-07-31</td><td><b><a class="tkl" href="https://www.google.com/search?q=EQR%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">EQR</a></b></td><td class='neg'>SELL</td><td>66.45</td><td>997</td><td><span class='neg'>-5</span></td><td style='max-width:420px'>time stop: underwater after 40d</td></tr><tr><td>2026-07-31</td><td><b><a class="tkl" href="https://www.google.com/search?q=LIN%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LIN</a></b></td><td class='neg'>SELL</td><td>478.38</td><td>1059</td><td><span class='pos'>+57</span></td><td style='max-width:420px'>trailing stop 10% (stop 491.05)</td></tr><tr><td>2026-07-30</td><td><b><a class="tkl" href="https://www.google.com/search?q=MA%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MA</a></b></td><td class='pos'>BUY</td><td>577.35</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 8.4% base [519.86–563.32] · stop 519.86 · target 650.24</td></tr><tr><td>2026-07-30</td><td><b><a class="tkl" href="https://www.google.com/search?q=JCI%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JCI</a></b></td><td class='neg'>SELL</td><td>143.88</td><td>979</td><td><span class='neg'>-23</span></td><td style='max-width:420px'>time stop: underwater after 40d</td></tr><tr><td>2026-07-29</td><td><b><a class="tkl" href="https://www.google.com/search?q=TJX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a></b></td><td class='pos'>BUY</td><td>161.63</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 7.0% base [150.34–160.80] · stop 150.34 · target 181.72</td></tr><tr><td>2026-07-29</td><td><b><a class="tkl" href="https://www.google.com/search?q=V%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">V</a></b></td><td class='pos'>BUY</td><td>368.73</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 6.8% base [343.09–366.59] · stop 343.09 · target 413.59</td></tr><tr><td>2026-07-29</td><td><b><a class="tkl" href="https://www.google.com/search?q=COST%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">COST</a></b></td><td class='pos'>BUY</td><td>974.03</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 5.9% base [912.97–966.58] · stop 912.97 · target 1073.80</td></tr><tr><td>2026-07-29</td><td><b><a class="tkl" href="https://www.google.com/search?q=TT%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TT</a></b></td><td class='neg'>SELL</td><td>446.80</td><td>924</td><td><span class='neg'>-78</span></td><td style='max-width:420px'>stop 447.64 hit</td></tr><tr><td>2026-07-29</td><td><b><a class="tkl" href="https://www.google.com/search?q=IBKR%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">IBKR</a></b></td><td class='neg'>SELL</td><td>86.26</td><td>973</td><td><span class='neg'>-29</span></td><td style='max-width:420px'>time stop: underwater after 40d</td></tr><tr><td>2026-07-29</td><td><b><a class="tkl" href="https://www.google.com/search?q=MS%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MS</a></b></td><td class='neg'>SELL</td><td>203.13</td><td>997</td><td><span class='neg'>-5</span></td><td style='max-width:420px'>time stop: underwater after 40d</td></tr><tr><td>2026-07-28</td><td><b><a class="tkl" href="https://www.google.com/search?q=ES%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ES</a></b></td><td class='pos'>BUY</td><td>75.39</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 3.9% base [72.20–75.04] · stop 72.20 · target 80.72</td></tr><tr><td>2026-07-28</td><td><b><a class="tkl" href="https://www.google.com/search?q=PWR%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">PWR</a></b></td><td class='neg'>SELL</td><td>588.36</td><td>1005</td><td><span class='pos'>+3</span></td><td style='max-width:420px'>trailing stop 25% (stop 588.93)</td></tr><tr><td>2026-07-16</td><td><b><a class="tkl" href="https://www.google.com/search?q=KO%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KO</a></b></td><td class='pos'>BUY</td><td>84.92</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 6.1% base [79.39–84.25] · stop 79.39 · target 93.97</td></tr><tr><td>2026-07-16</td><td><b><a class="tkl" href="https://www.google.com/search?q=FLEX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">FLEX</a></b></td><td class='neg'>SELL</td><td>121.12</td><td>1753</td><td><span class='pos'>+751</span></td><td style='max-width:420px'>trailing stop 25% (stop 121.55)</td></tr><tr><td>2026-06-30</td><td><b><a class="tkl" href="https://www.google.com/search?q=EBAY%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">EBAY</a></b></td><td class='pos'>BUY</td><td>111.75</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 5.6% base [104.94–110.80] · stop 104.94 · target 122.52</td></tr><tr><td>2026-06-30</td><td><b><a class="tkl" href="https://www.google.com/search?q=PLD%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">PLD</a></b></td><td class='neg'>SELL</td><td>135.47</td><td>929</td><td><span class='neg'>-73</span></td><td style='max-width:420px'>stop 138.76 hit</td></tr><tr><td>2026-06-26</td><td><b><a class="tkl" href="https://www.google.com/search?q=EA%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">EA</a></b></td><td class='pos'>BUY</td><td>205.25</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 1.5% base [201.72–204.73] · stop 201.72 · target 210.75</td></tr><tr><td>2026-06-26</td><td><b><a class="tkl" href="https://www.google.com/search?q=FANG%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">FANG</a></b></td><td class='neg'>SELL</td><td>179.91</td><td>997</td><td><span class='neg'>-5</span></td><td style='max-width:420px'>trailing stop 15% (stop 181.97)</td></tr><tr><td>2026-06-22</td><td><b><a class="tkl" href="https://www.google.com/search?q=TRV%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TRV</a></b></td><td class='pos'>BUY</td><td>310.61</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 6.5% base [288.93–307.81] · stop 288.93 · target 345.57</td></tr><tr><td>2026-06-22</td><td><b><a class="tkl" href="https://www.google.com/search?q=SPGI%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">SPGI</a></b></td><td class='neg'>SELL</td><td>407.39</td><td>940</td><td><span class='neg'>-62</span></td><td style='max-width:420px'>stop 410.40 hit</td></tr><tr><td>2026-06-18</td><td><b><a class="tkl" href="https://www.google.com/search?q=ROK%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ROK</a></b></td><td class='pos'>BUY</td><td>473.79</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 6.9% base [436.23–466.31] · stop 436.23 · target 526.47</td></tr><tr><td>2026-06-18</td><td><b><a class="tkl" href="https://www.google.com/search?q=TT%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TT</a></b></td><td class='pos'>BUY</td><td>483.40</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 6.2% base [447.64–475.34] · stop 447.64 · target 530.74</td></tr><tr><td>2026-06-18</td><td><b><a class="tkl" href="https://www.google.com/search?q=SLB%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">SLB</a></b></td><td class='neg'>SELL</td><td>48.09</td><td>885</td><td><span class='neg'>-117</span></td><td style='max-width:420px'>stop 49.44 hit</td></tr><tr><td>2026-06-18</td><td><b><a class="tkl" href="https://www.google.com/search?q=HAL%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">HAL</a></b></td><td class='neg'>SELL</td><td>34.93</td><td>964</td><td><span class='neg'>-38</span></td><td style='max-width:420px'>trailing stop 16% (stop 36.22)</td></tr><tr><td>2026-06-17</td><td><b><a class="tkl" href="https://www.google.com/search?q=VRTX%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">VRTX</a></b></td><td class='pos'>BUY</td><td>458.99</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 6.6% base [425.09–453.17] · stop 425.09 · target 509.33</td></tr><tr><td>2026-06-17</td><td><b><a class="tkl" href="https://www.google.com/search?q=AVB%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AVB</a></b></td><td class='neg'>SELL</td><td>179.63</td><td>947</td><td><span class='neg'>-55</span></td><td style='max-width:420px'>stop 180.84 hit</td></tr><tr><td>2026-06-16</td><td><b><a class="tkl" href="https://www.google.com/search?q=SPGI%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">SPGI</a></b></td><td class='pos'>BUY</td><td>433.25</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 4.4% base [410.40–428.56] · stop 410.40 · target 464.88</td></tr><tr><td>2026-06-16</td><td><b><a class="tkl" href="https://www.google.com/search?q=BG%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BG</a></b></td><td class='neg'>SELL</td><td>119.42</td><td>909</td><td><span class='neg'>-93</span></td><td style='max-width:420px'>stop 119.95 hit</td></tr><tr><td>2026-06-15</td><td><b><a class="tkl" href="https://www.google.com/search?q=BRKB%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BRKB</a></b></td><td class='pos'>BUY</td><td>495.52</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 4.0% base [470.29–489.25] · stop 470.29 · target 527.17</td></tr><tr><td>2026-06-15</td><td><b><a class="tkl" href="https://www.google.com/search?q=MCO%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MCO</a></b></td><td class='neg'>SELL</td><td>454.06</td><td>997</td><td><span class='neg'>-5</span></td><td style='max-width:420px'>time stop: underwater after 40d</td></tr><tr><td>2026-06-10</td><td><b><a class="tkl" href="https://www.google.com/search?q=PG%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">PG</a></b></td><td class='pos'>BUY</td><td>149.05</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 6.0% base [140.19–148.67] · stop 140.19 · target 165.63</td></tr><tr><td>2026-06-10</td><td><b><a class="tkl" href="https://www.google.com/search?q=WM%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">WM</a></b></td><td class='pos'>BUY</td><td>224.28</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 5.3% base [211.46–222.73] · stop 211.46 · target 245.27</td></tr><tr><td>2026-06-10</td><td><b><a class="tkl" href="https://www.google.com/search?q=ADBE%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ADBE</a></b></td><td class='neg'>SELL</td><td>233.38</td><td>852</td><td><span class='neg'>-150</span></td><td style='max-width:420px'>stop 236.07 hit</td></tr><tr><td>2026-06-10</td><td><b><a class="tkl" href="https://www.google.com/search?q=GM%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GM</a></b></td><td class='neg'>SELL</td><td>79.40</td><td>999</td><td><span class='neg'>-3</span></td><td style='max-width:420px'>time stop: underwater after 40d</td></tr><tr><td>2026-06-09</td><td><b><a class="tkl" href="https://www.google.com/search?q=MNST%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MNST</a></b></td><td class='pos'>BUY</td><td>44.89</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 4.3% base [42.74–44.59] · stop 42.74 · target 48.31</td></tr><tr><td>2026-06-09</td><td><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b></td><td class='neg'>SELL</td><td>403.41</td><td>945</td><td><span class='neg'>-57</span></td><td style='max-width:420px'>stop 405.21 hit</td></tr><tr><td>2026-06-05</td><td><b><a class="tkl" href="https://www.google.com/search?q=AVB%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AVB</a></b></td><td class='pos'>BUY</td><td>189.72</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 4.6% base [180.84–189.19] · stop 180.84 · target 205.89</td></tr><tr><td>2026-06-05</td><td><b><a class="tkl" href="https://www.google.com/search?q=AVGO%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AVGO</a></b></td><td class='neg'>SELL</td><td>385.73</td><td>863</td><td><span class='neg'>-139</span></td><td style='max-width:420px'>stop 411.07 hit</td></tr><tr><td>2026-06-03</td><td><b><a class="tkl" href="https://www.google.com/search?q=BG%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BG</a></b></td><td class='pos'>BUY</td><td>131.41</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 8.7% base [119.95–130.38] · stop 119.95 · target 151.24</td></tr><tr><td>2026-06-03</td><td><b><a class="tkl" href="https://www.google.com/search?q=JCI%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JCI</a></b></td><td class='pos'>BUY</td><td>146.96</td><td>1000</td><td>—</td><td style='max-width:420px'>breakout from 8.3% base [133.91–145.03] · stop 133.91 · target 167.27</td></tr><tr><td>2026-06-03</td><td><b><a class="tkl" href="https://www.google.com/search?q=BLK%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BLK</a></b></td><td class='neg'>SELL</td><td>990.87</td><td>913</td><td><span class='neg'>-89</span></td><td style='max-width:420px'>stop 999.31 hit</td></tr><tr><td>2026-06-03</td><td><b><a class="tkl" href="https://www.google.com/search?q=VICI%20%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">VICI</a></b></td><td class='neg'>SELL</td><td>27.28</td><td>934</td><td><span class='neg'>-68</span></td><td style='max-width:420px'>stop 27.46 hit</td></tr></table></div>
+</div></body></html>

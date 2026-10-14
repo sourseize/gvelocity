@@ -13,8 +13,10 @@ set -euo pipefail
 SCRIPT_DIR="$HOME/velocity/main"
 REPORT="$HOME/velocity/report"          # single repo, checked out on report branch
 
-# Keep this in sync with ETF_CONFIG at the top of velocity.py.
+# Keep this in sync with ETF_CONFIG in src/config.py.
 ETFS=(MTUM QUAL DYNF)
+# Strategy used for this session's buy/sell signals: see `python velocity.py --list-strategies`
+STRATEGY="${VELOCITY_STRATEGY:-trend_follow}"
 
 LOG="[velocity $(date '+%Y-%m-%d %H:%M')]"
 echo "$LOG Starting"
@@ -30,6 +32,7 @@ for etf in "${ETFS[@]}"; do
     python3 "$SCRIPT_DIR/velocity.py" \
         --etf "$etf" \
         --report-dir "$REPORT" \
+        --strategy "$STRATEGY" \
         --paper-trade
 done
 

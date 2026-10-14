@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Velocity Tracker — QUAL — October 2026</title>
+<style>
+/* Purple/Lilac Theme - Flat Design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg: #1a1025;
+    --sf: #2d1f3e;
+    --bd: #4a3b5c;
+    --mt: #b8a9c9;
+    --ac: #a78bfa;
+    --ac-hover: #c4b5fd;
+    --tx: #f5f3ff;
+    --pos: #34d399;
+    --neg: #f87171;
+    --lilac-light: #ddd6fe;
+    --lilac-dark: #7c3aed;
+    --purple-glow: rgba(167, 139, 250, 0.15);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #0f172a;
+    color: var(--tx);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+a {
+    color: var(--ac);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--ac-hover);
+}
+
+.wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px 18px 40px;
+}
+
+h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--lilac-light) 0%, var(--ac) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h2 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ac);
+    margin: 32px 0 12px;
+    border-bottom: 2px solid var(--bd);
+    padding-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.sub {
+    color: var(--mt);
+    font-size: 0.85rem;
+    margin-bottom: 24px;
+}
+
+.nav {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    font-size: 0.85rem;
+}
+
+.nav a {
+    color: var(--ac);
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: var(--purple-glow);
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav a:hover {
+    border-color: var(--ac);
+    background: rgba(167, 139, 250, 0.2);
+}
+
+.stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.stat {
+    background: var(--sf);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    padding: 12px 14px;
+    min-width: 112px;
+    box-shadow: 0 4px 12px var(--purple-glow);
+}
+
+.sv {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ac);
+}
+
+.sl {
+    font-size: 0.7rem;
+    color: var(--mt);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.tip {
+    background: linear-gradient(135deg, #2d1f3e 0%, #3d2852 100%);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    color: var(--mt);
+}
+
+.tip b {
+    color: var(--tx);
+}
+
+/* Day block */
+.dayblock {
+    border: 1px solid var(--bd);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    background: var(--sf);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dayhead {
+    background: linear-gradient(135deg, var(--sf) 0%, #3d2852 100%);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--bd);
+}
+
+.daydate {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--lilac-light);
+}
+
+.daybadge {
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.day-body {
+    padding: 12px;
+}
+
+.ecard {
+    background: var(--sf);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.ecard:hover {
+    border-color: var(--ac);
+    box-shadow: 0 4px 16px var(--purple-glow);
+}
+
+.ect {
+    padding: 12px 14px 10px;
+}
+
+.ectitle {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.tk {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--lilac-light);
+}
+
+.tkl {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.tkl:hover {
+    color: var(--ac-hover);
+}
+
+.cn {
+    color: var(--mt);
+    font-size: 0.85rem;
+}
+
+.badge {
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ecmeta {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.ecmeta span {
+    display: flex;
+    flex-direction: column;
+}
+
+.ml {
+    font-size: 0.68rem;
+    color: var(--mt);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.ecs {
+    padding: 8px 14px;
+    border-top: 1px solid var(--bd);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.sbadge {
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.sigs {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.sig {
+    font-size: 0.8rem;
+    color: var(--mt);
+}
+
+.ecg {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--bd);
+}
+
+.egcol {
+    padding: 12px 16px;
+    border-right: 1px solid var(--bd);
+}
+
+.egcol:last-child {
+    border-right: none;
+}
+
+.egt {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ac);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.mr {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    font-size: 0.82rem;
+}
+
+.mr span:first-child {
+    color: var(--mt);
+}
+
+.espark {
+    display: flex;
+    gap: 24px;
+    padding: 10px 14px;
+    border-top: 1px solid var(--bd);
+    flex-wrap: wrap;
+}
+
+.spl {
+    font-size: 0.68rem;
+    color: var(--mt);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+/* exits / movers inline */
+.mini-exit {
+    font-size: 0.85rem;
+    color: var(--mt);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd);
+}
+
+.mini-exit:last-child {
+    border-bottom: none;
+}
+
+.mini-exit .tk {
+    font-size: 0.95rem;
+    color: var(--neg);
+}
+
+.mini-mover {
+    font-size: 0.85rem;
+    color: var(--mt);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd);
+}
+
+.mini-mover:last-child {
+    border-bottom: none;
+}
+
+/* table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--mt);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 2px solid var(--bd);
+}
+
+td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #2d1f3e;
+    vertical-align: middle;
+    font-size: 0.82rem;
+}
+
+tr:hover td {
+    background: rgba(167, 139, 250, 0.08);
+}
+
+.tw {
+    overflow-x: auto;
+}
+
+.pos {
+    color: var(--pos);
+    font-weight: 600;
+}
+
+.neg {
+    color: var(--neg);
+    font-weight: 600;
+}
+
+.bar {
+    height: 4px;
+    border-radius: 2px;
+    margin-top: 4px;
+}
+
+.none {
+    color: var(--mt);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding: 10px 0;
+}
+
+footer {
+    margin-top: 48px;
+    color: var(--mt);
+    font-size: 0.75rem;
+    border-top: 1px solid var(--bd);
+    padding-top: 16px;
+    text-align: center;
+}
+
+/* Flat icons placeholder styles */
+.icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.icon-portfolio {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a78bfa'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Cline x1='3' y1='10' x2='21' y2='10' stroke='%231a1025' stroke-width='2'/%3E%3Cline x1='12' y1='3' x2='12' y2='21' stroke='%231a1025' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Velocity Tracker — QUAL — October 2026
+  <span style="font-size:.75rem;background:#10b98122;color:#10b981;border-radius:4px;padding:2px 8px;margin-left:8px;vertical-align:middle">Current month</span>
+</h1>
+<p class="sub">iShares MSCI USA Quality Factor ETF · 8 trading days · 0 new entries · 0 exits</p>
+
+<div class="nav">
+  <a href="2026-09.html">← Sep 2026</a> · <a href="../index.html">← All ETFs</a>
+</div>
+
+<div class="tip">
+  <b>Signal states:</b> ENTRY = all entry checks pass today · HOLD = open in the book ·
+  EXIT = an exit rule fired · WATCH = setup forming. Strategy: <b>—</b>
+  
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="sv">8</div><div class="sl">Trading days</div></div>
+  <div class="stat"><div class="sv">0</div><div class="sl">New entries</div></div>
+  <div class="stat"><div class="sv">0</div><div class="sl">Exits</div></div>
+</div>
+
+
+<details class="dayblock" open>
+  <summary class="dayhead" style="cursor:pointer;list-style:none">
+    <span class="daydate">2026-10-12</span>
+    <span class="daybadge" style="background:#334155;color:#94a3b8">no changes</span>
+  </summary>
+  <div class="day-body"><h2>Top weight movers (20d)</h2><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b> APPLIED MATERIAL INC <span class="pos">+0.350%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b> MICROSOFT <span class="pos">+0.350%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b> LAM RESEARCH <span class="pos">+0.310%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=TJX%20TJX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a></b> TJX <span class="pos">+0.300%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b> META PLATFORMS CLASS A <span class="pos">+0.290%</span></div>
+<details class="top20block">
+  <summary style="cursor:pointer;color:var(--mt);font-size:.8rem">Top 20 holdings — 2026-10-12</summary>
+  <div class="tw"><table>
+  <tr><th>Ticker</th><th>Sector</th><th>Weight</th><th>20d ROC</th><th>Wt pctile</th><th>52w DD</th><th>Signal</th></tr>
+  <tr><td><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>8.08%<div class='bar' style='width:80px;background:#3b82f6'></div></td><td class='pos'>+7.1%</td><td>99.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AAPL%20APPLE%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AAPL</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.11%<div class='bar' style='width:71px;background:#3b82f6'></div></td><td class='pos'>+2.4%</td><td>98.3th</td><td>-0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a></b></td><td style="color:#3b82f6">Information Tech</td><td>6.39%<div class='bar' style='width:63px;background:#3b82f6'></div></td><td class='pos'>+7.3%</td><td>97.5th</td><td>-3.3%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b></td><td style="color:#6366f1">Communication</td><td>4.77%<div class='bar' style='width:47px;background:#6366f1'></div></td><td class='pos'>+11.6%</td><td>96.6th</td><td>-1.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LLY%20ELI%20LILLY%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LLY</a></b></td><td style="color:#8b5cf6">Health Care</td><td>3.65%<div class='bar' style='width:36px;background:#8b5cf6'></div></td><td class='pos'>+3.9%</td><td>95.8th</td><td>-5.8%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b></td><td style="color:#3b82f6">Information Tech</td><td>3.57%<div class='bar' style='width:35px;background:#3b82f6'></div></td><td class='pos'>+13.2%</td><td>94.9th</td><td>-10.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=TJX%20TJX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>3.48%<div class='bar' style='width:34px;background:#ec4899'></div></td><td class='pos'>+12.6%</td><td>94.1th</td><td>-6.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=V%20VISA%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">V</a></b></td><td style="color:#10b981">Financials</td><td>3.26%<div class='bar' style='width:32px;background:#10b981'></div></td><td class='pos'>+3.7%</td><td>93.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>2.95%<div class='bar' style='width:29px;background:#3b82f6'></div></td><td class='pos'>+17.3%</td><td>92.4th</td><td>-7.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=KLAC%20KLA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KLAC</a></b></td><td style="color:#3b82f6">Information Tech</td><td>2.49%<div class='bar' style='width:24px;background:#3b82f6'></div></td><td class='pos'>+12.4%</td><td>91.5th</td><td>-8.1%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=XOM%20EXXONMOBIL%20HOLDINGS%20CORP%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">XOM</a></b></td><td style="color:#ef4444">Energy</td><td>2.34%<div class='bar' style='width:23px;background:#ef4444'></div></td><td class='pos'>+4.3%</td><td>90.7th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MA%20MASTERCARD%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MA</a></b></td><td style="color:#10b981">Financials</td><td>2.30%<div class='bar' style='width:23px;background:#10b981'></div></td><td class='pos'>+3.6%</td><td>89.8th</td><td>-0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=JNJ%20JOHNSON%20%26%20JOHNSON%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JNJ</a></b></td><td style="color:#8b5cf6">Health Care</td><td>2.05%<div class='bar' style='width:20px;background:#8b5cf6'></div></td><td class='neg'>-1.0%</td><td>89.0th</td><td>-4.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOGL%20ALPHABET%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOGL</a></b></td><td style="color:#6366f1">Communication</td><td>1.97%<div class='bar' style='width:19px;background:#6366f1'></div></td><td class='pos'>+1.0%</td><td>88.1th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BRK%20B%20BERKSHIRE%20HATHAWAY%20INC%20CLASS%20B%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BRK B</a></b></td><td style="color:#10b981">Financials</td><td>1.81%<div class='bar' style='width:18px;background:#10b981'></div></td><td class='pos'>+0.5%</td><td>87.3th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b></td><td style="color:#6366f1">Communication</td><td>1.63%<div class='bar' style='width:16px;background:#6366f1'></div></td><td class='neg'>-12.1%</td><td>86.4th</td><td>-13.6%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ANET%20ARISTA%20NETWORKS%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ANET</a></b></td><td style="color:#3b82f6">Information Tech</td><td>1.57%<div class='bar' style='width:15px;background:#3b82f6'></div></td><td class='pos'>+12.3%</td><td>85.6th</td><td>-2.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOG%20ALPHABET%20CLASS%20C%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOG</a></b></td><td style="color:#6366f1">Communication</td><td>1.55%<div class='bar' style='width:15px;background:#6366f1'></div></td><td class='pos'>+0.9%</td><td>84.7th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ROST%20ROSS%20STORES%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ROST</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>1.36%<div class='bar' style='width:13px;background:#ec4899'></div></td><td class='neg'>-1.8%</td><td>83.9th</td><td>-8.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MRK%20MERCK%20%26%20CO%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MRK</a></b></td><td style="color:#8b5cf6">Health Care</td><td>1.35%<div class='bar' style='width:13px;background:#8b5cf6'></div></td><td class='pos'>+0.4%</td><td>83.1th</td><td>-4.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr>
+  </table></div>
+</details></div>
+</details>
+<details class="dayblock">
+  <summary class="dayhead" style="cursor:pointer;list-style:none">
+    <span class="daydate">2026-10-09</span>
+    <span class="daybadge" style="background:#334155;color:#94a3b8">no changes</span>
+  </summary>
+  <div class="day-body"><h2>Top weight movers (20d)</h2><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b> LAM RESEARCH <span class="pos">+0.420%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b> APPLIED MATERIAL INC <span class="pos">+0.410%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a></b> NVIDIA <span class="pos">+0.320%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b> NETFLIX <span class="neg">-0.300%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=KLAC%20KLA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KLAC</a></b> KLA <span class="pos">+0.280%</span></div>
+<details class="top20block">
+  <summary style="cursor:pointer;color:var(--mt);font-size:.8rem">Top 20 holdings — 2026-10-09</summary>
+  <div class="tw"><table>
+  <tr><th>Ticker</th><th>Sector</th><th>Weight</th><th>20d ROC</th><th>Wt pctile</th><th>52w DD</th><th>Signal</th></tr>
+  <tr><td><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>8.01%<div class='bar' style='width:80px;background:#3b82f6'></div></td><td class='pos'>+8.0%</td><td>99.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AAPL%20APPLE%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AAPL</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.03%<div class='bar' style='width:70px;background:#3b82f6'></div></td><td class='pos'>+1.3%</td><td>98.3th</td><td>-1.3%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a></b></td><td style="color:#3b82f6">Information Tech</td><td>6.49%<div class='bar' style='width:64px;background:#3b82f6'></div></td><td class='pos'>+5.0%</td><td>97.5th</td><td>-2.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b></td><td style="color:#6366f1">Communication</td><td>4.62%<div class='bar' style='width:46px;background:#6366f1'></div></td><td class='pos'>+10.9%</td><td>96.6th</td><td>-4.4%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b></td><td style="color:#3b82f6">Information Tech</td><td>3.69%<div class='bar' style='width:36px;background:#3b82f6'></div></td><td class='pos'>+6.9%</td><td>95.8th</td><td>-8.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LLY%20ELI%20LILLY%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LLY</a></b></td><td style="color:#8b5cf6">Health Care</td><td>3.65%<div class='bar' style='width:36px;background:#8b5cf6'></div></td><td class='pos'>+5.7%</td><td>94.9th</td><td>-6.1%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=TJX%20TJX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>3.41%<div class='bar' style='width:34px;background:#ec4899'></div></td><td class='pos'>+10.1%</td><td>94.1th</td><td>-8.8%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=V%20VISA%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">V</a></b></td><td style="color:#10b981">Financials</td><td>3.24%<div class='bar' style='width:32px;background:#10b981'></div></td><td class='pos'>+4.0%</td><td>93.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>3.01%<div class='bar' style='width:30px;background:#3b82f6'></div></td><td class='pos'>+11.1%</td><td>92.4th</td><td>-6.1%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=KLAC%20KLA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KLAC</a></b></td><td style="color:#3b82f6">Information Tech</td><td>2.57%<div class='bar' style='width:25px;background:#3b82f6'></div></td><td class='pos'>+8.3%</td><td>91.5th</td><td>-5.5%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=XOM%20EXXONMOBIL%20HOLDINGS%20CORP%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">XOM</a></b></td><td style="color:#ef4444">Energy</td><td>2.31%<div class='bar' style='width:23px;background:#ef4444'></div></td><td class='pos'>+1.8%</td><td>90.7th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MA%20MASTERCARD%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MA</a></b></td><td style="color:#10b981">Financials</td><td>2.28%<div class='bar' style='width:22px;background:#10b981'></div></td><td class='pos'>+3.5%</td><td>89.8th</td><td>-1.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=JNJ%20JOHNSON%20%26%20JOHNSON%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JNJ</a></b></td><td style="color:#8b5cf6">Health Care</td><td>2.04%<div class='bar' style='width:20px;background:#8b5cf6'></div></td><td class='neg'>-1.6%</td><td>89.0th</td><td>-5.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOGL%20ALPHABET%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOGL</a></b></td><td style="color:#6366f1">Communication</td><td>1.97%<div class='bar' style='width:19px;background:#6366f1'></div></td><td class='pos'>+3.9%</td><td>88.1th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BRK%20B%20BERKSHIRE%20HATHAWAY%20INC%20CLASS%20B%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BRK B</a></b></td><td style="color:#10b981">Financials</td><td>1.81%<div class='bar' style='width:18px;background:#10b981'></div></td><td class='pos'>+1.0%</td><td>87.3th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b></td><td style="color:#6366f1">Communication</td><td>1.63%<div class='bar' style='width:16px;background:#6366f1'></div></td><td class='neg'>-9.2%</td><td>86.4th</td><td>-14.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ANET%20ARISTA%20NETWORKS%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ANET</a></b></td><td style="color:#3b82f6">Information Tech</td><td>1.61%<div class='bar' style='width:16px;background:#3b82f6'></div></td><td class='pos'>+8.6%</td><td>85.6th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOG%20ALPHABET%20CLASS%20C%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOG</a></b></td><td style="color:#6366f1">Communication</td><td>1.54%<div class='bar' style='width:15px;background:#6366f1'></div></td><td class='pos'>+3.7%</td><td>84.7th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MRK%20MERCK%20%26%20CO%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MRK</a></b></td><td style="color:#8b5cf6">Health Care</td><td>1.35%<div class='bar' style='width:13px;background:#8b5cf6'></div></td><td class='pos'>+1.2%</td><td>83.1th</td><td>-4.6%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=FTNT%20FORTINET%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">FTNT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>1.35%<div class='bar' style='width:13px;background:#3b82f6'></div></td><td class='pos'>+24.8%</td><td>83.1th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr>
+  </table></div>
+</details></div>
+</details>
+<details class="dayblock">
+  <summary class="dayhead" style="cursor:pointer;list-style:none">
+    <span class="daydate">2026-10-08</span>
+    <span class="daybadge" style="background:#334155;color:#94a3b8">no changes</span>
+  </summary>
+  <div class="day-body"><h2>Top weight movers (20d)</h2><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b> META PLATFORMS CLASS A <span class="pos">+0.360%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b> APPLIED MATERIAL INC <span class="pos">+0.240%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=TJX%20TJX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a></b> TJX <span class="pos">+0.230%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b> MICROSOFT <span class="pos">+0.200%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=FTNT%20FORTINET%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">FTNT</a></b> FORTINET <span class="pos">+0.200%</span></div>
+<details class="top20block">
+  <summary style="cursor:pointer;color:var(--mt);font-size:.8rem">Top 20 holdings — 2026-10-08</summary>
+  <div class="tw"><table>
+  <tr><th>Ticker</th><th>Sector</th><th>Weight</th><th>20d ROC</th><th>Wt pctile</th><th>52w DD</th><th>Signal</th></tr>
+  <tr><td><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.86%<div class='bar' style='width:78px;background:#3b82f6'></div></td><td class='pos'>+6.1%</td><td>99.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AAPL%20APPLE%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AAPL</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.14%<div class='bar' style='width:71px;background:#3b82f6'></div></td><td class='pos'>+4.2%</td><td>98.3th</td><td>-0.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a></b></td><td style="color:#3b82f6">Information Tech</td><td>6.56%<div class='bar' style='width:65px;background:#3b82f6'></div></td><td class='pos'>+5.6%</td><td>97.5th</td><td>-1.5%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b></td><td style="color:#6366f1">Communication</td><td>4.66%<div class='bar' style='width:46px;background:#6366f1'></div></td><td class='pos'>+11.9%</td><td>96.6th</td><td>-4.1%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b></td><td style="color:#3b82f6">Information Tech</td><td>3.73%<div class='bar' style='width:37px;background:#3b82f6'></div></td><td class='pos'>+7.6%</td><td>95.8th</td><td>-7.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LLY%20ELI%20LILLY%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LLY</a></b></td><td style="color:#8b5cf6">Health Care</td><td>3.64%<div class='bar' style='width:36px;background:#8b5cf6'></div></td><td class='pos'>+4.1%</td><td>94.9th</td><td>-6.8%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=TJX%20TJX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>3.42%<div class='bar' style='width:34px;background:#ec4899'></div></td><td class='pos'>+9.8%</td><td>94.1th</td><td>-8.8%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=V%20VISA%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">V</a></b></td><td style="color:#10b981">Financials</td><td>3.17%<div class='bar' style='width:31px;background:#10b981'></div></td><td class='pos'>+2.1%</td><td>93.2th</td><td>-1.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>3.04%<div class='bar' style='width:30px;background:#3b82f6'></div></td><td class='pos'>+12.2%</td><td>92.4th</td><td>-5.6%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=KLAC%20KLA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KLAC</a></b></td><td style="color:#3b82f6">Information Tech</td><td>2.59%<div class='bar' style='width:25px;background:#3b82f6'></div></td><td class='pos'>+11.0%</td><td>91.5th</td><td>-4.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=XOM%20EXXONMOBIL%20HOLDINGS%20CORP%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">XOM</a></b></td><td style="color:#ef4444">Energy</td><td>2.31%<div class='bar' style='width:23px;background:#ef4444'></div></td><td class='pos'>+2.0%</td><td>90.7th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MA%20MASTERCARD%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MA</a></b></td><td style="color:#10b981">Financials</td><td>2.23%<div class='bar' style='width:22px;background:#10b981'></div></td><td class='pos'>+1.7%</td><td>89.8th</td><td>-3.5%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=JNJ%20JOHNSON%20%26%20JOHNSON%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JNJ</a></b></td><td style="color:#8b5cf6">Health Care</td><td>2.01%<div class='bar' style='width:20px;background:#8b5cf6'></div></td><td class='neg'>-3.7%</td><td>89.0th</td><td>-6.8%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOGL%20ALPHABET%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOGL</a></b></td><td style="color:#6366f1">Communication</td><td>1.96%<div class='bar' style='width:19px;background:#6366f1'></div></td><td class='pos'>+4.7%</td><td>88.1th</td><td>-0.4%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BRK%20B%20BERKSHIRE%20HATHAWAY%20INC%20CLASS%20B%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BRK B</a></b></td><td style="color:#10b981">Financials</td><td>1.80%<div class='bar' style='width:18px;background:#10b981'></div></td><td class='pos'>+0.8%</td><td>87.3th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b></td><td style="color:#6366f1">Communication</td><td>1.67%<div class='bar' style='width:16px;background:#6366f1'></div></td><td class='neg'>-5.8%</td><td>86.4th</td><td>-12.4%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ANET%20ARISTA%20NETWORKS%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ANET</a></b></td><td style="color:#3b82f6">Information Tech</td><td>1.58%<div class='bar' style='width:15px;background:#3b82f6'></div></td><td class='pos'>+11.6%</td><td>85.6th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOG%20ALPHABET%20CLASS%20C%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOG</a></b></td><td style="color:#6366f1">Communication</td><td>1.54%<div class='bar' style='width:15px;background:#6366f1'></div></td><td class='pos'>+4.4%</td><td>84.7th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ROST%20ROSS%20STORES%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ROST</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>1.36%<div class='bar' style='width:13px;background:#ec4899'></div></td><td class='neg'>-0.1%</td><td>83.9th</td><td>-8.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MRK%20MERCK%20%26%20CO%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MRK</a></b></td><td style="color:#8b5cf6">Health Care</td><td>1.33%<div class='bar' style='width:13px;background:#8b5cf6'></div></td><td class='neg'>-1.6%</td><td>83.1th</td><td>-6.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr>
+  </table></div>
+</details></div>
+</details>
+<details class="dayblock">
+  <summary class="dayhead" style="cursor:pointer;list-style:none">
+    <span class="daydate">2026-10-07</span>
+    <span class="daybadge" style="background:#334155;color:#94a3b8">no changes</span>
+  </summary>
+  <div class="day-body"><h2>Top weight movers (20d)</h2><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b> META PLATFORMS CLASS A <span class="pos">+0.340%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a></b> NVIDIA <span class="pos">+0.320%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b> MICROSOFT <span class="pos">+0.300%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b> APPLIED MATERIAL INC <span class="pos">+0.300%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b> LAM RESEARCH <span class="pos">+0.240%</span></div>
+<details class="top20block">
+  <summary style="cursor:pointer;color:var(--mt);font-size:.8rem">Top 20 holdings — 2026-10-07</summary>
+  <div class="tw"><table>
+  <tr><th>Ticker</th><th>Sector</th><th>Weight</th><th>20d ROC</th><th>Wt pctile</th><th>52w DD</th><th>Signal</th></tr>
+  <tr><td><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.97%<div class='bar' style='width:79px;background:#3b82f6'></div></td><td class='pos'>+7.8%</td><td>99.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AAPL%20APPLE%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AAPL</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.07%<div class='bar' style='width:70px;background:#3b82f6'></div></td><td class='pos'>+6.8%</td><td>98.3th</td><td>-1.3%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a></b></td><td style="color:#3b82f6">Information Tech</td><td>6.76%<div class='bar' style='width:67px;background:#3b82f6'></div></td><td class='pos'>+6.2%</td><td>97.5th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b></td><td style="color:#6366f1">Communication</td><td>4.66%<div class='bar' style='width:46px;background:#6366f1'></div></td><td class='pos'>+10.3%</td><td>96.6th</td><td>-4.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b></td><td style="color:#3b82f6">Information Tech</td><td>3.83%<div class='bar' style='width:38px;background:#3b82f6'></div></td><td class='pos'>+4.3%</td><td>95.8th</td><td>-5.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LLY%20ELI%20LILLY%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LLY</a></b></td><td style="color:#8b5cf6">Health Care</td><td>3.70%<div class='bar' style='width:37px;background:#8b5cf6'></div></td><td class='pos'>+5.7%</td><td>94.9th</td><td>-5.3%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=TJX%20TJX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>3.43%<div class='bar' style='width:34px;background:#ec4899'></div></td><td class='pos'>+10.1%</td><td>94.1th</td><td>-8.8%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=V%20VISA%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">V</a></b></td><td style="color:#10b981">Financials</td><td>3.14%<div class='bar' style='width:31px;background:#10b981'></div></td><td class='pos'>+1.3%</td><td>93.2th</td><td>-2.5%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>3.11%<div class='bar' style='width:31px;background:#3b82f6'></div></td><td class='pos'>+11.0%</td><td>92.4th</td><td>-3.6%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=KLAC%20KLA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KLAC</a></b></td><td style="color:#3b82f6">Information Tech</td><td>2.60%<div class='bar' style='width:26px;background:#3b82f6'></div></td><td class='pos'>+7.6%</td><td>91.5th</td><td>-4.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=XOM%20EXXONMOBIL%20HOLDINGS%20CORP%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">XOM</a></b></td><td style="color:#ef4444">Energy</td><td>2.25%<div class='bar' style='width:22px;background:#ef4444'></div></td><td class='neg'>-0.1%</td><td>90.7th</td><td>-1.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MA%20MASTERCARD%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MA</a></b></td><td style="color:#10b981">Financials</td><td>2.22%<div class='bar' style='width:22px;background:#10b981'></div></td><td class='pos'>+0.5%</td><td>89.8th</td><td>-4.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=JNJ%20JOHNSON%20%26%20JOHNSON%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JNJ</a></b></td><td style="color:#8b5cf6">Health Care</td><td>2.03%<div class='bar' style='width:20px;background:#8b5cf6'></div></td><td class='neg'>-3.2%</td><td>89.0th</td><td>-6.1%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOGL%20ALPHABET%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOGL</a></b></td><td style="color:#6366f1">Communication</td><td>1.97%<div class='bar' style='width:19px;background:#6366f1'></div></td><td class='pos'>+6.0%</td><td>88.1th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BRK%20B%20BERKSHIRE%20HATHAWAY%20INC%20CLASS%20B%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BRK B</a></b></td><td style="color:#10b981">Financials</td><td>1.78%<div class='bar' style='width:17px;background:#10b981'></div></td><td class='neg'>-0.1%</td><td>87.3th</td><td>-0.8%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b></td><td style="color:#6366f1">Communication</td><td>1.63%<div class='bar' style='width:16px;background:#6366f1'></div></td><td class='neg'>-8.3%</td><td>86.4th</td><td>-14.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ANET%20ARISTA%20NETWORKS%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ANET</a></b></td><td style="color:#3b82f6">Information Tech</td><td>1.61%<div class='bar' style='width:16px;background:#3b82f6'></div></td><td class='pos'>+11.9%</td><td>85.6th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOG%20ALPHABET%20CLASS%20C%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOG</a></b></td><td style="color:#6366f1">Communication</td><td>1.55%<div class='bar' style='width:15px;background:#6366f1'></div></td><td class='pos'>+5.8%</td><td>84.7th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ROST%20ROSS%20STORES%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ROST</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>1.37%<div class='bar' style='width:13px;background:#ec4899'></div></td><td class='pos'>+0.1%</td><td>83.9th</td><td>-8.1%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MRK%20MERCK%20%26%20CO%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MRK</a></b></td><td style="color:#8b5cf6">Health Care</td><td>1.33%<div class='bar' style='width:13px;background:#8b5cf6'></div></td><td class='neg'>-3.2%</td><td>83.1th</td><td>-6.4%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr>
+  </table></div>
+</details></div>
+</details>
+<details class="dayblock">
+  <summary class="dayhead" style="cursor:pointer;list-style:none">
+    <span class="daydate">2026-10-06</span>
+    <span class="daybadge" style="background:#334155;color:#94a3b8">no changes</span>
+  </summary>
+  <div class="day-body"><h2>Top weight movers (20d)</h2><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b> META PLATFORMS CLASS A <span class="pos">+0.410%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b> MICROSOFT <span class="pos">+0.320%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b> APPLIED MATERIAL INC <span class="pos">+0.280%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a></b> NVIDIA <span class="pos">+0.230%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b> NETFLIX <span class="neg">-0.230%</span></div>
+<details class="top20block">
+  <summary style="cursor:pointer;color:var(--mt);font-size:.8rem">Top 20 holdings — 2026-10-06</summary>
+  <div class="tw"><table>
+  <tr><th>Ticker</th><th>Sector</th><th>Weight</th><th>20d ROC</th><th>Wt pctile</th><th>52w DD</th><th>Signal</th></tr>
+  <tr><td><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.94%<div class='bar' style='width:79px;background:#3b82f6'></div></td><td class='pos'>+7.2%</td><td>99.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AAPL%20APPLE%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AAPL</a></b></td><td style="color:#3b82f6">Information Tech</td><td>6.99%<div class='bar' style='width:69px;background:#3b82f6'></div></td><td class='pos'>+5.5%</td><td>98.3th</td><td>-2.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a></b></td><td style="color:#3b82f6">Information Tech</td><td>6.79%<div class='bar' style='width:67px;background:#3b82f6'></div></td><td class='pos'>+6.0%</td><td>97.5th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b></td><td style="color:#6366f1">Communication</td><td>4.77%<div class='bar' style='width:47px;background:#6366f1'></div></td><td class='pos'>+20.4%</td><td>96.6th</td><td>-1.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b></td><td style="color:#3b82f6">Information Tech</td><td>3.88%<div class='bar' style='width:38px;background:#3b82f6'></div></td><td class='pos'>+4.2%</td><td>95.8th</td><td>-3.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LLY%20ELI%20LILLY%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LLY</a></b></td><td style="color:#8b5cf6">Health Care</td><td>3.60%<div class='bar' style='width:36px;background:#8b5cf6'></div></td><td class='pos'>+3.0%</td><td>94.9th</td><td>-7.8%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=TJX%20TJX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>3.37%<div class='bar' style='width:33px;background:#ec4899'></div></td><td class='pos'>+6.3%</td><td>94.1th</td><td>-9.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>3.16%<div class='bar' style='width:31px;background:#3b82f6'></div></td><td class='pos'>+12.2%</td><td>93.2th</td><td>-1.8%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=V%20VISA%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">V</a></b></td><td style="color:#10b981">Financials</td><td>3.12%<div class='bar' style='width:31px;background:#10b981'></div></td><td class='pos'>+0.5%</td><td>92.4th</td><td>-2.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=KLAC%20KLA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KLAC</a></b></td><td style="color:#3b82f6">Information Tech</td><td>2.60%<div class='bar' style='width:26px;background:#3b82f6'></div></td><td class='pos'>+4.5%</td><td>91.5th</td><td>-4.6%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=XOM%20EXXONMOBIL%20HOLDINGS%20CORP%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">XOM</a></b></td><td style="color:#ef4444">Energy</td><td>2.25%<div class='bar' style='width:22px;background:#ef4444'></div></td><td class='pos'>+2.4%</td><td>90.7th</td><td>-0.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MA%20MASTERCARD%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MA</a></b></td><td style="color:#10b981">Financials</td><td>2.20%<div class='bar' style='width:22px;background:#10b981'></div></td><td class='neg'>-0.8%</td><td>89.8th</td><td>-4.8%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=JNJ%20JOHNSON%20%26%20JOHNSON%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JNJ</a></b></td><td style="color:#8b5cf6">Health Care</td><td>2.00%<div class='bar' style='width:20px;background:#8b5cf6'></div></td><td class='neg'>-5.3%</td><td>89.0th</td><td>-7.4%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOGL%20ALPHABET%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOGL</a></b></td><td style="color:#6366f1">Communication</td><td>1.95%<div class='bar' style='width:19px;background:#6366f1'></div></td><td class='pos'>+2.8%</td><td>88.1th</td><td>-0.5%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BRK%20B%20BERKSHIRE%20HATHAWAY%20INC%20CLASS%20B%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BRK B</a></b></td><td style="color:#10b981">Financials</td><td>1.78%<div class='bar' style='width:17px;background:#10b981'></div></td><td class='neg'>-0.1%</td><td>87.3th</td><td>-0.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ANET%20ARISTA%20NETWORKS%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ANET</a></b></td><td style="color:#3b82f6">Information Tech</td><td>1.61%<div class='bar' style='width:16px;background:#3b82f6'></div></td><td class='pos'>+10.5%</td><td>86.4th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b></td><td style="color:#6366f1">Communication</td><td>1.60%<div class='bar' style='width:16px;background:#6366f1'></div></td><td class='neg'>-10.5%</td><td>85.6th</td><td>-15.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOG%20ALPHABET%20CLASS%20C%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOG</a></b></td><td style="color:#6366f1">Communication</td><td>1.53%<div class='bar' style='width:15px;background:#6366f1'></div></td><td class='pos'>+2.7%</td><td>84.7th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ROST%20ROSS%20STORES%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ROST</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>1.36%<div class='bar' style='width:13px;background:#ec4899'></div></td><td class='neg'>-2.2%</td><td>83.9th</td><td>-8.6%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=FTNT%20FORTINET%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">FTNT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>1.33%<div class='bar' style='width:13px;background:#3b82f6'></div></td><td class='pos'>+21.5%</td><td>83.1th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr>
+  </table></div>
+</details></div>
+</details>
+<details class="dayblock">
+  <summary class="dayhead" style="cursor:pointer;list-style:none">
+    <span class="daydate">2026-10-05</span>
+    <span class="daybadge" style="background:#334155;color:#94a3b8">no changes</span>
+  </summary>
+  <div class="day-body"><h2>Top weight movers (20d)</h2><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b> META PLATFORMS CLASS A <span class="pos">+0.740%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b> APPLIED MATERIAL INC <span class="pos">+0.350%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b> MICROSOFT <span class="pos">+0.290%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b> NETFLIX <span class="neg">-0.260%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a></b> NVIDIA <span class="pos">+0.220%</span></div>
+<details class="top20block">
+  <summary style="cursor:pointer;color:var(--mt);font-size:.8rem">Top 20 holdings — 2026-10-05</summary>
+  <div class="tw"><table>
+  <tr><th>Ticker</th><th>Sector</th><th>Weight</th><th>20d ROC</th><th>Wt pctile</th><th>52w DD</th><th>Signal</th></tr>
+  <tr><td><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.90%<div class='bar' style='width:79px;background:#3b82f6'></div></td><td class='pos'>+5.1%</td><td>99.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AAPL%20APPLE%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AAPL</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.00%<div class='bar' style='width:70px;background:#3b82f6'></div></td><td class='pos'>+4.0%</td><td>98.3th</td><td>-2.4%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a></b></td><td style="color:#3b82f6">Information Tech</td><td>6.80%<div class='bar' style='width:68px;background:#3b82f6'></div></td><td class='pos'>+3.7%</td><td>97.5th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b></td><td style="color:#6366f1">Communication</td><td>4.80%<div class='bar' style='width:48px;background:#6366f1'></div></td><td class='pos'>+20.3%</td><td>96.6th</td><td>-1.3%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b></td><td style="color:#3b82f6">Information Tech</td><td>4.03%<div class='bar' style='width:40px;background:#3b82f6'></div></td><td class='pos'>+12.4%</td><td>95.8th</td><td>-0.5%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LLY%20ELI%20LILLY%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LLY</a></b></td><td style="color:#8b5cf6">Health Care</td><td>3.56%<div class='bar' style='width:35px;background:#8b5cf6'></div></td><td class='neg'>-0.5%</td><td>94.9th</td><td>-8.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=TJX%20TJX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>3.32%<div class='bar' style='width:33px;background:#ec4899'></div></td><td class='pos'>+1.8%</td><td>94.1th</td><td>-11.6%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>3.24%<div class='bar' style='width:32px;background:#3b82f6'></div></td><td class='pos'>+19.3%</td><td>93.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=V%20VISA%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">V</a></b></td><td style="color:#10b981">Financials</td><td>3.12%<div class='bar' style='width:31px;background:#10b981'></div></td><td class='neg'>-1.4%</td><td>92.4th</td><td>-3.1%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=KLAC%20KLA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KLAC</a></b></td><td style="color:#3b82f6">Information Tech</td><td>2.73%<div class='bar' style='width:27px;background:#3b82f6'></div></td><td class='pos'>+11.4%</td><td>91.5th</td><td>-0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=XOM%20EXXONMOBIL%20HOLDINGS%20CORP%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">XOM</a></b></td><td style="color:#ef4444">Energy</td><td>2.25%<div class='bar' style='width:22px;background:#ef4444'></div></td><td class='pos'>+2.8%</td><td>90.7th</td><td>-1.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MA%20MASTERCARD%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MA</a></b></td><td style="color:#10b981">Financials</td><td>2.20%<div class='bar' style='width:22px;background:#10b981'></div></td><td class='neg'>-2.5%</td><td>89.8th</td><td>-5.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=JNJ%20JOHNSON%20%26%20JOHNSON%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JNJ</a></b></td><td style="color:#8b5cf6">Health Care</td><td>1.99%<div class='bar' style='width:19px;background:#8b5cf6'></div></td><td class='neg'>-8.1%</td><td>89.0th</td><td>-8.1%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOGL%20ALPHABET%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOGL</a></b></td><td style="color:#6366f1">Communication</td><td>1.95%<div class='bar' style='width:19px;background:#6366f1'></div></td><td class='pos'>+2.4%</td><td>88.1th</td><td>-0.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BRK%20B%20BERKSHIRE%20HATHAWAY%20INC%20CLASS%20B%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BRK B</a></b></td><td style="color:#10b981">Financials</td><td>1.78%<div class='bar' style='width:17px;background:#10b981'></div></td><td class='pos'>—</td><td>87.3th</td><td>-1.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b></td><td style="color:#6366f1">Communication</td><td>1.58%<div class='bar' style='width:15px;background:#6366f1'></div></td><td class='neg'>-13.7%</td><td>86.4th</td><td>-17.4%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ANET%20ARISTA%20NETWORKS%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ANET</a></b></td><td style="color:#3b82f6">Information Tech</td><td>1.55%<div class='bar' style='width:15px;background:#3b82f6'></div></td><td class='pos'>+6.8%</td><td>85.6th</td><td>-0.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOG%20ALPHABET%20CLASS%20C%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOG</a></b></td><td style="color:#6366f1">Communication</td><td>1.54%<div class='bar' style='width:15px;background:#6366f1'></div></td><td class='pos'>+2.5%</td><td>84.7th</td><td>-0.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ROST%20ROSS%20STORES%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ROST</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>1.37%<div class='bar' style='width:13px;background:#ec4899'></div></td><td class='neg'>-1.9%</td><td>83.9th</td><td>-7.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MRK%20MERCK%20%26%20CO%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MRK</a></b></td><td style="color:#8b5cf6">Health Care</td><td>1.30%<div class='bar' style='width:13px;background:#8b5cf6'></div></td><td class='neg'>-7.2%</td><td>83.1th</td><td>-8.5%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr>
+  </table></div>
+</details></div>
+</details>
+<details class="dayblock">
+  <summary class="dayhead" style="cursor:pointer;list-style:none">
+    <span class="daydate">2026-10-02</span>
+    <span class="daybadge" style="background:#334155;color:#94a3b8">no changes</span>
+  </summary>
+  <div class="day-body"><h2>Top weight movers (20d)</h2><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b> META PLATFORMS CLASS A <span class="pos">+0.690%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b> APPLIED MATERIAL INC <span class="pos">+0.490%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b> LAM RESEARCH <span class="pos">+0.430%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b> NETFLIX <span class="neg">-0.280%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=KLAC%20KLA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KLAC</a></b> KLA <span class="pos">+0.260%</span></div>
+<details class="top20block">
+  <summary style="cursor:pointer;color:var(--mt);font-size:.8rem">Top 20 holdings — 2026-10-02</summary>
+  <div class="tw"><table>
+  <tr><th>Ticker</th><th>Sector</th><th>Weight</th><th>20d ROC</th><th>Wt pctile</th><th>52w DD</th><th>Signal</th></tr>
+  <tr><td><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.84%<div class='bar' style='width:78px;background:#3b82f6'></div></td><td class='pos'>+1.5%</td><td>99.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AAPL%20APPLE%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AAPL</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.06%<div class='bar' style='width:70px;background:#3b82f6'></div></td><td class='pos'>+1.7%</td><td>98.3th</td><td>-2.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a></b></td><td style="color:#3b82f6">Information Tech</td><td>6.70%<div class='bar' style='width:67px;background:#3b82f6'></div></td><td class='pos'>+2.4%</td><td>97.5th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b></td><td style="color:#6366f1">Communication</td><td>4.74%<div class='bar' style='width:47px;background:#6366f1'></div></td><td class='pos'>+19.2%</td><td>96.6th</td><td>-3.1%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b></td><td style="color:#3b82f6">Information Tech</td><td>4.07%<div class='bar' style='width:40px;background:#3b82f6'></div></td><td class='pos'>+18.7%</td><td>95.8th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LLY%20ELI%20LILLY%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LLY</a></b></td><td style="color:#8b5cf6">Health Care</td><td>3.58%<div class='bar' style='width:35px;background:#8b5cf6'></div></td><td class='neg'>-1.4%</td><td>94.9th</td><td>-9.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=TJX%20TJX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>3.30%<div class='bar' style='width:32px;background:#ec4899'></div></td><td class='pos'>+0.4%</td><td>94.1th</td><td>-12.8%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>3.25%<div class='bar' style='width:32px;background:#3b82f6'></div></td><td class='pos'>+23.9%</td><td>93.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=V%20VISA%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">V</a></b></td><td style="color:#10b981">Financials</td><td>3.07%<div class='bar' style='width:30px;background:#10b981'></div></td><td class='neg'>-4.8%</td><td>92.4th</td><td>-5.5%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=KLAC%20KLA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KLAC</a></b></td><td style="color:#3b82f6">Information Tech</td><td>2.75%<div class='bar' style='width:27px;background:#3b82f6'></div></td><td class='pos'>+19.6%</td><td>91.5th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=XOM%20EXXONMOBIL%20HOLDINGS%20CORP%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">XOM</a></b></td><td style="color:#ef4444">Energy</td><td>2.27%<div class='bar' style='width:22px;background:#ef4444'></div></td><td class='pos'>+1.1%</td><td>90.7th</td><td>-1.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MA%20MASTERCARD%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MA</a></b></td><td style="color:#10b981">Financials</td><td>2.16%<div class='bar' style='width:21px;background:#10b981'></div></td><td class='neg'>-5.7%</td><td>89.8th</td><td>-7.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=JNJ%20JOHNSON%20%26%20JOHNSON%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JNJ</a></b></td><td style="color:#8b5cf6">Health Care</td><td>2.02%<div class='bar' style='width:20px;background:#8b5cf6'></div></td><td class='neg'>-8.0%</td><td>89.0th</td><td>-7.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOGL%20ALPHABET%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOGL</a></b></td><td style="color:#6366f1">Communication</td><td>1.94%<div class='bar' style='width:19px;background:#6366f1'></div></td><td class='pos'>+0.3%</td><td>88.1th</td><td>-1.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BRK%20B%20BERKSHIRE%20HATHAWAY%20INC%20CLASS%20B%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BRK B</a></b></td><td style="color:#10b981">Financials</td><td>1.78%<div class='bar' style='width:17px;background:#10b981'></div></td><td class='pos'>—</td><td>87.3th</td><td>-1.5%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b></td><td style="color:#6366f1">Communication</td><td>1.58%<div class='bar' style='width:15px;background:#6366f1'></div></td><td class='neg'>-18.9%</td><td>86.4th</td><td>-17.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ANET%20ARISTA%20NETWORKS%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ANET</a></b></td><td style="color:#3b82f6">Information Tech</td><td>1.56%<div class='bar' style='width:15px;background:#3b82f6'></div></td><td class='pos'>+8.3%</td><td>85.6th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOG%20ALPHABET%20CLASS%20C%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOG</a></b></td><td style="color:#6366f1">Communication</td><td>1.53%<div class='bar' style='width:15px;background:#6366f1'></div></td><td class='pos'>+0.4%</td><td>84.7th</td><td>-1.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ROST%20ROSS%20STORES%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ROST</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>1.39%<div class='bar' style='width:13px;background:#ec4899'></div></td><td class='neg'>-1.4%</td><td>83.9th</td><td>-6.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MRK%20MERCK%20%26%20CO%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MRK</a></b></td><td style="color:#8b5cf6">Health Care</td><td>1.36%<div class='bar' style='width:13px;background:#8b5cf6'></div></td><td class='neg'>-5.3%</td><td>83.1th</td><td>-5.4%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr>
+  </table></div>
+</details></div>
+</details>
+<details class="dayblock">
+  <summary class="dayhead" style="cursor:pointer;list-style:none">
+    <span class="daydate">2026-10-01</span>
+    <span class="daybadge" style="background:#334155;color:#94a3b8">no changes</span>
+  </summary>
+  <div class="day-body"><h2>Top weight movers (20d)</h2><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b> META PLATFORMS CLASS A <span class="pos">+0.750%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b> APPLIED MATERIAL INC <span class="pos">+0.570%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b> LAM RESEARCH <span class="pos">+0.550%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=KLAC%20KLA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KLAC</a></b> KLA <span class="pos">+0.360%</span></div><div class="mini-mover"><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b> NETFLIX <span class="neg">-0.350%</span></div>
+<details class="top20block">
+  <summary style="cursor:pointer;color:var(--mt);font-size:.8rem">Top 20 holdings — 2026-10-01</summary>
+  <div class="tw"><table>
+  <tr><th>Ticker</th><th>Sector</th><th>Weight</th><th>20d ROC</th><th>Wt pctile</th><th>52w DD</th><th>Signal</th></tr>
+  <tr><td><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.80%<div class='bar' style='width:78px;background:#3b82f6'></div></td><td class='pos'>+3.2%</td><td>99.2th</td><td>-0.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AAPL%20APPLE%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AAPL</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.02%<div class='bar' style='width:70px;background:#3b82f6'></div></td><td class='pos'>+1.6%</td><td>98.3th</td><td>-3.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a></b></td><td style="color:#3b82f6">Information Tech</td><td>6.65%<div class='bar' style='width:66px;background:#3b82f6'></div></td><td class='pos'>+2.9%</td><td>97.5th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b></td><td style="color:#6366f1">Communication</td><td>4.75%<div class='bar' style='width:47px;background:#6366f1'></div></td><td class='pos'>+22.4%</td><td>96.6th</td><td>-3.4%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b></td><td style="color:#3b82f6">Information Tech</td><td>4.00%<div class='bar' style='width:40px;background:#3b82f6'></div></td><td class='pos'>+18.0%</td><td>95.8th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LLY%20ELI%20LILLY%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LLY</a></b></td><td style="color:#8b5cf6">Health Care</td><td>3.62%<div class='bar' style='width:36px;background:#8b5cf6'></div></td><td class='neg'>-0.9%</td><td>94.9th</td><td>-8.4%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=TJX%20TJX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>3.33%<div class='bar' style='width:33px;background:#ec4899'></div></td><td class='pos'>+1.7%</td><td>94.1th</td><td>-12.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>3.20%<div class='bar' style='width:32px;background:#3b82f6'></div></td><td class='pos'>+20.7%</td><td>93.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=V%20VISA%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">V</a></b></td><td style="color:#10b981">Financials</td><td>3.07%<div class='bar' style='width:30px;background:#10b981'></div></td><td class='neg'>-4.9%</td><td>92.4th</td><td>-5.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=KLAC%20KLA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KLAC</a></b></td><td style="color:#3b82f6">Information Tech</td><td>2.67%<div class='bar' style='width:26px;background:#3b82f6'></div></td><td class='pos'>+16.3%</td><td>91.5th</td><td>-1.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=XOM%20EXXONMOBIL%20HOLDINGS%20CORP%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">XOM</a></b></td><td style="color:#ef4444">Energy</td><td>2.27%<div class='bar' style='width:22px;background:#ef4444'></div></td><td class='neg'>-0.2%</td><td>90.7th</td><td>-1.3%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MA%20MASTERCARD%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MA</a></b></td><td style="color:#10b981">Financials</td><td>2.16%<div class='bar' style='width:21px;background:#10b981'></div></td><td class='neg'>-6.5%</td><td>89.8th</td><td>-7.6%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=JNJ%20JOHNSON%20%26%20JOHNSON%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JNJ</a></b></td><td style="color:#8b5cf6">Health Care</td><td>2.05%<div class='bar' style='width:20px;background:#8b5cf6'></div></td><td class='neg'>-6.0%</td><td>89.0th</td><td>-6.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOGL%20ALPHABET%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOGL</a></b></td><td style="color:#6366f1">Communication</td><td>1.92%<div class='bar' style='width:19px;background:#6366f1'></div></td><td class='pos'>+0.3%</td><td>88.1th</td><td>-3.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BRK%20B%20BERKSHIRE%20HATHAWAY%20INC%20CLASS%20B%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BRK B</a></b></td><td style="color:#10b981">Financials</td><td>1.78%<div class='bar' style='width:17px;background:#10b981'></div></td><td class='pos'>—</td><td>87.3th</td><td>-1.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b></td><td style="color:#6366f1">Communication</td><td>1.60%<div class='bar' style='width:16px;background:#6366f1'></div></td><td class='neg'>-18.0%</td><td>86.4th</td><td>-17.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ANET%20ARISTA%20NETWORKS%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ANET</a></b></td><td style="color:#3b82f6">Information Tech</td><td>1.55%<div class='bar' style='width:15px;background:#3b82f6'></div></td><td class='pos'>+9.9%</td><td>85.6th</td><td>-1.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOG%20ALPHABET%20CLASS%20C%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOG</a></b></td><td style="color:#6366f1">Communication</td><td>1.51%<div class='bar' style='width:15px;background:#6366f1'></div></td><td class='pos'>+0.3%</td><td>84.7th</td><td>-2.8%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ROST%20ROSS%20STORES%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ROST</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>1.43%<div class='bar' style='width:14px;background:#ec4899'></div></td><td class='pos'>+1.4%</td><td>83.9th</td><td>-4.6%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MRK%20MERCK%20%26%20CO%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MRK</a></b></td><td style="color:#8b5cf6">Health Care</td><td>1.36%<div class='bar' style='width:13px;background:#8b5cf6'></div></td><td class='neg'>-5.2%</td><td>83.1th</td><td>-5.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr>
+  </table></div>
+</details></div>
+</details>
+
+
+<h2>Top 20 holdings — 2026-10-12</h2>
+<div class="tw"><table>
+<tr><th>Ticker</th><th>Sector</th><th>Weight</th><th>20d ROC</th><th>Wt pctile</th><th>52w DD</th><th>Signal</th></tr>
+<tr><td><b><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>8.08%<div class='bar' style='width:80px;background:#3b82f6'></div></td><td class='pos'>+7.1%</td><td>99.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AAPL%20APPLE%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AAPL</a></b></td><td style="color:#3b82f6">Information Tech</td><td>7.11%<div class='bar' style='width:71px;background:#3b82f6'></div></td><td class='pos'>+2.4%</td><td>98.3th</td><td>-0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a></b></td><td style="color:#3b82f6">Information Tech</td><td>6.39%<div class='bar' style='width:63px;background:#3b82f6'></div></td><td class='pos'>+7.3%</td><td>97.5th</td><td>-3.3%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a></b></td><td style="color:#6366f1">Communication</td><td>4.77%<div class='bar' style='width:47px;background:#6366f1'></div></td><td class='pos'>+11.6%</td><td>96.6th</td><td>-1.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LLY%20ELI%20LILLY%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LLY</a></b></td><td style="color:#8b5cf6">Health Care</td><td>3.65%<div class='bar' style='width:36px;background:#8b5cf6'></div></td><td class='pos'>+3.9%</td><td>95.8th</td><td>-5.8%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a></b></td><td style="color:#3b82f6">Information Tech</td><td>3.57%<div class='bar' style='width:35px;background:#3b82f6'></div></td><td class='pos'>+13.2%</td><td>94.9th</td><td>-10.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=TJX%20TJX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>3.48%<div class='bar' style='width:34px;background:#ec4899'></div></td><td class='pos'>+12.6%</td><td>94.1th</td><td>-6.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=V%20VISA%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">V</a></b></td><td style="color:#10b981">Financials</td><td>3.26%<div class='bar' style='width:32px;background:#10b981'></div></td><td class='pos'>+3.7%</td><td>93.2th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a></b></td><td style="color:#3b82f6">Information Tech</td><td>2.95%<div class='bar' style='width:29px;background:#3b82f6'></div></td><td class='pos'>+17.3%</td><td>92.4th</td><td>-7.9%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=KLAC%20KLA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">KLAC</a></b></td><td style="color:#3b82f6">Information Tech</td><td>2.49%<div class='bar' style='width:24px;background:#3b82f6'></div></td><td class='pos'>+12.4%</td><td>91.5th</td><td>-8.1%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=XOM%20EXXONMOBIL%20HOLDINGS%20CORP%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">XOM</a></b></td><td style="color:#ef4444">Energy</td><td>2.34%<div class='bar' style='width:23px;background:#ef4444'></div></td><td class='pos'>+4.3%</td><td>90.7th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MA%20MASTERCARD%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MA</a></b></td><td style="color:#10b981">Financials</td><td>2.30%<div class='bar' style='width:23px;background:#10b981'></div></td><td class='pos'>+3.6%</td><td>89.8th</td><td>-0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=JNJ%20JOHNSON%20%26%20JOHNSON%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JNJ</a></b></td><td style="color:#8b5cf6">Health Care</td><td>2.05%<div class='bar' style='width:20px;background:#8b5cf6'></div></td><td class='neg'>-1.0%</td><td>89.0th</td><td>-4.2%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOGL%20ALPHABET%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOGL</a></b></td><td style="color:#6366f1">Communication</td><td>1.97%<div class='bar' style='width:19px;background:#6366f1'></div></td><td class='pos'>+1.0%</td><td>88.1th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=BRK%20B%20BERKSHIRE%20HATHAWAY%20INC%20CLASS%20B%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BRK B</a></b></td><td style="color:#10b981">Financials</td><td>1.81%<div class='bar' style='width:18px;background:#10b981'></div></td><td class='pos'>+0.5%</td><td>87.3th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=NFLX%20NETFLIX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NFLX</a></b></td><td style="color:#6366f1">Communication</td><td>1.63%<div class='bar' style='width:16px;background:#6366f1'></div></td><td class='neg'>-12.1%</td><td>86.4th</td><td>-13.6%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ANET%20ARISTA%20NETWORKS%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ANET</a></b></td><td style="color:#3b82f6">Information Tech</td><td>1.57%<div class='bar' style='width:15px;background:#3b82f6'></div></td><td class='pos'>+12.3%</td><td>85.6th</td><td>-2.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=GOOG%20ALPHABET%20CLASS%20C%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">GOOG</a></b></td><td style="color:#6366f1">Communication</td><td>1.55%<div class='bar' style='width:15px;background:#6366f1'></div></td><td class='pos'>+0.9%</td><td>84.7th</td><td>0.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=ROST%20ROSS%20STORES%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">ROST</a></b></td><td style="color:#ec4899">Consumer Discret</td><td>1.36%<div class='bar' style='width:13px;background:#ec4899'></div></td><td class='neg'>-1.8%</td><td>83.9th</td><td>-8.0%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr><tr><td><b><a class="tkl" href="https://www.google.com/search?q=MRK%20MERCK%20%26%20CO%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MRK</a></b></td><td style="color:#8b5cf6">Health Care</td><td>1.35%<div class='bar' style='width:13px;background:#8b5cf6'></div></td><td class='pos'>+0.4%</td><td>83.1th</td><td>-4.7%</td><td><span class="sbadge" style="background:#6b728022;color:#6b7280;border:1px solid #6b728044">—</span></td></tr>
+</table></div>
+<h2>Sector breakdown</h2>
+<div class="tw"><table>
+<tr><th>Sector</th><th>Holdings</th><th>Total weight</th></tr>
+<tr><td style="color:#3b82f6">Information Technology</td><td>20</td><td>38.39%<div class='bar' style='width:115px;background:#3b82f6'></div></td></tr><tr><td style="color:#10b981">Financials</td><td>24</td><td>11.66%<div class='bar' style='width:34px;background:#10b981'></div></td></tr><tr><td style="color:#6366f1">Communication</td><td>6</td><td>10.50%<div class='bar' style='width:31px;background:#6366f1'></div></td></tr><tr><td style="color:#8b5cf6">Health Care</td><td>13</td><td>9.24%<div class='bar' style='width:27px;background:#8b5cf6'></div></td></tr><tr><td style="color:#ec4899">Consumer Discretionary</td><td>10</td><td>8.95%<div class='bar' style='width:26px;background:#ec4899'></div></td></tr><tr><td style="color:#f59e0b">Industrials</td><td>16</td><td>8.33%<div class='bar' style='width:24px;background:#f59e0b'></div></td></tr><tr><td style="color:#06b6d4">Consumer Staples</td><td>9</td><td>4.28%<div class='bar' style='width:12px;background:#06b6d4'></div></td></tr><tr><td style="color:#ef4444">Energy</td><td>7</td><td>3.39%<div class='bar' style='width:10px;background:#ef4444'></div></td></tr><tr><td style="color:#f97316">Utilities</td><td>5</td><td>1.92%<div class='bar' style='width:5px;background:#f97316'></div></td></tr><tr><td style="color:#84cc16">Materials</td><td>4</td><td>1.72%<div class='bar' style='width:5px;background:#84cc16'></div></td></tr><tr><td style="color:#14b8a6">Real Estate</td><td>4</td><td>1.53%<div class='bar' style='width:4px;background:#14b8a6'></div></td></tr>
+</table></div>
+
+<footer>Velocity · Generated: 14 Oct 2026 08:17 UTC · Source: BlackRock QUAL holdings · October 2026</footer>
+</div>
+</body>
+</html>

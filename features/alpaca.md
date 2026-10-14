@@ -27,12 +27,8 @@ Create an `AlpacaClient` module that uses Alpaca's Portfolio API to create and m
   - [x] Add `ALPACA_BASE_URL` for API endpoint selection
 
 ### Phase 3: Portfolio Integration
-- [x] Modify `src/trader.py` to integrate Alpaca
-  - [x] Add optional `alpaca_client` parameter to `Portfolio.__init__()`
-  - [x] Modify `Portfolio.buy()` to submit order to Alpaca after local state update
-  - [x] Modify `Portfolio.sell()` to submit order to Alpaca after local state update
-  - [x] Add `sync_alpaca_positions(etf)` method to import existing positions for specific ETF
-  - [x] Add logging for Alpaca order submissions
+- [x] `velocity.py::submit_to_alpaca()` submits the session's entries/exits after the global book is updated
+  - [x] DAY market orders, fractional qty (4 dp); one position per issuer is enforced by the book, not by Alpaca portfolios
 
 ### Phase 4: CLI Integration
 - [x] Add CLI flags to `velocity.py`

@@ -59,11 +59,12 @@ class AlpacaClient:
         try:
             from alpaca.trading.client import TradingClient
             from alpaca.trading.requests import MarketOrderRequest
-            from alpaca.trading.enums import OrderSide, OrderType
+            from alpaca.trading.enums import OrderSide, OrderType, TimeInForce
             self._trading_client = TradingClient(self.api_key, self.secret_key, paper=paper)
             self._MarketOrderRequest = MarketOrderRequest
             self._OrderSide = OrderSide
             self._OrderType = OrderType
+            self._TimeInForce = TimeInForce
             self._available = True
         except ImportError:
             log.warning("alpaca-py not installed. Install with: pip install alpaca-py")
@@ -138,11 +139,14 @@ class AlpacaClient:
             order_side = self._OrderSide.BUY if side.lower() == "buy" else self._OrderSide.SELL
             order_type_enum = self._OrderType.MARKET if order_type.lower() == "market" else self._OrderType.LIMIT
 
+            # time_in_force is REQUIRED by alpaca-py (pydantic ValidationError without it);
+            # fractional quantities are only accepted as DAY orders.
             request = self._MarketOrderRequest(
                 symbol=ticker,
-                qty=qty,
+                qty=round(float(qty), 4),
                 side=order_side,
                 type=order_type_enum,
+                time_in_force=self._TimeInForce.DAY,
             )
 
             order = self._trading_client.submit_order(request)

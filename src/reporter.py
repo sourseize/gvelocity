@@ -8,15 +8,13 @@ import os
 from pathlib import Path
 from typing import Optional, List, Dict, Any
 
-# Import from our modules (will be resolved when imported correctly)
-# For now, we'll define constants inline or import from config later
-SCORE_META = {
-    5: ("STRONG", "#10b981"),
-    4: ("GOOD", "#22c55e"),
-    3: ("WATCH", "#f59e0b"),
-    2: ("WEAK", "#ef4444"),
-    1: ("AVOID", "#ef4444"),
-    0: ("AVOID", "#6b7280"),
+# Strategy signal state per holding (produced by Strategy.explain / the engine)
+STATE_META = {
+    "ENTRY": ("ENTRY", "#10b981"),
+    "HOLD":  ("HOLD",  "#3b82f6"),
+    "EXIT":  ("EXIT",  "#ef4444"),
+    "WATCH": ("WATCH", "#f59e0b"),
+    "NONE":  ("—",     "#6b7280"),
 }
 
 # Sector colors
@@ -474,13 +472,7 @@ footer {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a78bfa'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Cline x1='3' y1='10' x2='21' y2='10' stroke='%231a1025' stroke-width='2'/%3E%3Cline x1='12' y1='3' x2='12' y2='21' stroke='%231a1025' stroke-width='2'/%3E%3C/svg%3E");
 }
 
-.icon-rising {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2334d399'%3E%3Cpath d='M13 2L3 14h9v8l10-12h-9z'/%3E%3C/svg%3E");
-}
 """
-
-RISING_STAR_LOOKBACK_DAYS = 60
-RISING_STAR_MIN_GROWTH = 0.30
 
 def month_key(date_str: str) -> str:
     """Convert YYYY-MM-DD to YYYY-MM."""
@@ -507,11 +499,39 @@ def ticker_link(ticker: str, name: str = "") -> str:
     return f'<a class="tkl" href="{url}" target="_blank" rel="noopener">{ticker}</a>'
 
 
-def score_badge(s: int) -> str:
-    """Generate HTML for score badge."""
-    lbl, col = SCORE_META.get(s, ("?", "#6b7280"))
+def state_badge(state: str) -> str:
+    """Badge for a holding's strategy signal state."""
+    lbl, col = STATE_META.get(state or "NONE", STATE_META["NONE"])
     return (f'<span class="sbadge" style="background:{col}22;color:{col};'
-            f'border:1px solid {col}44">{s}/5 — {lbl}</span>')
+            f'border:1px solid {col}44">{lbl}</span>')
+
+
+def rising_table(stars: list, title: str, collapsed: bool = False) -> str:
+    """Table of signals waiting for a slot in the strategy book."""
+    if not stars:
+        return ""
+    rows = ""
+    for r in stars:
+        chg = (r.get("ref_price", 0) / r["first_price"] - 1) if r.get("first_price") else 0.0
+        rows += (f"<tr><td><b>{ticker_link(r['ticker'])}</b></td><td>{r.get('first_seen','')}</td>"
+                 f"<td>{r.get('seen', 0)}</td><td>{fmt_f(r.get('ref_price'))}</td>"
+                 f"<td class='{'pos' if chg >= 0 else 'neg'}'>{chg:+.1%}</td><td>{r.get('why','')}</td>"
+                 f"<td style='max-width:380px'>{r.get('reason','')}</td></tr>")
+    table = (f'<div class="tw"><table><tr><th>Ticker</th><th>Waiting since</th><th>Sessions signalled</th>'
+             f'<th>Price</th><th>Since first signal</th><th>Why waiting</th><th>Signal</th></tr>{rows}</table></div>')
+    if collapsed:
+        return (f'<details class="top20block"><summary style="cursor:pointer;color:var(--mt);font-size:.8rem">'
+                f'🌱 {title} ({len(stars)})</summary>{table}</details>')
+    return (f'<h2>🌱 {title} ({len(stars)})</h2><p class="sub" style="margin-top:-8px">Entry signals the book could not '
+            f'take (full, or capital exhausted). They keep their place while the signal repeats, get priority for the '
+            f'next free slot, and drop off when the setup stops firing.</p>{table}')
+
+
+def checks_html(checks: dict, note: str = "") -> str:
+    items = "".join(f'<div class="sig">{"✅" if ok else "❌"} {name}</div>' for name, ok in (checks or {}).items())
+    if note:
+        items += f'<div class="sig" style="opacity:.8">{note}</div>'
+    return items
 
 
 def sparkline(values: list[float], w=180, h=36, colour="#3b82f6") -> str:
@@ -537,8 +557,7 @@ def entry_card(ticker: str, m: dict) -> str:
     wp = [r["price"] for r in reversed(m.get("weekly_history", [])) if r.get("price")]
     sd = sparkline(dp, colour="#3b82f6")
     sw = sparkline(wp, colour="#10b981")
-    s = m.get("confirmation_score", 0)
-    sigs = "".join(f'<div class="sig">{sg}</div>' for sg in m.get("confirmation_signals", []))
+    sig = m.get("signal", {}) or {}
     dd = m.get("drawdown_from_52w_high")
     mc = m.get("momentum_consistency")
 
@@ -571,8 +590,8 @@ def entry_card(ticker: str, m: dict) -> str:
     </div>
   </div>
   <div class="ecs">
-    {score_badge(s)}
-    <div class="sigs">{sigs}</div>
+    {state_badge(sig.get("state"))}
+    <div class="sigs">{checks_html(sig.get("checks"), sig.get("note", ""))}</div>
   </div>
   <div class="ecg">
     <div class="egcol"><div class="egt">Price ROC</div>{roc_rows}</div>
@@ -625,9 +644,7 @@ def render_day_block(entry: dict, is_latest: bool = False) -> str:
     for ne in new_entries:
         t = ne["ticker"]
         col = sc(ne.get("sector", ""))
-        s = ne.get("score", 0) or 0
-        lbl, scol = SCORE_META.get(s, ("?", "#6b7280"))
-        sigs_html = "".join(f'<div class="sig">{sg}</div>' for sg in ne.get("signals", []))
+        sig = ne.get("signal", {}) or {}
 
         roc20 = ne.get("price_roc_20d")
         wpct = ne.get("weight_percentile")
@@ -650,8 +667,8 @@ def render_day_block(entry: dict, is_latest: bool = False) -> str:
     </div>
   </div>
   <div class="ecs">
-    <span class="sbadge" style="background:{scol}22;color:{scol};border:1px solid {scol}44">{s}/5 — {lbl}</span>
-    <div class="sigs">{sigs_html}</div>
+    {state_badge(sig.get("state"))}
+    <div class="sigs">{checks_html(sig.get("checks"), sig.get("note", ""))}</div>
   </div>
 </div>"""
 
@@ -691,8 +708,6 @@ def render_day_block(entry: dict, is_latest: bool = False) -> str:
         trows = ""
         for h in top20_e:
             col = sc(h.get("sector", ""))
-            s = h.get("score", 0) or 0
-            scol = SCORE_META.get(s, ("?", "#6b7280"))[1]
             roc20 = h.get("price_roc_20d")
             rcls = "pos" if (roc20 or 0) >= 0 else "neg"
             wpct = h.get("weight_percentile")
@@ -707,51 +722,19 @@ def render_day_block(entry: dict, is_latest: bool = False) -> str:
                 f"<td class='{rcls}'>{fmt_pct(roc20, True)}</td>"
                 f"<td>{fmt_f(wpct,1)}th</td>"
                 f"<td>{fmt_pct(dd)}</td>"
-                f"<td><span style='color:{scol};font-weight:700'>{s}/5</span></td>"
+                f"<td>{state_badge(h.get('state'))}</td>"
                 f"</tr>"
             )
         top20_html = f"""
 <details class="top20block">
   <summary style="cursor:pointer;color:var(--mt);font-size:.8rem">Top 20 holdings — {date}</summary>
   <div class="tw"><table>
-  <tr><th>Ticker</th><th>Sector</th><th>Weight</th><th>20d ROC</th><th>Wt pctile</th><th>52w DD</th><th>Score</th></tr>
+  <tr><th>Ticker</th><th>Sector</th><th>Weight</th><th>20d ROC</th><th>Wt pctile</th><th>52w DD</th><th>Signal</th></tr>
   {trows}
   </table></div>
 </details>"""
 
-    # Rising stars for this specific day (nested, collapsed by default)
-    rising_e = entry.get("rising_stars", [])
-    rising_html = ""
-    if rising_e:
-        rrows = ""
-        for m in rising_e:
-            col = sc(m.get("sector", ""))
-            wroc = m.get("weight_roc") or 0
-            proc = m.get("price_roc")
-            pcls = "pos" if (proc or 0) >= 0 else "neg"
-            s = m.get("score", 0) or 0
-            scol = SCORE_META.get(s, ("?", "#6b7280"))[1]
-            w_then = m.get("weight_at_entry") or 0
-            w_now = m.get("current_weight") or 0
-            rrows += (
-                f"<tr>"
-                f"<td><b>{ticker_link(m['ticker'], m.get('name',''))}</b></td>"
-                f"<td style=\"color:{col}\">{m.get('sector','')[:16]}</td>"
-                f"<td>{m.get('first_seen','?')}</td>"
-                f"<td>{w_then:.2f}% → {w_now:.2f}%</td>"
-                f"<td class='pos'>+{wroc*100:.0f}%</td>"
-                f"<td class='{pcls}'>{fmt_pct(proc, True)}</td>"
-                f"<td><span style='color:{scol};font-weight:700'>{s}/5</span></td>"
-                f"</tr>"
-            )
-        rising_html = f"""
-<details class="top20block">
-  <summary style="cursor:pointer;color:var(--mt);font-size:.8rem">🌱 Rising stars — {date}</summary>
-  <div class="tw"><table>
-  <tr><th>Ticker</th><th>Sector</th><th>First seen</th><th>Weight then → now</th><th>Weight growth</th><th>Price since entry</th><th>Score</th></tr>
-  {rrows}
-  </table></div>
-</details>"""
+    rising_html = rising_table(entry.get("rising_stars", []), f"Rising stars — {date}", collapsed=True)
 
     body_content = ""
 
@@ -760,7 +743,7 @@ def render_day_block(entry: dict, is_latest: bool = False) -> str:
     if trades_e:
         trade_rows = ""
         for tr in trades_e:
-            typ = (tr.get("type") or "").upper()
+            typ = (tr.get("side") or tr.get("type") or "").upper()
             tcls = "pos" if typ == "BUY" else "neg"
             reason_text = tr.get("reason") or "—"
             trade_rows += (
@@ -834,9 +817,9 @@ def generate_monthly_page(
     nav_parts.append('<a href="../index.html">← All ETFs</a>')
     if (report_dir / "tickers" / "index.html").exists():
         nav_parts.append('<a href="tickers/index.html">Tracked tickers →</a>')
-    # Add portfolio link if it exists
-    if (report_dir / "portfolio.html").exists():
-        nav_parts.append('<a href="portfolio.html"><span class="icon icon-portfolio"></span>Portfolio</a>')
+    strat = (day_data or {}).get("strategy") or {}
+    if strat.get("name") and (report_dir.parent / "strategy" / f"{strat['name']}.html").exists():
+        nav_parts.append(f'<a href="../strategy/{strat["name"]}.html"><span class="icon icon-portfolio"></span>{strat.get("label", strat["name"])} book</a>')
     nav_html = " · ".join(p for p in nav_parts if p)
 
     # Day blocks — first entry is always open
@@ -850,42 +833,6 @@ def generate_monthly_page(
     # Watchlist table from most recent day_data (only on current month)
     watchlist_html = ""
     if day_data and is_current:
-        # Rising stars — recent entrants building position
-        rising = day_data.get("rising_stars", [])
-        if rising:
-            rrows = ""
-            for m in rising:
-                t = m["ticker"]
-                col = sc(m.get("sector", ""))
-                wroc = m.get("weight_roc_since_entry") or 0
-                proc = m.get("price_roc_since_entry")
-                pcls = "pos" if (proc or 0) >= 0 else "neg"
-                s = m.get("confirmation_score", 0) or 0
-                scol = SCORE_META.get(s, ("?", "#6b7280"))[1]
-                w_then = m.get("weight_at_entry") or 0
-                w_now = m.get("current_weight") or 0
-                fs = m.get("first_seen", "?")
-                rrows += (
-                    f"<tr>"
-                    f"<td><b>{ticker_link(t, m.get('name',''))}</b></td>"
-                    f"<td style=\"color:{col}\">{m.get('sector','')[:16]}</td>"
-                    f"<td>{fs}</td>"
-                    f"<td>{w_then:.2f}% → {w_now:.2f}%</td>"
-                    f"<td class='pos'>+{wroc*100:.0f}%</td>"
-                    f"<td class='{pcls}'>{fmt_pct(proc, True)}</td>"
-                    f"<td><span style='color:{scol};font-weight:700'>{s}/5</span></td>"
-                    f"</tr>"
-                )
-            watchlist_html += f"""
-<h2><span class="icon icon-rising"></span>Rising stars — building position</h2>
-<p class="sub" style="margin-top:-8px">Entered within the last {RISING_STAR_LOOKBACK_DAYS} trading days,
-weight up {RISING_STAR_MIN_GROWTH*100:.0f}%+ since entry — includes names outside the top-20 that a
-single day's snapshot would otherwise miss entirely.</p>
-<div class="tw"><table>
-<tr><th>Ticker</th><th>Sector</th><th>First seen</th><th>Weight then → now</th><th>Weight growth</th><th>Price since entry</th><th>Score</th></tr>
-{rrows}
-</table></div>"""
-
         top30 = day_data.get("top20", [])
         scored = day_data.get("scored", {})
         wrows = ""
@@ -893,8 +840,7 @@ single day's snapshot would otherwise miss entirely.</p>
             t = h["ticker"]
             col = sc(h.get("sector", ""))
             m = scored.get(t, {})
-            s = m.get("confirmation_score", 0) or 0
-            scol = SCORE_META.get(s, ("?","#6b7280"))[1]
+            state = (m.get("signal") or {}).get("state")
             roc20 = m.get("price_roc_20d")
             rcls = "pos" if (roc20 or 0) >= 0 else "neg"
             wpct = m.get("weight_percentile")
@@ -909,15 +855,41 @@ single day's snapshot would otherwise miss entirely.</p>
                 f"<td class='{rcls}'>{fmt_pct(roc20, True)}</td>"
                 f"<td>{fmt_f(wpct,1)}th</td>"
                 f"<td>{fmt_pct(dd)}</td>"
-                f"<td><span style='color:{scol};font-weight:700'>{s}/5</span></td>"
+                f"<td>{state_badge(state)}</td>"
                 f"</tr>"
             )
         if wrows:
             watchlist_html += f"""
 <h2>Top 20 holdings — {day_data["date"]}</h2>
 <div class="tw"><table>
-<tr><th>Ticker</th><th>Sector</th><th>Weight</th><th>20d ROC</th><th>Wt pctile</th><th>52w DD</th><th>Score</th></tr>
+<tr><th>Ticker</th><th>Sector</th><th>Weight</th><th>20d ROC</th><th>Wt pctile</th><th>52w DD</th><th>Signal</th></tr>
 {wrows}
+</table></div>"""
+
+        watchlist_html += rising_table(day_data.get("rising_stars", []), "Rising stars — signals waiting for a slot")
+
+        # Strategy signals across ALL holdings (not just the top 20)
+        sig_rows = ""
+        order = {"ENTRY": 0, "EXIT": 1, "HOLD": 2, "WATCH": 3}
+        flagged = [(t, m) for t, m in scored.items() if (m.get("signal") or {}).get("state") in order]
+        flagged.sort(key=lambda x: (order[x[1]["signal"]["state"]], x[0]))
+        for t, m in flagged:
+            sig = m["signal"]
+            col = sc(m.get("sector", ""))
+            sig_rows += (
+                f"<tr><td><b>{ticker_link(t, m.get('name',''))}</b></td>"
+                f"<td style=\"color:{col}\">{m.get('sector','')[:16]}</td>"
+                f"<td>{fmt_f(m.get('current_price'))}</td>"
+                f"<td>{state_badge(sig['state'])}</td>"
+                f"<td><div class='sigs'>{checks_html(sig.get('checks'), sig.get('note',''))}</div></td></tr>"
+            )
+        if sig_rows:
+            watchlist_html += f"""
+<h2>{strat.get('label', 'Strategy')} signals — {day_data["date"]}</h2>
+<p class="sub" style="margin-top:-8px">{strat.get('description', '')}</p>
+<div class="tw"><table>
+<tr><th>Ticker</th><th>Sector</th><th>Price</th><th>State</th><th>Checks</th></tr>
+{sig_rows}
 </table></div>"""
 
         # Sector breakdown
@@ -968,9 +940,9 @@ single day's snapshot would otherwise miss entirely.</p>
 </div>
 
 <div class="tip">
-  <b>Score 0–5:</b> ✅ Price ROC (20d) > 0 · ✅ Weight growing since entry ·
-  ✅ Weight > 50th pctile · ✅ Price above entry · ✅ Within 20% of 52w high.
-  <b>4–5 = act · 3 = watch · 0–2 = wait</b>
+  <b>Signal states:</b> ENTRY = all entry checks pass today · HOLD = open in the book ·
+  EXIT = an exit rule fired · WATCH = setup forming. Strategy: <b>{strat.get('label', '—')}</b>
+  {('— ' + strat['description']) if strat.get('description') else ''}
 </div>
 
 <div class="stats">
@@ -983,7 +955,7 @@ single day's snapshot would otherwise miss entirely.</p>
 
 {watchlist_html}
 
-<footer>Velocity · Pure maths · Generated: {generated_at} · Source: BlackRock {etf} holdings · {month_label}</footer>
+<footer>Velocity · Generated: {generated_at} · Source: BlackRock {etf} holdings · {month_label}</footer>
 </div>
 </body>
 </html>"""
@@ -1030,8 +1002,7 @@ def append_day_to_log(report_dir: Path, day_data: dict, commentary: dict = None)
             "name": m.get("name", t),
             "sector": m.get("sector", ""),
             "weight": m.get("current_weight"),
-            "score": m.get("confirmation_score"),
-            "signals": m.get("confirmation_signals", []),
+            "signal": m.get("signal"),
             "price": m.get("current_price"),
             "currency": m.get("currency", ""),
             "price_roc_20d": m.get("price_roc_20d"),
@@ -1064,27 +1035,10 @@ def append_day_to_log(report_dir: Path, day_data: dict, commentary: dict = None)
             "weight_pct": h.get("weight_pct"),
             "price": h.get("price"),
             "currency": h.get("currency", ""),
-            "score": m.get("confirmation_score"),
+            "state": (m.get("signal") or {}).get("state"),
             "price_roc_20d": m.get("price_roc_20d"),
             "weight_percentile": m.get("weight_percentile"),
             "drawdown": m.get("drawdown_from_52w_high"),
-        })
-
-    # Rising stars: recent entrants whose weight has grown meaningfully
-    # since entry — persisted daily so this history is actually captured
-    rising_details = []
-    for m in day_data["rising_stars"]:
-        rising_details.append({
-            "ticker": m["ticker"],
-            "name": m.get("name", m["ticker"]),
-            "sector": m.get("sector", ""),
-            "first_seen": m.get("first_seen"),
-            "weight_at_entry": m.get("weight_at_entry"),
-            "current_weight": m.get("current_weight"),
-            "weight_roc": m.get("weight_roc_since_entry"),
-            "price_roc": m.get("price_roc_since_entry"),
-            "weight_percentile": m.get("weight_percentile"),
-            "score": m.get("confirmation_score"),
         })
 
     entries.append({
@@ -1093,7 +1047,11 @@ def append_day_to_log(report_dir: Path, day_data: dict, commentary: dict = None)
         "exits": exit_details,
         "movers": mover_summary,
         "top20": top20_details,
-        "rising_stars": rising_details,
+        "strategy": day_data.get("strategy"),
+        "rising_stars": [
+            {k: r.get(k) for k in ("ticker", "first_seen", "last_seen", "seen", "ref_price", "first_price", "why", "reason", "etfs")}
+            for r in day_data.get("rising_stars", [])
+        ],
         "trades": day_data.get("trades", []),
         "n_holdings": len(day_data["top20"]),
         "n_snapshots": day_data["n_snapshots"],
@@ -1154,7 +1112,7 @@ def generate_hub_index(report_dir: Path) -> str:
         # In production, we'd get ETF_CONFIG from config module
         # For now, using a fallback
         try:
-            from config import ETF_CONFIG
+            from .config import ETF_CONFIG
             cfg = ETF_CONFIG.get(code, {})
         except ImportError:
             cfg = {}
@@ -1171,7 +1129,8 @@ def generate_hub_index(report_dir: Path) -> str:
         exits_e = latest.get("exits", [])
         movers = latest.get("movers", [])[:5]
         top20 = latest.get("top20", [])[:5]
-        rising = latest.get("rising_stars", [])[:5]
+        trades = latest.get("trades", [])
+        rising = latest.get("rising_stars", [])[:6]
 
         new_html = ""
         if new_e:
@@ -1213,28 +1172,31 @@ def generate_hub_index(report_dir: Path) -> str:
             )
             top20_html = f"<div class='hubrow'><b>Top 5:</b> {trows}</div>"
 
+        trades_html = ""
+        if trades:
+            chips = "".join(
+                f"<span class='chip'><span class='{'pos' if (t.get('side') or t.get('type')) == 'buy' else 'neg'}'>"
+                f"{(t.get('side') or t.get('type') or '').upper()}</span> {ticker_link(t['ticker'])}</span>"
+                for t in trades[:8]
+            )
+            trades_html = f"<div class='hubrow'><b>Trades:</b> {chips}</div>"
+
         rising_html = ""
         if rising:
-            rrows = "".join(
-                f"<span class='chip'>🌱 {ticker_link(m['ticker'], m.get('name',''))} "
-                f"<span class='pos'>+{(m.get('weight_roc') or 0)*100:.0f}%</span></span>"
-                for m in rising
-            )
-            rising_html = f"<div class='hubrow'><b>Rising stars:</b> {rrows}</div>"
+            chips = "".join(f"<span class='chip'>🌱 {ticker_link(r['ticker'])} <span class='mt'>x{r.get('seen', 0)}</span></span>"
+                            for r in rising)
+            rising_html = f"<div class='hubrow'><b>Rising stars:</b> {chips}</div>"
 
-        if not (new_html or exit_html or movers_html or top20_html or rising_html):
+        if not (new_html or exit_html or movers_html or top20_html or trades_html or rising_html):
             body = "<div class='hubrow none'>No changes today.</div>"
         else:
-            body = top20_html + rising_html + new_html + exit_html + movers_html
+            body = trades_html + rising_html + top20_html + new_html + exit_html + movers_html
 
         tickers_link = ""
         if (d / "tickers" / "index.html").exists():
             tickers_link = f" · <a href='{code}/tickers/index.html'>Tickers</a>"
         
-        # Add portfolio link if it exists
         portfolio_link = ""
-        if (d / "portfolio.html").exists():
-            portfolio_link = f" · <a href='{code}/portfolio.html'><span class='icon icon-portfolio' style='width:16px;height:16px'></span>Portfolio</a>"
 
         cards += f"""
 <div class="etfcard">
@@ -1245,6 +1207,20 @@ def generate_hub_index(report_dir: Path) -> str:
 
     if not cards:
         cards = '<p class="none">No ETFs tracked yet — run velocity.py --etf CODE to get started.</p>'
+
+    books = ""
+    strat_dir = report_dir / "strategy"
+    if strat_dir.exists():
+        links = []
+        for f in sorted(strat_dir.glob("*.html")):
+            try:
+                st = json.loads((f.with_suffix(".json")).read_text())
+                links.append(f"<span class='chip'><a href='strategy/{f.name}'>{f.stem}</a> "
+                             f"<span class='mt'>${st.get('total_value', 0):,.0f} · {len(st.get('positions', {}))} open</span></span>")
+            except Exception:
+                links.append(f"<span class='chip'><a href='strategy/{f.name}'>{f.stem}</a></span>")
+        if links:
+            books = f"<div class='etfcard'><h2>Strategy books</h2><div class='hubrow'>{''.join(links)}</div></div>"
 
     generated_at = datetime.datetime.now(datetime.timezone.utc).strftime("%d %b %Y %H:%M UTC")
 
@@ -1270,8 +1246,9 @@ def generate_hub_index(report_dir: Path) -> str:
 <div class="wrap">
 <h1>Velocity — tracked ETFs</h1>
 <p class="sub">{len(etf_dirs)} fund(s) tracked</p>
+{books}
 {cards}
-<footer style="margin-top:18px;color:var(--muted);font-size:.75rem;letter-spacing:.04em;text-transform:uppercase">Velocity · Pure maths · Generated: {generated_at}</footer>
+<footer style="margin-top:18px;color:var(--muted);font-size:.75rem;letter-spacing:.04em;text-transform:uppercase">Velocity · Generated: {generated_at}</footer>
 </div>
 </body>
 </html>"""

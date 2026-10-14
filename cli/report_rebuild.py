@@ -21,13 +21,16 @@ from pathlib import Path
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from src.config import ETF_CONFIG, DEFAULT_REPORT_DIR, NEW_ENTRY_LOOKBACK_DAYS
-from src.database import get_db, default_db_path, etf_report_dir, recent_dates
+from src.config import ETF_CONFIG, DEFAULT_REPORT_DIR
+from src.database import get_db, default_db_path, etf_report_dir
 from src.reporter import (
     get_all_months, load_month_log, generate_monthly_page,
     generate_hub_index, append_day_to_log
 )
-from src.analyzer import compute_metrics
+from src.day_data import build_day_data
+from src.strategies import get_strategy, available, DEFAULT_STRATEGY
+from src.engine import Engine
+from src.book import Book
 
 logging.basicConfig(
     level=logging.INFO,
@@ -37,50 +40,8 @@ logging.basicConfig(
 log = logging.getLogger("report_rebuild")
 
 
-def build_day_data(conn, today: str) -> dict:
-    """Build today's analysis data using modular functions."""
-    from src.database import detect_new_entries, detect_exits, detect_weight_movers, find_rising_stars
-
-    new_tickers = detect_new_entries(conn, today, NEW_ENTRY_LOOKBACK_DAYS)
-    exits = detect_exits(conn, today)
-    movers = detect_weight_movers(conn, today, NEW_ENTRY_LOOKBACK_DAYS)
-
-    current_holdings = [r["ticker"] for r in conn.execute(
-        "SELECT ticker FROM holdings WHERE snapshot_date=?",
-        (today,)
-    )]
-    to_score = list(dict.fromkeys(new_tickers + current_holdings))
-    scored = {t: compute_metrics(conn, t, today) for t in to_score}
-
-    top20 = [dict(r) for r in conn.execute(
-        """SELECT ticker,name,sector,weight_pct,price,currency
-           FROM holdings WHERE snapshot_date=? ORDER BY weight_pct DESC LIMIT 20""",
-        (today,)
-    )]
-    sectors = [dict(r) for r in conn.execute(
-        """SELECT sector, COUNT(*) as count, SUM(weight_pct) as total_weight
-           FROM holdings WHERE snapshot_date=?
-           GROUP BY sector ORDER BY total_weight DESC""",
-        (today,)
-    )]
-
-    rising_stars = find_rising_stars(conn, today, scored)
-
-    return {
-        "date": today,
-        "new_tickers": new_tickers,
-        "exits": exits,
-        "movers": movers,
-        "scored": scored,
-        "top20": top20,
-        "sectors": sectors,
-        "rising_stars": rising_stars,
-        "n_snapshots": len(recent_dates(conn, 9999)),
-        "lookback": NEW_ENTRY_LOOKBACK_DAYS,
-    }
-
-
-def rebuild_report_pages_from_db(conn, fund_dir: Path, etf: str, etf_name: str, today: str) -> None:
+def rebuild_report_pages_from_db(conn, fund_dir: Path, etf: str, etf_name: str, today: str,
+                                 strategy=None, book=None) -> None:
     """Rebuild monthly log JSONs and HTML pages from historical snapshots in the DB."""
     # Clean up existing month HTML/JSON files
     for pattern in ("????-??.json", "????-??.html"):
@@ -106,7 +67,8 @@ def rebuild_report_pages_from_db(conn, fund_dir: Path, etf: str, etf_name: str, 
 
     # Replay each date through the log
     for snapshot_date in snapshot_dates:
-        day_data = build_day_data(conn, snapshot_date)
+        day_data = build_day_data(conn, snapshot_date, etf=etf, strategy=strategy, book=book,
+                                  trades=book.trades if book else None)
         append_day_to_log(fund_dir, day_data, {})
 
     all_months = sorted(get_all_months(fund_dir))
@@ -115,7 +77,8 @@ def rebuild_report_pages_from_db(conn, fund_dir: Path, etf: str, etf_name: str, 
         return
 
     live_ym = all_months[-1]
-    latest_day_data = build_day_data(conn, today)
+    latest_day_data = build_day_data(conn, today, etf=etf, strategy=strategy, book=book,
+                                     trades=book.trades if book else None)
 
     for idx, ym in enumerate(all_months):
         prev_ym = all_months[idx - 1] if idx > 0 else None
@@ -139,7 +102,23 @@ def rebuild_report_pages_from_db(conn, fund_dir: Path, etf: str, etf_name: str, 
         log.info("[%s] Wrote %s (%d day entries)", etf, filename, len(entries))
 
 
-def rebuild_etf(etf: str, args, report_root: Path) -> bool:
+def load_strategy_context(args, report_root: Path):
+    """Prepare the chosen strategy on all ETF DBs so every rebuilt day gets its signal state."""
+    conns = {e: get_db(default_db_path(e)) for e in sorted(ETF_CONFIG) if default_db_path(e).exists()}
+    if not conns:
+        return None, None
+    strategy = get_strategy(args.strategy)
+    book_db = Path(__file__).resolve().parent.parent / "data" / "books.db"
+    import sqlite3
+    bc = sqlite3.connect(book_db) if book_db.exists() else None
+    Engine(strategy, conns, book_conn=bc)
+    book = Book.load(bc, strategy.name) if bc is not None else Book(strategy.name)
+    for c in conns.values():
+        c.close()
+    return strategy, book
+
+
+def rebuild_etf(etf: str, args, report_root: Path, strategy=None, book=None) -> bool:
     """Rebuild reports for a single ETF. Returns True if successful."""
     etf_cfg = ETF_CONFIG[etf]
     etf_name = etf_cfg["name"]
@@ -167,7 +146,7 @@ def rebuild_etf(etf: str, args, report_root: Path) -> bool:
     today = latest["fetch_date"]
     log.info("[%s] Rebuilding reports from DB, latest date: %s", etf, today)
 
-    rebuild_report_pages_from_db(conn, fund_dir, etf, etf_name, today)
+    rebuild_report_pages_from_db(conn, fund_dir, etf, etf_name, today, strategy, book)
     conn.close()
     log.info("[%s] Done.", etf)
     return True
@@ -188,20 +167,27 @@ def main():
                    help="DB path override. Default: data/{ETF}.db")
     p.add_argument("--report-dir", default=str(DEFAULT_REPORT_DIR),
                    help="Shared report root. Default: velocity/report")
+    p.add_argument("--strategy", choices=available(), default=DEFAULT_STRATEGY,
+                   help="Strategy whose signal states are shown in the rebuilt pages")
     args = p.parse_args()
 
     report_root = Path(args.report_dir)
     report_root.mkdir(parents=True, exist_ok=True)
+    strategy, book = load_strategy_context(args, report_root)
 
     if args.etf == "ALL":
         if args.db:
             log.error("--db can't be combined with --etf ALL (each ETF needs its own DB).")
             sys.exit(1)
         for etf in sorted(ETF_CONFIG.keys()):
-            rebuild_etf(etf, args, report_root)
+            rebuild_etf(etf, args, report_root, strategy, book)
     else:
-        if not rebuild_etf(args.etf, args, report_root):
+        if not rebuild_etf(args.etf, args, report_root, strategy, book):
             sys.exit(1)
+
+    if book is not None:
+        book.write_report(report_root / "strategy", strategy.label)
+        log.info("Strategy book page written: strategy/%s.html", strategy.name)
 
     # Regenerate hub
     hub_html = generate_hub_index(report_root)

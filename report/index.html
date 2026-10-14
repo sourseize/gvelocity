@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Velocity — tracked ETFs</title>
+<style>
+/* Purple/Lilac Theme - Flat Design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg: #1a1025;
+    --sf: #2d1f3e;
+    --bd: #4a3b5c;
+    --mt: #b8a9c9;
+    --ac: #a78bfa;
+    --ac-hover: #c4b5fd;
+    --tx: #f5f3ff;
+    --pos: #34d399;
+    --neg: #f87171;
+    --lilac-light: #ddd6fe;
+    --lilac-dark: #7c3aed;
+    --purple-glow: rgba(167, 139, 250, 0.15);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #0f172a;
+    color: var(--tx);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+a {
+    color: var(--ac);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--ac-hover);
+}
+
+.wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 24px 18px 40px;
+}
+
+h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--lilac-light) 0%, var(--ac) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h2 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ac);
+    margin: 32px 0 12px;
+    border-bottom: 2px solid var(--bd);
+    padding-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.sub {
+    color: var(--mt);
+    font-size: 0.85rem;
+    margin-bottom: 24px;
+}
+
+.nav {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    font-size: 0.85rem;
+}
+
+.nav a {
+    color: var(--ac);
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: var(--purple-glow);
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav a:hover {
+    border-color: var(--ac);
+    background: rgba(167, 139, 250, 0.2);
+}
+
+.stats {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.stat {
+    background: var(--sf);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    padding: 12px 14px;
+    min-width: 112px;
+    box-shadow: 0 4px 12px var(--purple-glow);
+}
+
+.sv {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ac);
+}
+
+.sl {
+    font-size: 0.7rem;
+    color: var(--mt);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.tip {
+    background: linear-gradient(135deg, #2d1f3e 0%, #3d2852 100%);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    color: var(--mt);
+}
+
+.tip b {
+    color: var(--tx);
+}
+
+/* Day block */
+.dayblock {
+    border: 1px solid var(--bd);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    background: var(--sf);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dayhead {
+    background: linear-gradient(135deg, var(--sf) 0%, #3d2852 100%);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--bd);
+}
+
+.daydate {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--lilac-light);
+}
+
+.daybadge {
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.day-body {
+    padding: 12px;
+}
+
+.ecard {
+    background: var(--sf);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.ecard:hover {
+    border-color: var(--ac);
+    box-shadow: 0 4px 16px var(--purple-glow);
+}
+
+.ect {
+    padding: 12px 14px 10px;
+}
+
+.ectitle {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.tk {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--lilac-light);
+}
+
+.tkl {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.tkl:hover {
+    color: var(--ac-hover);
+}
+
+.cn {
+    color: var(--mt);
+    font-size: 0.85rem;
+}
+
+.badge {
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ecmeta {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.ecmeta span {
+    display: flex;
+    flex-direction: column;
+}
+
+.ml {
+    font-size: 0.68rem;
+    color: var(--mt);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.ecs {
+    padding: 8px 14px;
+    border-top: 1px solid var(--bd);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.sbadge {
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.sigs {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.sig {
+    font-size: 0.8rem;
+    color: var(--mt);
+}
+
+.ecg {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--bd);
+}
+
+.egcol {
+    padding: 12px 16px;
+    border-right: 1px solid var(--bd);
+}
+
+.egcol:last-child {
+    border-right: none;
+}
+
+.egt {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ac);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.mr {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    font-size: 0.82rem;
+}
+
+.mr span:first-child {
+    color: var(--mt);
+}
+
+.espark {
+    display: flex;
+    gap: 24px;
+    padding: 10px 14px;
+    border-top: 1px solid var(--bd);
+    flex-wrap: wrap;
+}
+
+.spl {
+    font-size: 0.68rem;
+    color: var(--mt);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+}
+
+/* exits / movers inline */
+.mini-exit {
+    font-size: 0.85rem;
+    color: var(--mt);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd);
+}
+
+.mini-exit:last-child {
+    border-bottom: none;
+}
+
+.mini-exit .tk {
+    font-size: 0.95rem;
+    color: var(--neg);
+}
+
+.mini-mover {
+    font-size: 0.85rem;
+    color: var(--mt);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--bd);
+}
+
+.mini-mover:last-child {
+    border-bottom: none;
+}
+
+/* table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 10px 12px;
+    color: var(--mt);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 2px solid var(--bd);
+}
+
+td {
+    padding: 8px 12px;
+    border-bottom: 1px solid #2d1f3e;
+    vertical-align: middle;
+    font-size: 0.82rem;
+}
+
+tr:hover td {
+    background: rgba(167, 139, 250, 0.08);
+}
+
+.tw {
+    overflow-x: auto;
+}
+
+.pos {
+    color: var(--pos);
+    font-weight: 600;
+}
+
+.neg {
+    color: var(--neg);
+    font-weight: 600;
+}
+
+.bar {
+    height: 4px;
+    border-radius: 2px;
+    margin-top: 4px;
+}
+
+.none {
+    color: var(--mt);
+    font-style: italic;
+    font-size: 0.85rem;
+    padding: 10px 0;
+}
+
+footer {
+    margin-top: 48px;
+    color: var(--mt);
+    font-size: 0.75rem;
+    border-top: 1px solid var(--bd);
+    padding-top: 16px;
+    text-align: center;
+}
+
+/* Flat icons placeholder styles */
+.icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.icon-portfolio {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a78bfa'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Cline x1='3' y1='10' x2='21' y2='10' stroke='%231a1025' stroke-width='2'/%3E%3Cline x1='12' y1='3' x2='12' y2='21' stroke='%231a1025' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+
+.etfcard{background:linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(10, 16, 28, 0.96));border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:12px;box-shadow:var(--shadow)}
+.etfcard h2{margin:0 0 4px;font-size:1.02rem}
+.etfcard h2 a{color:var(--text);text-decoration:none}
+.etfcard h2 a:hover{color:var(--accent-2)}
+.etfname{font-size:.78rem;color:var(--muted);font-weight:400;margin-left:8px}
+.hubrow{font-size:.82rem;margin-top:6px;color:var(--muted)}
+.hubrow.none{color:var(--muted)}
+.hubrow .mt{color:var(--text)}
+.chip{display:inline-block;background:rgba(15, 23, 42, 0.8);border:1px solid var(--border);border-radius:999px;padding:2px 8px;margin:2px 4px 2px 0;font-size:.76rem;color:var(--text)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Velocity — tracked ETFs</h1>
+<p class="sub">3 fund(s) tracked</p>
+<div class='etfcard'><h2>Strategy books</h2><div class='hubrow'><span class='chip'><a href='strategy/double_bottom.html'>double_bottom</a> <span class='mt'>$103,112 · 25 open</span></span><span class='chip'><a href='strategy/range_breakout.html'>range_breakout</a> <span class='mt'>$99,274 · 25 open</span></span><span class='chip'><a href='strategy/trend_follow.html'>trend_follow</a> <span class='mt'>$107,368 · 25 open</span></span></div></div>
+
+<div class="etfcard">
+  <h2><a href="DYNF/index.html">DYNF</a> <span class="etfname">iShares U.S. Equity Factor Rotation Active ETF</span></h2>
+  <p class="sub">Last update: 2026-10-12</p>
+  <div class='hubrow'><b>Top 5:</b> <span class='chip'><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a> <span class='mt'>8.29%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=AAPL%20APPLE%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AAPL</a> <span class='mt'>7.83%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a> <span class='mt'>5.14%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=AMZN%20AMAZON.COM%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMZN</a> <span class='mt'>4.13%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=JPM%20JPMORGAN%20CHASE%20%26%20CO%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JPM</a> <span class='mt'>3.21%</span></span></div><div class='hubrow'><b>Top movers:</b> <span class='chip'><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a> <span class='pos'>+0.34%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a> <span class='pos'>+0.31%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=JPM%20JPMORGAN%20CHASE%20%26%20CO%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JPM</a> <span class='neg'>-0.26%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=BAC%20BANK%20OF%20AMERICA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">BAC</a> <span class='neg'>-0.22%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=AMD%20ADVANCED%20MICRO%20DEVICES%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMD</a> <span class='pos'>+0.22%</span></span></div>
+</div>
+<div class="etfcard">
+  <h2><a href="MTUM/index.html">MTUM</a> <span class="etfname">iShares MSCI USA Momentum Factor ETF</span></h2>
+  <p class="sub">Last update: 2026-10-12</p>
+  <div class='hubrow'><b>Top 5:</b> <span class='chip'><a class="tkl" href="https://www.google.com/search?q=AMD%20ADVANCED%20MICRO%20DEVICES%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMD</a> <span class='mt'>6.11%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=MU%20MICRON%20TECHNOLOGY%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MU</a> <span class='mt'>5.06%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=INTC%20INTEL%20CORPORATION%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">INTC</a> <span class='mt'>4.02%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=CSCO%20CISCO%20SYSTEMS%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">CSCO</a> <span class='mt'>3.59%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=JNJ%20JOHNSON%20%26%20JOHNSON%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JNJ</a> <span class='mt'>3.22%</span></span></div><div class='hubrow'><b>Top movers:</b> <span class='chip'><a class="tkl" href="https://www.google.com/search?q=AMD%20ADVANCED%20MICRO%20DEVICES%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMD</a> <span class='pos'>+0.66%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a> <span class='pos'>+0.33%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=MRVL%20MARVELL%20TECHNOLOGY%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MRVL</a> <span class='pos'>+0.26%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=SNDK%20SANDISK%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">SNDK</a> <span class='neg'>-0.22%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=JNJ%20JOHNSON%20%26%20JOHNSON%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">JNJ</a> <span class='neg'>-0.21%</span></span></div>
+</div>
+<div class="etfcard">
+  <h2><a href="QUAL/index.html">QUAL</a> <span class="etfname">iShares MSCI USA Quality Factor ETF</span></h2>
+  <p class="sub">Last update: 2026-10-12</p>
+  <div class='hubrow'><b>Top 5:</b> <span class='chip'><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a> <span class='mt'>8.08%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=AAPL%20APPLE%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AAPL</a> <span class='mt'>7.11%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=NVDA%20NVIDIA%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">NVDA</a> <span class='mt'>6.39%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a> <span class='mt'>4.77%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=LLY%20ELI%20LILLY%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LLY</a> <span class='mt'>3.65%</span></span></div><div class='hubrow'><b>Top movers:</b> <span class='chip'><a class="tkl" href="https://www.google.com/search?q=AMAT%20APPLIED%20MATERIAL%20INC%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">AMAT</a> <span class='pos'>+0.35%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=MSFT%20MICROSOFT%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">MSFT</a> <span class='pos'>+0.35%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=LRCX%20LAM%20RESEARCH%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">LRCX</a> <span class='pos'>+0.31%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=TJX%20TJX%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">TJX</a> <span class='pos'>+0.30%</span></span><span class='chip'><a class="tkl" href="https://www.google.com/search?q=META%20META%20PLATFORMS%20CLASS%20A%20stock%20price%20Yahoo%20Finance" target="_blank" rel="noopener">META</a> <span class='pos'>+0.29%</span></span></div>
+</div>
+<footer style="margin-top:18px;color:var(--muted);font-size:.75rem;letter-spacing:.04em;text-transform:uppercase">Velocity · Generated: 14 Oct 2026 08:17 UTC</footer>
+</div>
+</body>
+</html>
