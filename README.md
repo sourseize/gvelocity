@@ -11,48 +11,6 @@ python velocity.py --etf ALL --paper-trade --strategy trend_follow
 ```
 
 ---
-
-## Layout
-
-```
-velocity/
-|-- velocity.py              daily runner: fetch holdings -> strategy session -> reports
-|-- velocity.sh              cron wrapper (VELOCITY_STRATEGY env selects the strategy)
-|-- src/
-|   |-- config.py            ETF URLs, book/risk defaults, Alpaca env
-|   |-- fetcher.py           BlackRock CSV fetch + parse
-|   |-- database.py          snapshots / holdings / weekly_closes (SQLite, one DB per ETF)
-|   |-- market_data.py       bars (split-adjusted from holdings, or OHLCV from Alpaca), issuer map, Universe
-|   |-- indicators.py        shared vectorised indicators (SMA, Donchian, sigma, ATR, RS rank, RVOL/OBV, swings)
-|   |-- strategies/
-|   |   |-- base.py          Strategy interface + EntrySignal / ExitSignal
-|   |   |-- __init__.py      factory: get_strategy(name), available()
-|   |   |-- trend_follow.py  Trend Follower
-|   |   |-- range_breakout.py Range Breakout
-|   |   `-- double_bottom.py Double Top / Bottom
-|   |-- engine.py            runs a strategy: generic exits, cooldown, sizing, position-limit policy, fills
-|   |-- book.py              global position book (one per strategy), SQLite persistence, HTML
-|   |-- day_data.py          per-ETF daily report payload (+ strategy signal state per holding)
-|   |-- analyzer.py          descriptive per-holding metrics for the report
-|   |-- reporter.py          HTML pages
-|   `-- alpaca_client.py     order submission (paper by default)
-|-- cli/
-|   |-- backfill.py          historical holdings backfill
-|   |-- backtest.py          replay / compare strategies over stored history
-|   |-- migrate_db.py        back up + rebuild the DBs on the current schema, replay sessions into books.db
-|   |-- report_rebuild.py    rebuild HTML from the DBs
-|   `-- ticker.py            one ticker's signal-state history for a strategy
-|-- data/
-|   |-- MTUM.db QUAL.db DYNF.db   holdings only: snapshots / holdings / weekly_closes
-|   |-- books.db             books (one row per strategy) · sessions (one row per session) · signals
-|   |                        (per-ticker state per session) · optional daily_bars
-|   `-- backup/<stamp>/      copies taken by cli/migrate_db.py
-|-- tests/                   python -m pytest tests -q
-`-- report/                  GitHub Pages checkout: index.html, {ETF}/..., strategy/{name}.html, tickers/
-```
-
----
-
 ## Strategies
 
 | name | label | entry | risk / exit |
@@ -183,17 +141,6 @@ store_bars(sqlite3.connect("data/books.db"), bars)      # table daily_bars — p
   `sessions` (what each session did: entries / exits / skipped / equity), `signals` (every
   ticker's ENTRY / HOLD / WATCH state per session — queryable history without recomputation),
   optional `daily_bars`.
-* `cli/migrate_db.py` backs the files up to `data/backup/<timestamp>/`, rebuilds each ETF DB
-  with only the holdings data on the current schema (legacy tables dropped, weekly closes
-  re‑derived, VACUUM), and replays the chosen strategy (`--strategy all` for every strategy)
-  session by session into a fresh `books.db` exactly as the daily runner would have. Then
-  `cli/report_rebuild.py --etf ALL` regenerates the HTML.
-
-## Other tools
-
-```bash
-python cli/migrate_db.py [--strategy all] [--replay-from DATE] [--no-replay] [--dry-run]
-```
 
 ```bash
 python cli/backfill.py --etf ALL --months 12             # historical holdings
@@ -202,18 +149,6 @@ python cli/ticker.py NVDA --strategy double_bottom       # one ticker's signal h
 python -m pytest tests -q
 ```
 
-## Alpaca
-
-`.env` at the project root: `ALPACA_API_KEY`, `ALPACA_SECRET_KEY`, `ALPACA_PAPER=true`.
-Orders are DAY market orders with fractional quantities (4 dp). All strategies trade the same
-Alpaca account; the global book is what keeps one position per issuer.
-
 ## Prerequisites
 
 Python 3.9+, `pip install -r requirements.txt` (requests, pandas, numpy, tabulate, alpaca‑py).
-
-## Caveats
-
-* BlackRock publishes holdings with a ~2‑day lag; a session therefore sees prices that are
-  two sessions old unless `daily_bars` are stored. `cli/backfill.py` clamps its end date.
-* The parser fails loudly (`ValueError`) on a new CSV layout; a `NoDataForDateError` is benign.
