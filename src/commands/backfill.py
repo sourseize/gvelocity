@@ -1,7 +1,5 @@
-#!/usr/bin/env python3
 """
-backfill.py — one-off historical populator for Velocity (CLI Tool)
-==================================================================
+velocity backfill — one-off historical populator
 
 Pulls a configured ETF's historical holdings via BlackRock's `asOfDate` CSV
 parameter for the trailing N months (default 12), stores them in that ETF's
@@ -11,7 +9,7 @@ had been running the whole time. Also regenerates the top-level hub page.
 
 IMPORTANT — why this isn't a bulk fetch-then-analyze:
 Velocity's new-entry/exit/mover detection (detect_new_entries, detect_exits,
-recent_dates, etc. in velocity.py) always looks at "the N most recent dates
+recent_dates, etc.) always looks at "the N most recent dates
 in the whole snapshots table" — it does NOT filter by "on or before the date
 being analyzed". That's fine for live daily cron (today IS the most recent row),
 but it means analysis MUST happen immediately after each day's snapshot is
@@ -19,40 +17,36 @@ stored, in strict chronological order, before the next day's snapshot goes in.
 This script does exactly that: fetch → store → analyze → log, one day at a time,
 oldest first.
 
-Usage (run from the velocity directory):
-  python cli/backfill.py --etf MTUM           # backfill MTUM, last 12 months
-  python cli/backfill.py --etf ALL            # backfill all configured ETFs
-  python cli/backfill.py --etf MTUM --months 6
-  python cli/backfill.py --etf MTUM --dry-run # show dates, fetch nothing
-  python cli/backfill.py --etf MTUM --no-wipe # keep existing data, fill gaps
+Usage:
+  velocity backfill --etf MTUM           # backfill MTUM, last 12 months (fills gaps, keeps existing rows)
+  velocity backfill --etf ALL            # backfill all configured ETFs
+  velocity backfill --etf MTUM --months 6
+  velocity backfill --etf MTUM --dry-run # show dates, fetch nothing
+  velocity backfill --etf MTUM --wipe    # start over: delete stored rows + report archive first
+
+Existing data is KEPT by default: dates already in the DB are not re-requested, only the gaps
+are fetched.  --wipe is opt-in and refuses to delete history older than the window being
+re-fetched unless --force is given (the strategies need 60+ bars of warm-up; a short re-fill
+silently starves them).
 """
 
 import argparse
 import datetime
 import logging
-import sys
 import time
 from pathlib import Path
 from typing import Optional
 
-# Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
+from ..config import ETF_CONFIG, FETCH_HEADERS
+from ..database import get_db, default_db_path, etf_report_dir, store_snapshot
+from ..day_data import build_day_data
+from ..exceptions import NoDataForDateError, VelocityError
+from ..fetcher import parse_csv
+from ..reporter import (get_all_months, load_month_log, generate_monthly_page, generate_hub_index, append_day_to_log)
+from ._common import add_etf_arg, add_report_dir_arg, iso_date, check_db_arg, check_report_dir, check_etf_dbs, etfs_of
 
-from src.config import ETF_CONFIG, FETCH_HEADERS, DEFAULT_REPORT_DIR
-from src.database import get_db, default_db_path, etf_report_dir, store_snapshot
-from src.fetcher import parse_csv, NoDataForDateError
-from src.reporter import (
-    get_all_months, load_month_log, generate_monthly_page,
-    generate_hub_index, append_day_to_log
-)
-from src.day_data import build_day_data
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s %(levelname)s %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
-log = logging.getLogger("backfill")
+log = logging.getLogger(__name__)
+HELP = "Fetch N months of historical holdings into the ETF databases (keeps stored rows, fills gaps)"
 
 
 def fetch_csv_for_date(base_url: str, date_obj: datetime.date, retries: int = 3, backoff: float = 5.0):
@@ -196,14 +190,29 @@ def backfill_etf(etf: str, args, report_root: Path) -> Optional[str]:
         return None
 
     conn = get_db(db_path)
+    existing = [r[0] for r in conn.execute("SELECT fetch_date FROM snapshots ORDER BY fetch_date")]
 
-    if not args.no_wipe:
+    if args.wipe:
+        if existing and existing[0] < start_date.isoformat() and not args.force:
+            conn.close()
+            log.error("[%s] refusing to wipe: the database holds %d sessions back to %s, but this run only re-fetches "
+                      "from %s (--months %d) — the strategies would lose warm-up history. Re-run with a larger "
+                      "--months, without --wipe (fills gaps only), or add --force to wipe anyway.",
+                      etf, len(existing), existing[0], start_date, args.months)
+            return None
         wipe_existing(conn, fund_dir)
+        existing = []
+    elif existing:
+        log.info("[%s] keeping %d stored sessions (%s → %s); only missing dates are requested (--wipe to start over)",
+                 etf, len(existing), existing[0], existing[-1])
 
     fetched, skipped = 0, 0
-    last_stored_date = None
+    last_stored_date = existing[-1] if existing else None
+    already = set(existing)
 
     for i, d in enumerate(dates, 1):
+        if d.isoformat() in already:
+            continue
         hdate, rows = fetch_csv_for_date(etf_url, d)
         if not hdate:
             skipped += 1
@@ -235,6 +244,8 @@ def backfill_etf(etf: str, args, report_root: Path) -> Optional[str]:
         log.error("[%s] Nothing was stored — skipping report generation for this ETF", etf)
         conn.close()
         return None
+    if not fetched:
+        log.info("[%s] nothing new to fetch — history already complete up to %s", etf, last_stored_date)
 
     regenerate_all_pages(conn, fund_dir, last_stored_date, etf, etf_name)
     conn.close()
@@ -242,60 +253,41 @@ def backfill_etf(etf: str, args, report_root: Path) -> Optional[str]:
     return last_stored_date
 
 
-def main():
-    p = argparse.ArgumentParser(
-        description="Backfill Velocity with N months of ETF history (MANUAL TOOL)",
-        epilog="Examples:\n"
-               "  python cli/backfill.py --etf MTUM --months 12\n"
-               "  python cli/backfill.py --etf ALL\n"
-               "  python cli/backfill.py --etf DYNF --dry-run\n"
-               "  python cli/backfill.py --etf MTUM --no-wipe\n",
-        formatter_class=argparse.RawDescriptionHelpFormatter
-    )
-    p.add_argument("--etf", required=True, choices=sorted(ETF_CONFIG.keys()) + ["ALL"],
-                   help="Which configured ETF to backfill, or ALL to backfill every "
-                        "configured ETF in one invocation. Required.")
-    p.add_argument("--db", default=None,
-                   help="DB path override. Default: data/{ETF}.db")
-    p.add_argument("--report-dir", default=str(DEFAULT_REPORT_DIR),
-                   help="Shared report root. Default: velocity/report")
-    p.add_argument("--months", type=int, default=12,
-                   help="How many trailing months to backfill (default: 12)")
-    p.add_argument("--end-date", default=None,
-                   help="YYYY-MM-DD end of range, default today (auto-clamped)")
-    p.add_argument("--sleep", type=float, default=1.5,
-                   help="Seconds between requests (default: 1.5)")
-    p.add_argument("--no-wipe", action="store_true",
-                   help="Keep existing DB/report rows, just fill gaps")
-    p.add_argument("--dry-run", action="store_true",
-                   help="Print the date list and exit, no network calls")
-    args = p.parse_args()
+def configure(p) -> None:
+    add_etf_arg(p, required=True, help="Which configured ETF to backfill, or ALL for every configured ETF")
+    p.add_argument("--db", default=None, help="DB path override. Default: data/{ETF}.db")
+    add_report_dir_arg(p)
+    p.add_argument("--months", type=int, default=12, help="How many trailing months to backfill (default: 12)")
+    p.add_argument("--end-date", type=iso_date, default=None, help="YYYY-MM-DD end of range, default today (auto-clamped)")
+    p.add_argument("--sleep", type=float, default=1.5, help="Seconds between requests (default: 1.5)")
+    p.add_argument("--wipe", action="store_true",
+                   help="Delete the ETF's stored rows and report archive before fetching (default: keep them, fill gaps)")
+    p.add_argument("--force", action="store_true",
+                   help="With --wipe: allow deleting history that is older than the window being re-fetched")
+    p.add_argument("--no-wipe", action="store_true", help=argparse.SUPPRESS)   # former default; kept as a no-op
+    p.add_argument("--dry-run", action="store_true", help="Print the date list and exit, no network calls")
 
+
+def validate(p, args) -> None:
+    if args.no_wipe:
+        log.info("--no-wipe is now the default behaviour (flag ignored)")
+    if args.months < 1:
+        p.error("--months must be >= 1")
+    if args.sleep < 0:
+        p.error("--sleep must be >= 0")
+    check_db_arg(p, args)
+    check_report_dir(p, args)
+    check_etf_dbs(p, etfs_of(args))
+
+
+def run(args) -> int:
     report_root = Path(args.report_dir)
-    report_root.mkdir(parents=True, exist_ok=True)
-
-    if args.etf == "ALL":
-        if args.db:
-            log.error("--db can't be combined with --etf ALL (each ETF needs its own DB).")
-            sys.exit(1)
-        any_stored = False
-        for etf in sorted(ETF_CONFIG.keys()):
-            if backfill_etf(etf, args, report_root):
-                any_stored = True
-        if not any_stored:
-            log.error("Nothing was stored for any ETF — aborting before hub generation")
-            sys.exit(1)
-    else:
-        if not backfill_etf(args.etf, args, report_root):
-            sys.exit(1)
-
-    if not args.dry_run:
-        hub_html = generate_hub_index(report_root)
-        (report_root / "index.html").write_text(hub_html, encoding="utf-8")
-        log.info("Hub index.html updated")
-
-    log.info("Backfill done. Run velocity.py --etf ALL for daily runs from here on.")
-
-
-if __name__ == "__main__":
-    main()
+    stored = [etf for etf in etfs_of(args) if backfill_etf(etf, args, report_root)]
+    if args.dry_run:
+        return 0
+    if not stored:
+        raise VelocityError("nothing was stored for any ETF — hub page not regenerated")
+    (report_root / "index.html").write_text(generate_hub_index(report_root), encoding="utf-8")
+    log.info("Hub index.html updated")
+    log.info("Backfill done. Run `velocity trading --etf ALL --paper-trade` for daily runs from here on.")
+    return 0

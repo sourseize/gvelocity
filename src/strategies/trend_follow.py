@@ -26,6 +26,10 @@ class TrendFollow(Strategy):
                     trail_mult=2.5, trail_min=0.08, trail_max=0.25, sma_break_days=2, time_stop_days=30)
     warmup_days = 60
 
+    def warmup(self) -> int:
+        p = self.p
+        return max(p["sma_len"] + p["sma_slope_lag"], p["breakout_len"] + 1, p["rs_len"] + 1, p["exit_low_len"] + 1, 21)
+
     def prepare(self, ind, universe):
         super().prepare(ind, universe)
         p = self.p

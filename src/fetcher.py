@@ -72,6 +72,10 @@ def fetch_csv(url: str, etf: str = "") -> Tuple[datetime.date, List[Dict]]:
     log.info("Fetching %s CSV …", etf or "ETF")
     resp = requests.get(url, headers=FETCH_HEADERS, timeout=30)
     resp.raise_for_status()
+    head = resp.text.lstrip()[:500].lower()
+    if head.startswith("<") or "<html" in head:
+        raise ValueError("server returned an HTML page instead of the holdings CSV "
+                         "(blocked / anti-bot response, or the endpoint changed)")
     return parse_csv(resp.text)
 
 def parse_csv(raw: str) -> Tuple[datetime.date, List[Dict]]:

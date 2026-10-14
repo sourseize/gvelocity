@@ -1,7 +1,7 @@
 """
 day_data — one day's report payload for an ETF: new entries / exits / weight movers / top-20 /
 sectors, descriptive metrics per holding, and the active strategy's signal state per holding.
-Shared by velocity.py, cli/backfill.py and cli/report_rebuild.py.
+Shared by the trading, backfill and rebuild commands.
 """
 from __future__ import annotations
 

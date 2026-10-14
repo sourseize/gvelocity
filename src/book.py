@@ -12,6 +12,7 @@ book — ONE position book across all tracked ETFs, one per strategy.
 from __future__ import annotations
 
 import datetime as _dt
+import html
 import json
 import sqlite3
 from dataclasses import dataclass, field, asdict
@@ -29,6 +30,7 @@ CREATE TABLE IF NOT EXISTS books (
     equity_json     TEXT NOT NULL,
     last_exit_json  TEXT NOT NULL,
     rising_json     TEXT NOT NULL DEFAULT '{}',
+    note            TEXT NOT NULL DEFAULT '',
     updated_at      TEXT NOT NULL
 );
 """
@@ -70,6 +72,9 @@ def _ensure_schema(conn: sqlite3.Connection) -> None:
     cols = {r[1] for r in conn.execute("PRAGMA table_info(books)")}
     if "rising_json" not in cols:
         conn.execute("ALTER TABLE books ADD COLUMN rising_json TEXT NOT NULL DEFAULT '{}'")
+        conn.commit()
+    if "note" not in cols:          # provenance, e.g. "populated by backtest: <command>"
+        conn.execute("ALTER TABLE books ADD COLUMN note TEXT NOT NULL DEFAULT ''")
         conn.commit()
 
 
@@ -133,6 +138,7 @@ class Book:
         self.last_exit: Dict[str, str] = {}
         self.rising: Dict[str, dict] = {}          # issuer -> rising-star record
         self.last_date: Optional[str] = None
+        self.note: str = ""                        # provenance shown in the report (set by backtest --save-book)
 
     # ── rising stars ──
     def note_rising(self, issuer: str, ticker: str, date: str, ref_price: float, rank: float,
@@ -211,16 +217,16 @@ class Book:
         now = _dt.datetime.now(_dt.timezone.utc).isoformat()
         conn.execute(
             """INSERT INTO books (strategy, initial_capital, cash, last_date, positions_json, trades_json,
-                                  equity_json, last_exit_json, rising_json, updated_at)
-               VALUES (?,?,?,?,?,?,?,?,?,?)
+                                  equity_json, last_exit_json, rising_json, note, updated_at)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?)
                ON CONFLICT(strategy) DO UPDATE SET initial_capital=excluded.initial_capital, cash=excluded.cash,
                  last_date=excluded.last_date, positions_json=excluded.positions_json, trades_json=excluded.trades_json,
                  equity_json=excluded.equity_json, last_exit_json=excluded.last_exit_json,
-                 rising_json=excluded.rising_json, updated_at=excluded.updated_at""",
+                 rising_json=excluded.rising_json, note=excluded.note, updated_at=excluded.updated_at""",
             (self.strategy, self.initial_capital, self.cash, self.last_date,
              json.dumps({k: asdict(v) for k, v in self.positions.items()}),
              json.dumps([asdict(t) for t in self.trades]), json.dumps(self.equity),
-             json.dumps(self.last_exit), json.dumps(self.rising), now))
+             json.dumps(self.last_exit), json.dumps(self.rising), self.note, now))
         conn.commit()
 
     @classmethod
@@ -237,6 +243,7 @@ class Book:
         b.trades = [Trade(**t) for t in json.loads(row["trades_json"])]
         b.equity = json.loads(row["equity_json"]); b.last_exit = json.loads(row["last_exit_json"])
         b.rising = json.loads(row.get("rising_json") or "{}")
+        b.note = row.get("note") or ""
         return b
 
     @staticmethod
@@ -248,7 +255,7 @@ class Book:
     def to_dict(self) -> dict:
         return {"strategy": self.strategy, "initial_capital": self.initial_capital, "cash": self.cash,
                 "last_date": self.last_date, "total_value": self.total_value(), "realized": self.realized(),
-                "unrealized": self.unrealized(),
+                "unrealized": self.unrealized(), "note": self.note,
                 "positions": {k: asdict(v) for k, v in self.positions.items()},
                 "rising_stars": self.rising_list(),
                 "trades": [asdict(t) for t in self.trades], "equity": self.equity}
@@ -296,6 +303,7 @@ class Book:
 <title>Velocity — {label or self.strategy} book</title><style>{CSS}</style></head><body><div class="wrap">
 <h1>{label or self.strategy} — position book</h1>
 <p class="sub">Strategy <code>{self.strategy}</code> · last session {self.last_date or '—'} · <a href="../index.html">← All ETFs</a></p>
+{f'<p class="sub note">{html.escape(self.note)}</p>' if self.note else ''}
 <div class="stats">
   <div class="stat"><div class="sv">${fmt_f(self.total_value(), 0)}</div><div class="sl">Equity</div></div>
   <div class="stat"><div class="sv">{ret:+.2%}</div><div class="sl">Return</div></div>

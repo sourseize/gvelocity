@@ -43,8 +43,13 @@ def bars_from_holdings(conns: Dict[str, sqlite3.Connection]) -> pd.DataFrame:
     frames = [pd.read_sql(
         "SELECT snapshot_date AS date, ticker, price AS close, shares FROM holdings "
         "WHERE price IS NOT NULL AND price > 0", conn) for conn in conns.values()]
+    cols = ["date", "ticker", "close"]
+    if not frames:
+        return pd.DataFrame(columns=cols)
     h = pd.concat(frames, ignore_index=True)
     h = h[h.ticker.map(is_tradeable_symbol)]
+    if h.empty:                       # databases exist but hold no priced holdings rows
+        return pd.DataFrame(columns=cols)
     h = h.sort_values("shares").drop_duplicates(["date", "ticker"], keep="last")
     close = h.pivot(index="date", columns="ticker", values="close").sort_index()
     shares = h.pivot(index="date", columns="ticker", values="shares").sort_index()
@@ -57,7 +62,7 @@ def bars_from_holdings(conns: Dict[str, sqlite3.Connection]) -> pd.DataFrame:
     if n:
         log.info("bars_from_holdings: adjusted %d split events", n)
     out = adj.stack().reset_index()
-    out.columns = ["date", "ticker", "close"]
+    out.columns = cols
     return out
 
 

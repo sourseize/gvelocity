@@ -48,7 +48,7 @@ CREATE INDEX IF NOT EXISTS idx_wc_ticker     ON weekly_closes(ticker, week_endin
 CREATE INDEX IF NOT EXISTS idx_wc_week       ON weekly_closes(week_ending);
 """
 
-# tables of the retired per-ETF paper-trading system; dropped by cli/migrate_db.py
+# tables of the retired per-ETF paper-trading system (no longer created)
 LEGACY_TABLES = ("portfolio_state", "trading_state")
 
 

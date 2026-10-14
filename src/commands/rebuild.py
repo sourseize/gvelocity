@@ -1,43 +1,32 @@
-#!/usr/bin/env python3
 """
-report_rebuild.py — rebuild HTML reports from existing database (CLI Tool)
-===========================================================================
+velocity rebuild — rebuild the HTML reports from the existing databases
 
 Regenerates all HTML pages from existing data in the SQLite database
 without fetching any new data from the network. Useful after tweaking
 report templates or when you need to regenerate reports from existing data.
 
-Usage (run from the velocity directory):
-  python cli/report_rebuild.py --etf MTUM
-  python cli/report_rebuild.py --etf ALL
+Usage:
+  velocity rebuild --etf MTUM
+  velocity rebuild --etf ALL --strategy double_bottom
 """
 
-import argparse
-import datetime
 import logging
-import sys
+import sqlite3
 from pathlib import Path
 
-# Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent))
+from ..book import Book
+from ..config import ETF_CONFIG
+from ..database import get_db, default_db_path, etf_report_dir
+from ..day_data import build_day_data
+from ..engine import Engine
+from ..exceptions import VelocityError
+from ..reporter import (get_all_months, load_month_log, generate_monthly_page, generate_hub_index, append_day_to_log)
+from ..strategies import get_strategy
+from ._common import (add_etf_arg, add_strategy_args, add_report_dir_arg, check_strategy_params, check_report_dir,
+                      check_db_arg, check_etf_dbs, etfs_of, open_etf_dbs, default_book_db, is_sqlite_file)
 
-from src.config import ETF_CONFIG, DEFAULT_REPORT_DIR
-from src.database import get_db, default_db_path, etf_report_dir
-from src.reporter import (
-    get_all_months, load_month_log, generate_monthly_page,
-    generate_hub_index, append_day_to_log
-)
-from src.day_data import build_day_data
-from src.strategies import get_strategy, available, DEFAULT_STRATEGY
-from src.engine import Engine
-from src.book import Book
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s %(levelname)s %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
-log = logging.getLogger("report_rebuild")
+log = logging.getLogger(__name__)
+HELP = "Rebuild the HTML reports from the stored databases (no network)"
 
 
 def rebuild_report_pages_from_db(conn, fund_dir: Path, etf: str, etf_name: str, today: str,
@@ -104,12 +93,13 @@ def rebuild_report_pages_from_db(conn, fund_dir: Path, etf: str, etf_name: str, 
 
 def load_strategy_context(args, report_root: Path):
     """Prepare the chosen strategy on all ETF DBs so every rebuilt day gets its signal state."""
-    conns = {e: get_db(default_db_path(e)) for e in sorted(ETF_CONFIG) if default_db_path(e).exists()}
+    conns = open_etf_dbs(require=False)
     if not conns:
         return None, None
     strategy = get_strategy(args.strategy)
-    book_db = Path(__file__).resolve().parent.parent / "data" / "books.db"
-    import sqlite3
+    book_db = default_book_db()
+    if book_db.exists() and not is_sqlite_file(book_db):
+        raise VelocityError(f"book database {book_db} is not a SQLite database — restore it from backup or move it aside")
     bc = sqlite3.connect(book_db) if book_db.exists() else None
     Engine(strategy, conns, book_conn=bc)
     book = Book.load(bc, strategy.name) if bc is not None else Book(strategy.name)
@@ -152,50 +142,30 @@ def rebuild_etf(etf: str, args, report_root: Path, strategy=None, book=None) -> 
     return True
 
 
-def main():
-    """Main entry point."""
-    p = argparse.ArgumentParser(
-        description="Rebuild HTML reports from existing database (MANUAL TOOL)",
-        epilog="Examples:\n"
-               "  python cli/report_rebuild.py --etf MTUM\n"
-               "  python cli/report_rebuild.py --etf ALL\n",
-        formatter_class=argparse.RawDescriptionHelpFormatter
-    )
-    p.add_argument("--etf", required=True, choices=sorted(ETF_CONFIG.keys()) + ["ALL"],
-                   help="Which configured ETF to rebuild, or ALL for all ETFs. Required.")
-    p.add_argument("--db", default=None,
-                   help="DB path override. Default: data/{ETF}.db")
-    p.add_argument("--report-dir", default=str(DEFAULT_REPORT_DIR),
-                   help="Shared report root. Default: velocity/report")
-    p.add_argument("--strategy", choices=available(), default=DEFAULT_STRATEGY,
-                   help="Strategy whose signal states are shown in the rebuilt pages")
-    args = p.parse_args()
+def configure(p) -> None:
+    add_etf_arg(p, required=True, help="Which configured ETF to rebuild, or ALL")
+    p.add_argument("--db", default=None, help="DB path override. Default: data/{ETF}.db")
+    add_report_dir_arg(p)
+    add_strategy_args(p, params=False)
 
+
+def validate(p, args) -> None:
+    check_strategy_params(p, args)
+    check_db_arg(p, args)
+    check_report_dir(p, args)
+    check_etf_dbs(p, etfs_of(args))
+
+
+def run(args) -> int:
     report_root = Path(args.report_dir)
-    report_root.mkdir(parents=True, exist_ok=True)
     strategy, book = load_strategy_context(args, report_root)
-
-    if args.etf == "ALL":
-        if args.db:
-            log.error("--db can't be combined with --etf ALL (each ETF needs its own DB).")
-            sys.exit(1)
-        for etf in sorted(ETF_CONFIG.keys()):
-            rebuild_etf(etf, args, report_root, strategy, book)
-    else:
-        if not rebuild_etf(args.etf, args, report_root, strategy, book):
-            sys.exit(1)
-
+    ok = [etf for etf in etfs_of(args) if rebuild_etf(etf, args, report_root, strategy, book)]
+    if not ok:
+        raise VelocityError("no ETF could be rebuilt (no databases / no snapshots) — run `velocity backfill` first")
     if book is not None:
         book.write_report(report_root / "strategy", strategy.label)
         log.info("Strategy book page written: strategy/%s.html", strategy.name)
-
-    # Regenerate hub
-    hub_html = generate_hub_index(report_root)
-    (report_root / "index.html").write_text(hub_html, encoding="utf-8")
+    (report_root / "index.html").write_text(generate_hub_index(report_root), encoding="utf-8")
     log.info("Hub index.html updated")
-
     log.info("Report rebuild complete.")
-
-
-if __name__ == "__main__":
-    main()
+    return 0

@@ -7,7 +7,7 @@ signals; the engine sizes, caps and books them; the HTML report shows holdings c
 the strategy's signal state for every holding.
 
 ```
-python velocity.py --etf ALL --paper-trade --strategy trend_follow
+velocity trading --etf ALL --paper-trade --strategy trend_follow
 ```
 
 ---
@@ -20,13 +20,41 @@ python velocity.py --etf ALL --paper-trade --strategy trend_follow
 | `double_bottom` | Double Top / Bottom | two swing lows within 3 %, 10–60 bars apart, neckline ≥ 5 % above · first close above the neckline within 15 bars · not a gap day · [RVOL ≥ 1.3] | stop 1 % under the lows · target = neckline + pattern height · a completed **double top** on a held name exits it · 40‑day time stop |
 
 Rules in [brackets] need bars with volume (see *Market data*); without them the strategy
-runs in price‑only mode and says so in the log.
+runs in price‑only mode and says so in the log. Each strategy needs a warm‑up of history
+before its first signal (≈ 61 / 50 / 30 bars with the default parameters — `--list-strategies`
+shows it); the engine warns when the stored history is shorter, and `velocity backtest` refuses
+to run, because every entry rule would silently evaluate to false.
 
 ```bash
-python velocity.py --list-strategies                       # names, labels, parameters
-python velocity.py --etf ALL --paper-trade --strategy range_breakout
-python velocity.py --etf ALL --paper-trade --strategy trend_follow --param breakout_len=40 --param rs_min_pct=0.6
+velocity strategies                                        # names, labels, parameters, warm-up
+velocity trading --etf ALL --paper-trade --strategy range_breakout
+velocity trading --etf ALL --paper-trade --strategy trend_follow --param breakout_len=40 --param rs_min_pct=0.6
+velocity trading --etf ALL --paper-trade --offline         # no holdings fetch: session on the stored history
+velocity reset-book --strategy trend_follow                # offline: empty that strategy's book
 ```
+
+Only the holdings fetch needs the network. `--reset-book` on its own is an offline book
+operation (add `--paper-trade` to also run today's session); `--offline` skips the fetch for any
+run; `backtest`, `ticker`, `rebuild`, `strategies` and `reset-book` never go online. Bad input
+(unknown `--param`, non-numeric values, unreadable paths, conflicting flags) is rejected with a
+usage message and exit code 2 before anything is fetched, written or deleted; a network or data
+problem is logged as one line and exits 1 (or, for a failed fetch, continues on the stored
+history). `-v/--verbose` shows full tracebacks.
+
+### Backtesting and registering a backtest as the live book
+
+```bash
+velocity backtest                                          # all strategies, 3/6/9-month windows
+velocity backtest --strategy trend_follow --windows 6 --save-book
+```
+
+Every backtest run writes `report/backtest/<strategy>.html` (+ `.json`): the exact command line,
+settings, a summary table per window, the equity chart and every trade (linked from the hub page).
+`--save-book` (one strategy, one window) **replaces** that strategy's book in `data/books.db` with
+the backtest's positions, trades, equity curve and session audit trail, so the next
+`velocity trading --paper-trade` carries on from the backtest's last date. The previous book is backed
+up to `data/book-backups/<strategy>-<timestamp>.json`, and the book's report shows where it came
+from (date, window and command).
 
 ### Writing a strategy
 
@@ -66,18 +94,38 @@ position limit, sizing and fills.
   the strategy's own rank decides (see the comparison — priority helps the pattern strategies
   a little and hurts the trend follower, which is better off buying the *freshest* breakout).
 * **Fills:** the live session books today's close as the reference price and (with
-  `--alpaca-trade`) submits DAY market orders for the next open; backtests default to the next
-  session's close (`--fill next`).
+  `--alpaca-trade`) submits DAY market orders for the next open; backtests fill the same way by
+  default (`--fill same`), so a registered backtest matches what the live engine would have done
+  (`--fill next` = next session's close, the more conservative assumption).
 
 ---
+
+## Commands
+
+Everything runs through one entry point, `velocity <command>` (`./velocity`, or
+`python velocity.py`; `velocity <command> --help` lists a command's options):
+
+| command | what it does | network |
+|---|---|---|
+| `trading` | the daily run: fetch holdings → strategy session → reports (**the main action**) | fetch only (`--offline` skips it) |
+| `fetch` | store today's holdings, nothing else | yes |
+| `backfill` | N months of historical holdings (keeps stored rows, fills gaps; `--wipe` to start over) | yes |
+| `backtest` | replay strategies over the stored history; `--save-book` registers the result as the live book | no |
+| `rebuild` | regenerate the HTML reports from the databases (alias `report-rebuild`) | no |
+| `ticker` | one ticker's signal history for a strategy | no |
+| `strategies` | list strategies, parameters and warm-up (alias `list-strategies`) | no |
+| `reset-book` | empty a strategy's book | no |
+
+For old scripts, `velocity.py --etf ALL --paper-trade` (no command) still runs `trading`, and
+`--list-strategies` still works; both say so in the log.
 
 ## Daily run
 
 ```bash
-python velocity.py --etf ALL --paper-trade                      # fetch, session, reports
-python velocity.py --etf ALL --paper-trade --alpaca-trade       # + submit orders to Alpaca
-python velocity.py --etf MTUM --no-trade                        # report only, no session
-python velocity.py --etf ALL --paper-trade --reset-book         # start the strategy's book over
+velocity trading --etf ALL --paper-trade                      # fetch, session, reports
+velocity trading --etf ALL --paper-trade --alpaca-trade       # + submit orders to Alpaca
+velocity trading --etf MTUM --no-trade                        # report only, no session
+velocity trading --etf ALL --paper-trade --reset-book         # start the strategy's book over, then run today
 ```
 
 | Flag | Default | Purpose |
@@ -107,12 +155,12 @@ Cron (`velocity.sh`): `VELOCITY_STRATEGY=range_breakout` selects the strategy.
 ## Backtesting and comparing strategies
 
 ```bash
-python cli/backtest.py                                   # all strategies, trailing 3/6/9-month windows
-python cli/backtest.py --strategy trend_follow --windows 6 --trades
-python cli/backtest.py --start 2026-02-13 --end 2026-08-13 --fill same
-python cli/backtest.py --max-positions 40 --max-positions-policy replace
-python cli/backtest.py --rising-priority on
-python cli/backtest.py --out analysis/strategy_comparison.md   # + .csv (trades) + .png (P&L curves)
+velocity backtest                                        # all strategies, trailing 3/6/9-month windows
+velocity backtest --strategy trend_follow --windows 6 --trades
+velocity backtest --start 2026-02-13 --end 2026-08-13 --fill next
+velocity backtest --max-positions 40 --max-positions-policy replace
+velocity backtest --rising-priority on
+velocity backtest --out analysis/strategy_comparison.md  # + .csv (trades) + .png (P&L curves)
 ```
 
 All strategies get identical bars, capital, caps, limits and commissions; every book is marked
@@ -143,9 +191,10 @@ store_bars(sqlite3.connect("data/books.db"), bars)      # table daily_bars — p
   optional `daily_bars`.
 
 ```bash
-python cli/backfill.py --etf ALL --months 12             # historical holdings
-python cli/report_rebuild.py --etf ALL [--strategy X]    # rebuild HTML with a strategy's signal states
-python cli/ticker.py NVDA --strategy double_bottom       # one ticker's signal history
+velocity backfill --etf ALL --months 12                  # historical holdings (keeps stored rows, fills gaps)
+velocity backfill --etf MTUM --months 15 --wipe          # start over (refuses to drop older history without --force)
+velocity rebuild --etf ALL [--strategy X]                # rebuild HTML with a strategy's signal states
+velocity ticker NVDA --strategy double_bottom            # one ticker's signal history
 python -m pytest tests -q
 ```
 

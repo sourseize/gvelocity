@@ -23,7 +23,10 @@ def _wide(bars: pd.DataFrame, col: str) -> Optional[pd.DataFrame]:
 
 class Indicators:
     def __init__(self, bars: pd.DataFrame):
-        self.close: pd.DataFrame = _wide(bars, "close")
+        close = _wide(bars, "close")
+        if close is None or close.empty:
+            raise ValueError("no price bars: the bar frame has no 'close' values")
+        self.close: pd.DataFrame = close
         self.high: Optional[pd.DataFrame] = _wide(bars, "high")
         self.low: Optional[pd.DataFrame] = _wide(bars, "low")
         self.volume: Optional[pd.DataFrame] = _wide(bars, "volume")

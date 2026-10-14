@@ -1,27 +1,24 @@
-#!/usr/bin/env python3
 """
-ticker.py — replay a strategy's signal state for one ticker over its whole history (CLI tool)
+velocity ticker — replay a strategy's signal state for one ticker over its whole history
 
-  python cli/ticker.py NVDA                          # default strategy
-  python cli/ticker.py NVDA --strategy double_bottom
-  python cli/ticker.py NVDA --html /tmp/NVDA.html    # custom output path (skips index update)
+  velocity ticker NVDA                          # default strategy
+  velocity ticker NVDA --strategy double_bottom
+  velocity ticker NVDA --html /tmp/NVDA.html    # custom output path (skips index update)
 
 Writes report/tickers/{TICKER}.html and updates report/tickers/index.html + manifest.json.
 """
-import argparse
 import datetime
 import json
-import sqlite3
-import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
-from src.config import ETF_CONFIG, DEFAULT_REPORT_DIR
-from src.database import default_db_path
-from src.market_data import load_market_bars
-from src.strategies import get_strategy, available, parse_params, DEFAULT_STRATEGY
-from src.engine import Engine
-from src.reporter import CSS, state_badge, checks_html, fmt_f
+from ..engine import Engine
+from ..exceptions import VelocityError
+from ..market_data import load_market_bars
+from ..reporter import CSS, state_badge, checks_html, fmt_f
+from ..strategies import get_strategy, parse_params
+from ._common import add_strategy_args, add_report_dir_arg, check_strategy_params, check_report_dir, open_etf_dbs
+
+HELP = "Replay a strategy's signal state for one ticker over its whole history"
 
 
 def build_html(ticker: str, strategy, history: list, generated_at: str) -> str:
@@ -37,22 +34,28 @@ def build_html(ticker: str, strategy, history: list, generated_at: str) -> str:
 </div></body></html>"""
 
 
-def main():
-    p = argparse.ArgumentParser(description="Replay a strategy's signal state for one ticker (MANUAL TOOL)")
+def configure(p) -> None:
     p.add_argument("ticker")
-    p.add_argument("--strategy", choices=available(), default=DEFAULT_STRATEGY)
-    p.add_argument("--param", action="append", default=[], metavar="KEY=VALUE")
-    p.add_argument("--report-dir", default=str(DEFAULT_REPORT_DIR))
+    add_strategy_args(p)
+    add_report_dir_arg(p)
     p.add_argument("--html", default=None, help="custom output path (skips index update)")
-    args = p.parse_args()
 
-    conns = {e: sqlite3.connect(default_db_path(e)) for e in sorted(ETF_CONFIG) if default_db_path(e).exists()}
+
+def validate(p, args) -> None:
+    if not args.ticker.strip():
+        p.error("ticker must not be empty")
+    check_strategy_params(p, args)
+    if not args.html:
+        check_report_dir(p, args)
+
+
+def run(args) -> int:
+    conns = open_etf_dbs()
     strategy = get_strategy(args.strategy, **parse_params(args.param))
     eng = Engine(strategy, conns, bars=load_market_bars(conns))
-    t = args.ticker.upper()
+    t = args.ticker.strip().upper()
     if t not in eng.ind.tickers:
-        print(f"{t}: no price history in the tracked ETFs")
-        sys.exit(1)
+        raise VelocityError(f"{t}: no price history in the tracked ETFs")
     closes = eng.ind.close[t].dropna()
     history = []
     print(f"{'Date':<12}{'Close':>10}  {'State':<7} checks")
@@ -70,7 +73,7 @@ def main():
         out = Path(args.html); out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(build_html(t, strategy, history, generated_at), encoding="utf-8")
         print(f"wrote {out}")
-        return
+        return 0
     tdir = Path(args.report_dir) / "tickers"
     tdir.mkdir(parents=True, exist_ok=True)
     (tdir / f"{t}.html").write_text(build_html(t, strategy, history, generated_at), encoding="utf-8")
@@ -85,7 +88,4 @@ def main():
 <style>{CSS}</style></head><body><div class="wrap"><h1>Tracked tickers ({len(manifest)})</h1>
 <p class="sub"><a href="../index.html">← hub</a></p>{items}</div></body></html>""", encoding="utf-8")
     print(f"wrote {tdir / (t + '.html')} and index")
-
-
-if __name__ == "__main__":
-    main()
+    return 0

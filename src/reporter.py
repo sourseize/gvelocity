@@ -1206,7 +1206,7 @@ def generate_hub_index(report_dir: Path) -> str:
 </div>"""
 
     if not cards:
-        cards = '<p class="none">No ETFs tracked yet — run velocity.py --etf CODE to get started.</p>'
+        cards = '<p class="none">No ETFs tracked yet — run `velocity trading --etf CODE` to get started.</p>'
 
     books = ""
     strat_dir = report_dir / "strategy"
@@ -1221,6 +1221,19 @@ def generate_hub_index(report_dir: Path) -> str:
                 links.append(f"<span class='chip'><a href='strategy/{f.name}'>{f.stem}</a></span>")
         if links:
             books = f"<div class='etfcard'><h2>Strategy books</h2><div class='hubrow'>{''.join(links)}</div></div>"
+
+    bt_dir = report_dir / "backtest"
+    if bt_dir.exists():
+        links = []
+        for f in sorted(bt_dir.glob("*.html"), key=lambda f: f.stat().st_mtime, reverse=True):
+            try:
+                meta = json.loads(f.with_suffix(".json").read_text())
+                links.append(f"<span class='chip'><a href='backtest/{f.name}'>{f.stem}</a> "
+                             f"<span class='mt'>{meta.get('ran_at', '')[:10]}{' · book registered' if meta.get('saved_book') else ''}</span></span>")
+            except Exception:
+                links.append(f"<span class='chip'><a href='backtest/{f.name}'>{f.stem}</a></span>")
+        if links:
+            books += f"<div class='etfcard'><h2>Backtests</h2><div class='hubrow'>{''.join(links)}</div></div>"
 
     generated_at = datetime.datetime.now(datetime.timezone.utc).strftime("%d %b %Y %H:%M UTC")
 

@@ -30,6 +30,9 @@ class RangeBreakout(Strategy):
                     trail_mult=2.5, trail_min=0.08, trail_max=0.25, time_stop_days=40)
     warmup_days = 50
 
+    def warmup(self) -> int:
+        return max(self.p["sma_len"], self.p["base_len"] + 1, 21)
+
     def prepare(self, ind, universe):
         super().prepare(ind, universe)
         p = self.p

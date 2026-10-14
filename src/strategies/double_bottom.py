@@ -32,6 +32,11 @@ class DoubleBottom(Strategy):
                     stop_buffer=0.01, target_mult=1.0, gap_sigma=3.0, rvol_entry=1.3, time_stop_days=40)
     warmup_days = 30
 
+    def warmup(self) -> int:
+        # first swing low needs `swing_w` bars on each side, the second one `sep_min` bars later,
+        # confirmation `swing_w` bars after that; gap filter needs ~20 bars of returns
+        return max(2 * self.p["swing_w"] + self.p["sep_min"] + 1, self.warmup_days)
+
     # ── pattern scan ──
     def _scan(self, c: np.ndarray, lows: np.ndarray, highs: np.ndarray):
         p = self.p; n = len(c); w = int(p["swing_w"])

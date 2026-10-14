@@ -15,7 +15,7 @@ REPORT="$HOME/velocity/report"          # single repo, checked out on report bra
 
 # Keep this in sync with ETF_CONFIG in src/config.py.
 ETFS=(MTUM QUAL DYNF)
-# Strategy used for this session's buy/sell signals: see `python velocity.py --list-strategies`
+# Strategy used for this session's buy/sell signals: see `velocity strategies`
 STRATEGY="${VELOCITY_STRATEGY:-trend_follow}"
 
 LOG="[velocity $(date '+%Y-%m-%d %H:%M')]"
@@ -29,7 +29,7 @@ source "$SCRIPT_DIR/.venv/bin/activate"
 # at $REPORT/index.html
 for etf in "${ETFS[@]}"; do
     echo "$LOG Running $etf"
-    python3 "$SCRIPT_DIR/velocity.py" \
+    python3 "$SCRIPT_DIR/velocity.py" trading \
         --etf "$etf" \
         --report-dir "$REPORT" \
         --strategy "$STRATEGY" \

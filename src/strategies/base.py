@@ -16,6 +16,7 @@ target) so the Book can size the position and the Engine can manage generic exit
 """
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, field, asdict
 from typing import Dict, List, Optional, TYPE_CHECKING
 
@@ -68,8 +69,32 @@ class Strategy:
         unknown = set(params) - set(self.defaults)
         if unknown:
             raise ValueError(f"{self.name}: unknown parameter(s) {sorted(unknown)}; valid: {sorted(self.defaults)}")
+        for k, v in params.items():
+            self._check_param(k, v)
         self.p: Dict[str, object] = {**self.defaults, **params}
         self.ind: Optional[Indicators] = None
+
+    def _check_param(self, key: str, value) -> None:
+        """A parameter must have the same type as its default (bool / int / float / str) and, for
+        numbers, be finite and non-negative — so a bad --param fails here with a clear message
+        instead of deep inside pandas during prepare()."""
+        default = self.defaults[key]
+        what = f"{self.name}: parameter {key!r}"
+        if isinstance(default, bool):
+            if not isinstance(value, bool):
+                raise ValueError(f"{what} expects true/false, got {value!r}")
+        elif isinstance(default, int):
+            if isinstance(value, bool) or not isinstance(value, int):
+                raise ValueError(f"{what} expects an integer (default {default}), got {value!r}")
+            if value < 0:
+                raise ValueError(f"{what} must be >= 0, got {value}")
+        elif isinstance(default, float):
+            if isinstance(value, bool) or not isinstance(value, (int, float)):
+                raise ValueError(f"{what} expects a number (default {default}), got {value!r}")
+            if not math.isfinite(value) or value < 0:
+                raise ValueError(f"{what} must be a finite number >= 0, got {value}")
+        elif isinstance(default, str) and not isinstance(value, str):
+            raise ValueError(f"{what} expects text, got {value!r}")
 
     # ── lifecycle ──
     def prepare(self, ind: Indicators, universe: "Universe") -> None:
@@ -88,6 +113,11 @@ class Strategy:
     def explain(self, date: str, ticker: str) -> dict:
         """Per-holding signal state for the report: state in {ENTRY, HOLD, EXIT, WATCH, NONE}."""
         return {"state": "NONE", "checks": {}, "note": ""}
+
+    def warmup(self) -> int:
+        """Bars of history needed before the first signal can fire, for the CURRENT parameters
+        (strategies override this from their look-backs; `warmup_days` is the documented default)."""
+        return self.warmup_days
 
     # ── helpers ──
     def params_dict(self) -> dict:

@@ -25,6 +25,7 @@ import pandas as pd
 
 from .book import Book, log_session, log_signals
 from .indicators import Indicators
+from .exceptions import VelocityError
 from .market_data import Universe, load_market_bars
 from .strategies.base import Strategy, EntrySignal, ExitSignal
 
@@ -57,6 +58,8 @@ class EngineConfig:
     policy: MaxPositionsPolicy = field(default_factory=MaxPositionsPolicy)
     rising_priority: bool = False     # waiting signals go to the front of the queue for free slots (else strategy rank)
     rising_max_age: int = 10          # sessions without a repeat signal before a rising star is dropped
+    short_history: str = "warn"       # history shorter than the strategy's warm-up: "warn" (live: keep managing
+                                      # open positions) or "error" (backtests: the result would be meaningless)
 
 
 class Engine:
@@ -66,10 +69,21 @@ class Engine:
         self.conns = conns
         self.cfg = cfg
         self.bars = bars if bars is not None else load_market_bars(conns, book_conn)
-        self.ind = Indicators(self.bars)
+        try:
+            self.ind = Indicators(self.bars)
+        except ValueError as e:
+            raise VelocityError(f"no price history in the ETF databases ({e}) — run `velocity backfill --etf ALL` first") from e
         if not self.ind.has_volume:
             log.warning("%s: bars carry no volume — volume rules are inactive (price-only mode)", strategy.name)
         self.dates: List[str] = self.ind.dates
+        need = strategy.warmup()
+        if len(self.dates) < need:
+            msg = (f"{strategy.name}: only {len(self.dates)} sessions of price history ({self.dates[0]} → {self.dates[-1]}) "
+                   f"but the strategy needs {need} bars of warm-up with the current parameters — its entry rules cannot "
+                   f"fire until the history is deeper (`velocity backfill --etf ALL --months N`)")
+            if cfg.short_history == "error":
+                raise VelocityError(msg)
+            log.warning(msg)
         self.universe = Universe(conns, self.dates)
         strategy.prepare(self.ind, self.universe)
 
@@ -179,11 +193,16 @@ class Engine:
         return unfilled
 
     # ── backtest ──
-    def backtest(self, start: str, end: str, fill: str = "next", capital: float = 100000.0) -> Book:
+    def backtest(self, start: str, end: str, fill: str = "next", capital: float = 100000.0,
+                 log_conn: Optional[sqlite3.Connection] = None) -> Book:
+        """Replay every session in [start, end] into a fresh book.  With `log_conn` each session is
+        written to the `sessions` audit table (used when a backtest is registered as the live book)."""
         book = Book(self.strategy.name, capital)
         for d in self.dates:
             if start <= d <= end:
-                self.step(book, d, fill=fill, execute=True)
+                res = self.step(book, d, fill=fill, execute=True)
+                if log_conn is not None:
+                    log_session(log_conn, self.strategy.name, d, res, book)
         return book
 
     # ── signal snapshot for the audit log / report ──
