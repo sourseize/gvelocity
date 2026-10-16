@@ -1,7 +1,6 @@
 """
-day_data — one day's report payload for an ETF: new entries / exits / weight movers / top-20 /
-sectors, descriptive metrics per holding, and the active strategy's signal state per holding.
-Shared by the trading, backfill and rebuild commands.
+day_data — one day's payload: new entries / exits / weight movers / top-20 / sectors,
+descriptive metrics per holding, and the active strategy's signal state per holding.
 """
 from __future__ import annotations
 
@@ -13,7 +12,12 @@ from .database import detect_new_entries, detect_exits, detect_weight_movers, re
 from .market_data import issuer_key
 
 
-def build_day_data(conn, today: str, etf: str = "", strategy=None, book=None, trades: Optional[list] = None) -> dict:
+def build_day_data(conn, today: str, strategy=None, book=None, trades: Optional[list] = None,
+                   signals: Optional[dict] = None, rising: Optional[list] = None) -> dict:
+    """One day's payload.  Signal states come from `signals` ({ticker: {state, note, checks}}, the
+    stored audit rows of that day's session) when given; otherwise they are computed live from
+    the prepared strategy with the book's holdings shown as HOLD.  `rising` likewise overrides the
+    book's current watchlist (historical days show the watchlist as it was after that session)."""
     new_tickers = detect_new_entries(conn, today, NEW_ENTRY_LOOKBACK_DAYS)
     exits = detect_exits(conn, today)
     movers = detect_weight_movers(conn, today, NEW_ENTRY_LOOKBACK_DAYS)
@@ -26,6 +30,9 @@ def build_day_data(conn, today: str, etf: str = "", strategy=None, book=None, tr
     # strategy signal state per holding (HOLD overrides when the issuer is in the book)
     held = set(book.positions) if book is not None else set()
     for t, m in scored.items():
+        if signals is not None:
+            m["signal"] = signals.get(t) or {"state": "NONE", "checks": {}, "note": ""}
+            continue
         if strategy is not None and strategy.ind is not None:
             sig = strategy.explain(today, t)
         else:
@@ -55,14 +62,11 @@ def build_day_data(conn, today: str, etf: str = "", strategy=None, book=None, tr
     day_trades = []
     for t in (trades or []):
         d = t if isinstance(t, dict) else vars(t)
-        if d.get("date") == today and (not etf or etf in (d.get("etfs") or [])):
+        if d.get("date") == today:
             day_trades.append(d)
 
-    rising = []
-    if book is not None:
-        for r in book.rising_list():
-            if not etf or etf in r.get("etfs", []):
-                rising.append(r)
+    if rising is None:
+        rising = book.rising_list() if book is not None else []
 
     return {
         "date": today,
@@ -75,6 +79,6 @@ def build_day_data(conn, today: str, etf: str = "", strategy=None, book=None, tr
         "sectors": sectors,
         "strategy": strat_info,
         "trades": day_trades,
-        "n_snapshots": len(recent_dates(conn, 9999)),
+        "n_snapshots": len(recent_dates(conn, 9999, asof=today)),
         "lookback": NEW_ENTRY_LOOKBACK_DAYS,
     }

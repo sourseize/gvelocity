@@ -1,5 +1,5 @@
 """
-Descriptive per-holding metrics for the HTML report (price ROC, weight rank, 52-week drawdown).
+Descriptive per-holding metrics (price ROC, weight rank, 52-week drawdown), as of the date analysed.
 Trading signals are NOT produced here — see src/strategies/.
 """
 
@@ -130,17 +130,17 @@ def compute_metrics(conn, ticker: str, today: str) -> dict:
     Returns:
         Dictionary of calculated metrics
     """
-    # Get daily and weekly history
-    dh = daily_history(conn, ticker, 25)
-    wh = weekly_history(conn, ticker, 52)
+    # Get daily and weekly history up to `today`
+    dh = daily_history(conn, ticker, 25, asof=today)
+    wh = weekly_history(conn, ticker, 52, asof=today)
 
     # Extract price arrays
     dp = [r["price"] for r in dh if r.get("price") is not None]
     wp = [r["price"] for r in wh if r.get("price") is not None]
 
-    # Get first seen date
+    # First seen date (on or before today)
     first_seen_row = conn.execute(
-        "SELECT MIN(snapshot_date) as d FROM holdings WHERE ticker=?", (ticker,)
+        "SELECT MIN(snapshot_date) as d FROM holdings WHERE ticker=? AND snapshot_date<=?", (ticker, today)
     ).fetchone()
     first_seen = first_seen_row["d"] if first_seen_row else None
 

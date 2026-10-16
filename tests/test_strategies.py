@@ -9,16 +9,15 @@ from src.strategies import get_strategy, available, parse_params, REGISTRY
 from src.strategies.base import Strategy, EntrySignal
 from src.engine import Engine, EngineConfig, MaxPositionsPolicy
 from src.book import Book
-from src.config import ETF_CONFIG
-from src.database import default_db_path
+from src.config import DB_PATH
+from src.database import get_db
 
-DATA = Path(__file__).resolve().parent.parent / "data"
-ETFS = [e for e in sorted(ETF_CONFIG) if (DATA / f"{e}.db").exists()]
-needs_db = pytest.mark.skipif(not ETFS, reason="no ETF databases present")
+needs_db = pytest.mark.skipif(not DB_PATH.exists(), reason="no database present")
 
 
-def conns():
-    return {e: sqlite3.connect(DATA / f"{e}.db") for e in ETFS}
+def ro_conn():
+    """Read-only connection to the real database (tests must not modify it)."""
+    return sqlite3.connect(f"file:{DB_PATH}?mode=ro", uri=True)
 
 
 def synthetic_bars(n=160, seed=0, tickers=("AAA", "BBB", "CCC")):
@@ -91,18 +90,18 @@ class Always(Strategy):
             if iss in book.positions: continue
             px = float(self.ind.at(self.ind.close, date, meta["ticker"]))
             if px == px:
-                out.append(EntrySignal(iss, meta["ticker"], px, stop_price=px * 0.9, rank=-px, etfs=meta["etfs"]))
+                out.append(EntrySignal(iss, meta["ticker"], px, stop_price=px * 0.9, rank=-px))
         return sorted(out, key=lambda s: -s.rank)
 
 
 class FakeUniverse:
     def __init__(self, tickers): self.t = tickers
-    def on(self, date): return {t: {"ticker": t, "etfs": ["X"], "recent_add": False} for t in self.t}
+    def on(self, date): return {t: {"ticker": t, "recent_add": False} for t in self.t}
 
 
 def make_engine(bars, strategy, cfg):
     eng = Engine.__new__(Engine)
-    eng.strategy, eng.conns, eng.cfg, eng.bars = strategy, {}, cfg, bars
+    eng.strategy, eng.conn, eng.cfg, eng.bars = strategy, None, cfg, bars
     eng.ind = Indicators(bars); eng.dates = eng.ind.dates
     eng.universe = FakeUniverse(eng.ind.tickers)
     strategy.prepare(eng.ind, eng.universe)
@@ -153,9 +152,9 @@ def test_book_cap_sizing_and_ledger_reconciliation():
 
 
 def test_book_persistence_roundtrip(tmp_path):
-    conn = sqlite3.connect(tmp_path / "b.db")
+    conn = get_db(tmp_path / "b.db")
     b = Book("x", 1000)
-    b.open("AAA", "AAA", 10.0, "2026-01-02", 500, 1.0, 9.0, 0.1, None, "r", ["MTUM"], {"k": 1})
+    b.open("AAA", "AAA", 10.0, "2026-01-02", 500, 1.0, 9.0, 0.1, None, "r", {"k": 1})
     b.last_date = "2026-01-02"; b.save(conn)
     c = Book.load(conn, "x")
     assert c.cash == b.cash and c.positions["AAA"].meta == {"k": 1} and c.last_date == "2026-01-02"
@@ -166,7 +165,7 @@ def test_book_persistence_roundtrip(tmp_path):
 # ── on the real databases ──
 @needs_db
 def test_split_adjustment_removes_fake_crashes():
-    bars = md.bars_from_holdings(conns())
+    bars = md.bars_from_holdings(ro_conn())
     c = bars.pivot(index="date", columns="ticker", values="close")
     assert c.pct_change(fill_method=None).min().min() > -0.6
 
@@ -174,7 +173,7 @@ def test_split_adjustment_removes_fake_crashes():
 @needs_db
 @pytest.mark.parametrize("name", available())
 def test_strategy_runs_on_real_data_with_one_position_per_issuer(name):
-    eng = Engine(get_strategy(name), conns(), EngineConfig(max_positions=20))
+    eng = Engine(get_strategy(name), ro_conn(), EngineConfig(max_positions=20))
     book = eng.backtest(eng.dates[-60], eng.dates[-1], fill="next", capital=100000)
     assert len(book.positions) <= 20
     assert len({md.issuer_key(p.ticker) for p in book.positions.values()}) == len(book.positions)
@@ -185,9 +184,8 @@ def test_strategy_runs_on_real_data_with_one_position_per_issuer(name):
 
 @needs_db
 def test_live_session_is_idempotent(tmp_path):
-    cs = conns()
-    eng = Engine(get_strategy("trend_follow"), cs, EngineConfig(max_positions=5))
-    bc = sqlite3.connect(tmp_path / "books.db")
+    eng = Engine(get_strategy("trend_follow"), ro_conn(), EngineConfig(max_positions=5))
+    bc = get_db(tmp_path / "books.db")
     book = Book.load(bc, "trend_follow", 100000)
     today = eng.dates[-1]
     r1 = eng.run_session(book, today); book.save(bc)
@@ -196,13 +194,14 @@ def test_live_session_is_idempotent(tmp_path):
     assert len(Book.load(bc, "trend_follow").trades) == len(r1["entries"]) + len(r1["exits"])
 
 
-def test_alpaca_order_request_has_time_in_force():
-    pytest.importorskip("alpaca.trading.requests")
-    from src.alpaca_client import AlpacaClient
-    cl = AlpacaClient("k", "s", paper=True)
-    req = cl._MarketOrderRequest(symbol="AAPL", qty=1.5, side=cl._OrderSide.BUY,
-                                 type=cl._OrderType.MARKET, time_in_force=cl._TimeInForce.DAY)
-    assert req.time_in_force == cl._TimeInForce.DAY
+def test_book_load_ignores_fields_from_older_schemas(tmp_path):
+    import json
+    conn = get_db(tmp_path / "b.db")
+    b = Book("x", 1000); b.save(conn)
+    pos = {"AAA": {"issuer": "AAA", "ticker": "AAA", "shares": 1.0, "entry_price": 10.0, "entry_date": "2026-01-02",
+                   "stop_price": 9.0, "etfs": ["OLD"]}}
+    conn.execute("UPDATE books SET positions_json=? WHERE strategy='x'", (json.dumps(pos),))
+    assert Book.load(conn, "x").positions["AAA"].ticker == "AAA"
 
 
 # ── rising stars ──
@@ -243,9 +242,9 @@ def test_rising_stars_expire_and_capture_capital_exhaustion():
 
 
 def test_rising_stars_persist(tmp_path):
-    conn = sqlite3.connect(tmp_path / "b.db")
+    conn = get_db(tmp_path / "b.db")
     b = Book("x", 1000)
-    b.note_rising("AAA", "AAA", "2026-01-02", 10.0, 0.5, "sig", "book full", ["MTUM"])
+    b.note_rising("AAA", "AAA", "2026-01-02", 10.0, 0.5, "sig", "book full")
     b.save(conn)
     c = Book.load(conn, "x")
     assert c.rising["AAA"]["seen"] == 1 and c.rising_list()[0]["ticker"] == "AAA"
@@ -264,6 +263,6 @@ def test_weekly_close_is_last_snapshot_of_week(tmp_path):
     assert wk == [("2026-01-09", 12.0)]
     store_snapshot(conn, dt.date(2026, 1, 6), row(11))     # a late-arriving Tuesday must not overwrite Thursday
     assert conn.execute("SELECT price FROM weekly_closes").fetchone()[0] == 12.0
-    conn.execute("DELETE FROM weekly_closes"); conn.commit()
+    conn.execute("DELETE FROM weekly_closes")
     assert rebuild_weekly_closes(conn) == 1
     assert tuple(conn.execute("SELECT week_ending, price FROM weekly_closes").fetchone()) == ("2026-01-09", 12.0)

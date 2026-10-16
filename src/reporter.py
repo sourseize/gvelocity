@@ -1,12 +1,13 @@
 """
-HTML generation and reporting logic for Velocity tracker
+HTML rendering for Velocity — pure functions from data to HTML strings.
+
+Nothing here touches the file system: the web server calls these renderers with data read from
+the database (`day_log_entry()` turns a `build_day_data()` payload into the compact per-day record
+the month page renders).
 """
 
 import datetime
-import json
-import os
-from pathlib import Path
-from typing import Optional, List, Dict, Any
+from typing import Optional
 
 # Strategy signal state per holding (produced by Strategy.explain / the engine)
 STATE_META = {
@@ -492,11 +493,16 @@ def fmt_f(v, dp=2) -> str:
 
 
 def ticker_link(ticker: str, name: str = "") -> str:
-    """Create a Google search link for a ticker with Yahoo Finance."""
-    query = f"{ticker} {name} stock price Yahoo Finance".strip()
+    """Link to the ticker's signal-history page."""
+    return f'<a class="tkl" href="/ticker/{ticker}" title="{name}">{ticker}</a>'
+
+
+def external_quote_link(ticker: str, name: str = "") -> str:
+    """Google search for the ticker's quote (used on the ticker page)."""
     import urllib.parse
-    url = "https://www.google.com/search?q=" + urllib.parse.quote(query)
-    return f'<a class="tkl" href="{url}" target="_blank" rel="noopener">{ticker}</a>'
+    query = f"{ticker} {name} stock price Yahoo Finance".strip()
+    return ('<a class="tkl" href="https://www.google.com/search?q=' + urllib.parse.quote(query) +
+            '" target="_blank" rel="noopener">quote ↗</a>')
 
 
 def state_badge(state: str) -> str:
@@ -585,7 +591,7 @@ def entry_card(ticker: str, m: dict) -> str:
     <div class="ecmeta">
       <span><span class="ml">Weight</span><b>{fmt_f(m.get("current_weight"))}%</b></span>
       <span><span class="ml">Price</span><b>{fmt_f(m.get("current_price"))} {m.get("currency","")}</b></span>
-      <span><span class="ml">Days in ETF</span><b>{m.get("days_in_etf","?")}</b></span>
+      <span><span class="ml">Days in fund</span><b>{m.get("days_in_etf","?")}</b></span>
       <span><span class="ml">First seen</span><b>{m.get("first_seen","?")}</b></span>
     </div>
   </div>
@@ -784,20 +790,14 @@ def generate_monthly_page(
     prev_ym: Optional[str],
     next_ym: Optional[str],
     is_current: bool,
-    report_dir: Path,
     day_data: Optional[dict] = None,
-    live_ym: Optional[str] = None,
-    etf: str = "",
-    etf_name: str = "",
+    book_label: Optional[str] = None,
+    site_nav: str = "",
 ) -> str:
     """
-    Generate the full HTML for a monthly report page.
-    entries: list of day-log dicts, newest first.
-    live_ym: the YYYY-MM of whichever month is currently being served as
-    index.html (i.e. today's month). Needed because a "next month" link
-    can point at the live month from an archive page, and that month's
-    file is index.html, not "{live_ym}.html" (that file doesn't exist
-    until the month is sealed on rollover).
+    The HTML of one month: a collapsible block per trading day (newest first) and, for the
+    current month, the live sections (top-20, rising stars, signals across all holdings, sectors).
+    entries: list of `day_log_entry()` dicts, newest first.
     """
     month_label = datetime.datetime.strptime(ym + "-01", "%Y-%m-%d").strftime("%B %Y")
     all_new = sum(len(e.get("new_entries", [])) for e in entries)
@@ -806,20 +806,15 @@ def generate_monthly_page(
     nav_parts = []
     if prev_ym:
         prev_label = datetime.datetime.strptime(prev_ym + "-01", "%Y-%m-%d").strftime("%b %Y")
-        prev_href = "index.html" if prev_ym == live_ym else f"{prev_ym}.html"
-        nav_parts.append(f'<a href="{prev_href}">← {prev_label}</a>')
+        nav_parts.append(f'<a href="/month/{prev_ym}">← {prev_label}</a>')
     if next_ym:
         next_label = datetime.datetime.strptime(next_ym + "-01", "%Y-%m-%d").strftime("%b %Y")
-        next_href = "index.html" if next_ym == live_ym else f"{next_ym}.html"
-        nav_parts.append(f'<a href="{next_href}">{next_label} →</a>')
+        nav_parts.append(f'<a href="/month/{next_ym}">{next_label} →</a>')
     if not is_current:
-        nav_parts.append('<a href="index.html">Latest ↑</a>')
-    nav_parts.append('<a href="../index.html">← All ETFs</a>')
-    if (report_dir / "tickers" / "index.html").exists():
-        nav_parts.append('<a href="tickers/index.html">Tracked tickers →</a>')
+        nav_parts.append('<a href="/">Latest ↑</a>')
     strat = (day_data or {}).get("strategy") or {}
-    if strat.get("name") and (report_dir.parent / "strategy" / f"{strat['name']}.html").exists():
-        nav_parts.append(f'<a href="../strategy/{strat["name"]}.html"><span class="icon icon-portfolio"></span>{strat.get("label", strat["name"])} book</a>')
+    if strat.get("name"):
+        nav_parts.append(f'<a href="/strategy/{strat["name"]}">{book_label or strat.get("label", strat["name"])} book</a>')
     nav_html = " · ".join(p for p in nav_parts if p)
 
     # Day blocks — first entry is always open
@@ -925,15 +920,16 @@ def generate_monthly_page(
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Velocity Tracker — {etf} — {month_label}</title>
+<title>Velocity — {month_label}</title>
 <style>{CSS}</style>
 </head>
 <body>
 <div class="wrap">
-<h1>Velocity Tracker — {etf} — {month_label}
+{site_nav}
+<h1>Velocity — {month_label}
   <span style="font-size:.75rem;background:{status_color};color:{status_text_color};border-radius:4px;padding:2px 8px;margin-left:8px;vertical-align:middle">{status_label}</span>
 </h1>
-<p class="sub">{etf_name} · {n_days} trading days · {all_new} new entries · {all_exit} exits</p>
+<p class="sub">{n_days} trading days · {all_new} new entries · {all_exit} exits</p>
 
 <div class="nav">
   {nav_html if nav_html else '<span style="color:var(--mt)">No other months yet</span>'}
@@ -955,45 +951,14 @@ def generate_monthly_page(
 
 {watchlist_html}
 
-<footer>Velocity · Generated: {generated_at} · Source: BlackRock {etf} holdings · {month_label}</footer>
+<footer>Velocity · Generated: {generated_at} · Source: BlackRock fund holdings · {month_label}</footer>
 </div>
 </body>
 </html>"""
 
 
-def get_all_months(report_dir: Path) -> list[str]:
-    """Return sorted list of all YYYY-MM months with a .json log file."""
-    months = sorted(
-        p.stem for p in report_dir.glob("????-??.json")
-    )
-    return months
-
-
-def load_month_log(report_dir: Path, ym: str) -> list[dict]:
-    """Load the JSON data log for a given YYYY-MM."""
-    p = report_dir / f"{ym}.json"
-    if p.exists():
-        try:
-            return json.loads(p.read_text(encoding="utf-8"))
-        except Exception:
-            return []
-    return []
-
-
-def save_month_log(report_dir: Path, ym: str, entries: list[dict]) -> None:
-    """Save monthly log to JSON file."""
-    p = report_dir / f"{ym}.json"
-    p.write_text(json.dumps(entries, indent=2), encoding="utf-8")
-
-
-def append_day_to_log(report_dir: Path, day_data: dict, commentary: dict = None) -> None:
-    """Append today's structured summary to the monthly JSON log."""
-    ym = month_key(day_data["date"])
-    entries = load_month_log(report_dir, ym)
-
-    # Dedup — replace if same date already exists
-    entries = [e for e in entries if e.get("date") != day_data["date"]]
-
+def day_log_entry(day_data: dict) -> dict:
+    """The compact per-day record the month page renders, from a `build_day_data()` payload."""
     new_entry_details = []
     for t in day_data["new_tickers"]:
         m = day_data["scored"].get(t, {})
@@ -1012,7 +977,7 @@ def append_day_to_log(report_dir: Path, day_data: dict, commentary: dict = None)
 
     exit_details = [
         {"ticker": e["ticker"], "name": e["name"],
-         "sector": e.get("sector",""), "weight": e.get("weight_pct")}
+         "sector": e.get("sector", ""), "weight": e.get("weight_pct")}
         for e in day_data["exits"]
     ]
 
@@ -1023,7 +988,7 @@ def append_day_to_log(report_dir: Path, day_data: dict, commentary: dict = None)
         for m in day_data["movers"][:5]
     ]
 
-    # Top 20 holdings snapshot, merged with score metrics, persisted per day
+    # Top 20 holdings snapshot, merged with score metrics
     top20_details = []
     for h in day_data["top20"]:
         t = h["ticker"]
@@ -1041,7 +1006,7 @@ def append_day_to_log(report_dir: Path, day_data: dict, commentary: dict = None)
             "drawdown": m.get("drawdown_from_52w_high"),
         })
 
-    entries.append({
+    return {
         "date": day_data["date"],
         "new_entries": new_entry_details,
         "exits": exit_details,
@@ -1049,219 +1014,10 @@ def append_day_to_log(report_dir: Path, day_data: dict, commentary: dict = None)
         "top20": top20_details,
         "strategy": day_data.get("strategy"),
         "rising_stars": [
-            {k: r.get(k) for k in ("ticker", "first_seen", "last_seen", "seen", "ref_price", "first_price", "why", "reason", "etfs")}
+            {k: r.get(k) for k in ("ticker", "first_seen", "last_seen", "seen", "ref_price", "first_price", "why", "reason")}
             for r in day_data.get("rising_stars", [])
         ],
         "trades": day_data.get("trades", []),
         "n_holdings": len(day_data["top20"]),
         "n_snapshots": day_data["n_snapshots"],
-    })
-
-    # Sort newest-first for the log
-    entries.sort(key=lambda x: x["date"], reverse=True)
-    save_month_log(report_dir, ym, entries)
-
-
-def rollover_if_needed(report_dir: Path, today: str) -> None:
-    """
-    On the 1st of a new month: index.html already contains last month's data.
-    We seal it as YYYY-MM.html and the caller will create a fresh index.html.
-    This function just checks if a seal is needed and does it.
-    """
-    index_path = report_dir / "index.html"
-    if not index_path.exists():
-        return
-
-    # Detect what month index.html currently represents by checking JSON logs
-    today_ym = month_key(today)
-    # Find most recent json that isn't today's month
-    months = get_all_months(report_dir)
-    if not months:
-        return
-
-    latest_logged_ym = months[-1]
-    if latest_logged_ym < today_ym:
-        # We've rolled into a new month — seal the old index.html
-        sealed = report_dir / f"{latest_logged_ym}.html"
-        if not sealed.exists():
-            import shutil
-            shutil.copy(index_path, sealed)
-            # Note: In production, we'd use the logger from main module
-
-
-def find_tracked_etf_dirs(report_dir: Path) -> list[Path]:
-    """Any subfolder of report_dir containing at least one monthly JSON log
-    counts as a tracked ETF — this picks up anything on disk, not just
-    entries currently in ETF_CONFIG, so old data isn't orphaned if a fund
-    is later removed from the config."""
-    if not report_dir.exists():
-        return []
-    return sorted(
-        d for d in report_dir.iterdir()
-        if d.is_dir() and get_all_months(d)
-    )
-
-
-def generate_hub_index(report_dir: Path) -> str:
-    """Generate the top-level hub index.html linking all tracked ETFs."""
-    etf_dirs = find_tracked_etf_dirs(report_dir)
-
-    cards = ""
-    for d in etf_dirs:
-        code = d.name
-        # In production, we'd get ETF_CONFIG from config module
-        # For now, using a fallback
-        try:
-            from .config import ETF_CONFIG
-            cfg = ETF_CONFIG.get(code, {})
-        except ImportError:
-            cfg = {}
-        name = cfg.get("name", code)
-
-        months = get_all_months(d)
-        latest_ym = months[-1] if months else None
-        day_entries = load_month_log(d, latest_ym) if latest_ym else []
-        if not day_entries:
-            continue
-        latest = day_entries[0]  # newest first
-
-        new_e = latest.get("new_entries", [])
-        exits_e = latest.get("exits", [])
-        movers = latest.get("movers", [])[:5]
-        top20 = latest.get("top20", [])[:5]
-        trades = latest.get("trades", [])
-        rising = latest.get("rising_stars", [])[:6]
-
-        new_html = ""
-        if new_e:
-            chips = "".join(
-                f"<span class='chip'>{ticker_link(e['ticker'], e.get('name',''))}</span>"
-                for e in new_e[:8]
-            )
-            more = f" +{len(new_e)-8} more" if len(new_e) > 8 else ""
-            new_html = f"<div class='hubrow'><b>New:</b> {chips}{more}</div>"
-
-        exit_html = ""
-        if exits_e:
-            chips = "".join(
-                f"<span class='chip' style='opacity:.6'>{ticker_link(e['ticker'], e.get('name',''))}</span>"
-                for e in exits_e[:8]
-            )
-            more = f" +{len(exits_e)-8} more" if len(exits_e) > 8 else ""
-            exit_html = f"<div class='hubrow'><b>Exits:</b> {chips}{more}</div>"
-
-        movers_html = ""
-        if movers:
-            mrows = ""
-            for m in movers:
-                d_ = m.get("delta", 0) or 0
-                cls = "pos" if d_ >= 0 else "neg"
-                sign = "+" if d_ >= 0 else ""
-                mrows += (
-                    f"<span class='chip'>{ticker_link(m['ticker'], m.get('name',''))} "
-                    f"<span class='{cls}'>{sign}{d_:.2f}%</span></span>"
-                )
-            movers_html = f"<div class='hubrow'><b>Top movers:</b> {mrows}</div>"
-
-        top20_html = ""
-        if top20:
-            trows = "".join(
-                f"<span class='chip'>{ticker_link(h['ticker'], h.get('name',''))} "
-                f"<span class='mt'>{(h.get('weight_pct') or 0):.2f}%</span></span>"
-                for h in top20
-            )
-            top20_html = f"<div class='hubrow'><b>Top 5:</b> {trows}</div>"
-
-        trades_html = ""
-        if trades:
-            chips = "".join(
-                f"<span class='chip'><span class='{'pos' if (t.get('side') or t.get('type')) == 'buy' else 'neg'}'>"
-                f"{(t.get('side') or t.get('type') or '').upper()}</span> {ticker_link(t['ticker'])}</span>"
-                for t in trades[:8]
-            )
-            trades_html = f"<div class='hubrow'><b>Trades:</b> {chips}</div>"
-
-        rising_html = ""
-        if rising:
-            chips = "".join(f"<span class='chip'>🌱 {ticker_link(r['ticker'])} <span class='mt'>x{r.get('seen', 0)}</span></span>"
-                            for r in rising)
-            rising_html = f"<div class='hubrow'><b>Rising stars:</b> {chips}</div>"
-
-        if not (new_html or exit_html or movers_html or top20_html or trades_html or rising_html):
-            body = "<div class='hubrow none'>No changes today.</div>"
-        else:
-            body = trades_html + rising_html + top20_html + new_html + exit_html + movers_html
-
-        tickers_link = ""
-        if (d / "tickers" / "index.html").exists():
-            tickers_link = f" · <a href='{code}/tickers/index.html'>Tickers</a>"
-        
-        portfolio_link = ""
-
-        cards += f"""
-<div class="etfcard">
-  <h2><a href="{code}/index.html">{code}</a> <span class="etfname">{name}</span></h2>
-  <p class="sub">Last update: {latest['date']}{tickers_link}{portfolio_link}</p>
-  {body}
-</div>"""
-
-    if not cards:
-        cards = '<p class="none">No ETFs tracked yet — run `velocity trading --etf CODE` to get started.</p>'
-
-    books = ""
-    strat_dir = report_dir / "strategy"
-    if strat_dir.exists():
-        links = []
-        for f in sorted(strat_dir.glob("*.html")):
-            try:
-                st = json.loads((f.with_suffix(".json")).read_text())
-                links.append(f"<span class='chip'><a href='strategy/{f.name}'>{f.stem}</a> "
-                             f"<span class='mt'>${st.get('total_value', 0):,.0f} · {len(st.get('positions', {}))} open</span></span>")
-            except Exception:
-                links.append(f"<span class='chip'><a href='strategy/{f.name}'>{f.stem}</a></span>")
-        if links:
-            books = f"<div class='etfcard'><h2>Strategy books</h2><div class='hubrow'>{''.join(links)}</div></div>"
-
-    bt_dir = report_dir / "backtest"
-    if bt_dir.exists():
-        links = []
-        for f in sorted(bt_dir.glob("*.html"), key=lambda f: f.stat().st_mtime, reverse=True):
-            try:
-                meta = json.loads(f.with_suffix(".json").read_text())
-                links.append(f"<span class='chip'><a href='backtest/{f.name}'>{f.stem}</a> "
-                             f"<span class='mt'>{meta.get('ran_at', '')[:10]}{' · book registered' if meta.get('saved_book') else ''}</span></span>")
-            except Exception:
-                links.append(f"<span class='chip'><a href='backtest/{f.name}'>{f.stem}</a></span>")
-        if links:
-            books += f"<div class='etfcard'><h2>Backtests</h2><div class='hubrow'>{''.join(links)}</div></div>"
-
-    generated_at = datetime.datetime.now(datetime.timezone.utc).strftime("%d %b %Y %H:%M UTC")
-
-    return f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Velocity — tracked ETFs</title>
-<style>{CSS}
-.etfcard{{background:linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(10, 16, 28, 0.96));border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin-bottom:12px;box-shadow:var(--shadow)}}
-.etfcard h2{{margin:0 0 4px;font-size:1.02rem}}
-.etfcard h2 a{{color:var(--text);text-decoration:none}}
-.etfcard h2 a:hover{{color:var(--accent-2)}}
-.etfname{{font-size:.78rem;color:var(--muted);font-weight:400;margin-left:8px}}
-.hubrow{{font-size:.82rem;margin-top:6px;color:var(--muted)}}
-.hubrow.none{{color:var(--muted)}}
-.hubrow .mt{{color:var(--text)}}
-.chip{{display:inline-block;background:rgba(15, 23, 42, 0.8);border:1px solid var(--border);border-radius:999px;padding:2px 8px;margin:2px 4px 2px 0;font-size:.76rem;color:var(--text)}}
-</style>
-</head>
-<body>
-<div class="wrap">
-<h1>Velocity — tracked ETFs</h1>
-<p class="sub">{len(etf_dirs)} fund(s) tracked</p>
-{books}
-{cards}
-<footer style="margin-top:18px;color:var(--muted);font-size:.75rem;letter-spacing:.04em;text-transform:uppercase">Velocity · Generated: {generated_at}</footer>
-</div>
-</body>
-</html>"""
+    }

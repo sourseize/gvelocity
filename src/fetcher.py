@@ -8,16 +8,9 @@ import io
 import logging
 import re
 import requests
-import urllib.error
-import urllib.parse
-import urllib.request
-from pathlib import Path
 from typing import Optional, Tuple, List, Dict
 
-from .config import (
-    FETCH_HEADERS,
-    NEW_ENTRY_LOOKBACK_DAYS, DEFAULT_REPORT_DIR
-)
+from .config import FETCH_HEADERS
 from .exceptions import NoDataForDateError
 
 log = logging.getLogger(__name__)
@@ -53,13 +46,12 @@ def _match_header(header_row: List[str], *aliases: str) -> Optional[int]:
     return None
 
 
-def fetch_csv(url: str, etf: str = "") -> Tuple[datetime.date, List[Dict]]:
+def fetch_csv(url: str) -> Tuple[datetime.date, List[Dict]]:
     """
-    Fetch and parse CSV from URL.
+    Fetch and parse the holdings CSV from URL.
 
     Args:
         url: URL to fetch CSV from
-        etf: ETF ticker for logging
 
     Returns:
         Tuple of (holdings_date, rows)
@@ -69,7 +61,7 @@ def fetch_csv(url: str, etf: str = "") -> Tuple[datetime.date, List[Dict]]:
         NoDataForDateError: When no data available for date
         ValueError: For parsing errors
     """
-    log.info("Fetching %s CSV …", etf or "ETF")
+    log.info("Fetching holdings CSV …")
     resp = requests.get(url, headers=FETCH_HEADERS, timeout=30)
     resp.raise_for_status()
     head = resp.text.lstrip()[:500].lower()
@@ -82,7 +74,7 @@ def parse_csv(raw: str) -> Tuple[datetime.date, List[Dict]]:
     """
     Parse a BlackRock holdings CSV.
 
-    Written to tolerate cross-fund format variation rather than assuming MTUM's exact layout.
+    Written to tolerate cross-fund format variation rather than assuming one fund's exact layout.
     Handles different preamble lengths, date formats, column variations, and trailing disclaimer text.
 
     Args:
@@ -159,7 +151,7 @@ def parse_csv(raw: str) -> Tuple[datetime.date, List[Dict]]:
     if header_idx is None:
         raise ValueError(
             "Ticker-like header row not found in CSV — this fund's CSV layout may "
-            "differ from what this parser expects; check ETF_CONFIG's url and "
+            "differ from what this parser expects; check HOLDINGS_URL and "
             "inspect the raw response"
         )
 

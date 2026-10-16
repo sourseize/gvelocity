@@ -4,6 +4,7 @@ import textwrap
 from ..strategies import available, REGISTRY, DEFAULT_STRATEGY
 
 HELP = "List the available strategies, their parameters and warm-up"
+NEEDS_DB = False
 
 
 def configure(p) -> None:
@@ -20,7 +21,7 @@ def render() -> str:
         out.append(f"      warm-up: {cls().warmup()} bars · time stop: {cls.defaults.get('time_stop_days', cls.time_stop_days)} d")
         out.append(wrap("params: " + "  ".join(f"{k}={v}" for k, v in cls.defaults.items()), "      "))
         out.append("")
-    out.append("Override a parameter with --param key=value (repeatable), e.g. velocity trading --param breakout_len=40")
+    out.append("Override a parameter with --param key=value (repeatable), e.g. velocity serve --param breakout_len=40")
     return "\n".join(out)
 
 

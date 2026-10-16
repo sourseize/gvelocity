@@ -1,25 +1,18 @@
 """
-Helpers shared by the `velocity` sub-commands: argument types, path checks, database access.
+Helpers shared by the `velocity` sub-commands: argument types, validation, database access.
 """
 from __future__ import annotations
 
 import argparse
 import math
-import os
 import sqlite3
-from pathlib import Path
-from typing import Dict
 
-from ..config import ETF_CONFIG, DEFAULT_REPORT_DIR
-from ..database import get_db, default_db_path
+from ..config import (DB_PATH, INITIAL_CAPITAL, MAX_PURCHASE_AMOUNT, MAX_POSITIONS, RISK_PER_TRADE,
+                      COMMISSION_PER_TRADE)
+from ..database import get_db, SchemaTooNew
+from ..engine import EngineConfig, MaxPositionsPolicy
 from ..exceptions import VelocityError
 from ..strategies import get_strategy, available, parse_params, DEFAULT_STRATEGY
-
-ROOT = Path(__file__).resolve().parent.parent.parent
-
-
-def default_book_db() -> Path:
-    return ROOT / "data" / "books.db"
 
 
 # ── argparse types ──
@@ -59,10 +52,6 @@ def iso_date(text):
 
 
 # ── common argument groups ──
-def add_etf_arg(p: argparse.ArgumentParser, required: bool = False, help: str = "Which ETF, or ALL") -> None:
-    p.add_argument("--etf", choices=sorted(ETF_CONFIG) + ["ALL"], required=required, help=help)
-
-
 def add_strategy_args(p: argparse.ArgumentParser, params: bool = True, allow_all: bool = False) -> None:
     choices = available() + (["all"] if allow_all else [])
     p.add_argument("--strategy", choices=choices, default="all" if allow_all else DEFAULT_STRATEGY,
@@ -72,8 +61,32 @@ def add_strategy_args(p: argparse.ArgumentParser, params: bool = True, allow_all
                        help="Override a strategy parameter (repeatable), e.g. --param breakout_len=40")
 
 
-def add_report_dir_arg(p: argparse.ArgumentParser) -> None:
-    p.add_argument("--report-dir", default=str(DEFAULT_REPORT_DIR), help="Report root (default: report/)")
+def add_engine_args(p: argparse.ArgumentParser, rising_choice: bool = False) -> None:
+    """Book / risk / position-limit settings (the same on `backtest` and `serve`)."""
+    p.add_argument("--capital", type=positive(float), default=INITIAL_CAPITAL, help="Book capital when first created")
+    p.add_argument("--max-purchase-amount", type=positive(float), default=MAX_PURCHASE_AMOUNT, help="Hard $ cap per issuer")
+    p.add_argument("--max-positions", type=positive(int), default=MAX_POSITIONS, help="Open positions per book")
+    p.add_argument("--max-positions-policy", choices=["skip", "replace"], default="skip",
+                   help="When the book is full: skip new signals, or replace the weakest losing position")
+    p.add_argument("--risk-per-trade", type=fraction, default=RISK_PER_TRADE, help="Fraction of equity at risk per trade (0–1]")
+    if rising_choice:
+        p.add_argument("--rising-priority", choices=["on", "off"], default=None,
+                       help="give waiting rising stars priority for free slots (default: engine default)")
+    else:
+        p.add_argument("--rising-priority", action="store_true",
+                       help="Give waiting rising stars priority over fresh signals for free slots (default: strategy rank)")
+
+
+def engine_config(args, short_history: str = "warn") -> EngineConfig:
+    cfg = EngineConfig(max_positions=args.max_positions, max_amount=args.max_purchase_amount,
+                       risk_per_trade=args.risk_per_trade, commission=COMMISSION_PER_TRADE,
+                       policy=MaxPositionsPolicy(mode=args.max_positions_policy), short_history=short_history)
+    rp = getattr(args, "rising_priority", None)
+    if isinstance(rp, str):
+        cfg.rising_priority = rp == "on"
+    elif rp:
+        cfg.rising_priority = True
+    return cfg
 
 
 # ── validation (call from a command's validate(); uses parser.error -> exit 2) ──
@@ -88,81 +101,38 @@ def check_strategy_params(p: argparse.ArgumentParser, args) -> dict:
     return params
 
 
-def check_report_dir(p: argparse.ArgumentParser, args) -> Path:
-    root = Path(args.report_dir)
+def is_sqlite_file(path) -> bool:
     try:
-        root.mkdir(parents=True, exist_ok=True)
-    except OSError as e:
-        p.error(f"--report-dir: cannot create {root} ({e.strerror or e})")
-    if not os.access(root, os.W_OK):
-        p.error(f"--report-dir: {root} is not writable")
-    return root
-
-
-def is_sqlite_file(path: Path) -> bool:
-    try:
-        with path.open("rb") as f:
+        with open(path, "rb") as f:
             head = f.read(16)
     except OSError:
         return False
     return head == b"" or head == b"SQLite format 3\x00"
 
 
-def check_db_arg(p: argparse.ArgumentParser, args) -> None:
-    """--db: must be a SQLite file (or creatable), and only with a single --etf."""
-    if not getattr(args, "db", None):
-        return
-    if getattr(args, "etf", None) == "ALL":
-        p.error("--db needs a single --etf (each ETF has its own database)")
-    path = Path(args.db)
-    if path.is_dir():
-        p.error(f"--db: {path} is a directory")
-    if path.exists() and not is_sqlite_file(path):
-        p.error(f"--db: {path} is not a SQLite database")
-    if not path.exists():
-        try:
-            path.parent.mkdir(parents=True, exist_ok=True)
-        except OSError as e:
-            p.error(f"--db: cannot create directory {path.parent} ({e.strerror or e})")
-        if not os.access(path.parent, os.W_OK):
-            p.error(f"--db: directory {path.parent} is not writable")
+def check_db(p: argparse.ArgumentParser) -> None:
+    """The application database, if present, must be a SQLite file (usage error otherwise)."""
+    if DB_PATH.exists() and not is_sqlite_file(DB_PATH):
+        p.error(f"database {DB_PATH} is not a SQLite database — restore it or move it aside")
 
 
-def check_etf_dbs(p: argparse.ArgumentParser, etfs) -> None:
-    for etf in etfs:
-        dbp = default_db_path(etf)
-        if dbp.exists() and not is_sqlite_file(dbp):
-            p.error(f"holdings database {dbp} is not a SQLite database — restore it or move it aside")
-
-
-def etfs_of(args) -> list:
-    return sorted(ETF_CONFIG) if args.etf == "ALL" else [args.etf]
-
-
-# ── databases ──
-def open_etf_dbs(db_override: str | None = None, etf: str | None = None, require: bool = True) -> Dict[str, sqlite3.Connection]:
-    """Connections to every existing ETF database (schema ensured); `db_override` replaces `etf`'s path."""
-    conns = {}
-    for e in sorted(ETF_CONFIG):
-        path = Path(db_override) if (db_override and etf == e) else default_db_path(e)
-        if path.exists():
-            try:
-                conns[e] = get_db(path)
-            except sqlite3.Error as ex:
-                raise VelocityError(f"cannot open holdings database {path}: {ex}") from ex
-    if require and not conns:
-        raise VelocityError("no ETF databases in data/ — run `velocity backfill --etf ALL` first")
-    return conns
-
-
-def open_book_db(must_exist: bool = False) -> sqlite3.Connection:
-    path = default_book_db()
-    if must_exist and not path.exists():
-        raise VelocityError(f"no book database at {path} yet — run `velocity trading --paper-trade` first")
-    if path.exists() and not is_sqlite_file(path):
-        raise VelocityError(f"book database {path} is not a SQLite database — restore it from backup or move it aside")
+# ── database ──
+def open_db(must_exist: bool = False) -> sqlite3.Connection:
+    """Connection to data/velocity.db (created with the holdings schema when missing)."""
+    if must_exist and not DB_PATH.exists():
+        raise VelocityError(f"no database at {DB_PATH} yet — run `velocity backfill` (or `velocity fetch`) first")
+    if DB_PATH.exists() and not is_sqlite_file(DB_PATH):
+        raise VelocityError(f"database {DB_PATH} is not a SQLite database — restore it or move it aside")
     try:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        return sqlite3.connect(path)
+        DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+        return get_db(DB_PATH)
+    except SchemaTooNew as e:
+        raise VelocityError(f"{e} — upgrade Velocity before using this database") from e
     except (sqlite3.Error, OSError) as e:
-        raise VelocityError(f"cannot open book database {path}: {e}") from e
+        raise VelocityError(f"cannot open database {DB_PATH}: {e}") from e
+
+
+def require_history(conn: sqlite3.Connection) -> None:
+    """Raise when the database holds no holdings snapshots yet."""
+    if conn.execute("SELECT COUNT(*) FROM snapshots").fetchone()[0] == 0:
+        raise VelocityError(f"no holdings history in {DB_PATH} — run `velocity backfill` first")

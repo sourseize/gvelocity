@@ -39,3 +39,8 @@ htmlcov/
 # OS generated files
 .DS_Store
 Thumbs.db
+
+# SQLite side files (WAL mode, coming in Step 1)
+data/*.db-wal
+data/*.db-shm
+data/velocity.lock

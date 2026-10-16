@@ -2,7 +2,7 @@
 trend_follow — Trend Follower (Donchian breakout inside an established uptrend).
 
 ENTRY  close > SMA50 and SMA50 rising · close >= 55-day high (20-day for names just added
-       to an ETF) · 60-day ROC in the top half of the universe · not a gap day (< 3 sigma)
+       to the fund) · 60-day ROC in the top half of the universe · not a gap day (< 3 sigma)
        · [volume: RVOL >= 1.5 and OBV above its 20-day mean — when bars carry volume]
 STOP   volatility-scaled trailing stop (2.5 * sigma20 * sqrt(10), clamped 8–25 %)
 EXIT   close < 20-day low · 2 closes < SMA50 · [distribution day] · time stop 30 d underwater
@@ -83,9 +83,9 @@ class TrendFollow(Strategy):
             if self.vol_ok is not None:
                 reason += f" · RVOL {float(ind.at(ind.rvol(), date, t)):.1f}x"
             if meta.get("recent_add"):
-                reason += " · recent ETF add"
+                reason += " · recent add"
             out.append(EntrySignal(issuer, t, px, stop_price=px * (1 - trail), trail=trail, rank=rs,
-                                   reason=reason, etfs=meta["etfs"], checks=checks))
+                                   reason=reason, checks=checks))
         out.sort(key=lambda s: -s.rank)
         return out
 

@@ -93,7 +93,7 @@ class RangeBreakout(Strategy):
             if self.vol_ok is not None:
                 reason += f" · RVOL {float(ind.at(ind.rvol(), date, t)):.1f}x"
             out.append(EntrySignal(issuer, t, px, stop_price=ll, trail=None, target_price=target,
-                                   rank=-width, reason=reason, etfs=meta["etfs"], checks=checks,
+                                   rank=-width, reason=reason, checks=checks,
                                    meta={"breakout_level": hh, "base_low": ll}))
         out.sort(key=lambda s: -s.rank)      # tightest base first
         return out

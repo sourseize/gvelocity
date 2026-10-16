@@ -1,32 +1,20 @@
 #!/usr/bin/env python3
-"""
-Velocity — daily ETF holdings tracker + strategy session runner
-
-  velocity trading --etf ALL --paper-trade [--strategy NAME]   daily run (the main action)
-  velocity fetch --etf ALL                                     store today's holdings only
-  velocity backtest [--strategy NAME] [--save-book]            replay strategies; register the result as the book
-  velocity backfill --etf ALL --months 12                      historical holdings
-  velocity rebuild --etf ALL                                   regenerate the HTML reports
-  velocity ticker NVDA --strategy double_bottom                one ticker's signal history
-  velocity strategies                                          list strategies and parameters
-  velocity reset-book --strategy NAME                          empty a strategy's book
-
-  velocity <command> --help                                    options of a command
-"""
+"""Velocity — fund holdings tracker + paper-trading strategy runner.  `velocity <command> --help` for a command's options."""
 import argparse
 import logging
 import sqlite3
 import sys
 
-from src.commands import COMMANDS, DEFAULT_COMMAND, all_names
+from src.commands import COMMANDS
 from src.exceptions import VelocityError
+from src.lock import InstanceLock, LockHeld
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 log = logging.getLogger("velocity")
 
 
 def build_parser():
-    p = argparse.ArgumentParser(prog="velocity", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    p = argparse.ArgumentParser(prog="velocity", description=__doc__)
     p.add_argument("-v", "--verbose", action="store_true", help="Debug logging; show tracebacks for unexpected errors")
     subs = p.add_subparsers(dest="command", metavar="<command>", title="commands")
     parsers = {}
@@ -48,24 +36,8 @@ def canonical(name: str) -> str:
     return name
 
 
-def legacy_argv(argv):
-    """Pre-command invocations keep working:  `velocity.py --etf ALL --paper-trade`  ->  `trading …`
-    and  `velocity.py --list-strategies`  ->  `strategies`."""
-    if not argv:
-        return argv
-    if "--list-strategies" in argv:
-        log.info("`--list-strategies` is now `velocity strategies`")
-        return ["strategies"] + [a for a in argv if a != "--list-strategies"]
-    first = next((a for a in argv if a not in ("-v", "--verbose")), None)
-    if first is not None and first.startswith("-") and first not in ("-h", "--help"):
-        log.info("no command given — assuming `velocity %s` (say it explicitly; this fallback is for old scripts)", DEFAULT_COMMAND)
-        i = argv.index(first)
-        return argv[:i] + [DEFAULT_COMMAND] + argv[i:]
-    return argv
-
-
 def main(argv=None) -> int:
-    argv = legacy_argv(sys.argv[1:] if argv is None else list(argv))
+    argv = sys.argv[1:] if argv is None else list(argv)
     p, parsers = build_parser()
     args = p.parse_args(argv)
     if args.verbose:
@@ -79,8 +51,14 @@ def main(argv=None) -> int:
 
     if hasattr(mod, "validate"):
         mod.validate(sp, args)            # exits 2 on bad input, before any side effect
+    lock = None
     try:
+        if getattr(mod, "NEEDS_DB", True):
+            lock = InstanceLock(name).acquire()     # refused while `velocity serve` (or another command) runs
         return mod.run(args) or 0
+    except LockHeld as e:
+        log.error("%s", e)
+        return 1
     except KeyboardInterrupt:
         log.warning("interrupted — nothing further was written")
         return 130
@@ -94,6 +72,9 @@ def main(argv=None) -> int:
         log.error("unexpected error: %s: %s%s", type(e).__name__, e,
                   "" if args.verbose else " (re-run with --verbose for the traceback)", exc_info=args.verbose)
         return 1
+    finally:
+        if lock is not None:
+            lock.release()
 
 
 if __name__ == "__main__":

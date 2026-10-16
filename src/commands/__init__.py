@@ -3,33 +3,23 @@
 
 Each command is a module with:
     HELP                 one-line description for `velocity --help`
+    NEEDS_DB             optional (default True): take the instance lock — refused while `velocity serve` runs
     configure(parser)    add its arguments
     validate(parser, args)   optional: reject bad input with parser.error() BEFORE any side effect
     run(args) -> int     do the work; expected failures raise VelocityError
 """
-from . import trading, fetch, strategies, reset_book, backfill, backtest, ticker, rebuild
+from . import serve, strategies, resetbook, backfill, backtest, ticker, status
 
 #: name -> (module, aliases)
 COMMANDS = {
-    "trading":    (trading,    []),
-    "fetch":      (fetch,      []),
+    "serve":      (serve,      []),
+    "status":     (status,     []),
     "backtest":   (backtest,   []),
     "backfill":   (backfill,   []),
-    "rebuild":    (rebuild,    ["report-rebuild"]),
     "ticker":     (ticker,     []),
-    "strategies": (strategies, ["list-strategies"]),
-    "reset-book": (reset_book, []),
+    "strategies": (strategies, []),
+    "resetbook":  (resetbook,  []),
 }
 
-DEFAULT_COMMAND = "trading"
 
-
-def all_names():
-    names = []
-    for name, (_, aliases) in COMMANDS.items():
-        names.append(name)
-        names.extend(aliases)
-    return names
-
-
-__all__ = ["COMMANDS", "DEFAULT_COMMAND", "all_names"]
+__all__ = ["COMMANDS"]

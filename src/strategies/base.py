@@ -12,7 +12,7 @@ the Engine and Book do that.  Every strategy implements:
 
 Entry signals carry the risk parameters (initial stop, optional trailing fraction, optional
 target) so the Book can size the position and the Engine can manage generic exits
-(stop / trail / target / time stop / dropped-from-ETF) uniformly for every strategy.
+(stop / trail / target / time stop / dropped-from-fund) uniformly for every strategy.
 """
 from __future__ import annotations
 
@@ -37,7 +37,6 @@ class EntrySignal:
     target_price: Optional[float] = None
     rank: float = 0.0                 # higher = better; used to fill limited slots
     reason: str = ""
-    etfs: List[str] = field(default_factory=list)
     checks: Dict[str, bool] = field(default_factory=dict)
     meta: Dict[str, float] = field(default_factory=dict)   # strategy-specific levels kept on the position
 

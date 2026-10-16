@@ -3,7 +3,7 @@ engine — runs a Strategy over trading sessions against a Book.
 
 Generic, strategy-independent rules live here so every strategy gets them for free:
   * mark to market, trailing-stop ratchet
-  * exits: dropped from all tracked ETFs · close below stop · target reached · time stop
+  * exits: dropped from the fund · close below stop · target reached · time stop
   * re-entry cooldown after an exit
   * position limit + the `max_positions` policy (see MaxPositionsPolicy)
   * rising stars: signals not taken (book full / no cash) are parked in the book's watchlist,
@@ -18,12 +18,12 @@ from __future__ import annotations
 import logging
 import sqlite3
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import Callable, Dict, List, Optional
 
 import numpy as np
 import pandas as pd
 
-from .book import Book, log_session, log_signals
+from .book import Book
 from .indicators import Indicators
 from .exceptions import VelocityError
 from .market_data import Universe, load_market_bars
@@ -63,16 +63,16 @@ class EngineConfig:
 
 
 class Engine:
-    def __init__(self, strategy: Strategy, conns: Dict[str, sqlite3.Connection], cfg: EngineConfig = EngineConfig(),
-                 bars: Optional[pd.DataFrame] = None, book_conn: Optional[sqlite3.Connection] = None):
+    def __init__(self, strategy: Strategy, conn: sqlite3.Connection, cfg: EngineConfig = EngineConfig(),
+                 bars: Optional[pd.DataFrame] = None):
         self.strategy = strategy
-        self.conns = conns
+        self.conn = conn
         self.cfg = cfg
-        self.bars = bars if bars is not None else load_market_bars(conns, book_conn)
+        self.bars = bars if bars is not None else load_market_bars(conn)
         try:
             self.ind = Indicators(self.bars)
         except ValueError as e:
-            raise VelocityError(f"no price history in the ETF databases ({e}) — run `velocity backfill --etf ALL` first") from e
+            raise VelocityError(f"no price history in the database ({e}) — run `velocity backfill` first") from e
         if not self.ind.has_volume:
             log.warning("%s: bars carry no volume — volume rules are inactive (price-only mode)", strategy.name)
         self.dates: List[str] = self.ind.dates
@@ -80,11 +80,11 @@ class Engine:
         if len(self.dates) < need:
             msg = (f"{strategy.name}: only {len(self.dates)} sessions of price history ({self.dates[0]} → {self.dates[-1]}) "
                    f"but the strategy needs {need} bars of warm-up with the current parameters — its entry rules cannot "
-                   f"fire until the history is deeper (`velocity backfill --etf ALL --months N`)")
+                   f"fire until the history is deeper (`velocity backfill --months N`)")
             if cfg.short_history == "error":
                 raise VelocityError(msg)
             log.warning(msg)
-        self.universe = Universe(conns, self.dates)
+        self.universe = Universe(conn, self.dates)
         strategy.prepare(self.ind, self.universe)
 
     # ── helpers ──
@@ -117,7 +117,7 @@ class Engine:
             px = pos.last_price
             reason = None
             if issuer not in univ:
-                reason = "dropped from all tracked ETFs"
+                reason = "dropped from the fund"
             elif px < pos.stop_price:
                 reason = (f"trailing stop {pos.trail:.0%} (stop {pos.stop_price:.2f})" if pos.trail
                           else f"stop {pos.stop_price:.2f} hit")
@@ -158,9 +158,9 @@ class Engine:
             unfilled = self._execute(book, date, list(exits.values()), entries, fill)
             entries = [s for s in entries if s not in unfilled]
             for s in skipped:
-                book.note_rising(s.issuer, s.ticker, date, s.ref_price, s.rank, s.reason, "book full", s.etfs)
+                book.note_rising(s.issuer, s.ticker, date, s.ref_price, s.rank, s.reason, "book full")
             for s in unfilled:
-                book.note_rising(s.issuer, s.ticker, date, s.ref_price, s.rank, s.reason, "capital exhausted", s.etfs)
+                book.note_rising(s.issuer, s.ticker, date, s.ref_price, s.rank, s.reason, "capital exhausted")
             skipped = skipped + unfilled
             book.prune_rising(date, self.dates, cfg.rising_max_age)
             book.last_date = date
@@ -188,21 +188,22 @@ class Engine:
             # keep the stop/target levels as signalled; re-anchor a trailing stop to the actual fill
             stop = s.stop_price if s.trail is None else max(s.stop_price, px * (1 - s.trail))
             if book.open(s.issuer, s.ticker, px, fill_date, dollars, cfg.commission, stop, s.trail, s.target_price,
-                         s.reason, s.etfs, s.meta) is None:
+                         s.reason, s.meta) is None:
                 unfilled.append(s)
         return unfilled
 
     # ── backtest ──
     def backtest(self, start: str, end: str, fill: str = "next", capital: float = 100000.0,
-                 log_conn: Optional[sqlite3.Connection] = None) -> Book:
-        """Replay every session in [start, end] into a fresh book.  With `log_conn` each session is
-        written to the `sessions` audit table (used when a backtest is registered as the live book)."""
+                 on_session: Optional[Callable[[str, dict, Book], None]] = None) -> Book:
+        """Replay every session in [start, end] into a fresh book.  `on_session(date, result, book)`
+        is called after each session (used to record the audit trail when a backtest is registered
+        as the live book)."""
         book = Book(self.strategy.name, capital)
         for d in self.dates:
             if start <= d <= end:
                 res = self.step(book, d, fill=fill, execute=True)
-                if log_conn is not None:
-                    log_session(log_conn, self.strategy.name, d, res, book)
+                if on_session is not None:
+                    on_session(d, res, book)
         return book
 
     # ── signal snapshot for the audit log / report ──
@@ -225,10 +226,10 @@ class Engine:
         return rows
 
     # ── live session ──
-    def run_session(self, book: Book, date: str, log_conn: Optional[sqlite3.Connection] = None) -> dict:
-        """Evaluate one live session, booking today's close as the reference fill.  Idempotent per date.
-        With `log_conn`, the session result and the per-ticker signal states are written to the
-        `sessions` / `signals` tables (the audit trail)."""
+    def run_session(self, book: Book, date: str) -> dict:
+        """Evaluate one live session in memory, booking today's close as the reference fill.
+        Idempotent per date.  Nothing is written: the result carries the per-ticker signal states
+        (`signals`) and `services.session.persist_session` stores result + book atomically."""
         if book.last_date == date:
             log.info("[%s] %s already processed — skipping", self.strategy.name, date)
             return {"date": date, "exits": [], "entries": [], "replaced": [], "skipped": [], "skipped_session": True}
@@ -236,9 +237,7 @@ class Engine:
             log.warning("[%s] %s not in bar data", self.strategy.name, date)
             return {"date": date, "exits": [], "entries": [], "replaced": [], "skipped": [], "skipped_session": True}
         res = self.step(book, date, fill="same", execute=True)
-        if log_conn is not None:
-            log_session(log_conn, self.strategy.name, date, res, book)
-            log_signals(log_conn, self.strategy.name, date, self.signal_rows(book, date))
+        res["signals"] = self.signal_rows(book, date)
         for e in res["exits"]:
             log.info("[%s] SELL %-6s @ %.2f — %s", self.strategy.name, e.ticker, e.ref_price, e.reason)
         for s in res["entries"]:

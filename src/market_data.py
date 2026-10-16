@@ -2,20 +2,18 @@
 market_data — price bars and the tradeable universe.
 
 Bars come from one of two places:
-  * `daily_bars` table (OHLCV with volume, split-adjusted) — filled by `fetch_daily_bars()`
-    from Alpaca Market Data; this enables the volume rules of every strategy.
-  * fallback: the BlackRock valuation price in the `holdings` tables of all tracked ETFs,
-    merged into one close series per ticker and split-adjusted (price / k with shares * k
-    on the same day is a split, not a crash).
+  * `daily_bars` table (OHLCV with volume, split-adjusted) — optional, filled by an external
+    provider through `store_bars()`; this enables the volume rules of every strategy.
+  * fallback: the BlackRock valuation price in the `holdings` table, one close series per
+    ticker, split-adjusted (price / k with shares * k on the same day is a split, not a crash).
 
 The universe is issuer-level: GOOG and GOOGL are one company and may be held once.
 """
 from __future__ import annotations
 
-import datetime as _dt
 import logging
 import sqlite3
-from typing import Dict, Iterable, List, Optional
+from typing import Dict, List, Optional
 
 import pandas as pd
 
@@ -38,17 +36,13 @@ def is_tradeable_symbol(ticker: str) -> bool:
 
 
 # ── bars ────────────────────────────────────────────────────────────────────
-def bars_from_holdings(conns: Dict[str, sqlite3.Connection]) -> pd.DataFrame:
-    """Long DataFrame(date, ticker, close) from the holdings tables, split-adjusted."""
-    frames = [pd.read_sql(
-        "SELECT snapshot_date AS date, ticker, price AS close, shares FROM holdings "
-        "WHERE price IS NOT NULL AND price > 0", conn) for conn in conns.values()]
+def bars_from_holdings(conn: sqlite3.Connection) -> pd.DataFrame:
+    """Long DataFrame(date, ticker, close) from the holdings table, split-adjusted."""
+    h = pd.read_sql("SELECT snapshot_date AS date, ticker, price AS close, shares FROM holdings "
+                    "WHERE price IS NOT NULL AND price > 0", conn)
     cols = ["date", "ticker", "close"]
-    if not frames:
-        return pd.DataFrame(columns=cols)
-    h = pd.concat(frames, ignore_index=True)
     h = h[h.ticker.map(is_tradeable_symbol)]
-    if h.empty:                       # databases exist but hold no priced holdings rows
+    if h.empty:                       # database exists but holds no priced holdings rows
         return pd.DataFrame(columns=cols)
     h = h.sort_values("shares").drop_duplicates(["date", "ticker"], keep="last")
     close = h.pivot(index="date", columns="ticker", values="close").sort_index()
@@ -76,34 +70,14 @@ CREATE INDEX IF NOT EXISTS idx_bars_ticker ON daily_bars(ticker);
 """
 
 
-def fetch_daily_bars(tickers: Iterable[str], start: _dt.date, end: Optional[_dt.date] = None,
-                     api_key: str = "", secret_key: str = "") -> pd.DataFrame:
-    """Daily OHLCV from Alpaca Market Data (free IEX feed), split/dividend adjusted."""
-    from alpaca.data.historical import StockHistoricalDataClient
-    from alpaca.data.requests import StockBarsRequest
-    from alpaca.data.timeframe import TimeFrame
-    from alpaca.data.enums import Adjustment, DataFeed
-    client = StockHistoricalDataClient(api_key or None, secret_key or None)
-    tickers = sorted({t for t in tickers if is_tradeable_symbol(t)})
-    frames = []
-    for j in range(0, len(tickers), 200):
-        req = StockBarsRequest(symbol_or_symbols=tickers[j:j + 200], timeframe=TimeFrame.Day,
-                               start=start, end=end, adjustment=Adjustment.ALL, feed=DataFeed.IEX)
-        df = client.get_stock_bars(req).df
-        if df.empty:
-            continue
-        df = df.reset_index().rename(columns={"symbol": "ticker", "timestamp": "date"})
-        df["date"] = pd.to_datetime(df["date"]).dt.date.astype(str)
-        frames.append(df[["date", "ticker", "open", "high", "low", "close", "volume"]])
-    cols = ["date", "ticker", "open", "high", "low", "close", "volume"]
-    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame(columns=cols)
-
-
 def store_bars(conn: sqlite3.Connection, bars: pd.DataFrame) -> int:
-    conn.executescript(BARS_SCHEMA)
+    from .database import transaction
     rows = bars[["date", "ticker", "open", "high", "low", "close", "volume"]].itertuples(index=False, name=None)
-    cur = conn.executemany("INSERT OR REPLACE INTO daily_bars VALUES (?,?,?,?,?,?,?)", rows)
-    conn.commit()
+    with transaction(conn):
+        for stmt in BARS_SCHEMA.split(";"):
+            if stmt.strip():
+                conn.execute(stmt)
+        cur = conn.executemany("INSERT OR REPLACE INTO daily_bars VALUES (?,?,?,?,?,?,?)", rows)
     return cur.rowcount
 
 
@@ -115,19 +89,18 @@ def load_bars(conn: sqlite3.Connection) -> Optional[pd.DataFrame]:
     return df if len(df) else None
 
 
-def load_market_bars(conns: Dict[str, sqlite3.Connection], book_conn: Optional[sqlite3.Connection] = None) -> pd.DataFrame:
-    """Prefer real OHLCV bars from the book DB; fall back to the holdings prices."""
-    if book_conn is not None:
-        bars = load_bars(book_conn)
-        if bars is not None:
-            log.info("using %d OHLCV bars from daily_bars", len(bars))
-            return bars
-    return bars_from_holdings(conns)
+def load_market_bars(conn: sqlite3.Connection) -> pd.DataFrame:
+    """Prefer real OHLCV bars (`daily_bars`); fall back to the holdings prices."""
+    bars = load_bars(conn)
+    if bars is not None:
+        log.info("using %d OHLCV bars from daily_bars", len(bars))
+        return bars
+    return bars_from_holdings(conn)
 
 
 # ── universe ────────────────────────────────────────────────────────────────
 def membership_start(conn: sqlite3.Connection) -> Dict[str, str]:
-    """Start date of each ticker's CURRENT membership spell in an ETF."""
+    """Start date of each ticker's CURRENT membership spell in the fund."""
     dates = [r[0] for r in conn.execute("SELECT fetch_date FROM snapshots ORDER BY fetch_date")]
     idx = {d: i for i, d in enumerate(dates)}
     rows = conn.execute("SELECT ticker, snapshot_date FROM holdings ORDER BY ticker, snapshot_date").fetchall()
@@ -144,32 +117,31 @@ def membership_start(conn: sqlite3.Connection) -> Dict[str, str]:
 
 
 class Universe:
-    """Issuer-level membership of all tracked ETFs, per date."""
+    """Issuer-level membership of the fund, per date."""
 
-    def __init__(self, conns: Dict[str, sqlite3.Connection], dates: List[str], recent_add_days: int = 20):
-        self.conns = conns
+    def __init__(self, conn: sqlite3.Connection, dates: List[str], recent_add_days: int = 20):
+        self.conn = conn
         self.dates = dates
         self.recent_add_days = recent_add_days
-        self.starts = {etf: membership_start(c) for etf, c in conns.items()}
+        self.starts = membership_start(conn)
         self._cache: Dict[str, Dict[str, dict]] = {}
 
     def on(self, date: str) -> Dict[str, dict]:
-        """{issuer: {"ticker", "etfs", "recent_add"}} for holdings on `date`."""
+        """{issuer: {"ticker", "recent_add"}} for holdings on `date`.  Share classes of one
+        issuer (GOOG/GOOGL) collapse to one entry; `recent_add` is true when the ticker joined
+        the fund within the last `recent_add_days` sessions."""
         if date in self._cache:
             return self._cache[date]
         univ: Dict[str, dict] = {}
         i = self.dates.index(date) if date in self.dates else None
-        for etf, conn in self.conns.items():
-            for (t,) in conn.execute("SELECT ticker FROM holdings WHERE snapshot_date=?", (date,)):
-                if not is_tradeable_symbol(t):
-                    continue
-                k = issuer_key(t)
-                fs = self.starts.get(etf, {}).get(t)
-                recent = bool(i is not None and fs and fs in self.dates and fs != self.dates[0]
-                              and i - self.dates.index(fs) <= self.recent_add_days)
-                e = univ.setdefault(k, {"ticker": t, "etfs": [], "recent_add": False})
-                if etf not in e["etfs"]:
-                    e["etfs"].append(etf)
-                e["recent_add"] = e["recent_add"] or recent
+        for (t,) in self.conn.execute("SELECT ticker FROM holdings WHERE snapshot_date=?", (date,)):
+            if not is_tradeable_symbol(t):
+                continue
+            k = issuer_key(t)
+            fs = self.starts.get(t)
+            recent = bool(i is not None and fs and fs in self.dates and fs != self.dates[0]
+                          and i - self.dates.index(fs) <= self.recent_add_days)
+            e = univ.setdefault(k, {"ticker": t, "recent_add": False})
+            e["recent_add"] = e["recent_add"] or recent
         self._cache[date] = univ
         return univ

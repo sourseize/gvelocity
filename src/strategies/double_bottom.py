@@ -136,7 +136,7 @@ class DoubleBottom(Strategy):
             depth = nl / lo - 1
             reason = f"double bottom {lo:.2f} / neckline {nl:.2f} ({depth:.0%} deep) · stop {stop:.2f} · target {target:.2f}"
             out.append(EntrySignal(issuer, t, px, stop_price=stop, trail=None, target_price=target,
-                                   rank=depth, reason=reason, etfs=meta["etfs"], checks=checks,
+                                   rank=depth, reason=reason, checks=checks,
                                    meta={"neckline": nl, "pattern_low": lo}))
         out.sort(key=lambda s: -s.rank)      # deepest pattern first
         return out

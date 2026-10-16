@@ -1,0 +1,19 @@
+# systemd unit for Velocity — adjust the two paths, then:
+#   sudo cp deploy/velocity.service /etc/systemd/system/ && sudo systemctl daemon-reload
+#   sudo systemctl enable --now velocity && journalctl -u velocity -f
+# To use the CLI (backfill / backtest / resetbook): systemctl stop velocity, run it, systemctl start velocity.
+[Unit]
+Description=Velocity — fund holdings paper trader and web pages
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+WorkingDirectory=/home/you/velocity
+ExecStart=/home/you/velocity/.venv/bin/python velocity.py serve --strategy trend_follow --poll-frequency 10 --host 127.0.0.1 --port 8787
+Restart=always
+RestartSec=10
+TimeoutStopSec=60
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=multi-user.target
