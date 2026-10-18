@@ -8,16 +8,16 @@ Each command is a module with:
     validate(parser, args)   optional: reject bad input with parser.error() BEFORE any side effect
     run(args) -> int     do the work; expected failures raise VelocityError
 """
-from . import serve, strategies, resetbook, backfill, backtest, ticker, status
+from . import serve, resetbook, backfill, backtest, signals, ticker, status
 
 #: name -> (module, aliases)
 COMMANDS = {
     "serve":      (serve,      []),
     "status":     (status,     []),
     "backtest":   (backtest,   []),
+    "signals":    (signals,    []),
     "backfill":   (backfill,   []),
     "ticker":     (ticker,     []),
-    "strategies": (strategies, []),
     "resetbook":  (resetbook,  []),
 }
 

@@ -2,13 +2,13 @@
 velocity serve — run Velocity 24×7: poll for new holdings, run the strategy's sessions, serve the
 web pages.
 
-  velocity serve                                   # trend_follow, poll every 10 min, http://127.0.0.1:8787/
-  velocity serve --strategy range_breakout --poll-frequency 5 --port 9000
-  velocity serve --strategy trend_follow --param breakout_len=40 --max-positions 30 --accept-param-change
+  velocity serve                                   # poll every 10 min, http://127.0.0.1:8787/
+  velocity serve --poll-frequency 5 --port 9000
+  velocity serve --param breakout_len=40 --max-positions 30 --accept-param-change
 
-ONE strategy is live per run; change it (or any setting) by restarting.  The settings must match
-the ones the book's last session ran with — otherwise `serve` refuses, unless
---accept-param-change is given (the change is then recorded on every following session).
+Change any setting by restarting.  The settings must match the ones the book's last session ran
+with — otherwise `serve` refuses, unless --accept-param-change is given (the change is then
+recorded on every following session).
 
 While it runs it holds the instance lock: the CLI commands that need the database are refused
 until it is stopped (Ctrl-C / SIGTERM; the current cycle finishes first).
@@ -20,8 +20,8 @@ import threading
 from ..scheduler import Scheduler, record_start, record_stop
 from ..web.server import WebServer
 from ..exceptions import VelocityError
-from ..strategies import get_strategy
-from ._common import (add_strategy_args, add_engine_args, engine_config, check_strategy_params, check_db, open_db,
+from ..strategy import make_strategy
+from ._common import (add_param_arg, add_engine_args, engine_config, check_strategy_params, check_db, open_db,
                       require_history)
 
 log = logging.getLogger(__name__)
@@ -29,7 +29,7 @@ HELP = "Run 24x7: poll for new holdings every N minutes, run the strategy's sess
 
 
 def configure(p) -> None:
-    add_strategy_args(p)
+    add_param_arg(p)
     add_engine_args(p)
     p.add_argument("--poll-frequency", type=float, default=10.0, metavar="MINUTES",
                    help="Minutes between holdings polls, round the clock (default: 10)")
@@ -56,15 +56,15 @@ def run(args) -> int:
     conn = open_db(must_exist=True)
     try:
         require_history(conn)
-        strategy = get_strategy(args.strategy, **args.params)
+        strategy = make_strategy(**args.params)
         cfg = engine_config(args)
-        sched = Scheduler(conn, strategy.name, args.params, cfg, args.capital,
+        sched = Scheduler(conn, args.params, cfg, args.capital,
                           poll_frequency=args.poll_frequency, catchup=not args.no_catchup)
         sched.check_settings(accept_change=args.accept_param_change)      # raises ParamsChanged -> exit 1
         record_start(conn, strategy, cfg, args.capital, args.poll_frequency)
         log.info("serve: %s (%s) · poll every %g min · %s", strategy.label, strategy.name, args.poll_frequency,
-                 f"max {cfg.max_positions} positions ({cfg.policy.mode}), ${cfg.max_amount:,.0f}/issuer, "
-                 f"risk {cfg.risk_per_trade:.2%}")
+                 f"{cfg.max_positions} positions ({cfg.policy.mode}) x {(1 - cfg.cash_reserve) / cfg.max_positions:.1%} of equity, "
+                 f"cash reserve {cfg.cash_reserve:.0%}")
         if args.once:
             sched.cycle()
             return 0

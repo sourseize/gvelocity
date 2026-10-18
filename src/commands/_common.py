@@ -7,12 +7,11 @@ import argparse
 import math
 import sqlite3
 
-from ..config import (DB_PATH, INITIAL_CAPITAL, MAX_PURCHASE_AMOUNT, MAX_POSITIONS, RISK_PER_TRADE,
-                      COMMISSION_PER_TRADE)
+from ..config import DB_PATH, INITIAL_CAPITAL, MAX_POSITIONS, CASH_RESERVE, COMMISSION_PER_TRADE
 from ..database import get_db, SchemaTooNew
 from ..engine import EngineConfig, MaxPositionsPolicy
 from ..exceptions import VelocityError
-from ..strategies import get_strategy, available, parse_params, DEFAULT_STRATEGY
+from ..strategy import make_strategy, parse_params
 
 
 # ── argparse types ──
@@ -31,13 +30,13 @@ def positive(kind):
 
 
 def fraction(text):
-    """argparse type: a number in (0, 1]."""
+    """argparse type: a number in [0, 1)."""
     try:
         v = float(text)
     except ValueError:
         raise argparse.ArgumentTypeError(f"expected a number, got {text!r}")
-    if not math.isfinite(v) or not 0 < v <= 1:
-        raise argparse.ArgumentTypeError(f"must be between 0 and 1, got {text!r}")
+    if not math.isfinite(v) or not 0 <= v < 1:
+        raise argparse.ArgumentTypeError(f"must be between 0 and 1 (exclusive), got {text!r}")
     return v
 
 
@@ -52,23 +51,20 @@ def iso_date(text):
 
 
 # ── common argument groups ──
-def add_strategy_args(p: argparse.ArgumentParser, params: bool = True, allow_all: bool = False) -> None:
-    choices = available() + (["all"] if allow_all else [])
-    p.add_argument("--strategy", choices=choices, default="all" if allow_all else DEFAULT_STRATEGY,
-                   help=f"Strategy (default: {'all' if allow_all else DEFAULT_STRATEGY})")
-    if params:
-        p.add_argument("--param", action="append", default=[], metavar="KEY=VALUE",
-                       help="Override a strategy parameter (repeatable), e.g. --param breakout_len=40")
+def add_param_arg(p: argparse.ArgumentParser) -> None:
+    p.add_argument("--param", action="append", default=[], metavar="KEY=VALUE",
+                   help="Override a strategy parameter (repeatable), e.g. --param breakout_len=40")
 
 
 def add_engine_args(p: argparse.ArgumentParser, rising_choice: bool = False) -> None:
-    """Book / risk / position-limit settings (the same on `backtest` and `serve`)."""
+    """Book / sizing / position-limit settings (the same on `backtest` and `serve`)."""
     p.add_argument("--capital", type=positive(float), default=INITIAL_CAPITAL, help="Book capital when first created")
-    p.add_argument("--max-purchase-amount", type=positive(float), default=MAX_PURCHASE_AMOUNT, help="Hard $ cap per issuer")
-    p.add_argument("--max-positions", type=positive(int), default=MAX_POSITIONS, help="Open positions per book")
+    p.add_argument("--max-positions", type=positive(int), default=MAX_POSITIONS,
+                   help=f"Open positions in the book; each gets an equal share of the investable equity (default {MAX_POSITIONS})")
+    p.add_argument("--cash-reserve", type=fraction, default=CASH_RESERVE,
+                   help=f"Share of equity kept in cash and never invested (default {CASH_RESERVE:.2f})")
     p.add_argument("--max-positions-policy", choices=["skip", "replace"], default="skip",
                    help="When the book is full: skip new signals, or replace the weakest losing position")
-    p.add_argument("--risk-per-trade", type=fraction, default=RISK_PER_TRADE, help="Fraction of equity at risk per trade (0–1]")
     if rising_choice:
         p.add_argument("--rising-priority", choices=["on", "off"], default=None,
                        help="give waiting rising stars priority for free slots (default: engine default)")
@@ -78,8 +74,7 @@ def add_engine_args(p: argparse.ArgumentParser, rising_choice: bool = False) -> 
 
 
 def engine_config(args, short_history: str = "warn") -> EngineConfig:
-    cfg = EngineConfig(max_positions=args.max_positions, max_amount=args.max_purchase_amount,
-                       risk_per_trade=args.risk_per_trade, commission=COMMISSION_PER_TRADE,
+    cfg = EngineConfig(max_positions=args.max_positions, cash_reserve=args.cash_reserve, commission=COMMISSION_PER_TRADE,
                        policy=MaxPositionsPolicy(mode=args.max_positions_policy), short_history=short_history)
     rp = getattr(args, "rising_priority", None)
     if isinstance(rp, str):
@@ -94,8 +89,7 @@ def check_strategy_params(p: argparse.ArgumentParser, args) -> dict:
     """Build the strategy once to surface unknown/ill-typed --param values as a usage error."""
     try:
         params = parse_params(getattr(args, "param", []))
-        if getattr(args, "strategy", None) not in (None, "all"):
-            get_strategy(args.strategy, **params)
+        make_strategy(**params)
     except ValueError as e:
         p.error(str(e))
     return params
@@ -120,7 +114,7 @@ def check_db(p: argparse.ArgumentParser) -> None:
 def open_db(must_exist: bool = False) -> sqlite3.Connection:
     """Connection to data/velocity.db (created with the holdings schema when missing)."""
     if must_exist and not DB_PATH.exists():
-        raise VelocityError(f"no database at {DB_PATH} yet — run `velocity backfill` (or `velocity fetch`) first")
+        raise VelocityError(f"no database at {DB_PATH} yet — run `velocity backfill` first")
     if DB_PATH.exists() and not is_sqlite_file(DB_PATH):
         raise VelocityError(f"database {DB_PATH} is not a SQLite database — restore it or move it aside")
     try:

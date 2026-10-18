@@ -9,7 +9,7 @@ Wants=network-online.target
 
 [Service]
 WorkingDirectory=/home/you/velocity
-ExecStart=/home/you/velocity/.venv/bin/python velocity.py serve --strategy trend_follow --poll-frequency 10 --host 127.0.0.1 --port 8787
+ExecStart=/home/you/velocity/.venv/bin/python velocity.py serve --poll-frequency 10 --host 127.0.0.1 --port 8787
 Restart=always
 RestartSec=10
 TimeoutStopSec=60

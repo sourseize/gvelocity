@@ -1,6 +1,6 @@
 """
 Descriptive per-holding metrics (price ROC, weight rank, 52-week drawdown), as of the date analysed.
-Trading signals are NOT produced here — see src/strategies/.
+Trading signals are NOT produced here — see src/strategy.py.
 """
 
 import math
@@ -56,69 +56,42 @@ def momentum_consistency(prices: list[float], lag: int = 4) -> Optional[float]:
     return hits / (len(prices) - lag)
 
 
+class DayWeights:
+    """The weight distribution of one snapshot, computed once per day and shared by every holding
+    (percentile and z-score of a ticker's weight among all holdings that day)."""
+
+    def __init__(self, conn, today: str):
+        self.w = {r["ticker"]: r["weight_pct"] for r in conn.execute(
+            "SELECT ticker, weight_pct FROM holdings WHERE snapshot_date=? AND weight_pct IS NOT NULL", (today,))}
+        self.sorted = sorted(self.w.values())
+        n = len(self.sorted)
+        self.mean = sum(self.sorted) / n if n else None
+        var = sum((x - self.mean) ** 2 for x in self.sorted) / n if n else 0.0
+        self.std = math.sqrt(var) if var else None
+
+    def percentile(self, ticker: str) -> Optional[float]:
+        """Percentile (0-100) of the ticker's weight among all holdings of the day."""
+        if len(self.sorted) < 2 or ticker not in self.w:
+            return None
+        import bisect
+        below = bisect.bisect_left(self.sorted, self.w[ticker])
+        return below / len(self.sorted) * 100
+
+    def zscore(self, ticker: str) -> Optional[float]:
+        if len(self.sorted) < 2 or ticker not in self.w or not self.std:
+            return None
+        return (self.w[ticker] - self.mean) / self.std
+
+
 def weight_percentile(conn, ticker: str, today: str) -> Optional[float]:
-    """
-    Calculate weight percentile among all holdings for a given date.
-
-    Args:
-        conn: Database connection
-        ticker: Ticker symbol
-        today: Date in YYYY-MM-DD format
-
-    Returns:
-        Percentile (0-100) or None if insufficient data
-    """
-    all_weights = [r["weight_pct"] for r in conn.execute(
-        "SELECT weight_pct FROM holdings WHERE snapshot_date=? AND weight_pct IS NOT NULL", (today,)
-    )]
-
-    if len(all_weights) < 2:
-        return None
-
-    my_weight = conn.execute(
-        "SELECT weight_pct FROM holdings WHERE snapshot_date=? AND ticker=?", (today, ticker)
-    ).fetchone()
-
-    if not my_weight:
-        return None
-
-    below = sum(1 for w in all_weights if w < my_weight["weight_pct"])
-    return (below / len(all_weights)) * 100
+    return DayWeights(conn, today).percentile(ticker)
 
 
 def weight_zscore(conn, ticker: str, today: str) -> Optional[float]:
-    """
-    Calculate weight z-score: (weight - mean) / stddev
-
-    Args:
-        conn: Database connection
-        ticker: Ticker symbol
-        today: Date in YYYY-MM-DD format
-
-    Returns:
-        Z-score or None if insufficient data or zero stddev
-    """
-    all_weights = [r["weight_pct"] for r in conn.execute(
-        "SELECT weight_pct FROM holdings WHERE snapshot_date=? AND weight_pct IS NOT NULL", (today,)
-    )]
-
-    if len(all_weights) < 2:
-        return None
-
-    mean = sum(all_weights) / len(all_weights)
-    variance = sum((w - mean) ** 2 for w in all_weights) / len(all_weights)
-    if variance == 0:
-        return None
-
-    std_dev = math.sqrt(variance)
-    my_weight = conn.execute(
-        "SELECT weight_pct FROM holdings WHERE snapshot_date=? AND ticker=?", (today, ticker)
-    ).fetchone()
-
-    return ((my_weight["weight_pct"] - mean) / std_dev) if my_weight else None
+    return DayWeights(conn, today).zscore(ticker)
 
 
-def compute_metrics(conn, ticker: str, today: str) -> dict:
+def compute_metrics(conn, ticker: str, today: str, weights: Optional[DayWeights] = None) -> dict:
     """
     Calculate all metrics for a given ticker and date.
 
@@ -126,10 +99,12 @@ def compute_metrics(conn, ticker: str, today: str) -> dict:
         conn: Database connection
         ticker: Ticker symbol
         today: Date in YYYY-MM-DD format
+        weights: the day's DayWeights (computed once per day by the caller; built here when omitted)
 
     Returns:
         Dictionary of calculated metrics
     """
+    weights = weights or DayWeights(conn, today)
     # Get daily and weekly history up to `today`
     dh = daily_history(conn, ticker, 25, asof=today)
     wh = weekly_history(conn, ticker, 52, asof=today)
@@ -191,8 +166,8 @@ def compute_metrics(conn, ticker: str, today: str) -> dict:
         "price_roc_10d": roc(dp, 10) if len(dp) > 10 else None,
         "price_roc_20d": roc(dp, 20) if len(dp) > 20 else None,
         "price_roc_52w": roc(wp, 51) if len(wp) > 51 else None,
-        "weight_percentile": weight_percentile(conn, ticker, today),
-        "weight_zscore": weight_zscore(conn, ticker, today),
+        "weight_percentile": weights.percentile(ticker),
+        "weight_zscore": weights.zscore(ticker),
         "drawdown_from_52w_high": max_drawdown(wp) if wp else None,
         "momentum_consistency": momentum_consistency(wp),
         "daily_history": dh[:20],  # Last 20 days for display

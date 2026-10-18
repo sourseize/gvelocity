@@ -10,7 +10,7 @@ from dataclasses import asdict
 from typing import Callable, Optional
 
 from ..book import Book, log_session
-from ..database import transaction
+from ..database import transaction, set_meta
 from ..engine import Engine
 from ..exceptions import VelocityError
 
@@ -31,6 +31,7 @@ def reset(conn: sqlite3.Connection, strategy: str, capital: float) -> Book:
         Book.delete(conn, strategy)
         conn.execute("DELETE FROM sessions WHERE strategy=?", (strategy,))
         conn.execute("DELETE FROM signals WHERE strategy=?", (strategy,))
+        set_meta(conn, "last_session_date", None)
     if old.last_date or old.trades:
         log.info("[%s] book reset: dropped %d trades, %d open positions (last session %s)",
                  strategy, len(old.trades), len(old.positions), old.last_date)

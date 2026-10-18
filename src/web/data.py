@@ -4,7 +4,7 @@ Read side of the web service.
 Every request opens its own read-only connection (`database.connect(readonly=True)`): request
 handlers cannot write, and they never touch the poller's writer connection.  The only shared
 object is `scheduler.state` (an immutable `MarketState`), used for the prepared strategy
-(`explain()` is pure reads on precomputed frames) and the bar history on the ticker page.
+(`explain()` is pure reads on precomputed frames), the bar history and the benchmark series.
 
 Historical days are rendered from the audit tables (`signals`, `sessions.rising_json`) so they
 show the state as it was; the latest day — if its session has not run yet — is explained live.
@@ -16,12 +16,15 @@ import sqlite3
 import threading
 from typing import Optional
 
+import numpy as np
+
+from .. import analytics
 from ..book import Book
 from ..config import DB_PATH
 from ..database import connect, all_dates, latest_date, get_meta
 from ..day_data import build_day_data
-from ..reporter import day_log_entry
 from ..scheduler import MarketState
+from .html import day_log_entry
 
 
 def ro() -> sqlite3.Connection:
@@ -104,6 +107,71 @@ class DayEntryCache:
             self._d.clear()
 
 
+# ── the book's performance view ──
+def book_view(conn, state: Optional[MarketState], book: Book) -> dict:
+    """Everything the book page shows: performance vs the fund, trade statistics, positions with
+    sector / stop distance / weight, sector exposure."""
+    bench = state.bench if state is not None else None
+    perf = analytics.performance(book, bench)
+    sectors = analytics.sector_map(conn)
+    trades = analytics.trade_stats(book, sectors)
+    tv = book.total_value() or 1.0
+    index = state.engine.index if state is not None else {}
+    positions = []
+    for p in sorted(book.positions.values(), key=lambda p: p.entry_date):
+        value = p.shares * p.last_price
+        positions.append({"ticker": p.ticker, "sector": sectors.get(p.ticker, ""), "entry_date": p.entry_date,
+                          "days": p.days_held(book.last_date or p.entry_date, index), "entry_price": p.entry_price,
+                          "last_price": p.last_price, "pnl_pct": p.pnl_pct, "pnl": (p.last_price - p.entry_price) * p.shares,
+                          "value": value, "weight": value / tv, "stop": p.stop_price,
+                          "stop_distance": (p.last_price - p.stop_price) / p.last_price if p.last_price else 0.0,
+                          "trail": p.trail, "target": p.target_price, "highest": p.highest_close})
+    by_sector: dict = {}
+    for p in positions:
+        by_sector[p["sector"] or "—"] = by_sector.get(p["sector"] or "—", 0.0) + p["weight"]
+    sector_exposure = sorted(by_sector.items(), key=lambda kv: -kv[1])
+    open_risk = sum(max(0.0, (p["last_price"] - p["stop"])) / p["last_price"] * p["value"] for p in positions if p["last_price"]) / tv
+    return {"book": book, "perf": perf, "trades": trades, "positions": positions, "sector_exposure": sector_exposure,
+            "open_risk": open_risk, "exposure": book.exposure(), "cash": book.cash, "equity": tv}
+
+
+def ticker_view(state: MarketState, book: Optional[Book], t: str) -> Optional[dict]:
+    """Price history, SMA, the book's trades in the ticker and the strategy's signal history."""
+    ind, strategy = state.engine.ind, state.strategy
+    if t not in ind.tickers:
+        return None
+    closes = ind.close[t].dropna()
+    sma = ind.sma(strategy.p["sma_len"])[t].reindex(closes.index)
+    history = [{"date": d, "close": float(c), **strategy.explain(d, t)} for d, c in closes.items()]
+    trades = [vars(x) for x in (book.trades if book else []) if x.ticker == t]
+    pos = None
+    if book is not None:
+        from ..market_data import issuer_key
+        p = book.positions.get(issuer_key(t))
+        if p is not None and p.ticker == t:
+            pos = vars(p)
+    return {"ticker": t, "dates": list(closes.index), "close": [float(c) for c in closes.values],
+            "sma": [float(v) if v == v else float("nan") for v in sma.values], "history": history, "trades": trades,
+            "position": pos, "sma_len": strategy.p["sma_len"]}
+
+
+class SignalQualityCache:
+    """The signal-quality table per market state (it takes ~1 s to compute)."""
+    def __init__(self):
+        self._key = None
+        self._rows = None
+        self._lock = threading.Lock()
+
+    def get(self, state: MarketState) -> list[dict]:
+        with self._lock:
+            if self._key == state.built_at and self._rows is not None:
+                return self._rows
+        rows = analytics.signal_quality(state.engine.ind, analytics.strategy_rules(state.strategy))
+        with self._lock:
+            self._key, self._rows = state.built_at, rows
+        return rows
+
+
 def status_payload(conn, state: Optional[MarketState]) -> dict:
     latest = latest_date(conn)
     fetched_at = conn.execute("SELECT fetched_at FROM snapshots WHERE fetch_date=?", (latest,)).fetchone() if latest else None
@@ -124,3 +192,19 @@ def status_payload(conn, state: Optional[MarketState]) -> dict:
 def fetch_log(conn, n: int = 20) -> list[dict]:
     return [dict(r) for r in conn.execute(
         "SELECT attempted_at, outcome, holdings_date, http_status, ms, message FROM fetch_log ORDER BY id DESC LIMIT ?", (n,))]
+
+
+def jsonable(obj):
+    """Make analytics output JSON-serialisable (pandas series -> lists, numpy -> python)."""
+    import pandas as pd
+    if isinstance(obj, dict):
+        return {k: jsonable(v) for k, v in obj.items() if k != "book"}
+    if isinstance(obj, (list, tuple)):
+        return [jsonable(v) for v in obj]
+    if isinstance(obj, pd.Series):
+        return [{"date": d, "value": float(v)} for d, v in obj.items()]
+    if isinstance(obj, (np.floating, np.integer)):
+        return obj.item()
+    if isinstance(obj, float) and obj != obj:
+        return None
+    return obj

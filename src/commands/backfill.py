@@ -13,7 +13,7 @@ Usage:
 
 Existing data is KEPT by default: dates already in the DB are not re-requested, only the gaps
 are fetched.  --wipe is opt-in and refuses to delete history older than the window being
-re-fetched unless --force is given (the strategies need 60+ bars of warm-up; a short re-fill
+re-fetched unless --force is given (the strategy needs 60+ bars of warm-up; a short re-fill
 silently starves them).
 """
 
@@ -115,7 +115,7 @@ def backfill(conn, args) -> Optional[str]:
         if existing and existing[0] < start_date.isoformat() and not args.force:
             raise VelocityError(
                 f"refusing to wipe: the database holds {len(existing)} sessions back to {existing[0]}, but this run "
-                f"only re-fetches from {start_date} (--months {args.months}) — the strategies would lose warm-up "
+                f"only re-fetches from {start_date} (--months {args.months}) — the strategy would lose warm-up "
                 f"history. Re-run with a larger --months, without --wipe (fills gaps only), or add --force to wipe anyway.")
         log.info("Wiping existing snapshots/holdings/weekly_closes rows …")
         wipe_holdings(conn)

@@ -1,12 +1,12 @@
-"""Tests for the strategy framework.  Run:  python -m pytest tests -q"""
+"""Tests for the strategy, the engine (sizing, limits, rising stars), the book and the analytics.
+Run:  python -m pytest tests -q"""
 import sqlite3, sys
 from pathlib import Path
 import numpy as np, pandas as pd, pytest
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from src import market_data as md
+from src import market_data as md, analytics
 from src.indicators import Indicators
-from src.strategies import get_strategy, available, parse_params, REGISTRY
-from src.strategies.base import Strategy, EntrySignal
+from src.strategy import TrendFollow, make_strategy, parse_params, EntrySignal, STRATEGY_NAME
 from src.engine import Engine, EngineConfig, MaxPositionsPolicy
 from src.book import Book
 from src.config import DB_PATH
@@ -31,23 +31,39 @@ def synthetic_bars(n=160, seed=0, tickers=("AAA", "BBB", "CCC")):
     return pd.DataFrame(rows, columns=["date", "ticker", "close", "high", "low", "volume"])
 
 
-# ── factory ──
-def test_factory_and_params():
-    assert set(available()) == {"trend_follow", "range_breakout", "double_bottom"}
-    s = get_strategy("trend_follow", breakout_len=40)
-    assert s.p["breakout_len"] == 40 and isinstance(s, Strategy)
+# ── the strategy ──
+def test_params_and_validation():
+    s = make_strategy(breakout_len=40)
+    assert s.p["breakout_len"] == 40 and isinstance(s, TrendFollow) and s.name == STRATEGY_NAME
     with pytest.raises(ValueError):
-        get_strategy("nope")
+        make_strategy(bogus=1)
     with pytest.raises(ValueError):
-        get_strategy("trend_follow", bogus=1)
+        make_strategy(breakout_len="x")
+    with pytest.raises(ValueError):
+        make_strategy(rs_min_pct=-1)
     assert parse_params(["a=1", "b=0.5", "c=true", "d=x"]) == {"a": 1, "b": 0.5, "c": True, "d": "x"}
+    assert make_strategy().warmup() == 61
 
 
-def test_every_strategy_implements_interface():
-    for name, cls in REGISTRY.items():
-        for m in ("prepare", "entries", "exits", "explain", "manage"):
-            assert callable(getattr(cls, m)), f"{name} lacks {m}"
-        assert cls.label and cls.description and isinstance(cls.defaults, dict)
+def test_strategy_entry_exit_and_explain_on_a_trend():
+    # a steady uptrend: every day is a new high -> ENTRY once warm; a crash -> EXIT
+    n = 120
+    dates = [str(d.date()) for d in pd.bdate_range("2026-01-01", periods=n)]
+    rng = np.random.default_rng(3)
+    up = 100 * np.cumprod(1 + np.r_[np.full(100, 0.004), np.full(20, -0.03)] + rng.normal(0, 0.003, n))
+    flat = np.full(n, 50.0) + np.sin(np.arange(n)) * 0.1
+    bars = pd.DataFrame({"date": dates * 2, "ticker": ["UP"] * n + ["FLAT"] * n, "close": np.r_[up, flat]})
+    st = make_strategy()
+    st.prepare(Indicators(bars))
+    entry_days = [d for d in dates[70:100] if st.explain(d, "UP")["state"] == "ENTRY"]
+    assert len(entry_days) > 10, "a steady uptrend must produce entries once warm"
+    assert st.explain(dates[-1], "UP")["state"] == "EXIT"
+    assert sum(st.explain(d, "FLAT")["state"] == "ENTRY" for d in dates[70:100]) <= 3
+    assert st.explain(dates[90], "NOPE")["state"] == "NONE"
+    book = Book("t", 1000)
+    sigs = st.entries(entry_days[0], {"UP": {"ticker": "UP"}, "FLAT": {"ticker": "FLAT"}}, book)
+    assert [x.ticker for x in sigs] == ["UP"] and 0.08 <= sigs[0].trail <= 0.25 and sigs[0].stop_price < sigs[0].ref_price
+    assert st.exits(dates[-1], _held(book, "UP", up[-1]))[0].reason.startswith("close below")
 
 
 def test_issuer_dedup_and_symbol_filter():
@@ -56,34 +72,28 @@ def test_issuer_dedup_and_symbol_filter():
 
 
 # ── indicators ──
-def test_indicators_degrade_without_volume():
+def test_indicators_basics():
     ind = Indicators(synthetic_bars())
-    assert ind.has_volume and ind.rvol() is not None and ind.atr_pct() is not None
-    ind2 = Indicators(synthetic_bars().drop(columns=["volume", "high", "low"]))
-    assert not ind2.has_volume and ind2.rvol() is None and ind2.obv_up() is None
-    assert ind2.vol_trail().stack().between(0.08, 0.25).all()
+    assert ind.vol_trail().stack().between(0.08, 0.25).all()
+    assert ind.hh(5).iloc[10]["AAA"] == ind.close["AAA"].iloc[5:10].max()        # previous 5 bars, today excluded
+    assert ind.rs_pct(20).iloc[-1].max() == 1.0
+    assert ind.below_sma_days(10)["AAA"].max() >= 1 and (ind.below_sma_days(10) >= 0).all().all()
+    with pytest.raises(ValueError):
+        Indicators(pd.DataFrame(columns=["date", "ticker", "close"]))
 
 
-def test_swing_points_and_double_bottom_detection():
-    # hand-made W pattern: down to 90, up to 100, down to 91, then break above 100
-    seq = list(np.linspace(110, 90, 15)) + list(np.linspace(90, 100, 15)) + list(np.linspace(100, 91, 15)) \
-          + list(np.linspace(91, 99, 12)) + [101, 103, 104, 105, 106, 107, 108, 109, 110, 111]
-    dates = [str(d.date()) for d in pd.bdate_range("2026-01-01", periods=len(seq))]
-    bars = pd.DataFrame({"date": dates, "ticker": "WWW", "close": seq})
-    ind = Indicators(bars)
-    s = get_strategy("double_bottom")
-    s.prepare(ind, None)
-    assert s.entry["WWW"].any(), "double bottom should complete when the neckline (100) breaks"
-    d = s.entry["WWW"].idxmax()
-    ex = s.explain(d, "WWW")
-    assert ex["state"] == "ENTRY" and 99 < s.neck.at[d, "WWW"] <= 101
+def _held(book, ticker, px):
+    book.open(ticker, ticker, px, "2026-01-02", 100, 1.0, px * 0.5, None, None, "r")
+    return book
 
 
 # ── engine semantics ──
-class Always(Strategy):
+class Always(TrendFollow):
     """buys everything every day with a 10% stop — to test the engine's limits and policies"""
-    name = "always"; label = "Always"; description = "test"; defaults = {}
-    def prepare(self, ind, universe): self.ind = ind
+    name = "always"; label = "Always"
+    def prepare(self, ind): self.ind = ind
+    def exits(self, date, book): return []
+    def explain(self, date, ticker): return {"state": "NONE", "checks": {}, "note": ""}
     def entries(self, date, univ, book):
         out = []
         for iss, meta in univ.items():
@@ -96,15 +106,15 @@ class Always(Strategy):
 
 class FakeUniverse:
     def __init__(self, tickers): self.t = tickers
-    def on(self, date): return {t: {"ticker": t, "recent_add": False} for t in self.t}
+    def on(self, date): return {t: {"ticker": t, "sector": "S"} for t in self.t}
 
 
 def make_engine(bars, strategy, cfg):
     eng = Engine.__new__(Engine)
     eng.strategy, eng.conn, eng.cfg, eng.bars = strategy, None, cfg, bars
-    eng.ind = Indicators(bars); eng.dates = eng.ind.dates
+    eng.ind = Indicators(bars); eng.dates = eng.ind.dates; eng.index = eng.ind.index
     eng.universe = FakeUniverse(eng.ind.tickers)
-    strategy.prepare(eng.ind, eng.universe)
+    strategy.prepare(eng.ind)
     return eng
 
 
@@ -138,17 +148,52 @@ def test_max_positions_replace_policy_replaces_only_losing_aged_positions():
     assert r["replaced"] == []
 
 
-def test_book_cap_sizing_and_ledger_reconciliation():
+def test_budget_sizing_cash_reserve_and_ledger_reconciliation():
     bars = synthetic_bars(tickers=tuple(f"T{i}" for i in range(5)))
-    cfg = EngineConfig(max_positions=10, max_amount=1000.0, risk_per_trade=0.0025)
+    cfg = EngineConfig(max_positions=4, cash_reserve=0.10)
     eng = make_engine(bars, Always(), cfg)
     book = eng.backtest(eng.dates[5], eng.dates[40], fill="next", capital=50000)
-    for t in book.trades:
-        if t.side == "buy":
-            assert t.value <= 1000.0 + 1e-6
+    buys = [t for t in book.trades if t.side == "buy"]
+    assert len(book.positions) == 4 and buys
+    # every position is an equal share of the investable equity: 90% / 4 = 22.5% of equity at the time
+    assert abs(buys[0].value - 50000 * 0.9 / 4) < 1.0
+    # the reserve is never spent: after the first session's fills, 10% of equity is still cash (commissions aside)
+    first = book.equity[0]
+    assert first["cash"] >= first["value"] * 0.10 - 5.0 and first["cash"] <= first["value"] * 0.10 + 1.0
     cash = 50000 - sum(t.value + t.commission for t in book.trades if t.side == "buy") \
            + sum(t.value - t.commission for t in book.trades if t.side == "sell")
     assert abs(cash - book.cash) < 1e-6
+
+
+def test_position_is_scaled_to_what_fits_above_the_reserve_or_refused():
+    b = Book("x", 10000)
+    budget = b.position_budget(2, 0.10)                  # 4500
+    assert abs(budget - 4500) < 1e-9 and abs(b.reserve(0.10) - 1000) < 1e-9
+    assert b.open("A", "A", 10.0, "d", budget, 1.0, 9.0, 0.1, None, "r", min_cash=b.reserve(0.10)) is not None
+    assert b.open("B", "B", 10.0, "d", budget, 1.0, 9.0, 0.1, None, "r", min_cash=b.reserve(0.10)) is not None
+    assert b.cash >= 1000 - 2.0                          # reserve intact (commissions aside)
+    # a third position: only ~0 left above the reserve -> refused
+    assert b.open("C", "C", 10.0, "d", budget, 1.0, 9.0, 0.1, None, "r", min_cash=b.reserve(0.10)) is None
+    # half a budget fits -> scaled down rather than refused
+    c = Book("y", 10000)
+    c.cash = 3600
+    assert c.open("A", "A", 10.0, "d", 4500, 1.0, 9.0, 0.1, None, "r", min_cash=1000).value < 4500
+
+
+def test_analytics_performance_and_trade_stats():
+    bars = synthetic_bars(tickers=tuple(f"T{i}" for i in range(5)))
+    eng = make_engine(bars, Always(), EngineConfig(max_positions=3))
+    book = eng.backtest(eng.dates[5], eng.dates[100], fill="same", capital=50000)
+    bench = pd.DataFrame({"fund": eng.ind.ret.mean(axis=1).fillna(0.0), "equal": eng.ind.ret.mean(axis=1).fillna(0.0)})
+    p = analytics.performance(book, bench)
+    assert p["sessions"] == 96 and abs(p["return"] - (book.total_value() / 50000 - 1)) < 1e-9
+    assert -1 < p["max_drawdown"] <= 0 and "bench_return" in p and len(p["windows"]) >= 1 and p["monthly"]
+    assert abs(p["excess"] - (p["return"] - p["bench_return"])) < 1e-9
+    t = analytics.trade_stats(book, {"T0": "S"})
+    assert t["closed"] == sum(1 for x in book.trades if x.side == "sell") and 0 <= t["win_rate"] <= 1
+    rules = {"always": eng.ind.close.notna()}
+    q = analytics.signal_quality(eng.ind, rules, horizons=(5,))
+    assert q[0]["n"] > 0 and abs(q[0]["horizons"][5]["excess"]) < 1e-9    # everything selected -> zero excess
 
 
 def test_book_persistence_roundtrip(tmp_path):
@@ -171,20 +216,19 @@ def test_split_adjustment_removes_fake_crashes():
 
 
 @needs_db
-@pytest.mark.parametrize("name", available())
-def test_strategy_runs_on_real_data_with_one_position_per_issuer(name):
-    eng = Engine(get_strategy(name), ro_conn(), EngineConfig(max_positions=20))
+def test_strategy_runs_on_real_data_with_one_position_per_issuer():
+    eng = Engine(make_strategy(), ro_conn(), EngineConfig(max_positions=20))
     book = eng.backtest(eng.dates[-60], eng.dates[-1], fill="next", capital=100000)
     assert len(book.positions) <= 20
     assert len({md.issuer_key(p.ticker) for p in book.positions.values()}) == len(book.positions)
     for t in book.trades:
         if t.side == "buy":
-            assert t.value <= 1000.0 + 1e-6
+            assert t.value <= 100000 * 1.5 * 0.9 / 20      # an equal share of equity, never more
 
 
 @needs_db
 def test_live_session_is_idempotent(tmp_path):
-    eng = Engine(get_strategy("trend_follow"), ro_conn(), EngineConfig(max_positions=5))
+    eng = Engine(make_strategy(), ro_conn(), EngineConfig(max_positions=5))
     bc = get_db(tmp_path / "books.db")
     book = Book.load(bc, "trend_follow", 100000)
     today = eng.dates[-1]
@@ -228,16 +272,18 @@ def test_rising_stars_collect_skipped_signals_and_get_priority():
 
 def test_rising_stars_expire_and_capture_capital_exhaustion():
     bars = synthetic_bars(tickers=("T0", "T1", "T2"))
-    cfg = EngineConfig(max_positions=10, max_amount=1000.0, risk_per_trade=1.0, rising_max_age=2)  # always the full $1k
+    cfg = EngineConfig(max_positions=10, cash_reserve=0.0, rising_max_age=2)
     eng = make_engine(bars, Always(), cfg)
-    book = Book("always", 1500)                       # cash for one position only
-    r = eng.step(book, eng.dates[5], fill="same")
-    assert len(book.positions) == 1 and len(r["skipped"]) == 2
+    book = Book("always", 1500)
+    px = float(eng.ind.close["T0"].iloc[5])
+    book.open("T0", "T0", px, eng.dates[4], 1300, 1.0, px * 0.5, None, None, "big")     # most of the cash is already invested
+    r = eng.step(book, eng.dates[5], fill="same")     # budget 10% of ~1500 = 150: T1 fits, T2 does not (< half a budget left)
+    assert len(book.positions) == 2 and len(r["skipped"]) == 1
     assert all(s["why"] == "capital exhausted" for s in book.rising.values())
     # stop signalling: Always() keeps signalling, so emulate by freezing last_seen and stepping past max_age
     for s in book.rising.values():
         s["last_seen"] = eng.dates[0]
-    book.prune_rising(eng.dates[5], eng.dates, max_age=2)
+    book.prune_rising(eng.dates[5], eng.index, max_age=2)
     assert book.rising == {}
 
 

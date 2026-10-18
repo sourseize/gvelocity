@@ -30,14 +30,13 @@ FETCH_HEADERS = {
 
 # ── storage ────────────────────────────────────────────────────────────────
 # One SQLite file holds everything: holdings history (snapshots / holdings / weekly_closes),
-# the strategy books, the session and signal audit trail and optional daily_bars.
+# the book, and the session and signal audit trail.
 DB_PATH = ROOT / "data" / "velocity.db"
 
 NEW_ENTRY_LOOKBACK_DAYS = 20
 
-# ── strategy / book defaults (override on the command line) ────────────────
-MAX_PURCHASE_AMOUNT = 1000.0         # hard $ cap per issuer
-MAX_POSITIONS = 25                   # open positions per strategy book
-RISK_PER_TRADE = 0.0025              # fraction of equity at risk at the initial stop
+# ── book defaults (override on the command line) ───────────────────────────
+MAX_POSITIONS = 25                   # open positions; each gets equity x (1 - CASH_RESERVE) / MAX_POSITIONS
+CASH_RESERVE = 0.10                  # share of equity kept as dry powder, never invested
 COMMISSION_PER_TRADE = 1.0
-INITIAL_CAPITAL = 100000.0           # capital of a strategy book
+INITIAL_CAPITAL = 100000.0           # capital of the book

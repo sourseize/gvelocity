@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from typing import Optional
 
-from .analyzer import compute_metrics
+from .analyzer import compute_metrics, DayWeights
 from .config import NEW_ENTRY_LOOKBACK_DAYS
 from .database import detect_new_entries, detect_exits, detect_weight_movers, recent_dates
 from .market_data import issuer_key
@@ -25,7 +25,8 @@ def build_day_data(conn, today: str, strategy=None, book=None, trades: Optional[
     current_holdings = [r["ticker"] for r in conn.execute(
         "SELECT ticker FROM holdings WHERE snapshot_date=?", (today,))]
     to_score = list(dict.fromkeys(new_tickers + current_holdings))
-    scored = {t: compute_metrics(conn, t, today) for t in to_score}
+    weights = DayWeights(conn, today)
+    scored = {t: compute_metrics(conn, t, today, weights) for t in to_score}
 
     # strategy signal state per holding (HOLD overrides when the issuer is in the book)
     held = set(book.positions) if book is not None else set()

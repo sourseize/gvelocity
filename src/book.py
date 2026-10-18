@@ -2,7 +2,8 @@
 book — ONE position book per strategy.
 
 * one position per issuer (GOOG == GOOGL)
-* hard $ cap per issuer; risk-based sizing below the cap
+* equal-budget sizing: equity x (1 - cash_reserve) / max_positions per position; the cash
+  reserve is dry powder that is never spent
 * SQLite table `books` (keyed by strategy name) is the single source of truth
 * rising stars: entry signals the book could NOT take (book full / capital exhausted) are
   kept as a watchlist with how many sessions they have kept signalling; they get priority
@@ -11,7 +12,6 @@ book — ONE position book per strategy.
 from __future__ import annotations
 
 import datetime as _dt
-import html
 import json
 import sqlite3
 from dataclasses import dataclass, field, fields, asdict
@@ -39,9 +39,10 @@ class Position:
     last_price: float = 0.0
     meta: Dict[str, float] = field(default_factory=dict)
 
-    def days_held(self, date: str, dates: List[str]) -> int:
-        if self.entry_date in dates and date in dates:
-            return dates.index(date) - dates.index(self.entry_date)
+    def days_held(self, date: str, index: Dict[str, int]) -> int:
+        """Sessions since entry (`index`: date -> position in the session list)."""
+        if self.entry_date in index and date in index:
+            return index[date] - index[self.entry_date]
         return 0
 
     @property
@@ -96,12 +97,12 @@ class Book:
         r.update({"last_seen": date, "seen": r["seen"] + 1, "ref_price": ref_price, "rank": rank,
                   "reason": reason, "why": why, "first_price": r.get("first_price", ref_price)})
 
-    def prune_rising(self, date: str, dates: List[str], max_age: int) -> List[dict]:
+    def prune_rising(self, date: str, index: Dict[str, int], max_age: int) -> List[dict]:
         """Drop stars that were taken, or whose signal has not repeated for `max_age` sessions."""
-        i = dates.index(date) if date in dates else None
+        i = index.get(date)
         dropped = []
         for issuer, r in list(self.rising.items()):
-            stale = i is not None and r["last_seen"] in dates and i - dates.index(r["last_seen"]) >= max_age
+            stale = i is not None and r["last_seen"] in index and i - index[r["last_seen"]] >= max_age
             if issuer in self.positions or stale:
                 dropped.append(self.rising.pop(issuer))
         return dropped
@@ -119,19 +120,35 @@ class Book:
     def realized(self) -> float:
         return sum(t.pnl for t in self.trades if t.side == "sell")
 
+    def exposure(self) -> float:
+        """Share of equity invested (0 = all cash)."""
+        tv = self.total_value()
+        return self.market_value() / tv if tv else 0.0
+
     # ── sizing ──
-    def size_dollars(self, stop_distance: float, max_amount: float, risk_per_trade: float) -> float:
-        """Dollars = min(cap, equity * risk / stop distance)."""
-        return min(max_amount, self.total_value() * risk_per_trade / max(stop_distance, 1e-4))
+    def reserve(self, cash_reserve: float) -> float:
+        """Dollars of dry powder that must stay in cash."""
+        return self.total_value() * cash_reserve
+
+    def position_budget(self, max_positions: int, cash_reserve: float) -> float:
+        """Equal share of the investable equity: equity x (1 - reserve) / max_positions."""
+        return self.total_value() * (1.0 - cash_reserve) / max(int(max_positions), 1)
 
     # ── mutations ──
     def open(self, issuer: str, ticker: str, price: float, date: str, dollars: float, commission: float,
              stop_price: float, trail: Optional[float], target_price: Optional[float], reason: str,
-             meta: Optional[dict] = None) -> Optional[Trade]:
+             meta: Optional[dict] = None, min_cash: float = 0.0) -> Optional[Trade]:
+        """Open a position of `dollars` (the budget).  When the budget does not fit above `min_cash`
+        (the reserve) the position is scaled down to what fits; below half a budget it is refused
+        (-> "capital exhausted", the signal waits as a rising star)."""
+        if issuer in self.positions or price <= 0:
+            return None
+        available = self.cash - min_cash - commission
+        if available < dollars * 0.5:
+            return None
+        dollars = min(dollars, available)
         shares = dollars / price
         cost = shares * price + commission
-        if cost > self.cash or issuer in self.positions:
-            return None
         self.cash -= cost
         self.positions[issuer] = Position(issuer, ticker, shares, price, date, stop_price, trail, target_price,
                                           highest_close=price, last_price=price, meta=dict(meta or {}))
@@ -210,64 +227,6 @@ class Book:
     def rising_list(self) -> List[dict]:
         """Rising stars, most persistent first (ties: strategy rank)."""
         return sorted(self.rising.values(), key=lambda r: (-r["seen"], -r.get("rank", 0)))
-
-    # ── HTML view (served by the web server) ──
-    def to_html(self, label: str = "", extra_html: str = "", nav_html: str = "") -> str:
-        from .reporter import ticker_link, fmt_f, CSS
-        rows = ""
-        for p in sorted(self.positions.values(), key=lambda p: p.entry_date):
-            cls = "pos" if p.pnl_pct >= 0 else "neg"
-            rows += (f"<tr><td><b>{ticker_link(p.ticker)}</b></td><td>{p.entry_date}</td><td>{fmt_f(p.entry_price)}</td>"
-                     f"<td>{fmt_f(p.last_price)}</td><td class='{cls}'>{p.pnl_pct:+.1%}</td><td>{fmt_f(p.stop_price)}</td>"
-                     f"<td>{fmt_f(p.target_price) if p.target_price else '—'}</td></tr>")
-        if not rows:
-            rows = "<tr><td colspan='7' class='none'>No open positions</td></tr>"
-        trows = ""
-        for t in reversed(self.trades[-60:]):
-            cls = "pos" if t.side == "buy" else "neg"
-            pnl = f"<span class='{'pos' if t.pnl >= 0 else 'neg'}'>{t.pnl:+.0f}</span>" if t.side == "sell" else "—"
-            trows += (f"<tr><td>{t.date}</td><td><b>{ticker_link(t.ticker)}</b></td><td class='{cls}'>{t.side.upper()}</td>"
-                      f"<td>{fmt_f(t.price)}</td><td>{fmt_f(t.value, 0)}</td><td>{pnl}</td><td style='max-width:420px'>{t.reason}</td></tr>")
-        if not trows:
-            trows = "<tr><td colspan='7' class='none'>No trades yet</td></tr>"
-        rrows = ""
-        for r in self.rising_list():
-            chg = (r["ref_price"] / r["first_price"] - 1) if r.get("first_price") else 0.0
-            rrows += (f"<tr><td><b>{ticker_link(r['ticker'])}</b></td><td>{r['first_seen']}</td><td>{r['last_seen']}</td>"
-                      f"<td>{r['seen']}</td><td>{fmt_f(r['ref_price'])}</td><td class='{'pos' if chg >= 0 else 'neg'}'>{chg:+.1%}</td>"
-                      f"<td>{r['why']}</td><td style='max-width:380px'>{r['reason']}</td></tr>")
-        if not rrows:
-            rrows = "<tr><td colspan='8' class='none'>No signals waiting</td></tr>"
-        closed = [t for t in self.trades if t.side == "sell"]
-        wins = [t for t in closed if t.pnl > 0]
-        ret = self.total_value() / self.initial_capital - 1
-        return f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Velocity — {label or self.strategy} book</title><style>{CSS}</style></head><body><div class="wrap">
-{nav_html}
-<h1>{label or self.strategy} — position book</h1>
-<p class="sub">Strategy <code>{self.strategy}</code> · last session {self.last_date or '—'}</p>
-{f'<p class="sub note">{html.escape(self.note)}</p>' if self.note else ''}
-<div class="stats">
-  <div class="stat"><div class="sv">${fmt_f(self.total_value(), 0)}</div><div class="sl">Equity</div></div>
-  <div class="stat"><div class="sv">{ret:+.2%}</div><div class="sl">Return</div></div>
-  <div class="stat"><div class="sv">${fmt_f(self.cash, 0)}</div><div class="sl">Cash</div></div>
-  <div class="stat"><div class="sv">{len(self.positions)}</div><div class="sl">Open</div></div>
-  <div class="stat"><div class="sv">{len(closed)}</div><div class="sl">Closed trades</div></div>
-  <div class="stat"><div class="sv">{(len(wins) / len(closed)) if closed else 0:.0%}</div><div class="sl">Win rate</div></div>
-  <div class="stat"><div class="sv">${fmt_f(self.realized(), 0)}</div><div class="sl">Realized</div></div>
-  <div class="stat"><div class="sv">${fmt_f(self.unrealized(), 0)}</div><div class="sl">Unrealized</div></div>
-</div>
-<h2>Open positions</h2><div class="tw"><table>
-<tr><th>Ticker</th><th>Entry</th><th>Entry px</th><th>Last</th><th>P&L</th><th>Stop</th><th>Target</th></tr>{rows}</table></div>
-<h2>Rising stars — signals waiting for a slot ({len(self.rising)})</h2>
-<p class="sub" style="margin-top:-8px">Entry signals the book could not take (full, or capital exhausted). They keep their place while the
-signal repeats, get priority for the next free slot, and drop off when the setup stops firing.</p>
-<div class="tw"><table>
-<tr><th>Ticker</th><th>First</th><th>Last</th><th>Sessions</th><th>Price</th><th>Since first</th><th>Why waiting</th><th>Signal</th></tr>{rrows}</table></div>
-<h2>Recent trades</h2><div class="tw"><table>
-<tr><th>Date</th><th>Ticker</th><th>Side</th><th>Price</th><th>Value</th><th>P&L</th><th>Reason</th></tr>{trows}</table></div>
-{extra_html}
-</div></body></html>"""
 
 
 # ── session / signal history (audit trail, queryable without recomputation) ──

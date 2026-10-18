@@ -20,7 +20,7 @@ def site(tmp_path, monkeypatch):
     conn = db.get_db(tmp_path / "v.db")
     fund = Fund(conn)
     monkeypatch.setattr(webdata, "DB_PATH", tmp_path / "v.db")          # request connections open this file read-only
-    sched = Scheduler(conn, "trend_follow", {}, EngineConfig(max_positions=3), 50000.0, poll_frequency=10, fetch=lambda c: None)
+    sched = Scheduler(conn, {}, EngineConfig(max_positions=3), 50000.0, poll_frequency=10, fetch=lambda c: None)
     sched.cycle()
     web = WebServer(sched, "127.0.0.1", 0)                               # port 0: any free port
     web.start()
@@ -41,12 +41,15 @@ def test_pages_render(site):
     latest = db.latest_date(conn)
     ym = latest[:7]
     for path, needle in [("/", "Trend Follower book"), (f"/month/{ym}", "Signal states"), (f"/day/{latest}", latest),
-                         ("/strategy/trend_follow", "position book"), (f"/strategy/trend_follow/session/{latest}", "Signals ("),
-                         ("/ticker/T0", "signal history"), ("/status", "listening on 127.0.0.1"),
-                         ("/strategy/double_bottom", "No sessions yet")]:
+                         ("/book", "Rolling quarters vs the fund"), (f"/session/{latest}", "Signals ("),
+                         ("/ticker/T0", "Signal history"), ("/signals", "ENTRY (all checks)"),
+                         ("/status", "listening on 127.0.0.1")]:
         status, ct, body = get(web, path)
         assert status == 200 and ct.startswith("text/html") and needle in body, (path, status)
     assert "UTC" in get(web, "/")[2] and "holdings" in get(web, "/")[2]
+    body = get(web, "/book")[2]
+    assert "<svg" in body and "Open positions" in body and "Trade analytics" in body
+    assert "<svg" in get(web, "/ticker/T0")[2]
 
 
 def test_api(site):
@@ -60,19 +63,23 @@ def test_api(site):
     assert day["date"] == latest and set(day["scored"]) == set(fund.tickers) and day["strategy"]["name"] == "trend_follow"
     month = json.loads(get(web, f"/api/month/{latest[:7]}")[2])
     assert month[0]["date"] == latest and {"new_entries", "exits", "movers", "top20", "trades", "rising_stars"} <= set(month[0])
-    book = json.loads(get(web, "/api/strategy/trend_follow")[2])
+    book = json.loads(get(web, "/api/book")[2])
     assert book["strategy"] == "trend_follow" and book["last_date"] == latest
-    assert json.loads(get(web, "/api/strategy/trend_follow/sessions")[2])[0]["date"] == latest
+    assert json.loads(get(web, "/api/sessions")[2])[0]["date"] == latest
+    assert json.loads(get(web, f"/api/session/{latest}")[2])["date"] == latest
     assert json.loads(get(web, "/api/dates")[2])[-1] == latest
-    assert json.loads(get(web, "/api/ticker/T1")[2])[-1]["date"] == latest
+    assert json.loads(get(web, "/api/ticker/T1")[2])["history"][-1]["date"] == latest
+    perf = json.loads(get(web, "/api/performance")[2])
+    assert perf["perf"]["sessions"] == 1 and "positions" in perf and "trades" in perf
+    assert json.loads(get(web, "/api/signals")[2])[0]["rule"] == "ENTRY (all checks)"
     st = json.loads(get(web, "/api/status")[2])
     assert st["holdings_date"] == latest and st["books"][0]["strategy"] == "trend_follow" and "last_poll_at" in st
 
 
 def test_not_found_and_bad_paths(site):
     web = site[0]
-    for path in ("/nope", "/month/1999-01", "/day/1999-01-01", "/ticker/ZZZZ", "/strategy/unknown", "/api/day/1999-01-01",
-                 "/strategy/trend_follow/session/1999-01-01", "/api/nothing", "/month/x", "/day/../etc/passwd"):
+    for path in ("/nope", "/month/1999-01", "/day/1999-01-01", "/ticker/ZZZZ", "/strategy/trend_follow", "/api/day/1999-01-01",
+                 "/session/1999-01-01", "/api/session/1999-01-01", "/api/nothing", "/month/x", "/day/../etc/passwd"):
         status, ct, body = get(web, path)
         assert status == 404, path
 
@@ -98,7 +105,7 @@ def test_historical_day_uses_stored_signals_and_cache_refreshes_after_a_cycle(si
 def test_requests_never_write(site):
     web, sched, fund, conn = site
     before = conn.execute("SELECT COUNT(*) FROM sessions").fetchone()[0], conn.execute("SELECT COUNT(*) FROM snapshots").fetchone()[0]
-    for path in ("/", "/status", "/strategy/trend_follow", "/api/status"):
+    for path in ("/", "/status", "/book", "/signals", "/api/status", "/api/performance"):
         get(web, path)
     after = conn.execute("SELECT COUNT(*) FROM sessions").fetchone()[0], conn.execute("SELECT COUNT(*) FROM snapshots").fetchone()[0]
     assert before == after

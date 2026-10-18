@@ -3,15 +3,17 @@ HTTP server of `velocity serve` — standard library only (ThreadingHTTPServer),
 localhost by default.
 
 Routes
-  /                                  hub: status strip, the live book, the latest day, months
-  /month/{YYYY-MM}                   one month of days (+ live sections for the current month)
-  /day/{YYYY-MM-DD}                  one day
-  /strategy/{name}                   the position book + its sessions
-  /strategy/{name}/session/{date}    one session: entries / exits / not taken / rising / signals / settings
-  /ticker/{T}                        a ticker's signal history under the live strategy
-  /status                            poller, books, fetch log, sessions
-  /api/health  /api/status  /api/dates  /api/day/{date}  /api/month/{ym}
-  /api/strategy/{name}  /api/strategy/{name}/sessions  /api/ticker/{T}      JSON
+  /                                  hub: status strip, the book vs the fund, the latest day, months
+  /book                              the performance page: equity vs fund, drawdown, exposure, positions,
+                                     sector exposure, rolling quarters, trade analytics, trades, sessions
+  /session/{date}                    one session: entries / exits / not taken / waiting / signals / settings
+  /ticker/{T}                        price chart with the book's trades, current checks, signal history
+  /signals                           signal quality: forward excess return per rule
+  /month/{YYYY-MM}                   one month of holdings days (+ live sections for the current month)
+  /day/{YYYY-MM-DD}                  one holdings day
+  /status                            poller, book, fetch log, sessions
+  /api/health  /api/status  /api/dates  /api/day/{date}  /api/month/{ym}  /api/book  /api/performance
+  /api/sessions  /api/session/{date}  /api/ticker/{T}  /api/signals                         JSON
 
 Requests read the database through their own read-only connection and the poller's immutable
 `MarketState`; nothing here writes.
@@ -30,7 +32,6 @@ from urllib.parse import unquote, urlsplit
 
 from ..book import Book
 from ..database import latest_date
-from ..reporter import day_log_entry
 from ..scheduler import Scheduler
 from ..services import books as books_svc
 from . import data, pages
@@ -53,6 +54,7 @@ class App:
         self.scheduler = scheduler
         self.bind = bind
         self.cache = data.DayEntryCache()
+        self.sigcache = data.SignalQualityCache()
         scheduler.on_cycle.append(lambda summary: self.cache.clear() if summary.get("stored") or summary.get("sessions") else None)
 
     # ── shared bits ──
@@ -96,9 +98,28 @@ class App:
         if not parts:
             st = data.status_payload(conn, self.state)
             book = self.book(conn)
+            view = data.book_view(conn, self.state, book) if book is not None and book.last_date else None
             latest = latest_date(conn)
             entry = self.entry(conn, latest, book) if latest else None
-            return 200, ct, pages.hub(st, strat, book, entry, ym, data.months(conn))
+            return 200, ct, pages.hub(st, strat, view, entry, ym, data.months(conn))
+        if parts == ["book"]:
+            if strat is None:
+                return 503, ct, pages.error(503, "starting up — the market state is not built yet", ym, strat)
+            book = self.book(conn)
+            view = data.book_view(conn, self.state, book)
+            settings = data.status_payload(conn, self.state).get("serve_settings") or {}
+            return 200, ct, pages.book_page(view, strat, data.sessions(conn, strat["name"]), ym, settings)
+        if parts[0] == "session" and len(parts) == 2 and DATE_RE.match(parts[1]) and strat:
+            row = data.session_row(conn, strat["name"], parts[1])
+            if row is None:
+                raise NotFound(f"no session on {parts[1]}")
+            return 200, ct, pages.session(strat, row, data.stored_signals(conn, strat["name"], parts[1]) or {}, ym)
+        if parts == ["signals"]:
+            st = self.state
+            if st is None:
+                return 503, ct, pages.error(503, "starting up — the market state is not built yet", ym, strat)
+            rows = self.sigcache.get(st)
+            return 200, ct, pages.signals_page(rows, strat, st.engine.dates, len(st.engine.ind.tickers), ym)
         if parts[0] == "month" and len(parts) == 2 and MONTH_RE.match(parts[1]):
             months = data.months(conn)
             if parts[1] not in months:
@@ -113,59 +134,35 @@ class App:
             if parts[1] not in data.all_dates(conn):
                 raise NotFound(f"no holdings stored for {parts[1]}")
             return 200, ct, pages.day(parts[1], self.entry(conn, parts[1], self.book(conn)), strat, ym)
-        if parts[0] == "strategy" and len(parts) >= 2 and NAME_RE.match(parts[1]):
-            name = parts[1]
-            info = strat if strat and strat["name"] == name else self._other_strategy(name)
-            if info is None:
-                raise NotFound(f"unknown strategy {name}")
-            if len(parts) == 2:
-                return 200, ct, pages.strategy_book(data.load_book(conn, name), info, data.sessions(conn, name), ym)
-            if len(parts) == 4 and parts[2] == "session" and DATE_RE.match(parts[3]):
-                row = data.session_row(conn, name, parts[3])
-                if row is None:
-                    raise NotFound(f"{name} has no session on {parts[3]}")
-                return 200, ct, pages.session(info, row, data.stored_signals(conn, name, parts[3]) or {}, ym)
         if parts[0] == "ticker" and len(parts) == 2 and NAME_RE.match(parts[1]):
             st = self.state
             if st is None:
                 return 503, ct, pages.error(503, "starting up — the market state is not built yet", ym, strat)
             t = parts[1].upper()
-            history = self.ticker_history(t)
-            if history is None:
+            view = data.ticker_view(st, self.book(conn), t)
+            if view is None:
                 raise NotFound(f"{t}: no price history in the fund")
-            row = conn.execute("SELECT name FROM holdings WHERE ticker=? ORDER BY snapshot_date DESC LIMIT 1", (t,)).fetchone()
-            return 200, ct, pages.ticker(t, strat, history, row["name"] if row else "", ym)
+            row = conn.execute("SELECT name, sector FROM holdings WHERE ticker=? ORDER BY snapshot_date DESC LIMIT 1", (t,)).fetchone()
+            return 200, ct, pages.ticker(view, strat, row["name"] if row else "", (row["sector"] if row else "") or "", ym)
         if parts == ["status"]:
             st = data.status_payload(conn, self.state)
             sessions = data.sessions(conn, strat["name"], 20) if strat else []
             return 200, ct, pages.status(st, strat, books_svc.summaries(conn), data.fetch_log(conn, 20), sessions, ym, self.bind)
         raise NotFound(path)
 
-    def _other_strategy(self, name: str) -> Optional[dict]:
-        from ..strategies import REGISTRY
-        cls = REGISTRY.get(name)
-        return {"name": name, "label": cls.label, "description": cls.description} if cls else None
-
-    def ticker_history(self, t: str) -> Optional[list[dict]]:
-        st = self.state
-        ind, strategy = st.engine.ind, st.strategy
-        if t not in ind.tickers:
-            return None
-        closes = ind.close[t].dropna()
-        return [{"date": d, "close": float(c), **strategy.explain(d, t)} for d, c in closes.items()]
-
     # ── JSON ──
     def api(self, conn, path: str) -> tuple[int, str, str]:
         ct = "application/json"
         parts = [p for p in path.split("/") if p]
-        dump = lambda obj: (200, ct, json.dumps(obj, indent=1, default=str))
+        dump = lambda obj: (200, ct, json.dumps(data.jsonable(obj), indent=1, default=str))
+        strat = self.strategy_info()
         if parts == ["health"]:
             st = data.status_payload(conn, self.state)
-            return dump({"ok": True, "strategy": (self.strategy_info() or {}).get("name"), "last_cycle_at": st["last_cycle_at"],
+            return dump({"ok": True, "strategy": (strat or {}).get("name"), "last_cycle_at": st["last_cycle_at"],
                          "last_cycle_status": st["last_cycle_status"], "holdings_date": st["holdings_date"],
                          "holdings_updated_at": st["holdings_updated_at"], "last_poll_at": st["last_poll_at"]})
         if parts == ["status"]:
-            return dump({**data.status_payload(conn, self.state), "strategy": self.strategy_info(),
+            return dump({**data.status_payload(conn, self.state), "strategy": strat,
                          "books": books_svc.summaries(conn), "fetch_log": data.fetch_log(conn, 20)})
         if parts == ["dates"]:
             return dump(data.all_dates(conn))
@@ -179,16 +176,25 @@ class App:
                 raise NotFound(parts[1])
             book = self.book(conn)
             return dump([self.entry(conn, d, book) for d in reversed(dates)])
-        if parts[0] == "strategy" and len(parts) >= 2 and NAME_RE.match(parts[1]):
-            if len(parts) == 2:
-                return dump(data.load_book(conn, parts[1]).to_dict())
-            if parts[2:] == ["sessions"]:
-                return dump(data.sessions(conn, parts[1]))
-        if parts[0] == "ticker" and len(parts) == 2 and NAME_RE.match(parts[1]) and self.state is not None:
-            history = self.ticker_history(parts[1].upper())
-            if history is None:
+        if parts == ["book"] and strat:
+            return dump(data.load_book(conn, strat["name"]).to_dict())
+        if parts == ["performance"] and strat:
+            view = data.book_view(conn, self.state, self.book(conn))
+            return dump({k: v for k, v in view.items() if k != "book"})
+        if parts == ["sessions"] and strat:
+            return dump(data.sessions(conn, strat["name"]))
+        if parts[0] == "session" and len(parts) == 2 and DATE_RE.match(parts[1]) and strat:
+            row = data.session_row(conn, strat["name"], parts[1])
+            if row is None:
                 raise NotFound(parts[1])
-            return dump(history)
+            return dump({**row, "signals": data.stored_signals(conn, strat["name"], parts[1]) or {}})
+        if parts[0] == "ticker" and len(parts) == 2 and NAME_RE.match(parts[1]) and self.state is not None:
+            view = data.ticker_view(self.state, self.book(conn), parts[1].upper())
+            if view is None:
+                raise NotFound(parts[1])
+            return dump(view)
+        if parts == ["signals"] and self.state is not None:
+            return dump(self.sigcache.get(self.state))
         raise NotFound("/api/" + path)
 
 

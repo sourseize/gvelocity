@@ -15,7 +15,7 @@ One thread, one writer.  Every `poll_frequency` minutes, round the clock:
 A failing cycle is logged and recorded — the loop never dies; the next cycle retries.
 Timestamps are UTC ISO-8601 like everything else in the database.
 
-The web server (Step 6) reads `scheduler.state` — an immutable `MarketState` that is swapped
+The web server reads `scheduler.state` — an immutable `MarketState` that is swapped
 as a whole after each rebuild — to explain signals; everything else it reads from the database.
 """
 from __future__ import annotations
@@ -30,12 +30,13 @@ import traceback
 from dataclasses import asdict, dataclass
 from typing import Callable, Optional
 
+from . import analytics
 from .book import Book
 from .database import get_meta, set_meta, latest_date, transaction
 from .engine import Engine, EngineConfig
 from .exceptions import VelocityError
 from .services import books as books_svc, holdings as holdings_svc, session as session_svc
-from .strategies import Strategy, get_strategy
+from .strategy import TrendFollow, make_strategy, STRATEGY_NAME
 from .util import utcnow
 
 log = logging.getLogger(__name__)
@@ -48,9 +49,10 @@ class MarketState:
     book: Book
     built_at: str
     latest_date: Optional[str]
+    bench: object = None          # analytics.benchmark_returns() frame (fund / equal-weight daily returns)
 
     @property
-    def strategy(self) -> Strategy:
+    def strategy(self) -> TrendFollow:
         return self.engine.strategy
 
 
@@ -58,7 +60,7 @@ class ParamsChanged(VelocityError):
     """The strategy / engine settings differ from those the book's last session ran with."""
 
 
-def settings_diff(conn: sqlite3.Connection, strategy: Strategy, cfg: EngineConfig) -> list[str]:
+def settings_diff(conn: sqlite3.Connection, strategy: TrendFollow, cfg: EngineConfig) -> list[str]:
     """Human-readable differences between the given settings and the ones recorded on the
     strategy's most recent session (empty when equal or when there is no session yet)."""
     row = conn.execute("SELECT params_json, engine_json FROM sessions WHERE strategy=? ORDER BY date DESC LIMIT 1",
@@ -80,11 +82,11 @@ def settings_diff(conn: sqlite3.Connection, strategy: Strategy, cfg: EngineConfi
 
 
 class Scheduler:
-    def __init__(self, conn: sqlite3.Connection, strategy_name: str, params: dict, cfg: EngineConfig,
+    def __init__(self, conn: sqlite3.Connection, params: dict, cfg: EngineConfig,
                  capital: float, poll_frequency: float = 10.0, catchup: bool = True,
                  fetch: Optional[Callable[[sqlite3.Connection], Optional[str]]] = None):
         self.conn = conn
-        self.strategy_name, self.params, self.cfg, self.capital = strategy_name, params, cfg, capital
+        self.strategy_name, self.params, self.cfg, self.capital = STRATEGY_NAME, params, cfg, capital
         self.poll_frequency = poll_frequency
         self.catchup = catchup
         self._fetch = fetch or holdings_svc.fetch_and_store
@@ -96,7 +98,7 @@ class Scheduler:
     # ── start-up ──
     def check_settings(self, accept_change: bool = False) -> list[str]:
         """Refuse to run a book with different settings than its last session unless told to."""
-        strategy = get_strategy(self.strategy_name, **self.params)
+        strategy = make_strategy(**self.params)
         diffs = settings_diff(self.conn, strategy, self.cfg)
         if diffs and not accept_change:
             raise ParamsChanged(f"{strategy.name}: settings differ from the book's last session:\n  " + "\n  ".join(diffs) +
@@ -107,10 +109,11 @@ class Scheduler:
         return diffs
 
     def rebuild_state(self) -> MarketState:
-        strategy = get_strategy(self.strategy_name, **self.params)
+        strategy = make_strategy(**self.params)
         engine = Engine(strategy, self.conn, self.cfg)
         book = books_svc.load(self.conn, strategy.name, self.capital)
-        self.state = MarketState(engine=engine, book=book, built_at=utcnow(), latest_date=latest_date(self.conn))
+        bench = analytics.benchmark_returns(self.conn, engine.ind)
+        self.state = MarketState(engine=engine, book=book, built_at=utcnow(), latest_date=latest_date(self.conn), bench=bench)
         return self.state
 
     # ── one cycle ──
@@ -203,7 +206,7 @@ class Scheduler:
         self.stop_event.set()
 
 
-def record_start(conn: sqlite3.Connection, strategy: Strategy, cfg: EngineConfig, capital: float, poll_frequency: float) -> None:
+def record_start(conn: sqlite3.Connection, strategy: TrendFollow, cfg: EngineConfig, capital: float, poll_frequency: float) -> None:
     with transaction(conn):
         set_meta(conn, "serve_started_at", utcnow())
         set_meta(conn, "serve_strategy", strategy.name)

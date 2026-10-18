@@ -44,3 +44,7 @@ Thumbs.db
 data/*.db-wal
 data/*.db-shm
 data/velocity.lock
+
+# standalone holdings report (cli/holdings_report.py) output
+cli/data/
+cli/report/

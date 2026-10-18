@@ -55,7 +55,7 @@ def env(tmp_path):
 
 def make(conn, fetch, **kw):
     cfg = kw.pop("cfg", EngineConfig(max_positions=3))
-    return Scheduler(conn, kw.pop("strategy", "trend_follow"), kw.pop("params", {}), cfg, 50000.0,
+    return Scheduler(conn, kw.pop("params", {}), cfg, 50000.0,
                      poll_frequency=kw.pop("poll_frequency", 10), fetch=fetch, **kw)
 
 
@@ -136,7 +136,7 @@ def test_settings_guard(env):
     assert "max_positions: 3 → 5" in str(e.value) and "--param breakout_len: 55 → 40" in str(e.value)
     diffs = changed.check_settings(accept_change=True)
     assert len(diffs) == 2
-    assert make(conn, fetch=lambda c: None, strategy="range_breakout").check_settings() == []   # no session yet
+    assert make(db.get_db(conn.execute("PRAGMA database_list").fetchone()[2] + ".other"), fetch=lambda c: None).check_settings() == []   # fresh db: no session yet
 
 
 def test_run_forever_polls_and_stops(env):

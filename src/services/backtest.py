@@ -1,5 +1,5 @@
 """
-backtest service — replay strategies over windows of the stored history.
+backtest service — replay the strategy over windows of the stored history, judged against the fund.
 """
 from __future__ import annotations
 
@@ -7,14 +7,14 @@ import sqlite3
 from dataclasses import dataclass, field
 from typing import Dict, List, Tuple
 
-import numpy as np
 import pandas as pd
 
+from .. import analytics
 from ..book import Book
 from ..engine import Engine, EngineConfig
 from ..exceptions import VelocityError
-from ..market_data import load_market_bars
-from ..strategies import get_strategy
+from ..market_data import bars_from_holdings
+from ..strategy import make_strategy
 
 Window = Tuple[str, str, str]          # (label, start, end)
 
@@ -29,44 +29,8 @@ def month_windows(dates: List[str], months: List[int], end: str | None = None) -
     return out
 
 
-def summarize(label: str, book: Book, n_days: int) -> dict:
-    tv = pd.DataFrame([vars(t) for t in book.trades])
-    sells = tv[tv.side == "sell"] if len(tv) else pd.DataFrame(columns=["pnl", "hold_days"])
-    wins, losses = sells[sells.pnl > 0], sells[sells.pnl <= 0]
-    eq = pd.Series([e["value"] for e in book.equity]) if book.equity else pd.Series([book.initial_capital])
-    dd = (eq / eq.cummax() - 1).min()
-    daily = eq.pct_change().dropna()
-    peak = max((e["value"] - e["cash"]) for e in book.equity) if book.equity else 0.0
-    total = book.realized() + book.unrealized()
-    return {
-        "strategy": label,
-        "trades": len(tv), "trades/day": round(len(tv) / max(n_days, 1), 2),
-        "closed": len(sells), "win rate": f"{(len(wins) / len(sells)):.0%}" if len(sells) else "n/a",
-        "med hold (d)": int(sells.hold_days.median()) if len(sells) else 0,
-        "avg win $": round(wins.pnl.mean()) if len(wins) else 0,
-        "avg loss $": round(losses.pnl.mean()) if len(losses) else 0,
-        "payoff": round(wins.pnl.mean() / abs(losses.pnl.mean()), 2) if len(wins) and len(losses) and losses.pnl.mean() else "n/a",
-        "expectancy $/trade": round(sells.pnl.mean(), 1) if len(sells) else 0,
-        "realized $": round(book.realized()), "unrealized $": round(book.unrealized()), "total P&L $": round(total),
-        "open": len(book.positions), "peak $ deployed": round(peak),
-        "P&L / peak deployed": f"{total / peak:+.1%}" if peak else "n/a",
-        "max drawdown": f"{dd:.2%}", "sharpe": round(daily.mean() / daily.std() * np.sqrt(252), 2) if daily.std() else "n/a",
-    }
-
-
-@dataclass
-class BacktestRun:
-    engines: Dict[str, Engine]
-    dates: List[str]
-    windows: List[Window]
-    rows: List[dict] = field(default_factory=list)                 # one summary row per (window, strategy)
-    books: Dict[Tuple[str, str], Book] = field(default_factory=dict)
-
-
-def prepare(conn: sqlite3.Connection, names: List[str], params: dict, cfg: EngineConfig) -> Tuple[Dict[str, Engine], List[str]]:
-    bars = load_market_bars(conn)
-    engines = {n: Engine(get_strategy(n, **params), conn, cfg, bars=bars) for n in names}
-    return engines, next(iter(engines.values())).dates
+def prepare(conn: sqlite3.Connection, params: dict, cfg: EngineConfig) -> Engine:
+    return Engine(make_strategy(**params), conn, cfg, bars=bars_from_holdings(conn))
 
 
 def resolve_windows(dates: List[str], months: List[int] | None, start: str | None, end: str | None) -> List[Window]:
@@ -78,15 +42,54 @@ def resolve_windows(dates: List[str], months: List[int] | None, start: str | Non
     return month_windows(dates, months or [3, 6, 9])
 
 
-def run(engines: Dict[str, Engine], dates: List[str], windows: List[Window], fill: str, capital: float) -> BacktestRun:
-    out = BacktestRun(engines, dates, windows)
-    for wlabel, start, end in windows:
+@dataclass
+class WindowResult:
+    label: str
+    start: str
+    end: str
+    n_days: int
+    warm: int                       # sessions of the window inside the strategy's warm-up
+    book: Book
+    perf: dict
+    trades: dict
+
+
+@dataclass
+class BacktestRun:
+    engine: Engine
+    windows: List[Window]
+    results: List[WindowResult] = field(default_factory=list)
+
+
+def run(conn: sqlite3.Connection, engine: Engine, windows: List[Window], fill: str, capital: float) -> BacktestRun:
+    out = BacktestRun(engine, windows)
+    bench = analytics.benchmark_returns(conn, engine.ind)
+    sectors = analytics.sector_map(conn)
+    dates = engine.dates
+    for label, start, end in windows:
+        book = engine.backtest(start, end, fill=fill, capital=capital)
         n_days = sum(1 for d in dates if start <= d <= end)
-        first_idx = dates.index(start)
-        for n, eng in engines.items():
-            book = eng.backtest(start, end, fill=fill, capital=capital)
-            out.books[(wlabel, n)] = book
-            warm = max(0, eng.strategy.warmup() - first_idx)
-            out.rows.append({"window": f"{wlabel} ({start} → {end}, {n_days}d)", **summarize(eng.strategy.label, book, n_days),
-                             "note": f"first {warm} sessions inside warm-up" if warm else ""})
+        warm = max(0, engine.strategy.warmup() - engine.index[start])
+        out.results.append(WindowResult(label, start, end, n_days, warm, book,
+                                        analytics.performance(book, bench), analytics.trade_stats(book, sectors)))
     return out
+
+
+def summary_rows(res: WindowResult) -> Dict[str, object]:
+    """One column of the plain-text comparison table."""
+    p, t = res.perf, res.trades
+    pct = lambda v: f"{v:+.1%}"
+    wins = p.get("windows", [])
+    return {
+        "book return": pct(p["return"]), "fund return": pct(p.get("bench_return", 0.0)),
+        "excess vs fund": pct(p.get("excess", 0.0)), "equal-weight return": pct(p.get("equal_return", 0.0)),
+        "max drawdown": pct(p["max_drawdown"]), "fund max drawdown": pct(p.get("bench_max_drawdown", 0.0)),
+        "sharpe": f"{p['sharpe']:.2f}", "fund sharpe": f"{p.get('bench_sharpe', 0.0):.2f}",
+        "avg exposure": f"{p['avg_exposure']:.0%}", "beta to fund": f"{p.get('beta', 0.0):.2f}",
+        "quarters beating fund": f"{sum(w['beat'] for w in wins)}/{len(wins)}" if wins else "n/a",
+        "trades": t["trades"], "closed": t["closed"], "open at end": t["open"],
+        "win rate": f"{t['win_rate']:.0%}", "payoff": f"{t['payoff']:.2f}", "profit factor": f"{t['profit_factor']:.2f}",
+        "expectancy $/trade": f"{t['expectancy']:.0f}", "median hold (d)": t["median_hold"],
+        "realized $": f"{t['realized']:.0f}", "unrealized $": f"{t['unrealized']:.0f}",
+        "note": f"first {res.warm} sessions inside warm-up" if res.warm else "",
+    }
