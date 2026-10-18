@@ -8,6 +8,12 @@ RANK   relative-strength percentile (higher first when slots are limited)
 STOP   volatility-scaled trailing stop (2.5 * sigma20 * sqrt(10), clamped 8–25 %), ratcheted on
        the highest close
 EXIT   close < 20-day low · 2 closes < SMA50 · time stop 30 d underwater (engine)
+NEW NAMES  a ticker has prices only while it is in the fund, so the full rules need 61 sessions of
+       membership ("freeze").  While they cannot be evaluated, a name with at least `freeze_days`
+       sessions is judged by the same rules with look-backs shortened to `freeze_days`: close >
+       SMA(F) rising · highest close of the previous F-1 sessions (= a new high since joining) ·
+       RS over F-1 sessions ranked against the whole fund · gap filter · exits on the F-day low /
+       closes below SMA(F).  freeze_days >= the full warm-up disables this.
 
 The strategy is a pure signal generator on close prices: it never touches cash, orders or
 persistence — the Engine and Book do that.  Entry signals carry the risk parameters (initial
@@ -85,7 +91,7 @@ class TrendFollow:
                    "volatility-scaled trailing stop and exits on a 20-day low or a broken 50-day average.")
     defaults: Dict[str, object] = dict(sma_len=50, sma_slope_lag=5, breakout_len=55, exit_low_len=20, rs_len=60,
                                        rs_min_pct=0.50, gap_sigma=3.0, trail_mult=2.5, trail_min=0.08, trail_max=0.25,
-                                       sma_break_days=2, time_stop_days=30)
+                                       sma_break_days=2, time_stop_days=30, freeze_days=10)
 
     def __init__(self, **params):
         unknown = set(params) - set(self.defaults)
@@ -119,10 +125,18 @@ class TrendFollow:
     def params_dict(self) -> dict:
         return dict(self.p)
 
-    def warmup(self) -> int:
-        """Bars of history a ticker needs before its first signal can fire."""
+    def full_warmup(self) -> int:
+        """Bars of history the full rules need."""
         p = self.p
         return max(p["sma_len"] + p["sma_slope_lag"], p["breakout_len"] + 1, p["rs_len"] + 1, p["exit_low_len"] + 1, 21)
+
+    def warmup(self) -> int:
+        """Bars of history a ticker needs before its first signal can fire."""
+        return min(self.full_warmup(), int(self.p["freeze_days"])) if self.p["freeze_days"] else self.full_warmup()
+
+    @property
+    def new_names_active(self) -> bool:
+        return 0 < int(self.p["freeze_days"]) < self.full_warmup()
 
     # ── lifecycle ──
     def prepare(self, ind: Indicators) -> None:
@@ -137,17 +151,57 @@ class TrendFollow:
         self.trail = ind.vol_trail(p["trail_mult"], 10, p["trail_min"], p["trail_max"])
         self.don_low = ind.close < ind.ll(p["exit_low_len"])
         self.trend_break = ind.below_sma_days(p["sma_len"]) >= p["sma_break_days"]
-        self.entry_ok = self.trend & self.brk & self.rs_ok & self.gap_ok
+        # where the full rules can be evaluated (enough consecutive history)
+        self.full = (ind.sma(p["sma_len"]).shift(p["sma_slope_lag"]).notna() & ind.hh(p["breakout_len"]).notna()
+                     & ind.roc(p["rs_len"]).notna())
+        self.entry_ok = (self.trend & self.brk & self.rs_ok & self.gap_ok).fillna(False)
+        self.is_new = self.full & False                    # no ticker on the shortened rules (until enabled below)
+        if self.new_names_active:
+            F = int(p["freeze_days"])
+            lag = max(1, min(int(p["sma_slope_lag"]), F // 3))
+            smin = min(15, max(5, F - 1))
+            self.trend_new = (ind.close > ind.sma(F)) & ind.sma_rising(F, lag)
+            self.brk_new = ind.close >= ind.hh(F - 1)
+            self.rs_new = ind.rs_pct(F - 1)
+            self.rs_ok_new = self.rs_new >= p["rs_min_pct"]
+            self.gap_ok_new = ind.gap_ok(p["gap_sigma"], 20, smin)
+            self.trail_new = ind.vol_trail(p["trail_mult"], 10, p["trail_min"], p["trail_max"], 20, smin)
+            self.don_low_new = ind.close < ind.ll(min(int(p["exit_low_len"]), F))
+            self.trend_break_new = ind.below_sma_days(F) >= p["sma_break_days"]
+            self.is_new = ~self.full & (ind.bars_so_far() >= F)
+            self.entry_ok = self.entry_ok | (self.is_new & (self.trend_new & self.brk_new & self.rs_ok_new & self.gap_ok_new).fillna(False))
 
     # ── rules ──
+    def new_name(self, date: str, ticker: str) -> bool:
+        """True when the ticker is judged by the shortened (new-name) rules on `date`."""
+        return self.new_names_active and self.ind.flag(self.is_new, date, ticker)
+
     def checks(self, date: str, ticker: str) -> Dict[str, bool]:
         ind = self.ind
+        if self.new_name(date, ticker):
+            F = int(self.p["freeze_days"])
+            return {
+                f"uptrend (close > SMA{F}, rising) · new name": ind.flag(self.trend_new, date, ticker),
+                f"{F - 1}d breakout (new high since joining)": ind.flag(self.brk_new, date, ticker),
+                f"relative strength >= {self.p['rs_min_pct']:.0%} ({F - 1}d)": ind.flag(self.rs_ok_new, date, ticker),
+                "not a gap day": ind.flag(self.gap_ok_new, date, ticker),
+            }
         return {
             f"uptrend (close > SMA{self.p['sma_len']}, rising)": ind.flag(self.trend, date, ticker),
             f"{self.p['breakout_len']}d breakout": ind.flag(self.brk, date, ticker),
             f"relative strength >= {self.p['rs_min_pct']:.0%}": ind.flag(self.rs_ok, date, ticker),
             "not a gap day": ind.flag(self.gap_ok, date, ticker),
         }
+
+    def _exit_flags(self, date: str, ticker: str):
+        """(close below the low, closes below the SMA) with the rule set that applies to the ticker."""
+        ind = self.ind
+        if self.new_name(date, ticker):
+            F = int(self.p["freeze_days"])
+            return (ind.flag(self.don_low_new, date, ticker), f"close below {min(int(self.p['exit_low_len']), F)}d low",
+                    ind.flag(self.trend_break_new, date, ticker), f"{self.p['sma_break_days']} closes below SMA{F}")
+        return (ind.flag(self.don_low, date, ticker), f"close below {self.p['exit_low_len']}d low",
+                ind.flag(self.trend_break, date, ticker), f"{self.p['sma_break_days']} closes below SMA{self.p['sma_len']}")
 
     def entries(self, date: str, univ: Dict[str, dict], book) -> List[EntrySignal]:
         """Ranked entry candidates for `date` among the fund's issuers not already held."""
@@ -160,11 +214,15 @@ class TrendFollow:
             if t not in ind.tickers or not ind.flag(self.entry_ok, date, t):
                 continue
             px = float(ind.at(ind.close, date, t))
-            trail = float(ind.at(self.trail, date, t))
+            new = self.new_name(date, t)
+            trail = float(ind.at(self.trail_new if new else self.trail, date, t))
             if np.isnan(trail):
                 trail = 0.15
-            rs = float(ind.at(self.rs, date, t))
-            reason = f"{self.p['breakout_len']}d breakout · RS pctile {rs:.0%} · trail {trail:.0%}"
+            rs = float(ind.at(self.rs_new if new else self.rs, date, t))
+            if np.isnan(rs):
+                rs = 0.0
+            reason = (f"{int(self.p['freeze_days']) - 1}d breakout · RS pctile {rs:.0%} · trail {trail:.0%} · new name" if new
+                      else f"{self.p['breakout_len']}d breakout · RS pctile {rs:.0%} · trail {trail:.0%}")
             out.append(EntrySignal(issuer, t, px, stop_price=px * (1 - trail), trail=trail, rank=rs,
                                    reason=reason, checks=self.checks(date, t)))
         out.sort(key=lambda s: -s.rank)
@@ -178,10 +236,11 @@ class TrendFollow:
             px = float(ind.at(ind.close, date, t))
             if np.isnan(px):
                 continue
-            if ind.flag(self.don_low, date, t):
-                out.append(ExitSignal(issuer, t, px, f"close below {self.p['exit_low_len']}d low"))
-            elif ind.flag(self.trend_break, date, t):
-                out.append(ExitSignal(issuer, t, px, f"{self.p['sma_break_days']} closes below SMA{self.p['sma_len']}"))
+            low, low_reason, brk, brk_reason = self._exit_flags(date, t)
+            if low:
+                out.append(ExitSignal(issuer, t, px, low_reason))
+            elif brk:
+                out.append(ExitSignal(issuer, t, px, brk_reason))
         return out
 
     def explain(self, date: str, ticker: str) -> dict:
@@ -191,17 +250,22 @@ class TrendFollow:
             return {"state": "NONE", "checks": {}, "note": "no bar data"}
         checks = self.checks(date, ticker)
         vals = list(checks.values())
+        low, _, brk, _ = self._exit_flags(date, ticker)
         if all(vals):
             state = "ENTRY"
-        elif ind.flag(self.don_low, date, ticker) or ind.flag(self.trend_break, date, ticker):
+        elif low or brk:
             state = "EXIT"
         elif vals[0] and vals[2]:           # in an uptrend with relative strength: the setup is forming
             state = "WATCH"
         else:
             state = "NONE"
-        rs = ind.at(self.rs, date, ticker)
-        note = f"RS pctile {rs:.0%}" if not np.isnan(rs) else ""
-        return {"state": state, "checks": checks, "note": note}
+        new = self.new_name(date, ticker)
+        rs = ind.at(self.rs_new if new else self.rs, date, ticker)
+        note = (f"RS pctile {rs:.0%}" if not np.isnan(rs) else "") + (" · new name: shortened rules" if new else "")
+        if not new and not ind.flag(self.full, date, ticker):
+            bars = int(ind.at(ind.bars_so_far(), date, ticker) or 0)
+            note = f"{bars} sessions of history — frozen until {self.warmup()}"
+        return {"state": state, "checks": checks, "note": note.strip(" ·")}
 
     def __repr__(self) -> str:
         return f"<TrendFollow {self.p}>"

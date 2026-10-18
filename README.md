@@ -68,6 +68,7 @@ pages reload when a cycle completes; historical days show signals and waiting li
 | rank | relative‑strength percentile (best first when slots are limited) |
 | stop | volatility‑scaled trailing stop 2.5 σ₂₀ √10, clamped 8–25 %, ratcheted on the highest close |
 | exit | close < 20‑day low · 2 closes < SMA50 · 30‑day time stop when underwater · dropped from the fund |
+| new names | a name has prices only while it is in the fund; until the full rules can be evaluated (61 sessions) a name with ≥ `freeze_days` (10) sessions is judged by the same rules with look‑backs shortened to 10 (SMA10 rising · new high since joining · 9‑day RS vs the whole fund · gap filter · exits on the 10‑day low / SMA10) |
 
 Parameters: `velocity backtest --param breakout_len=40 …` (`src/strategy.py::TrendFollow.defaults`).
 Why these rules and not others — including what was tried — is in `docs/REVIEW-AND-PLAN.md`.
@@ -87,8 +88,9 @@ transaction and idempotent per date. A new book starts on the latest date; seed 
 with `backtest --save-book`.
 
 Prices are the fund's valuation prices, split‑adjusted, **only while a stock is in the fund**: a
-newly added name has no history and cannot signal until it has been held for the strategy's
-warm‑up (61 sessions). There is no volume, no OHLC, no dividend adjustment.
+newly added name has no history and is frozen for `freeze_days` sessions (10), after which the
+shortened rules apply until the full 61‑session history exists. There is no volume, no OHLC, no
+dividend adjustment.
 
 Another fund: change `portfolioId` in `HOLDINGS_URL` (`src/config.py`), then
 `velocity backfill --wipe --force` and `velocity resetbook`. Nothing else names the fund.

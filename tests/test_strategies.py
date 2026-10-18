@@ -42,7 +42,8 @@ def test_params_and_validation():
     with pytest.raises(ValueError):
         make_strategy(rs_min_pct=-1)
     assert parse_params(["a=1", "b=0.5", "c=true", "d=x"]) == {"a": 1, "b": 0.5, "c": True, "d": "x"}
-    assert make_strategy().warmup() == 61
+    assert make_strategy().full_warmup() == 61 and make_strategy().warmup() == 10
+    assert make_strategy(freeze_days=0).warmup() == 61 and not make_strategy(freeze_days=61).new_names_active
 
 
 def test_strategy_entry_exit_and_explain_on_a_trend():
@@ -80,6 +81,26 @@ def test_indicators_basics():
     assert ind.below_sma_days(10)["AAA"].max() >= 1 and (ind.below_sma_days(10) >= 0).all().all()
     with pytest.raises(ValueError):
         Indicators(pd.DataFrame(columns=["date", "ticker", "close"]))
+
+
+def test_new_names_signal_after_the_freeze_with_shortened_rules():
+    n = 140
+    rng = np.random.default_rng(5)
+    dates = [str(d.date()) for d in pd.bdate_range("2026-01-01", periods=n)]
+    old = 100 * np.cumprod(1 + rng.normal(0.001, 0.01, n))
+    late = 50 * np.cumprod(1 + 0.006 + rng.normal(0, 0.003, n))          # steady riser that joins on day 100
+    rows = [(d, "OLD", c) for d, c in zip(dates, old)] + [(d, "LATE", c) for d, c in zip(dates[100:], late[100:])]
+    bars = pd.DataFrame(rows, columns=["date", "ticker", "close"])
+    st = make_strategy(freeze_days=10)
+    st.prepare(Indicators(bars))
+    states = [st.explain(d, "LATE")["state"] for d in dates[100:]]
+    assert states[0] == "NONE" and "frozen until 10" in st.explain(dates[100], "LATE")["note"]
+    assert all(s_ == "NONE" for s_ in states[:9]) and "ENTRY" in states[9:20], states[:20]
+    assert st.new_name(dates[112], "LATE") and not st.new_name(dates[112], "OLD")
+    assert "new name" in st.explain(dates[112], "LATE")["note"]
+    # with the freeze off, the late name stays frozen for the full warm-up
+    off = make_strategy(freeze_days=0); off.prepare(Indicators(bars))
+    assert all(off.explain(d, "LATE")["state"] == "NONE" for d in dates[100:])
 
 
 def _held(book, ticker, px):

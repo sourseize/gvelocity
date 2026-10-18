@@ -57,17 +57,25 @@ class Indicators:
 
     # ── volatility ──
     @lru_cache(maxsize=None)
-    def sigma(self, n: int = 20) -> pd.DataFrame:
-        return self.ret.rolling(n, min_periods=int(n * 0.75)).std()
+    def sigma(self, n: int = 20, min_periods: Optional[int] = None) -> pd.DataFrame:
+        """Rolling std of daily returns (needs 75 % of the window by default)."""
+        return self.ret.rolling(n, min_periods=min_periods or int(n * 0.75)).std()
 
-    def vol_trail(self, mult: float = 2.5, horizon: int = 10, lo: float = 0.08, hi: float = 0.25, n: int = 20) -> pd.DataFrame:
+    def vol_trail(self, mult: float = 2.5, horizon: int = 10, lo: float = 0.08, hi: float = 0.25, n: int = 20,
+                  min_periods: Optional[int] = None) -> pd.DataFrame:
         """Volatility-scaled trailing-stop fraction, clamped to [lo, hi]."""
-        return (mult * self.sigma(n) * np.sqrt(horizon)).clip(lo, hi)
+        return (mult * self.sigma(n, min_periods) * np.sqrt(horizon)).clip(lo, hi)
 
     @lru_cache(maxsize=None)
-    def gap_ok(self, k: float = 3.0, n: int = 20) -> pd.DataFrame:
+    def gap_ok(self, k: float = 3.0, n: int = 20, min_periods: Optional[int] = None) -> pd.DataFrame:
         """Today's move is not a blow-off: ret < k * yesterday's sigma."""
-        return self.ret < k * self.sigma(n).shift()
+        return self.ret < k * self.sigma(n, min_periods).shift()
+
+    @lru_cache(maxsize=None)
+    def bars_so_far(self) -> pd.DataFrame:
+        """Consecutive sessions with a price up to and including today (0 right after a gap)."""
+        has = self.close.notna().astype(int)
+        return has.apply(lambda col: col * (col.groupby((col == 0).cumsum()).cumcount() + 1))
 
     @lru_cache(maxsize=None)
     def below_sma_days(self, n: int) -> pd.DataFrame:
