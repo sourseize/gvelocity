@@ -12,6 +12,7 @@ report of what changed between consecutive days (new entrants, removals, share-c
 Files
     cli/data/holdings-YYYY-MM-DD.csv     the raw CSV of each holdings date (the file's own "as of" date)
     cli/report/Index-YYYY.html           one report per calendar year, newest day on top
+    cli/report/index.html                entry page linking the yearly reports (for GitHub Pages)
 
 Fetching
     The script looks at the CSVs already in cli/data and requests every weekday after the latest one
@@ -297,6 +298,14 @@ def prepend_day(doc: str, date: str, table: str) -> str:
     return doc.replace(MONTHS_MARK + "\n", MONTHS_MARK + "\n" + month_section(ym, table), 1)
 
 
+def home_page(years: List[int], latest: str) -> str:
+    items = "".join(f'<li><a href="Index-{y}.html">{y}</a></li>' for y in sorted(years, reverse=True))
+    return (f'<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+            f'<title>Holdings changes</title><style>{CSS}ul{{padding-left:18px}}li{{margin:4px 0}}</style></head><body>\n'
+            f'<h1>Holdings changes</h1><p class="note">Daily changes of the fund\'s holdings, one report per year. Latest holdings day: {latest}.</p>'
+            f'<ul>{items}</ul></body></html>\n')
+
+
 def build_reports(data_dir: Path, report_dir: Path, min_change: float, rebuild: bool = False) -> List[str]:
     """Add every missing day table to its year's report; returns the dates added."""
     dates = stored_dates(data_dir)
@@ -323,6 +332,8 @@ def build_reports(data_dir: Path, report_dir: Path, min_change: float, rebuild: 
         cache.pop(prev, None)
     for year, doc in docs.items():
         (report_dir / f"Index-{year}.html").write_text(doc, encoding="utf-8")
+    years = sorted({int(d[:4]) for d in dates[1:]})
+    (report_dir / "index.html").write_text(home_page(years, dates[-1]), encoding="utf-8")
     return added
 
 

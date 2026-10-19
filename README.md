@@ -125,6 +125,12 @@ a phone. Re‑running only adds the missing days (`--rebuild` regenerates, `--no
 download). `python cli/mock_server.py` serves synthetic CSVs in the iShares layout to try it
 offline: `python cli/holdings_report.py --url "http://127.0.0.1:8765/holdings.csv?fund=TEST" --days 60 --pause 0`.
 
+**Published with GitHub Actions** (`.github/workflows/holdings-report.yml`): runs at 07:00, 11:00,
+15:00 and 19:00 UTC (and on demand, with an optional rebuild), fetches the missing days, updates the
+reports and pushes CSVs + HTML to the `gh-pages` branch, which is the site's state and its source.
+One‑time setup: Settings → Pages → Source "Deploy from a branch", branch `gh-pages`, folder `/ (root)`;
+the site is then at `https://<user>.github.io/<repo>/` (`index.html` links the yearly reports).
+
 ## Run as a service
 
 See `deploy/velocity.service` (systemd): adjust the two paths, `sudo cp … /etc/systemd/system/`,
